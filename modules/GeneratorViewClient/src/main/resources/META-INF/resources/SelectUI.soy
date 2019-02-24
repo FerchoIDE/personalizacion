@@ -1,0 +1,21 @@
+{namespace SelectUI}
+/**
+ * Prints the portlet main view.
+ */
+{template .render}
+    {@param id: any}
+    {@param? label: ?}
+    {@param? value: string}
+    {@param options: list<string>}
+    {let $finalValue: isNonnull($value) ? $value : '' /}
+    <div id="{$id}">
+        <div class="form-group">
+            <label for="select_{$id}">{$label}</label>
+             <select class="form-control"   id="select_{$id}">
+                {foreach $option in $options}
+                    <option>$option</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+{/template}

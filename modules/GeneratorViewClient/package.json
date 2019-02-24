@@ -1,0 +1,16 @@
+{
+	"dependencies": {
+		"clay": "^2.7.0",
+		"clay-badge": "^2.7.0",
+		"clay-css": "^2.7.0",
+		"metal-component": "^2.4.5",
+		"metal-soy": "^2.4.5"
+	},
+	"devDependencies": {
+		"gulp": "^3.9.0",
+		"liferay-module-config-generator": "^1.2.1",
+		"metal-cli": "^4.0.1"
+	},
+	"name": "GeneratorViewClient",
+	"version": "1.0.5"
+}

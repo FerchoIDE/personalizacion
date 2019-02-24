@@ -1,0 +1,17 @@
+{namespace TextAreaUI}
+
+/**
+ * Prints the portlet main view.
+ */
+{template .render}
+    {@param id: any}
+    {@param? label: ?}
+    {@param? value: string}
+    {@param? placeholder: any}
+    {let $finalValue: isNonnull($value) ? $value : '' /}
+    <div id="{$id}" class="input-group-item">
+            <label for="input_{$id}">{$label}</label>
+            <textarea class="form-control" id="inputarea_{$id}" placeholder="{$placeholder}" value="{$finalValue}"></textarea>
+
+    </div>
+{/template}
