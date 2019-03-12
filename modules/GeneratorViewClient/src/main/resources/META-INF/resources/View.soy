@@ -128,12 +128,19 @@
                                             {param label: $field['label'][$selectedLanguage] /}
                                         {/call}
                                     {elseif $field['type'] == 'ddm-date'}
-                                        Date
+                                        {call DateUI.render}
+                                            {param id: $field['name'] /}
+                                            {param label: $field['label'][$defaultLanguage] /}
+                                            {param placeholder: $field['tip'][$defaultLanguage] /}
+                                            {param defaultLanguageId: $selectedLanguage /}
+                                        {/call}
                                     {elseif $field['type'] == 'ddm-text-html'}
                                         {call TextAreaUI.render}
                                             {param id: $field['name'] /}
                                             {param label: $field['label'][$selectedLanguage] /}
                                             {param placeholder: $field['tip'][$selectedLanguage] /}
+                                            {param availableLanguageIds: $availableLanguageIds /}
+                                            {param defaultLanguageId: $selectedLanguage /}
                                         {/call}
                                     {else}
                                         Ninguno<br/>

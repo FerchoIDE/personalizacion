@@ -8,7 +8,10 @@ Provide-Capability:\
 Require-Capability:\
 	soy;\
 		filter:="(type=metal)"
--includeresource: package.json,@json-path-2.4.0.jar,\
+-includeresource: package.json,\
+                  META-INF/resources/flatpickr.js = node_modules/flatpickr/dist/flatpickr.js,\
+                  META-INF/resources/flatpickr/dist/l10n/es.js = node_modules/flatpickr/dist/l10n/es.js,\
+                  @json-path-2.4.0.jar,\
                   @json-20180813.jar,@json-smart-2.3.jar,@accessors-smart-1.2.jar,\
                   @asm-5.0.4.jar,@slf4j-api-1.7.25.jar
 

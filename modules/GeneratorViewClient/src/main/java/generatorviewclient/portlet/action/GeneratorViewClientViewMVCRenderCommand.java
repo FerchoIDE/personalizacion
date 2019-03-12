@@ -36,8 +36,8 @@ public class GeneratorViewClientViewMVCRenderCommand
 
 
         Map map = new JsonUtil()
-                .loadFile("/Users/kelceyguillenbejarano/proyectos/c/posadas/ddm-form.json")
-               // .loadFile("/Users/kelceyguillenbejarano/proyectos/c/posadas/ddm-promociones.json")
+               // .loadFile("/Users/kelceyguillenbejarano/proyectos/c/posadas/ddm-form.json")
+                .loadFile("/Users/kelceyguillenbejarano/proyectos/c/posadas/ddm-promociones.json")
 
                 //.loadFile("/Users/kelceyguillenbejarano/proyectos/c/posadas/ddm-habitaion.json")
                 .transformStructure();

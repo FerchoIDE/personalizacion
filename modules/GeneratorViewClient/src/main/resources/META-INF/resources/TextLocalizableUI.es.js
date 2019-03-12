@@ -6,14 +6,6 @@ import TextUI from './TextUI.es'
  * TextUI Component
  */
 class TextLocalizableUI extends Component {
-    created() {
-        console.log("------------created-----------")
-    }
-
-    rendered(firstRender) {
-        console.log("----------rendered-------------"+firstRender)
-    }
-
 }
 
 // Register component

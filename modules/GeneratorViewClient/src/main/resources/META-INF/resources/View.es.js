@@ -6,7 +6,7 @@ import CheckBoxUI from './CheckBoxUI.es';
 import TextAreaUI from './TextAreaUI.es';
 import TitleLocalizableUI from './TitleLocalizableUI.es';
 import ViewNested from './ViewNested.es';
-
+import DateUI from './DateUI.es';
 
 
 
@@ -16,15 +16,7 @@ import templates from './View.soy';
  * View Component
  */
 class View extends Component {
-    created() {
-        console.log('----created----');
-    }
-    rendered(firstRender) {
-        console.log('-----rendered----'+JSON.stringify(firstRender));
-    }
-    willReceiveState(changes) {
-        console.log('-----willReceiveState----');
-    }
+
     closeOpenTab(event) {
         event.preventDefault();
         console.log('-----closeOpenTab----'+event.currentTarget.attributes['aria-expanded'].value);

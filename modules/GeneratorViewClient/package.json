@@ -3,6 +3,7 @@
 		"clay": "^2.7.0",
 		"clay-badge": "^2.7.0",
 		"clay-css": "^2.7.0",
+		"flatpickr": "^4.5.7",
 		"metal-component": "^2.4.5",
 		"metal-soy": "^2.4.5"
 	},
