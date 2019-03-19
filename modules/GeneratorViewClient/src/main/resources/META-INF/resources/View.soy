@@ -5,148 +5,213 @@
  */
 {template .render}
     {@param id: string}
-    {@param data: map<string, ?>}
+
+    {@param? changeTab: ?}
+    {@param? selectedTab: string}
     {@param contextPath: string}
-    {@param? closeOpenTab: ?}
-    {@param? changeLanguage: ?}
-    {@param collapseInfo: map<string,bool>}
-    {let $selectedLanguage: $data['selectedLanguage'] /}
-    {let $defaultLanguage: $data['defaultLanguage'] /}
-    {let $availableLanguageIds: $data['availableLanguageId'] /}
-    {let $availableLanguageIdsStyle: $data['availableLanguageId-style'] /}
-     <div id="{$id}">
+    {@param navigationNewURL: string}
+    {@param data: map<string,list<map<string,string>>>}
+    {@param header: map<string,string>}
+    {@param keys: list<string>}
 
-             <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
-                 <div class="panel">
-                     <a onclick="{$closeOpenTab}" aria-controls="accordionPrincipalCollapse" aria-expanded="true" class="collapse-icon sheet-subtitle"
-                        data-toggle="collapse" href="#accordionPrincipalCollapse" id="accordionPrincipalHeading" role="tab">
-                         <span >
-                             <div class="sheet-header"><h2 class="sheet-title">{$data['titleEstructure'][$defaultLanguage]}</h2></div>
-                         </span>
-                         <span class="collapse-icon-closed">
-                            <svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
-                                <use href="{$contextPath}/images/icons/icons.svg#angle-right" />
+
+    <div id="{$id}">
+        <div class="btn-group dropdown" role="group">
+            <button class="btn btn-primary" type="button">Agregar nuevo contenido</button>
+            <button aria-expanded="false" aria-haspopup="true" class="btn btn-primary btn-monospaced dropdown-toggle" data-toggle="dropdown" type="button">
+                <svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
+                    <use href="{$contextPath}/images/icons/icons.svg#caret-bottom" />
+                </svg>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=200950">Hoteles</a>
+                <a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=201291">Habitaciones</a>
+                <a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=39858">Promociones</a>
+                <a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=200950">Bar</a>
+                <a class="dropdown-item" href="{$navigationNewURL}&structureId=200950">Restaurante</a>
+                <a class="dropdown-item" href="{$navigationNewURL}&structureId=200950">Marcas</a>
+                <a class="dropdown-item" href="{$navigationNewURL}&structureId=200950">Hoteles</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{$navigationNewURL}&structureId=200950">Gimnasio</a>
+                <a class="dropdown-item" href="{$navigationNewURL}&structureId=200950">Destinos</a>
+                <a class="dropdown-item" href="{$navigationNewURL}&structureId=200950">Geo</a>
+                <a class="dropdown-item" href="{$navigationNewURL}&structureId=200950">Instalaciones</a>
+                <a class="dropdown-item" href="{$navigationNewURL}&structureId=200950">Genérico</a>
+                <a class="dropdown-item" href="{$navigationNewURL}&structureId=200950">Club de Fiestas Infantiles</a>
+                <a class="dropdown-item" href="{$navigationNewURL}&structureId=200950">Sala de Reuniones</a>
+            </div>
+        </div>
+        <br/>
+        <ul class="nav nav-underline" role="tablist">
+            <li class="nav-item">
+                <a onclick="{$changeTab}" style="font-size: 14px"  aria-controls="navUnderlineHotels" aria-expanded="{$selectedTab=='navUnderlineHotelsTab'?'true':'false'}" class="{$selectedTab=='navUnderlineHotelsTab'?'active':''} nav-link" data-toggle="tab"
+                   href="#navUnderlineHotels" id="navUnderlineHotelsTab" role="tab">Hoteles</a>
+            </li>
+            <li class="nav-item">
+                <a onclick="{$changeTab}" style="font-size: 14px" aria-controls="navUnderlineRooms" aria-expanded="{$selectedTab=='navUnderlineRoomsTab'?'true':'false'}" class="{$selectedTab=='navUnderlineRoomsTab'?'active':''} nav-link" data-toggle="tab" href="#navUnderlineRooms"
+                   id="navUnderlineRoomsTab" role="tab">Habitaciones</a>
+            </li>
+            <li class="nav-item">
+                <a onclick="{$changeTab}" style="font-size: 14px" aria-controls="navUnderlineRates" aria-expanded="{$selectedTab=='navUnderlineRatesTab'?'true':'false'}" class="{$selectedTab=='navUnderlineRatesTab'?'active':''} nav-link" data-toggle="tab" href="#navUnderlineRates"
+                   id="navUnderlineRatesTab" role="tab">Promociones</a>
+            </li>
+            <li class="nav-item">
+                <a onclick="{$changeTab}" style="font-size: 14px" aria-controls="navUnderlinePubs" aria-expanded="{$selectedTab=='navUnderlinePubsTab'?'true':'false'}" class="{$selectedTab=='navUnderlinePubsTab'?'active':''} nav-link" data-toggle="tab" href="#navUnderlinePubs"
+                   id="navUnderlinePubsTab" role="tab">Bar</a>
+            </li>
+            <li class="nav-item">
+                <a onclick="{$changeTab}" style="font-size: 14px" aria-controls="navUnderlineRestaurants"  aria-expanded="{$selectedTab=='navUnderlineRestaurantsTab'?'true':'false'}" class="{$selectedTab=='navUnderlineRestaurantsTab'?'active':''} nav-link" data-toggle="tab" href="#navUnderlineRestaurants"
+                   id="navUnderlineRestaurantsTab" role="tab">Restaurante</a>
+            </li>
+            <li class="nav-item">
+                <a onclick="{$changeTab}" aria-controls="navUnderlineSpa" style="font-size: 14px" aria-expanded="{$selectedTab=='navUnderlineSpaTab'?'true':'false'}" class="{$selectedTab=='navUnderlineSpaTab'?'active':''} nav-link" data-toggle="tab" href="#navUnderlineSpa"
+                   id="navUnderlineSpaTab" role="tab">Spa</a>
+            </li>
+            <li class="nav-item">
+                <a onclick="{$changeTab}" aria-controls="navUnderlineBrands" style="font-size: 14px" aria-expanded="{$selectedTab=='navUnderlineBrandsTab'?'true':'false'}" class="{$selectedTab=='navUnderlineBrandsTab'?'active':''} nav-link" data-toggle="tab" href="#navUnderlineBrands"
+                   id="navUnderlineBrandsTab" role="tab">Marcas</a>
+            </li>
+            <li class="dropdown nav-item">
+                <a aria-expanded="false" style="font-size: 14px" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="dropdown"
+                   href="#1" role="button">
+                    Mas
+                    <svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
+                        <use href="{$contextPath}/images/icons/icons.svg#caret-bottom"/>
+                    </svg>
+                </a>
+                <div class="dropdown-menu dropdown-menu-indicator-end">
+                    <a aria-controls="navUnderlineGyms" style="font-size: 14px" class="dropdown-item" data-toggle="tab"
+                       href="#navUnderlineGyms" id="navUnderlineGymsTab" role="tab">
+                        Gimnasio
+                        <span aria-hidden="true" class="dropdown-item-indicator">
+                            <svg class="lexicon-icon lexicon-icon-check" focusable="false" role="presentation">
+                                <use href="{$contextPath}/images/icons/icons.svg#check"/>
+                            </svg>
+				        </span>
+                    </a>
+
+                    <a aria-controls="navUnderlineDestinations" style="font-size: 14px" class="dropdown-item" data-toggle="tab"
+                       href="#navUnderlineDestinations" id="navUnderlineDestinationsTab" role="tab">
+                        Destinos
+                        <span aria-hidden="true" class="dropdown-item-indicator">
+                            <svg class="lexicon-icon lexicon-icon-check" focusable="false" role="presentation">
+                                <use href="{$contextPath}/images/icons/icons.svg#check"/>
+                            </svg>
+				        </span>
+                    </a>
+
+                    <a aria-controls="navUnderlineGeo" style="font-size: 14px" class="dropdown-item" data-toggle="tab"
+                       href="#navUnderlineGeo" id="navUnderlineGeoTab" role="tab">
+                        Geo
+                        <span aria-hidden="true" class="dropdown-item-indicator">
+                            <svg class="lexicon-icon lexicon-icon-check" focusable="false" role="presentation">
+                                <use href="{$contextPath}/images/icons/icons.svg#check"/>
+                            </svg>
+				        </span>
+                    </a>
+                    <a aria-controls="navUnderlineFacilities" style="font-size: 14px" class="dropdown-item" data-toggle="tab"
+                       href="#navUnderlineFacilities" id="navUnderlineFacilitiesTab" role="tab">
+                        Instalaciones
+                        <span aria-hidden="true" class="dropdown-item-indicator">
+                            <svg class="lexicon-icon lexicon-icon-check" focusable="false" role="presentation">
+                                <use href="{$contextPath}/images/icons/icons.svg#check"/>
+                            </svg>
+				        </span>
+                    </a>
+                    <a aria-controls="navUnderlineGenerics" style="font-size: 14px" class="dropdown-item" data-toggle="tab"
+                       href="#navUnderlineGenerics" id="navUnderlineGenericsTab" role="tab">
+                        Genérico
+                        <span aria-hidden="true" class="dropdown-item-indicator">
+                            <svg class="lexicon-icon lexicon-icon-check" focusable="false" role="presentation">
+                                <use href="{$contextPath}/images/icons/icons.svg#check"/>
+                            </svg>
+				        </span>
+                    </a>
+                    <a aria-controls="navUnderlineChildrensClub" style="font-size: 14px" class="dropdown-item" data-toggle="tab"
+                       href="#navUnderlineChildrensClub" id="navUnderlineChildrensClubTab" role="tab">
+                        Club de Fiestas Infantiles
+                        <span aria-hidden="true" class="dropdown-item-indicator">
+                            <svg class="lexicon-icon lexicon-icon-check" focusable="false" role="presentation">
+                                <use href="{$contextPath}/images/icons/icons.svg#check"/>
+                            </svg>
+				        </span>
+                    </a>
+                    <a aria-controls="navUnderlineMeetingRooms" style="font-size: 14px" class="dropdown-item" data-toggle="tab"
+                       href="#navUnderlineMeetingRooms" id="navUnderlineMeetingRoomsTab" role="tab">
+                        Sala de Reuniones
+                        <span aria-hidden="true" class="dropdown-item-indicator">
+                            <svg class="lexicon-icon lexicon-icon-check" focusable="false" role="presentation">
+                                <use href="{$contextPath}/images/icons/icons.svg#check"/>
                             </svg>
                         </span>
-                         <span class="collapse-icon-open">
-                            <svg class="lexicon-icon lexicon-icon-angle-down" focusable="false" role="presentation">
-                                <use href="{$contextPath}/images/icons/icons.svg#angle-down" />
-                            </svg>
-                        </span>
-                     </a>
-                     <div aria-labelledby="accordionPrincipalHeading" class="panel-collapse collapse  {$collapseInfo?['accordionPrincipalHeading']?'':'show'}"
-                          id="accordionPrincipalCollapse" role="tabpanel">
-                         <div class="panel-body">
-                             {call TitleLocalizableUI.render}
-                                 {param id: 'title_principal' /}
-                                 {param label: 'Titulo' /}
-                                 {param placeholder: 'Titulo principal' /}
-                                 {param contextPath: $contextPath/}
-                                 {param availableLanguageIds: $availableLanguageIds /}
-                                 {param defaultLanguage: $defaultLanguage /}
-                                 {param changeLanguage: $changeLanguage /}
-                                 {param availableLanguageIdsStyle: $availableLanguageIdsStyle /}
-                                 {param selectedLanguage: $selectedLanguage /}
-                             {/call}
-                             {call TitleLocalizableUI.render}
-                                 {param id: 'description_prinipal' /}
-                                 {param label: 'Descripcion' /}
-                                 {param placeholder: 'Descripcion principal' /}
-                                 {param contextPath: $contextPath/}
-                                 {param availableLanguageIds: $availableLanguageIds /}
-                                 {param defaultLanguage: $defaultLanguage /}
-                                 {param changeLanguage: $changeLanguage /}
-                                 {param availableLanguageIdsStyle: $availableLanguageIdsStyle /}
-                                 {param selectedLanguage: $selectedLanguage /}
-                             {/call}
-                         </div>
-                     </div>
-                 </div>
-             </div>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div aria-labelledby="navUnderlineHotelsTab" class="{$selectedTab=='navUnderlineHotelsTab'?'active show':''} tab-pane" id="navUnderlineHotels"
+                 role="tabpanel">
+                <br/>
+                <br/>
+                {call TableUI.render}
+                    {param id: '200950' /}
+                    {param header: $header /}
+                    {param contextPath: $contextPath /}
+                    {param keys: $keys /}
+                    {param data: $data['200950'] /}
+                {/call}
+            </div>
+            <div aria-labelledby="navUnderlineRoomsTab" class="{$selectedTab=='navUnderlineRoomsTab'?'active show':''}  tab-pane" id="navUnderlineRoomsTab"
+                 role="tabpanel">
 
+                <br/>
+                <br/>
+                {call TableUI.render}
+                    {param id: '201291' /}
+                    {param header: $header /}
+                    {param contextPath: $contextPath /}
+                    {param keys: $keys /}
+                    {param data: $data['201291'] /}
+                {/call}
+            </div>
+            <div aria-labelledby="navUnderlineRatesTab" class="{$selectedTab=='navUnderlineRatesTab'?'active show':''}  tab-pane" id="navUnderlineRates"
+                 role="tabpanel">
 
-         <div>
-             <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
-                 <div class="panel">
-                     <a onclick="{$closeOpenTab}" aria-controls="accordionGeneralCollapse" aria-expanded="false" class="collapse-icon sheet-subtitle collapsed"
-                        data-toggle="collapse" href="#accordionGeneralCollapse" id="accordionGeneralHeading" role="tab">
-                         <span >
-                             Generales
-                         </span>
-                         <span class="collapse-icon-closed">
-                            <svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
-                                <use href="{$contextPath}/images/icons/icons.svg#angle-right" />
-                            </svg>
-                        </span>
-                         <span class="collapse-icon-open">
-                            <svg class="lexicon-icon lexicon-icon-angle-down" focusable="false" role="presentation">
-                                <use href="{$contextPath}/images/icons/icons.svg#angle-down" />
-                            </svg>
-                        </span>
-                     </a>
-                     <div aria-labelledby="accordionGeneralHeading" class="panel-collapse collapse  {$collapseInfo?['accordionGeneralHeading']?'':'show'}"
-                          id="accordionGeneralCollapse" role="tabpanel">
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <div class="input-group">
+                <br/>
+                <br/>
+                {call TableUI.render}
+                    {param id: '39858' /}
+                    {param header: $header /}
+                    {param contextPath: $contextPath /}
+                    {param keys: $keys /}
+                    {param data: $data['39858'] /}
+                {/call}
+            </div>
+            <div aria-labelledby="navUnderlinePubsTab" class="{$selectedTab=='navUnderlinePubsTab'?'active show':''}  tab-pane" id="navUnderlinePubs" role="tabpanel">
 
-                {foreach $field in $data['nestedFields']}
+                <br/>
+                <br/>
+                {call TableUI.render}
+                    {param id: '48306' /}
+                    {param header: $header /}
+                    {param contextPath: $contextPath /}
+                    {param keys: $keys /}
+                    {param data: $data['48306'] /}
+                {/call}
+            </div>
+            <div aria-labelledby="navUnderlineRestaurantsTab" class="{$selectedTab=='navUnderlineRestaurantsTab'?'active show':''}  tab-pane"
+                 id="navUnderlineRestaurants" role="tabpanel">
 
-                                    {if $field['type'] == 'ddm-separator'}
-
-                                        {if index($field)>0 and $data['nestedFields'][index($field)-1]['type'] != 'ddm-separator'}
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </div>
-                                        {/if}
-                                        {call ViewNested.render}
-                                            {param id: 'id_'+index($field) /}
-                                            {param data: $field['nestedFields'] /}
-                                            {param title: $field['label'] /}
-                                            {param availableLanguageIds: $availableLanguageIds /}
-                                            {param defaultLanguage: $selectedLanguage /}
-                                            {param closeOpenTab: $closeOpenTab/}
-                                            {param contextPath: $contextPath/}
-                                            {param collapseInfo: $collapseInfo/}
-                                        {/call}
-                                    {elseif $field['type'] == 'text'}
-                                        {call TextLocalizableUI.render}
-                                            {param id: $field['name'] /}
-                                            {param type: $field['type'] /}
-                                            {param labels: $field['label'] /}
-                                            {param placeholder: $field['tip'] /}
-                                            {param availableLanguageIds: $availableLanguageIds /}
-                                            {param defaultLanguageId: $selectedLanguage /}
-                                        {/call}
-                                    {elseif $field['type'] == 'checkbox'}
-                                        {call CheckBoxUI.render}
-                                            {param id: $field['name'] /}
-                                            {param label: $field['label'][$selectedLanguage] /}
-                                        {/call}
-                                    {elseif $field['type'] == 'ddm-date'}
-                                        {call DateUI.render}
-                                            {param id: $field['name'] /}
-                                            {param label: $field['label'][$defaultLanguage] /}
-                                            {param placeholder: $field['tip'][$defaultLanguage] /}
-                                            {param defaultLanguageId: $selectedLanguage /}
-                                        {/call}
-                                    {elseif $field['type'] == 'ddm-text-html'}
-                                        {call TextAreaUI.render}
-                                            {param id: $field['name'] /}
-                                            {param label: $field['label'][$selectedLanguage] /}
-                                            {param placeholder: $field['tip'][$selectedLanguage] /}
-                                            {param availableLanguageIds: $availableLanguageIds /}
-                                            {param defaultLanguageId: $selectedLanguage /}
-                                        {/call}
-                                    {else}
-                                        Ninguno<br/>
-                                    {/if}
-                {/foreach}
-
-
+                <br/>
+                <br/>
+                {call TableUI.render}
+                    {param id: '200191' /}
+                    {param header: $header /}
+                    {param contextPath: $contextPath /}
+                    {param keys: $keys /}
+                    {param data: $data['200191'] /}
+                {/call}
+            </div>
+        </div>
     </div>
 {/template}

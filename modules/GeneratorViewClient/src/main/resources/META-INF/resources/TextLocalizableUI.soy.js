@@ -18,14 +18,7 @@ TextLocalizableUI.render = function(opt_data, opt_ignored) {
   var availableLanguageIds = goog.asserts.assertArray(opt_data.availableLanguageIds, "expected parameter 'availableLanguageIds' of type list<string>.");
   goog.asserts.assert(goog.isString(opt_data.defaultLanguageId) || (opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent), "expected param 'defaultLanguageId' of type string|goog.soy.data.SanitizedContent.");
   var defaultLanguageId = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.defaultLanguageId);
-  var output = '' + TextUI.render({id: opt_data.id, type: type, label: labels[defaultLanguageId], placeholder: opt_data.placeholder[defaultLanguageId], value: value});
-  var languageList30 = availableLanguageIds;
-  var languageListLen30 = languageList30.length;
-  for (var languageIndex30 = 0; languageIndex30 < languageListLen30; languageIndex30++) {
-    var languageData30 = languageList30[languageIndex30];
-    output += '<input type="hidden" id="' + soy.$$escapeHtmlAttribute(languageData30) + '_' + soy.$$escapeHtmlAttribute(opt_data.id) + '">';
-  }
-  return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);
+  return soydata.VERY_UNSAFE.ordainSanitizedHtml(TextUI.render({id: opt_data.id, type: type, label: labels[defaultLanguageId], placeholder: opt_data.placeholder[defaultLanguageId], value: value, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId}));
 };
 if (goog.DEBUG) {
   TextLocalizableUI.render.soyTemplateName = 'TextLocalizableUI.render';

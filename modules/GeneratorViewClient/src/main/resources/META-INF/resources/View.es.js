@@ -1,60 +1,44 @@
 import Component from 'metal-component/src/Component';
-import Footer from './Footer.es';
-import Header from './Header.es';
-import TextLocalizableUI from './TextLocalizableUI.es';
-import CheckBoxUI from './CheckBoxUI.es';
-import TextAreaUI from './TextAreaUI.es';
-import TitleLocalizableUI from './TitleLocalizableUI.es';
-import ViewNested from './ViewNested.es';
-import DateUI from './DateUI.es';
-
-
 
 import Soy from 'metal-soy/src/Soy';
 import templates from './View.soy';
+import TableUI from './components/TableUI.soy';
 /**
  * View Component
  */
 class View extends Component {
 
-    closeOpenTab(event) {
+    changeTab(event) {
         event.preventDefault();
-        console.log('-----closeOpenTab----'+event.currentTarget.attributes['aria-expanded'].value);
-        var collapseInfo1 = this.collapseInfo;
-        collapseInfo1[event.currentTarget.id]=event.currentTarget.attributes['aria-expanded'].value=='true'
-         this.setState({collapseInfo: collapseInfo1 })
+        console.log('-----changeTab----'+event.currentTarget.attributes['id'].value);
+        var st=event.currentTarget.attributes['id'].value
+        this.setState({selectedTab: st })
     }
 
-    changeLanguage(event) {
-        event.preventDefault();
-        console.log('-----changeLanguage----'+event.currentTarget.id);
-        //this.data['selectedLanguage']=event.currentTarget.id
-        var data1 = this.data;
-        data1['selectedLanguage']=event.currentTarget.id
-        this.setState({data: data1 })
-        //cerrado: false, collapsed, ''
-        //abierto: true, '', 'show'
+
+    rendered(firstRender) {
+        console.log('-----ViewNested-rendered----'+JSON.stringify(firstRender));
+
+
+    }
+    willReceiveState(changes) {
+        console.log('-----willReceiveState-rendered----');
+    }
+    willReceiveProps(propsChanges) {
+        console.log('-----willReceiveProps-rendered----');
+    }
+    willUpdate(changes, propsChanges) {
+        console.log('-----willUpdate-rendered----');
     }
 
 }
 
-// Register comp
-
 View.STATE = {
-    collapseInfo:{
-        value:{'accordionPrincipalHeading':false}
-    },
-    body: {
-        value: 'Default body'
-    },
-    header: {
-        value: 'Default header'
-    },
-    shown: {
-        // The default value will be: `true`.
-        value: true
+    selectedTab: {
+        value: 'navUnderlineHotelsTab'
     }
-};
+}
+
 Soy.register(View, templates);
 
 export default View;

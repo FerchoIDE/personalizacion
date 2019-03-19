@@ -1,0 +1,54 @@
+{namespace TableUI}
+
+
+
+/**
+ * Prints the portlet main view.
+ */
+{template .render}
+    {@param id: any}
+    {@param contextPath: string}
+    {@param header: map<string,string>}
+    {@param data: list<map<string,string>>}
+    {@param keys: list<string>}
+    <div id="{$id}" class="table-responsive">
+            <table class="show-quick-actions-on-hover table table-autofit table-hover table-list table-nowrap">
+                <thead>
+                <tr>
+                    {foreach $field in $keys}
+                        <th class="table-head-title">
+                            <a class="inline-item text-truncate-inline" href="#1">
+                                <span style="font-size: 10px"  title="{$header[$field]}">{$header[$field]}</span>
+                            </a>
+                        </th>
+                    {/foreach}
+                    <th >
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    {foreach $fieldData in $data}
+                        <tr>
+                            {foreach $field in $keys}
+                                <td>{$fieldData[$field]}</td>
+                            {/foreach}
+                            <td>
+                                <div class="quick-action-menu">
+                                    <a class="component-action quick-action-item" style="font-size: 14px" href="#1" role="button">
+                                        <svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+                                            <use href="{$contextPath}/images/icons/icons.svg#trash" />
+                                        </svg>
+                                    </a>
+                                    <a class="component-action quick-action-item" style="font-size: 14px" href="#1" role="button">
+                                        <svg class="lexicon-icon lexicon-icon-text-editor" focusable="false" role="presentation">
+                                            <use href="{$contextPath}/images/icons/icons.svg#text-editor" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {/foreach}
+                </tbody>
+            </table>
+        </div>
+{/template}
