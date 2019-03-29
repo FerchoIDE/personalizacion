@@ -1,22 +1,20 @@
 {namespace CheckBoxUI}
 
-
-
 /**
  * Prints the portlet main view.
  */
 {template .render}
-    {@param id: any}
-    {@param? label: ?}
-    {@param? value: string}
+	{@param id: any}
+	{@param? label: ?}
+	{@param? value: string}
 
-    {let $finalValue: isNonnull($value) ? $value : false /}
-    <div id="{$id}" class="custom-control custom-checkbox custom-control-inline">
-             <label>
-                <input checked="{$finalValue}" id="checkbox_{$id}" class="custom-control-input" type="checkbox"/>
-                <span class="custom-control-label">
-			        <span class="custom-control-label-text">{$label}</span>
-		        </span>
-            </label>
-    </div>
+	{let $finalValue: isNonnull($value) ? $value : false /}
+	<div id="{$id}" class="custom-control custom-checkbox custom-control-inline">
+			 <label>
+				<input checked="{$finalValue}" id="checkbox_{$id}" class="custom-control-input" type="checkbox"/>
+				<span class="custom-control-label">
+					<span class="custom-control-label-text">{$label}</span>
+				</span>
+			</label>
+	</div>
 {/template}

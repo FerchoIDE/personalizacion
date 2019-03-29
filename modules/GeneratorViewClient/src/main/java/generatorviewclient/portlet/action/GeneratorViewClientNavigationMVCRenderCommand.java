@@ -5,11 +5,12 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import generatorviewclient.constants.GeneratorViewClientPortletKeys;
+
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -18,8 +19,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-            "javax.portlet.name=" + GeneratorViewClientPortletKeys.GeneratorViewClient,
-            "mvc.command.name=Navigation"
+			"javax.portlet.name=" + GeneratorViewClientPortletKeys.GeneratorViewClient,
+			"mvc.command.name=Navigation"
 	},
 	service = MVCRenderCommand.class
 )
@@ -30,7 +31,8 @@ public class GeneratorViewClientNavigationMVCRenderCommand
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-        System.out.println("----------GeneratorViewClientNavigationMVCRenderCommand--------------");
+		System.out.println(
+			"----------GeneratorViewClientNavigationMVCRenderCommand--------------");
 
 		Template template = (Template)renderRequest.getAttribute(
 			WebKeys.TEMPLATE);

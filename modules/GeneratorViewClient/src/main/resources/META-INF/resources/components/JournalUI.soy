@@ -1,0 +1,186 @@
+{namespace JournalUI}
+
+/**
+ * Prints the portlet main view.
+ */
+{template .render}
+	{@param id: any}
+	{@param? label: ?}
+	{@param contextPath: string}
+
+	<div id="{$id}" class="container">
+		<ul class="navbar-nav">
+
+			<li class="nav-item">
+				<span class="navbar-text">
+					<h2 class="sheet-title">{$label}</h2>
+				</span>
+			</li>
+			<li class="nav-item">
+				<button data-target="#clayLargeModal" data-toggle="modal"
+						class="btn btn-monospaced btn-sm btn-primary" type="button">
+					<svg class="lexicon-icon lexicon-icon-search" focusable="false" role="presentation">
+						<use href="{$contextPath}/images/icons/icons.svg#search"></use>
+					</svg>
+				</button>
+				&nbsp;
+				<button class="btn btn-monospaced btn-sm btn-primary" type="button">
+					<svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
+						<use href="{$contextPath}/images/icons/icons.svg#plus"></use>
+					</svg>
+				</button>
+			</li>
+		</ul>
+
+		<div class="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
+			<div class="container">
+				<ul class="list-group show-quick-actions-on-hover">
+					<li class="list-group-item list-group-item-flex">
+						<div class="autofit-col">
+							<a href="#1">
+								<svg class="lexicon-icon lexicon-icon-trash" focusable="false"
+									 role="presentation">
+									<use href="{$contextPath}/images/icons/icons.svg#trash"></use>
+								</svg>
+							</a>
+						</div>
+
+						<div class="autofit-col autofit-col-expand">
+							<h4 class="list-group-title text-truncate">
+								<a href="#1">Item 6</a>
+							</h4>
+
+							<p class="list-group-subtitle text-truncate">Description 6</p>
+						</div>
+					</li>
+					<li class="list-group-item list-group-item-flex">
+						<div class="autofit-col">
+							<a href="#1">
+								<svg class="lexicon-icon lexicon-icon-trash" focusable="false"
+									 role="presentation">
+									<use href="{$contextPath}/images/icons/icons.svg#trash"></use>
+								</svg>
+							</a>
+						</div>
+
+						<div class="autofit-col autofit-col-expand">
+							<h4 class="list-group-title text-truncate">
+								<a href="#1">Item 20</a>
+							</h4>
+
+							<p class="list-group-subtitle text-truncate">Description 20</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div aria-labelledby="clayLargeModalLabel" class="fade modal" id="clayLargeModal" role="dialog" tabindex="-1">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="modal-title" id="claySmallModalLabel">{$label}</div>
+						<button aria-labelledby="Close" class="close" data-dismiss="modal" role="button" type="button">
+							<svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
+								<use href="{$contextPath}/images/icons/icons.svg#times"/>
+							</svg>
+						</button>
+					</div>
+
+					<div class="modal-body">
+						<ul class="list-group show-quick-actions-on-hover">
+							<li class="list-group-item list-group-item-flex">
+								<div class="autofit-col">
+									<div class="custom-control custom-checkbox">
+										<label>
+											<input class="custom-control-input" type="checkbox"/>
+											<span class="custom-control-label"></span>
+										</label>
+									</div>
+								</div>
+
+								<div class="autofit-col autofit-col-expand">
+									<h4 class="list-group-title text-truncate">
+										<a href="#1">Item 1</a>
+									</h4>
+
+									<p class="list-group-subtitle text-truncate">Description 1</p>
+								</div>
+							</li>
+							<li class="list-group-item list-group-item-flex">
+								<div class="autofit-col">
+									<div class="custom-control custom-checkbox">
+										<label>
+											<input class="custom-control-input" type="checkbox"/>
+											<span class="custom-control-label"></span>
+										</label>
+									</div>
+								</div>
+
+								<div class="autofit-col autofit-col-expand">
+									<h4 class="list-group-title text-truncate">
+										<a href="#1">Item 2</a>
+									</h4>
+
+									<p class="list-group-subtitle text-truncate">Description 2</p>
+								</div>
+							</li>
+							<li class="list-group-item list-group-item-flex">
+								<div class="autofit-col">
+									<div class="custom-control custom-checkbox">
+										<label>
+											<input class="custom-control-input" type="checkbox"/>
+											<span class="custom-control-label"></span>
+										</label>
+									</div>
+								</div>
+
+								<div class="autofit-col autofit-col-expand">
+									<h4 class="list-group-title text-truncate">
+										<a href="#1">Item 3</a>
+									</h4>
+
+									<p class="list-group-subtitle text-truncate">Description 3</p>
+								</div>
+							</li>
+							<li class="list-group-item list-group-item-flex">
+								<div class="autofit-col">
+									<div class="custom-control custom-checkbox">
+										<label>
+											<input class="custom-control-input" type="checkbox"/>
+											<span class="custom-control-label"></span>
+										</label>
+									</div>
+								</div>
+
+								<div class="autofit-col autofit-col-expand">
+									<h4 class="list-group-title text-truncate">
+										<a href="#1">Item 4</a>
+									</h4>
+
+									<p class="list-group-subtitle text-truncate">Description 4</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+
+					<div class="modal-footer">
+						<div class="modal-item-last">
+							<div class="btn-group">
+								<div class="btn-group-item">
+									<button class="btn btn-secondary" data-dismiss="modal" type="button">Cancelar
+									</button>
+								</div>
+
+								<div class="btn-group-item">
+									<button class="btn btn-primary" type="button">Guardar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{/template}

@@ -4,15 +4,15 @@
  * Prints the portlet main view.
  */
 {template .render}
-    {@param id: any}
-    {@param? label: ?}
-    {@param? value: string}
-    {@param? placeholder: any}
-    {@param defaultLanguageId: string}
-    {let $finalValue: isNonnull($value) ? $value : '' /}
-    {let $defaultLanguage: $defaultLanguageId /}
-    <div id="{$id}" class="input-group-item">
-            <label for="date_{$id}">{$label}</label>
-            <input type="text" id="date_{$id}" name="date_{$id}" placeholder="{$placeholder}" data-input>
-    </div>
+	{@param id: any}
+	{@param? label: ?}
+	{@param? value: string}
+	{@param? placeholder: any}
+	{@param defaultLanguageId: string}
+	{let $finalValue: isNonnull($value) ? $value : '' /}
+	{let $defaultLanguage: $defaultLanguageId /}
+	<div id="{$id}" class="input-group-item">
+			<label for="date_{$id}">{$label}</label>
+			<input type="text" id="date_{$id}" name="date_{$id}" placeholder="{$placeholder}" data-input>
+	</div>
 {/template}

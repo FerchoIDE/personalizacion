@@ -4,69 +4,70 @@
  * Prints the portlet main view.
  */
 {template .render}
-    {@param id: string}
-    {@param? label: string}
-    {@param? value: string}
-    {@param? placeholder: string}
-    {@param contextPath: string}
-    {@param availableLanguageIds: list<string>}
-    {@param defaultLanguage: string}
-    {@param availableLanguageIdsStyle: map<string,string>}
-    {@param selectedLanguage: string}
+	{@param id: string}
+	{@param? label: string}
+	{@param? value: string}
+	{@param? placeholder: string}
+	{@param contextPath: string}
+	{@param availableLanguageIds: list<string>}
+	{@param defaultLanguage: string}
+	{@param availableLanguageIdsStyle: map<string,string>}
+	{@param selectedLanguage: string}
 
-    {@param? changeLanguage: ?}
+	{@param? changeLanguage: ?}
 
-    {let $finalValue: isNonnull($value) ? $value : '' /}
-    <div id="{$id}">
-        <div class="form-group">
-            <label for="localizableInput1">{$label}</label>
-            <div class="input-group">
-                <div class="input-group-append input-group-item">
-                    <input class="form-control" id="input_{$id}" placeholder="{$placeholder}" type="text"
-                           value="{$finalValue}"/>
+	{let $finalValue: isNonnull($value) ? $value : '' /}
+	<div id="{$id}">
+		<div class="form-group">
+			<label for="localizableInput1">{$label}</label>
+			<div class="input-group">
+				<div class="input-group-append input-group-item">
+					<input class="form-control" id="input_{$id}" placeholder="{$placeholder}" type="text"
+						   value="{$finalValue}"/>
 
-                </div>
-                <div class="input-group-item input-group-item-shrink">
-                    <button aria-expanded="false" aria-haspopup="true"
-                            class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="dropdown"
-                            type="button">
-                        <span class="inline-item">
-                            <svg class="lexicon-icon lexicon-icon-{$availableLanguageIdsStyle[$selectedLanguage]}" focusable="false" role="presentation">
-                                <use href="{$contextPath}/images/icons/icons.svg#{$availableLanguageIdsStyle[$selectedLanguage]}"></use>
-                            </svg>
-                        </span>
-                        <span class="btn-section">{$selectedLanguage}</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        {foreach $languageId in $availableLanguageIds}
-                            <li>
-                                <a id="{$languageId}" onclick="{$changeLanguage}" class="active autofit-row dropdown-item" href="#{index($languageId)+1}">
-                                <span class="autofit-col autofit-col-expand">
-                                    <span class="autofit-section">
-                                        <span class="inline-item inline-item-before">
-                                            <svg class="lexicon-icon lexicon-icon-{$availableLanguageIdsStyle[$languageId]}" focusable="false"
-                                                 role="presentation">
-                                                <use href="{$contextPath}/images/icons/icons.svg#{$availableLanguageIdsStyle[$languageId]}"></use>
-                                            </svg>
-                                        </span>
-                                        {$languageId}
-                                    </span>
-                                </span>
-                                    {if $languageId == $defaultLanguage}
-                                        <span class="autofit-col">
-                                            <span class="label label-info">
-                                                <span class="label-item label-item-expand">Default</span>
-                                            </span>
-                                        </span>
-                                    {/if}
-                                </a>
-                            </li>
-                        {/foreach}
+				</div>
 
+				<div class="input-group-item input-group-item-shrink">
+					<button aria-expanded="false" aria-haspopup="true"
+							class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="dropdown"
+							type="button">
+						<span class="inline-item">
+							<svg class="lexicon-icon lexicon-icon-{$availableLanguageIdsStyle[$selectedLanguage]}" focusable="false" role="presentation">
+								<use href="{$contextPath}/images/icons/icons.svg#{$availableLanguageIdsStyle[$selectedLanguage]}"></use>
+							</svg>
+						</span>
+						<span class="btn-section">{$selectedLanguage}</span>
+					</button>
 
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+					<ul class="dropdown-menu dropdown-menu-right">
+						{foreach $languageId in $availableLanguageIds}
+							<li>
+								<a id="{$languageId}" onclick="{$changeLanguage}" class="active autofit-row dropdown-item" href="#{index($languageId)+1}">
+								<span class="autofit-col autofit-col-expand">
+									<span class="autofit-section">
+										<span class="inline-item inline-item-before">
+											<svg class="lexicon-icon lexicon-icon-{$availableLanguageIdsStyle[$languageId]}" focusable="false"
+												 role="presentation">
+												<use href="{$contextPath}/images/icons/icons.svg#{$availableLanguageIdsStyle[$languageId]}"></use>
+											</svg>
+										</span>
+										{$languageId}
+									</span>
+								</span>
+									{if $languageId == $defaultLanguage}
+										<span class="autofit-col">
+											<span class="label label-info">
+												<span class="label-item label-item-expand">Default</span>
+											</span>
+										</span>
+									{/if}
+								</a>
+							</li>
+						{/foreach}
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 {/template}

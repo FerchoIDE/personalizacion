@@ -20,13 +20,13 @@ TextAreaUI.render = function(opt_data, opt_ignored) {
   goog.asserts.assert(goog.isString(opt_data.defaultLanguageId) || (opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent), "expected param 'defaultLanguageId' of type string|goog.soy.data.SanitizedContent.");
   var defaultLanguageId = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.defaultLanguageId);
   var output = '';
-  var finalValue__soy267 = value != null ? value : '';
+  var finalValue__soy387 = value != null ? value : '';
   output += '<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="input-group-item"><label for="input_' + soy.$$escapeHtmlAttribute(opt_data.id) + '">' + soy.$$escapeHtml(label) + '</label>';
-  var languageList296 = availableLanguageIds;
-  var languageListLen296 = languageList296.length;
-  for (var languageIndex296 = 0; languageIndex296 < languageListLen296; languageIndex296++) {
-    var languageData296 = languageList296[languageIndex296];
-    output += (languageData296 == defaultLanguageId) ? '<textarea class="form-control" id="inputarea_' + soy.$$escapeHtmlAttribute(opt_data.id) + '_' + soy.$$escapeHtmlAttribute(languageData296) + '" placeholder="' + soy.$$escapeHtmlAttribute(placeholder) + '" value="' + soy.$$escapeHtmlAttribute(finalValue__soy267) + '"></textarea>' : '<textarea class="form-control" id="inputarea_' + soy.$$escapeHtmlAttribute(opt_data.id) + '_' + soy.$$escapeHtmlAttribute(languageData296) + '" placeholder="' + soy.$$escapeHtmlAttribute(placeholder) + '" style="display: none" value="' + soy.$$escapeHtmlAttribute(finalValue__soy267) + '"></textarea>';
+  var languageList416 = availableLanguageIds;
+  var languageListLen416 = languageList416.length;
+  for (var languageIndex416 = 0; languageIndex416 < languageListLen416; languageIndex416++) {
+    var languageData416 = languageList416[languageIndex416];
+    output += (languageData416 == defaultLanguageId) ? '<textarea class="form-control" id="inputarea_' + soy.$$escapeHtmlAttribute(opt_data.id) + '_' + soy.$$escapeHtmlAttribute(languageData416) + '" placeholder="' + soy.$$escapeHtmlAttribute(placeholder) + '" value="' + soy.$$escapeHtmlAttribute(finalValue__soy387) + '"></textarea>' : '<textarea class="form-control" id="inputarea_' + soy.$$escapeHtmlAttribute(opt_data.id) + '_' + soy.$$escapeHtmlAttribute(languageData416) + '" placeholder="' + soy.$$escapeHtmlAttribute(placeholder) + '" style="display: none" value="' + soy.$$escapeHtmlAttribute(finalValue__soy387) + '"></textarea>';
   }
   output += '</div>';
   return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);

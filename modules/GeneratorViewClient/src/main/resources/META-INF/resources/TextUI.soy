@@ -4,23 +4,23 @@
  * Prints the portlet main view.
  */
 {template .render}
-    {@param id: any}
-    {@param? label: ?}
-    {@param? value: string}
-    {@param? placeholder: any}
-    {@param type: any}
-    {@param availableLanguageIds: list<string>}
-    {@param defaultLanguageId: string}
-    {let $finalValue: isNonnull($value) ? $value : '' /}
-    <div id="{$id}" class="form-group-item">
-            <label for="input_{$id}">{$label}</label>
-            {foreach $language in $availableLanguageIds}
-                {if $language == $defaultLanguageId}
-                    <input class="form-control"  id="input_{$id}_{$language}" placeholder="{$placeholder}"  type="{$type}"/>{\t}
-                {else}
-                    <input class="form-control"   id="input_{$id}_{$language}" placeholder="{$placeholder}" style="display: none"  type="{$type}"/>{\t}
-                {/if}
+	{@param id: any}
+	{@param? label: ?}
+	{@param? value: string}
+	{@param? placeholder: any}
+	{@param type: any}
+	{@param availableLanguageIds: list<string>}
+	{@param defaultLanguageId: string}
+	{let $finalValue: isNonnull($value) ? $value : '' /}
+	<div id="{$id}" class="form-group-item">
+			<label for="input_{$id}">{$label}</label>
+			{foreach $language in $availableLanguageIds}
+				{if $language == $defaultLanguageId}
+					<input class="form-control"  id="input_{$id}_{$language}" placeholder="{$placeholder}"  type="{$type}"/>{\t}
+				{else}
+					<input class="form-control"   id="input_{$id}_{$language}" placeholder="{$placeholder}" style="display: none"  type="{$type}"/>{\t}
+				{/if}
 
-            {/foreach}
-         </div>&nbsp;
+			{/foreach}
+		 </div>&nbsp;
 {/template}

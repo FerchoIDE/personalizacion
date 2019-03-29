@@ -1,6 +1,4 @@
 import Component from 'metal-component/src/Component';
-import Footer from './Footer.es';
-import Header from './Header.es';
 import TextLocalizableUI from './TextLocalizableUI.es';
 import CheckBoxUI from './CheckBoxUI.es';
 import TextAreaUI from './TextAreaUI.es';
@@ -16,9 +14,17 @@ import templates from './NewStructure.soy';
  * View Component
  */
 class NewStructure extends Component {
+    rendered(firstRender) {
+        console.log('-----ViewNested-rendered----'+JSON.stringify(firstRender));
+
+
+    }
 
     closeOpenTab(event) {
-        event.preventDefault();
+        if(event === undefined)
+            return
+        console.log('-----receive event closeOpenTab----')
+       event.preventDefault();
         console.log('-----closeOpenTab----'+event.currentTarget.attributes['aria-expanded'].value);
         var collapseInfo1 = this.collapseInfo;
         collapseInfo1[event.currentTarget.id]=event.currentTarget.attributes['aria-expanded'].value=='true'
@@ -38,23 +44,6 @@ class NewStructure extends Component {
 
 }
 
-// Register comp
-
-NewStructure.STATE = {
-    collapseInfo:{
-        value:{'accordionPrincipalHeading':false}
-    },
-    body: {
-        value: 'Default body'
-    },
-    header: {
-        value: 'Default header'
-    },
-    shown: {
-        // The default value will be: `true`.
-        value: true
-    }
-};
 Soy.register(NewStructure, templates);
 
 export default NewStructure;
