@@ -1,0 +1,95 @@
+{namespace ViewNested}
+
+/**
+ * Prints the portlet main view.
+ */
+{template .render}
+	{@param id: string}
+	{@param data: list<?>}
+	{@param title: map<string, string>}
+	{@param defaultLanguage: string}
+	{@param availableLanguageIds: list<string>}
+	{@param contextPath: string}
+	{@param? closeOpenTab: ?}
+	{@param collapseInfo: map<string,bool>}
+	{let $show: isNonnull($collapseInfo?['accordion' + $id + 'Heading'])?($collapseInfo?['accordion' + $id + 'Heading'] ? '' : 'show'):'' /}
+	<div id="{$id}">
+			<div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
+				<div class="panel">
+					<a onclick="{$closeOpenTab}" aria-controls="accordion{$id}Collapse" aria-expanded="false"
+					   class="collapse-icon sheet-subtitle collapsed"
+					   data-toggle="collapse" href="#accordion{$id}Collapse" id="accordion{$id}Heading" role="tab">
+						 <span>
+							 {$title[$defaultLanguage]}
+						 </span>
+						<span class="collapse-icon-closed">
+							<svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
+								<use href="{$contextPath}/images/icons/icons.svg#angle-right"/>
+							</svg>
+						</span>
+						<span class="collapse-icon-open">
+							<svg class="lexicon-icon lexicon-icon-angle-down" focusable="false" role="presentation">
+								<use href="{$contextPath}/images/icons/icons.svg#angle-down"/>
+							</svg>
+						</span>
+					</a>
+
+					<div aria-labelledby="accordion{$id}Heading"
+						 class="panel-collapse collapse {$show}"
+						 id="accordion{$id}Collapse" role="tabpanel">
+						<div class="panel-body">
+							<div class="form-group">
+								<div class="input-group">
+									{foreach $field in $data}
+
+										{if $field['type'] == 'ddm-separator'}
+
+											anidado<br/>
+										{elseif $field['type'] == 'text'}
+											{call TextLocalizableUI.render}
+												{param id: $field['name'] /}
+												{param type: $field['type'] /}
+												{param labels: $field['label'] /}
+												{param placeholder: $field['tip'] /}
+												{param availableLanguageIds: $availableLanguageIds /}
+												{param defaultLanguageId: $defaultLanguage /}
+											{/call}
+										{elseif $field['type'] == 'checkbox'}
+											{call CheckBoxUI.render}
+												{param id: $field['name'] /}
+												{param label: $field['label'][$defaultLanguage] /}
+											{/call}
+										{elseif $field['type'] == 'ddm-date'}
+											{call DateUI.render}
+												{param id: $field['name'] /}
+												{param label: $field['label'][$defaultLanguage] /}
+												{param placeholder: $field['tip'][$defaultLanguage] /}
+												{param defaultLanguageId: $defaultLanguage /}
+											{/call}
+
+										{elseif $field['type'] == 'ddm-text-html'}
+											{call TextAreaUI.render}
+												{param id: $field['name'] /}
+												{param label: $field['label'][$defaultLanguage] /}
+												{param placeholder: $field['tip'][$defaultLanguage] /}
+												{param availableLanguageIds: $availableLanguageIds /}
+												{param defaultLanguageId: $defaultLanguage /}
+											{/call}
+										{elseif $field['type'] == 'ddm-journal-article'}
+											{call JournalUI.render}
+												{param id: $field['name'] /}
+												{param label: $field['label'][$defaultLanguage] /}
+												{param contextPath: $contextPath /}
+											{/call}
+										{else}
+											{$field['type']} -- Ninguno<br/>
+										{/if}
+									{/foreach}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+{/template}

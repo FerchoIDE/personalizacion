@@ -1,0 +1,22 @@
+{namespace RadioUI}
+
+/**
+ * Prints the portlet main view.
+ */
+{template .render}
+	{@param id: any}
+	{@param? label: ?}
+	{@param? value: string}
+
+	{let $finalValue: isNonnull($value) ? $value : '' /}
+	<div id="{$id}">
+		<div class="custom-control custom-radio">
+			<label>
+				<input checked="{$finalValue}" id="radio_{$id}" class="custom-control-input"   type="radio"/>
+				<span class="custom-control-label">
+			<span class="custom-control-label-text">{$label}</span>
+		</span>
+			</label>
+		</div>
+	</div>
+{/template}

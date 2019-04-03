@@ -39,7 +39,7 @@ public class GeneratorViewClientViewMVCRenderCommand
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		List<String> keysLst = Arrays.asList(
-			"200950", "201291", "39858", "48306", "200191", "48316", "200204");
+			"200950");
 
 		Map<String, List<Map<String, String>>> mpResult = keysLst.stream().map(s -> {
 			String[] keys = new String[1];

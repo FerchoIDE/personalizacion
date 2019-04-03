@@ -1,0 +1,151 @@
+{namespace NewStructure}
+
+/**
+ * Show portlet message in the view.
+ */
+{template .render}
+	{@param id: string}
+	{@param data: map<string, ?>}
+	{@param contextPath: string}
+	{@param? closeOpenTab: ?}
+	{@param? changeLanguage: ?}
+	{@param collapseInfo: map<string,bool>}
+
+	{let $selectedLanguage: $data['selectedLanguage'] /}
+	{let $defaultLanguage: $data['defaultLanguage'] /}
+	{let $availableLanguageIds: $data['availableLanguageId'] /}
+	{let $availableLanguageIdsStyle: $data['availableLanguageId-style'] /}
+	 <div id="{$id}">
+<div>funcion {$closeOpenTab}</div>
+			 <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
+				 <div class="panel">
+					 <a onclick="{$closeOpenTab}" aria-controls="accordionPrincipalCollapse" aria-expanded="true" class="collapse-icon sheet-subtitle"
+						data-toggle="collapse" href="#accordionPrincipalCollapse" id="accordionPrincipalHeading" role="tab">
+						 <span >
+							 <div class="sheet-header"><h2 class="sheet-title">{$data['titleEstructure'][$defaultLanguage]}</h2></div>
+						 </span>
+						 <span class="collapse-icon-closed">
+							<svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
+								<use href="{$contextPath}/images/icons/icons.svg#angle-right" />
+							</svg>
+						</span>
+						 <span class="collapse-icon-open">
+							<svg class="lexicon-icon lexicon-icon-angle-down" focusable="false" role="presentation">
+								<use href="{$contextPath}/images/icons/icons.svg#angle-down" />
+							</svg>
+						</span>
+					 </a>
+					 <div aria-labelledby="accordionPrincipalHeading" class="panel-collapse collapse  {$collapseInfo?['accordionPrincipalHeading']?'':'show'}"
+						  id="accordionPrincipalCollapse" role="tabpanel">
+						 <div class="panel-body">
+							 {call TitleLocalizableUI.render}
+								 {param id: 'title_principal' /}
+								 {param label: 'Titulo' /}
+								 {param placeholder: 'Titulo principal' /}
+								 {param contextPath: $contextPath/}
+								 {param availableLanguageIds: $availableLanguageIds /}
+								 {param defaultLanguage: $defaultLanguage /}
+								 {param changeLanguage: $changeLanguage /}
+								 {param availableLanguageIdsStyle: $availableLanguageIdsStyle /}
+								 {param selectedLanguage: $selectedLanguage /}
+							 {/call}
+							 {call TitleLocalizableUI.render}
+								 {param id: 'description_prinipal' /}
+								 {param label: 'Descripcion' /}
+								 {param placeholder: 'Descripcion principal' /}
+								 {param contextPath: $contextPath/}
+								 {param availableLanguageIds: $availableLanguageIds /}
+								 {param defaultLanguage: $defaultLanguage /}
+								 {param changeLanguage: $changeLanguage /}
+								 {param availableLanguageIdsStyle: $availableLanguageIdsStyle /}
+								 {param selectedLanguage: $selectedLanguage /}
+							 {/call}
+						 </div>
+					 </div>
+				 </div>
+			 </div>
+
+		 <div>
+			 <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
+				 <div class="panel">
+					 <a onclick="{$closeOpenTab}" aria-controls="accordionGeneralCollapse" aria-expanded="false" class="collapse-icon sheet-subtitle collapsed"
+						data-toggle="collapse" href="#accordionGeneralCollapse" id="accordionGeneralHeading" role="tab">
+						 <span >
+							 Generales
+						 </span>
+						 <span class="collapse-icon-closed">
+							<svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
+								<use href="{$contextPath}/images/icons/icons.svg#angle-right" />
+							</svg>
+						</span>
+						 <span class="collapse-icon-open">
+							<svg class="lexicon-icon lexicon-icon-angle-down" focusable="false" role="presentation">
+								<use href="{$contextPath}/images/icons/icons.svg#angle-down" />
+							</svg>
+						</span>
+					 </a>
+					 <div aria-labelledby="accordionGeneralHeading" class="panel-collapse collapse  {$collapseInfo?['accordionGeneralHeading']?'':'show'}"
+						  id="accordionGeneralCollapse" role="tabpanel">
+						<div class="panel-body">
+							<div class="form-group">
+								<div class="input-group">
+
+				{foreach $field in $data['nestedFields']}
+
+									{if $field['type'] == 'ddm-separator'}
+
+										{if index($field)>0 and $data['nestedFields'][index($field)-1]['type'] != 'ddm-separator'}
+											</div>
+											</div>
+											</div>
+											</div>
+											</div>
+											</div>
+											</div>
+										{/if}
+										{call ViewNested.render}
+											{param id: 'id_'+index($field) /}
+											{param data: $field['nestedFields'] /}
+											{param title: $field['label'] /}
+											{param availableLanguageIds: $availableLanguageIds /}
+											{param defaultLanguage: $selectedLanguage /}
+											{param closeOpenTab: $closeOpenTab/}
+											{param contextPath: $contextPath/}
+											{param collapseInfo: $collapseInfo/}
+										{/call}
+									{elseif $field['type'] == 'text'}
+										{call TextLocalizableUI.render}
+											{param id: $field['name'] /}
+											{param type: $field['type'] /}
+											{param labels: $field['label'] /}
+											{param placeholder: $field['tip'] /}
+											{param availableLanguageIds: $availableLanguageIds /}
+											{param defaultLanguageId: $selectedLanguage /}
+										{/call}
+									{elseif $field['type'] == 'checkbox'}
+										{call CheckBoxUI.render}
+											{param id: $field['name'] /}
+											{param label: $field['label'][$selectedLanguage] /}
+										{/call}
+									{elseif $field['type'] == 'ddm-date'}
+										{call DateUI.render}
+											{param id: $field['name'] /}
+											{param label: $field['label'][$defaultLanguage] /}
+											{param placeholder: $field['tip'][$defaultLanguage] /}
+											{param defaultLanguageId: $selectedLanguage /}
+										{/call}
+									{elseif $field['type'] == 'ddm-text-html'}
+										{call TextAreaUI.render}
+											{param id: $field['name'] /}
+											{param label: $field['label'][$selectedLanguage] /}
+											{param placeholder: $field['tip'][$selectedLanguage] /}
+											{param availableLanguageIds: $availableLanguageIds /}
+											{param defaultLanguageId: $selectedLanguage /}
+										{/call}
+									{else}
+										Ninguno<br/>
+									{/if}
+				{/foreach}
+
+	</div>
+{/template}

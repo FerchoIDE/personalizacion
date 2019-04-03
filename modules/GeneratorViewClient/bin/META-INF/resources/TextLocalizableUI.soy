@@ -1,0 +1,24 @@
+{namespace TextLocalizableUI}
+
+/**
+ * Prints the portlet main view.
+ */
+{template .render}
+	{@param id: any}
+	{@param labels: map<string,string>}
+	{@param? value: string}
+	{@param? type: any}
+	{@param placeholder: ?}
+	{@param availableLanguageIds: list<string>}
+	{@param defaultLanguageId: string}
+
+			{call TextUI.render}
+				{param id: $id /}
+				{param type: $type /}
+				{param label: $labels[$defaultLanguageId] /}
+				{param placeholder: $placeholder[$defaultLanguageId] /}
+				{param value: $value /}
+				{param availableLanguageIds: $availableLanguageIds /}
+				{param defaultLanguageId: $defaultLanguageId /}
+			{/call}
+{/template}
