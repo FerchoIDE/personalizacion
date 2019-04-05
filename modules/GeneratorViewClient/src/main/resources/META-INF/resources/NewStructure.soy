@@ -16,7 +16,6 @@
 	{let $availableLanguageIds: $data['availableLanguageId'] /}
 	{let $availableLanguageIdsStyle: $data['availableLanguageId-style'] /}
 	 <div id="{$id}">
-<div>funcion {$closeOpenTab}</div>
 			 <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
 				 <div class="panel">
 					 <a onclick="{$closeOpenTab}" aria-controls="accordionPrincipalCollapse" aria-expanded="true" class="collapse-icon sheet-subtitle"
@@ -145,6 +144,7 @@
 									{else}
 										Ninguno<br/>
 									{/if}
+					<div>&nbsp;&nbsp;</div>
 				{/foreach}
 
 	</div>

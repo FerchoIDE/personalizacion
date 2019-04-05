@@ -3,8 +3,12 @@ package generatorviewclient.portlet.action;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.util.comparator.ArticleModifiedDateComparator;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
@@ -17,6 +21,7 @@ import java.util.stream.Collectors;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,16 +42,26 @@ public class GeneratorViewClientViewMVCRenderCommand
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
+if(journalArticleService==null){
+	journalArticleService =
+			JournalArticleLocalServiceUtil.getService();
 
+	System.out.println("-------------nullllllllll=="+journalArticleService);
+}
+		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		long portletGroupId = themeDisplay.getLayout().getGroupId();
+		System.out.println("--------portletGroupId===" + portletGroupId);
 		List<String> keysLst = Arrays.asList(
 			"200950", "201291", "39858", "48306", "200191", "48316", "200204");
+		OrderByComparator comparator = new ArticleModifiedDateComparator(false); // OrderByComparatorFactoryUtil.create("DLFileEntry", "createDate/modifiedDate", true/false);
 
 		Map<String, List<Map<String, String>>> mpResult = keysLst.stream().map(s -> {
-			String[] keys = new String[1];
-			keys[0] = s;
+			//String[] keys = new String[1];
+			//keys[0] = s;
 			List<Map<String, String>> lstElement = new LinkedList<>();
 			List<JournalArticle> lst =
-				journalArticleService.getStructureArticles(keys);
+					journalArticleService.getStructureArticles(portletGroupId,s,0,10,comparator);
+				//journalArticleService.getStructureArticles(keys);
 
 			if (lst!= null) {
 				lst.forEach(journalArticle -> {
@@ -65,8 +80,8 @@ public class GeneratorViewClientViewMVCRenderCommand
 						Map<String, String> mapElement = new HashMap<>();
 
 						try {
-						    System.out.println(
-							journalArticle.getDDMStructure());
+						   // System.out.println(
+						//	journalArticle.getDDMStructure());
 
 							if (s.equalsIgnoreCase("200950"))
 								mapElement.put(
@@ -124,6 +139,10 @@ public class GeneratorViewClientViewMVCRenderCommand
 		navigationURL.setParameter("mvcRenderCommandName", "NewStructure");
 
 		template.put("navigationNewURL", navigationURL.toString());
+
+		ResourceURL resourceURL = renderResponse.createResourceURL();
+		resourceURL.setResourceID("getJournals");
+		System.out.println("-.-.-..-.-.-.--..-.-"+resourceURL.toString());
 
 		return "View";
 	}
