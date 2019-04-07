@@ -34,7 +34,7 @@ public class GetDocumentMedia implements MVCResourceCommand {
 
 
             com.liferay.portal.kernel.json.JSONArray array =
-                    new JournalArticleServices().getFilesAndFolder(portletGroupId,"AQUA","AQC");
+                    new JournalArticleServices().getFilesAndFolder(portletGroupId,"AQUA","","AQC");
             System.out.println("after  service ");
             System.out.println(array.toJSONString());
 

@@ -1,33 +1,45 @@
 package generatorviewclient.models;
 
-import java.util.List;
-
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFolder;
-
 public class Files {
 
-	DLFileEntry fileentry;
-	DLFolder subfolder;
-	List<Files> files;
-	public DLFileEntry getFileentry() {
-		return fileentry;
+	Long pk;
+	String name;
+	String path;
+	String shourtCut;
+	String url;
+	
+	
+	public String getUrl() {
+		return url;
 	}
-	public void setFileentry(DLFileEntry fileentry) {
-		this.fileentry = fileentry;
+	public void setUrl(String url) {
+		this.url = url;
 	}
-	public DLFolder getSubfolder() {
-		return subfolder;
+	public Long getPk() {
+		return pk;
 	}
-	public void setSubfolder(DLFolder subfolder) {
-		this.subfolder = subfolder;
+	public void setPk(Long pk) {
+		this.pk = pk;
 	}
-	public List<Files> getFiles() {
-		return files;
+	public String getName() {
+		return name;
 	}
-	public void setFiles(List<Files> files) {
-		this.files = files;
+	public void setName(String name) {
+		this.name = name;
 	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	public String getShourtCut() {
+		return shourtCut;
+	}
+	public void setShourtCut(String shourtCut) {
+		this.shourtCut = shourtCut;
+	}
+	
 	
 	
 	
