@@ -50,7 +50,12 @@ import generatorviewclient.models.Files;
 public class JournalArticleServices {
 	private static final Log log = LogFactoryUtil.getLog(JournalArticleServices.class);
 	
+	
+/*cambiar a base 64*/	
 public FileEntry saveFile(Long groupId,Long userId,Long folderId,String pathfile,String description,String changeLog){
+		
+	
+	
 		File file = new File(pathfile);
 		String mimeType = MimeTypesUtil.getContentType(file);
 		String title = file.getName();
@@ -59,7 +64,6 @@ public FileEntry saveFile(Long groupId,Long userId,Long folderId,String pathfile
 			is = new FileInputStream( file );
 			ServiceContext serviceContext = new ServiceContext();
 			serviceContext.setScopeGroupId(groupId);
-			
 			return DLAppLocalServiceUtil.addFileEntry(userId,groupId, folderId, file.getName(), mimeType, 
 	    			title, description, changeLog, is, file.getTotalSpace(), serviceContext);
 
@@ -76,7 +80,9 @@ public FileEntry saveFile(Long groupId,Long userId,Long folderId,String pathfile
 		    
 	}
 	
-	/*Obtiene lista de archivos por folder de marca y codigo de hotel*/
+
+
+	//busqueda recursiva de archivos x M y CH getFiles((portletGroupId,"AQUA","","AQC");
 	public JSONArray getFilesAndFolder(Long groupId,String brand,String type,String code_hotel) throws PortalException{
 		ArrayList<Long> nameList = new ArrayList<>();
 		JSONArray filesArray=JSONFactoryUtil.createJSONArray();
@@ -89,7 +95,7 @@ public FileEntry saveFile(Long groupId,Long userId,Long folderId,String pathfile
 	}
 	
 	
-	/*Obtiene lista de folders*/
+	//getFolders((portletGroupId,"AQUA","","AQC");//busqueda recursiva de folder  x M y CH
 	public JSONArray getListFolders(Long groupId,String brand,String type,String code_hotel) throws PortalException{
 		ArrayList<Long> nameList = new ArrayList<>();
 		JSONArray filesArray=JSONFactoryUtil.createJSONArray();
@@ -100,6 +106,31 @@ public FileEntry saveFile(Long groupId,Long userId,Long folderId,String pathfile
 		filesArray=getFoldersJson(groupId, hc, type, filesArray);
 		return filesArray;
 	}
+	
+	
+	
+	//getFilesByName((portletGroupId,"AQUA","","AQC","junior");//busqueda recursiva de folder y archivos x M, CH y NH
+	public JSONArray getFilesByName(Long groupId,String brand,String type,String code_hotel) throws PortalException{
+		ArrayList<Long> nameList = new ArrayList<>();
+		JSONArray filesArray=JSONFactoryUtil.createJSONArray();
+		long id_base=getRootFolderByConfiguration(groupId);
+		Long brandFolder=getFolder(groupId, brand, id_base);
+		Long hc=getFolder(groupId, code_hotel, brandFolder);
+		nameList.add(hc);
+		filesArray=getFoldersAndFilesByName(groupId, hc, type, filesArray);
+		return filesArray;
+	}
+	
+	
+	//getFilesByCurrentFolderAndName((portletGroupId,"AQUA","","AQC","junior");//busqueda recursiva de folder y archivos x M, CH y NH
+		public JSONArray getFilesByCurrentFolderAndName(Long groupId,Long currentFolder,String type,String code_hotel) throws PortalException{
+			JSONArray filesArray=JSONFactoryUtil.createJSONArray();
+			filesArray=getFoldersAndFilesByName(groupId, currentFolder, type, filesArray);
+			return filesArray;
+		}
+	
+	
+	
 	
 	public List<DLFileEntry> getFilesByName(Long groupId,Long idCurrentFolder,String namefile){
 		DynamicQuery query = DynamicQueryFactoryUtil.forClass(DLFileEntry.class, "DLFileEntry",PortalClassLoaderUtil.getClassLoader());
