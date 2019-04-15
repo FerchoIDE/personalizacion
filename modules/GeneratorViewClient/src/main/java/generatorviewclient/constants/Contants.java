@@ -7,12 +7,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 public class Contants {
     private static final Log log = LogFactoryUtil.getLog(Contants.class);
 
-
-    public static String LENGUAJE = "";
-
-    public static String[] STRUCTURE_IDS;
-
-    public static String[] DLFILEENTRY_BASE;
+	public static String LENGUAJE = "";
+	
+	public static String[] STRUCTURE_IDS;
+	
+	public static String[] JOURNAL_HOTEL;
+	
+	public static String[] JOURNAL_RATES;
+	
+	public static String[] DLFILEENTRY_BASE;
 
     public static String getLanguaje() {
 

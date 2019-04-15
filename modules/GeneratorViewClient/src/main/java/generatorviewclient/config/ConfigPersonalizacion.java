@@ -7,11 +7,17 @@ import aQute.bnd.annotation.metatype.Meta;
 @ExtendedObjectClassDefinition(category = "Posadas", scope = ExtendedObjectClassDefinition.Scope.SYSTEM)
 @Meta.OCD( localization = "content/Language",id = "generatorviewclient.config.ConfigPersonalizacion",name = "Liferay api personalization")
 public interface ConfigPersonalizacion {
-	/*Restaurant,Meeting room,Gym,Bar,Spa,Fiesta Kids Club,Generic,Brand,Basic Web Content,Destination,Rate,Hotels,Room,Facility*/
-	@Meta.AD(deflt = "32889|32886|34996|34990|32883|34993|34999|34987|31256|34978|34975|34984|34981|32880", required = false, description = "Get id Base Structures Liferay")
+	/*Restaurant,Meeting room,Gym,Bar,Spa,Fiesta Kids Club,Generic,Brand,Destination,Rate,Hotels,Room,Facility*/
+	@Meta.AD(deflt = "119201|119204|121330|121324|119207|121327|121333|121321|121312|121309|121318|121315|119198|32880", required = false, description = "Get id Base Structures Liferay")
     public String[] StructureId();
 	
-	@Meta.AD(deflt = "POSADAS|HOTEL", required = false, description = "Get id Base Folders")
+	@Meta.AD(deflt = "POSADAS|HOTEL", required = false, description = "Get path Base Folders FileSystem")
     public String[] DLFileEntryFolderBase();
+
+	@Meta.AD(deflt = "POSADAS|HOTEL", required = false, description = "Get path Base Folders Hotel Webcontent")
+    public String[] JournalFolderHotelBase();
+    
+	@Meta.AD(deflt = "POSADAS|RATES", required = false, description = "Get path Base Folders Rates Webcontent")
+    public String[] JournalFolderRateBase();
 	
 }
