@@ -53,27 +53,61 @@ public class JournalArticleServices {
 	
 	//busqueda recursiva de archivos x M y CH getFiles((portletGroupId,"AQUA","","AQC");
 	public JSONArray getFilesAndFolder(Long groupId,String brand,String type,String code_hotel) throws PortalException{
+		
 		JSONArray filesArray=JSONFactoryUtil.createJSONArray();
 		long id_base=getRootFolderByConfiguration(groupId);
-		Long brandFolder=getFolder(groupId, brand, id_base);
-		Long hc=getFolder(groupId, code_hotel, brandFolder);
-		filesArray=getFoldersAndFilesByfolderJson(groupId, hc, type, filesArray);
-		if(getFilesByFolder(groupId, hc)!=null){
-			for (DLFileEntry file : getFilesByFolder(groupId, hc)) {
-				JSONObject filesObject=null;
-				filesObject=JSONFactoryUtil.createJSONObject();
-				filesObject.put("idFile", file.getFileEntryId());
-				filesObject.put("filename", file.getFileName());
-				filesObject.put("path", file.getFolder().getPath());
-				String url="/documents/"+file.getGroupId()+"/"+file.getFolderId()+"/"+file.getFileName()+"/"+file.getUuid()+"?t="+System.currentTimeMillis();;
-				filesObject.put("fullPath",url.replace(" ", "%20") );
-				filesObject.put("imageThumbnail",url.replace(" ", "%20")+"&imageThumbnail=1");
-				filesArray.put(filesObject);
-			}
-			}
-		return filesArray;
+		if(code_hotel!=null && brand!=null){
+			Long brandFolder=getFolder(groupId, brand, id_base);
+			Long hc=getFolder(groupId, code_hotel, brandFolder);
+			filesArray=getFoldersAndFilesByfolderJson(groupId, hc, type, filesArray);
+			if(getFilesByFolder(groupId, hc)!=null){
+				for (DLFileEntry file : getFilesByFolder(groupId, hc)) {
+					filesArray.put(mapping(file));
+				}
+				}
+			return filesArray;
+		}
+		else if(brand!=null && code_hotel==null){
+			Long brandFolder=getFolder(groupId, brand, id_base);
+			filesArray=getFoldersAndFilesByfolderJson(groupId, brandFolder, type, filesArray);
+			if(getFilesByFolder(groupId, brandFolder)!=null){
+				for (DLFileEntry file : getFilesByFolder(groupId, brandFolder)) {
+					filesArray.put(mapping(file));
+				}
+				}
+			return filesArray;
+		}
+		else if(code_hotel!=null && brand==null){
+			if(getFilesByFolder(groupId, id_base)!=null){
+				for (DLFileEntry file : getFilesByFolder(groupId, id_base)) {
+					filesArray.put(mapping(file));
+				}
+				}
+			return filesArray;
+		}else{
+			if(getFilesByFolder(groupId, id_base)!=null){
+				for (DLFileEntry file : getFilesByFolder(groupId, id_base)) {
+					filesArray.put(mapping(file));
+				}
+				}
+			return filesArray;
+		}
+		
 	}
 	
+	
+	public JSONObject mapping(DLFileEntry file) throws PortalException{
+		JSONObject filesObject=null;
+		filesObject=JSONFactoryUtil.createJSONObject();
+		filesObject.put("idFile", file.getFileEntryId());
+		filesObject.put("filename", file.getFileName());
+		filesObject.put("path", file.getFolder().getPath());
+		String url="/documents/"+file.getGroupId()+"/"+file.getFolderId()+"/"+file.getFileName()+"/"+file.getUuid()+"?t="+System.currentTimeMillis();;
+		filesObject.put("fullPath",url.replace(" ", "%20") );
+		filesObject.put("imageThumbnail",url.replace(" ", "%20")+"&imageThumbnail=1");
+		return filesObject;
+
+	}
 	
 	//getFolders((portletGroupId,"AQUA","","AQC");//busqueda recursiva de folder  x M y CH
 	public JSONArray getListFolders(Long groupId,String brand,String code_hotel) throws PortalException{
@@ -108,15 +142,7 @@ public class JournalArticleServices {
 		filesArray=getFoldersAndFilesByName(groupId, hc, name, filesArray);
 		if(getFilesByName(groupId, hc, name)!=null){
 			for (DLFileEntry file : getFilesByName(groupId, hc, name)) {
-				JSONObject filesObject=null;
-				filesObject=JSONFactoryUtil.createJSONObject();
-				filesObject.put("idFile", file.getFileEntryId());
-				filesObject.put("filename", file.getFileName());
-				filesObject.put("path", file.getFolder().getPath());
-				String url="/documents/"+file.getGroupId()+"/"+file.getFolderId()+"/"+file.getFileName()+"/"+file.getUuid()+"?t="+System.currentTimeMillis();;
-				filesObject.put("fullPath",url.replace(" ", "%20") );
-				filesObject.put("imageThumbnail",url.replace(" ", "%20")+"&imageThumbnail=1");
-				filesArray.put(filesObject);
+				filesArray.put(mapping(file));
 			}
 			}
 		return filesArray;
@@ -129,15 +155,8 @@ public class JournalArticleServices {
 			filesArray=getFoldersAndFilesByName(groupId, currentFolder, name, filesArray);
 			if(getFilesByName(groupId, currentFolder, name)!=null){
 			for (DLFileEntry file : getFilesByName(groupId, currentFolder, name)) {
-				JSONObject filesObject=null;
-				filesObject=JSONFactoryUtil.createJSONObject();
-				filesObject.put("idFile", file.getFileEntryId());
-				filesObject.put("filename", file.getFileName());
-				filesObject.put("path", file.getFolder().getPath());
-				String url="/documents/"+file.getGroupId()+"/"+file.getFolderId()+"/"+file.getFileName()+"/"+file.getUuid()+"?t="+System.currentTimeMillis();;
-				filesObject.put("fullPath",url.replace(" ", "%20") );
-				filesObject.put("imageThumbnail",url.replace(" ", "%20")+"&imageThumbnail=1");
-				filesArray.put(filesObject);
+				filesArray.put(mapping(file));
+
 			}
 			}
 			return filesArray;
