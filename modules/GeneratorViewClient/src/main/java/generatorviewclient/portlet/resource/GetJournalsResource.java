@@ -4,6 +4,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import generatorviewclient.liferayservice.JournalArticleServices;
+import generatorviewclient.util.FileUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +32,7 @@ public class GetJournalsResource implements MVCResourceCommand {
     public boolean serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException {
         System.out.println("--------------+++++++++------");
         try {
-            String body = getBuffer(resourceRequest.getReader());
+            String body = FileUtil.getBuffer(resourceRequest.getReader());
             JSONObject jsonObject =  new JSONObject(body);
             System.out.println(jsonObject);
             resourceResponse.setCharacterEncoding("UTF-8");
@@ -52,22 +53,7 @@ public class GetJournalsResource implements MVCResourceCommand {
         return false;
     }
 
-    public static String getBuffer(BufferedReader buffer) throws IOException {
-        String retorno = null;
 
-        String lineaSalida = "";
-        StringBuffer contenido = new StringBuffer();
-        String separador = "";
-
-        while ((lineaSalida = buffer.readLine()) != null) {
-            contenido.append(separador + lineaSalida);
-            separador = "\n";
-        }
-
-        retorno = contenido.toString();
-
-        return retorno;
-    }
 
 
     public static List getData(){

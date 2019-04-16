@@ -4,7 +4,12 @@ import templates from './TextUI.soy';
 /**
  * TextUI Component
  */
-class TextUI extends Component {}
+class TextUI extends Component {
+    handleChange(event) {
+        console.log('----TextUI----'+event.target.value)
+        this.value = event.target.value;
+    }
+}
 
 // Register component
 Soy.register(TextUI, templates);

@@ -5,6 +5,8 @@
  */
 {template .render}
 	{@param id: any}
+
+	{@param localizable: bool}
 	{@param labels: map<string,string>}
 	{@param? value: string}
 	{@param? type: any}
@@ -15,6 +17,7 @@
 			{call TextUI.render}
 				{param id: $id /}
 				{param type: $type /}
+				{param localizable: $localizable /}
 				{param label: $labels[$defaultLanguageId] /}
 				{param placeholder: $placeholder[$defaultLanguageId] /}
 				{param value: $value /}

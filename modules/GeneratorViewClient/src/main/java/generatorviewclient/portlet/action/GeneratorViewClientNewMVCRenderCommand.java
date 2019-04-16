@@ -84,6 +84,7 @@ else if (structureId.equalsIgnoreCase("201291"))
         collapseInfo.put("accordionPrincipalHeading", false);
         collapseInfo.put("accordionGeneralHeading", true);
         template.put("collapseInfo", collapseInfo);
+        template.put("structureId", structureId);
 
         return "NewStructure";
     }

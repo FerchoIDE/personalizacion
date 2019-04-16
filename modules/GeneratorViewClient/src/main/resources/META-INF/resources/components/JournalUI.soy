@@ -104,10 +104,10 @@
                                     <div class="autofit-col">
                                         <div class="custom-control custom-checkbox">
                                             <label>
-                                                 {if $itemsResultSelected[$field.id]}
-                                                     <input checked onclick="{$setSelectedResult}" value="{$field}" id="{$field.id}" class="custom-control-input" type="checkbox"/>
+                                                 {if $itemsResultSelected[$field.idFile]}
+                                                     <input checked onclick="{$setSelectedResult}" value="{$field}" id="{$field.idFile}" class="custom-control-input" type="checkbox"/>
                                                  {else}
-                                                     <input onclick="{$setSelectedResult}" value="{$field}" id="{$field.id}" class="custom-control-input" type="checkbox"/>
+                                                     <input onclick="{$setSelectedResult}" value="{$field}" id="{$field.idFile}" class="custom-control-input" type="checkbox"/>
                                                  {/if}
                                                 <span class="custom-control-label"></span>
                                             </label>
@@ -116,7 +116,7 @@
 
                                     <div class="autofit-col autofit-col-expand">
                                         <h4 class="list-group-title text-truncate">
-                                            <a href="#1">{$field.name}</a>
+                                            <a href="#1">{$field.filename}</a>
                                         </h4>
 
                                         <p class="list-group-subtitle text-truncate">{$field.description}</p>

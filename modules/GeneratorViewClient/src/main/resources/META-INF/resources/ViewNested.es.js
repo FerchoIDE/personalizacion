@@ -10,13 +10,49 @@ import DocumentUI from './components/DocumentUI.es';
 
 import Soy from 'metal-soy/src/Soy';
 import templates from './ViewNested.soy';
+import Service from "./service/Service";
 /**
  * View Component
  */
 class ViewNested extends Component {
+    created() {
+        this.checkedOption = this.checkedOption.bind(this);
 
+        this.setState({checkedConcat: {} })
+        this.setState({checkedSelected: {} })
+    }
+    rendered(firstRender) {
+        console.log('-----ViewNested-rendered----'+JSON.stringify(firstRender));
+
+
+    }
+    checkedOption(event) {
+        if(event === undefined)
+            return
+        console.log('-----receive event checkedOption----'+event.currentTarget.id+'--'+event.currentTarget.title+'--'+event.currentTarget.pattern+'--'+event.currentTarget.checked)
+       var _checkedSelected = this.checkedSelected
+        if(_checkedSelected[event.currentTarget.pattern]=== undefined)
+            _checkedSelected[event.currentTarget.pattern]={}
+        if(event.currentTarget.checked){
+            _checkedSelected[event.currentTarget.pattern][event.currentTarget.id]=event.currentTarget.title
+        }else{
+            delete _checkedSelected[event.currentTarget.pattern][event.currentTarget.id]
+        }
+        // event.preventDefault();
+        var _checkedConcat = this.checkedConcat
+        _checkedConcat[event.currentTarget.pattern]=Object.values(_checkedSelected[event.currentTarget.pattern]).join('-')
+       // console.log(JSON.stringify())
+        this.setState({checkedConcat: _checkedConcat })
+        this.setState({checkedSelected: _checkedSelected })
+        console.log('finishh event checkedOption')
+
+
+    }
 }
-
+ViewNested.STATE = {
+    checkedConcat:{value:{}},
+    checkedSelected:{value:{}},
+}
 // Register component
 Soy.register(ViewNested, templates);
 

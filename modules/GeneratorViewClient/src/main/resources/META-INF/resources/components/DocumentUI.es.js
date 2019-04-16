@@ -8,17 +8,17 @@ import Service from "../service/Service"
 class DocumentUI extends Component {
     created() {
         this.setResultDocument = this.setResultDocument.bind(this);
+        this.setFoldersDocument = this.setFoldersDocument.bind(this);
+
 
         this.setState({itemsAsociated: {} })
+        this.setState({searchText: undefined })
     }
 
     rendered(firstRender) {
-        console.log('-----DocumentUI-rendered----');
         if(firstRender){
-
             this.setState({itemsAsociated: {} })
         }
-
     }
 
     openSelectDocument(event) {
@@ -27,8 +27,32 @@ class DocumentUI extends Component {
         console.log('-----receive event openSelectDocument----')
         event.preventDefault();
 
-        new Service().getDocuments('cod-1','rooms',this.setResultDocument)
+        new Service().getDocuments('AQUA','AQC',this.setResultDocument)
+        new Service().getFoldersForDocument('AQUA','AQC',this.setFoldersDocument)
+    }
 
+    changeSearchText(event){
+        let _searchText=event.target.value;
+        this.setState({searchText: _searchText })
+
+    }
+    searchByName(event){
+
+        console.log('-----searchByName----')
+        event.preventDefault();
+        if(this.searchText!==undefined && this.searchText!==''){
+
+            new Service().getDocumentsForName('AQUA','AQC',this.searchText,this.setResultDocument)
+        }
+
+    }
+    changeFolder(event){
+
+        console.log('-----changeFolder----')
+        event.preventDefault();
+        let _folderSelected = event.currentTarget.value
+
+        new Service().getDocumentsForFolder('AQUA','AQC',_folderSelected,this.setResultDocument)
     }
 
     setResultDocument(resultDocument){
@@ -36,10 +60,18 @@ class DocumentUI extends Component {
         for(var result of resultDocument){
             _itemsResult.push(result)
         }
-        console.log(_itemsResult)
+
         this.setState({itemsResult: _itemsResult })
         this.setState({isOpenSelect: true })
         this.setState({itemsResultSelected: {} })
+    }
+
+    setFoldersDocument(resultFolders){
+        var _foldersDocuments= []
+        for(var result of resultFolders){
+            _foldersDocuments.push(result)
+        }
+        this.setState({foldersDocuments: _foldersDocuments })
     }
 
     setSelectedResult(event){
@@ -96,8 +128,11 @@ class DocumentUI extends Component {
 }
 DocumentUI.STATE = {
     isOpenSelect:{value:false},
+    selectedFolder:{value:undefined},
+    searchText:{value:undefined},
     itemsAsociated:{value:{}},
     itemsResult:{value:[]},
+    foldersDocuments:{value:[]},
     itemsResultSelected:{value:{}},
 }
 // Register component

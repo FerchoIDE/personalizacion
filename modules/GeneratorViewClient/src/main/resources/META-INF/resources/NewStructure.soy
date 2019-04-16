@@ -5,6 +5,8 @@
  */
 {template .render}
 	{@param id: string}
+	{@param structureId: string}
+
 	{@param data: map<string, ?>}
 	{@param contextPath: string}
 	{@param? closeOpenTab: ?}
@@ -104,6 +106,8 @@
 										{/if}
 										{call ViewNested.render}
 											{param id: 'id_'+index($field) /}
+											{param structureId: $structureId /}
+											{param name: $field['name'] /}
 											{param data: $field['nestedFields'] /}
 											{param title: $field['label'] /}
 											{param availableLanguageIds: $availableLanguageIds /}
@@ -111,11 +115,15 @@
 											{param closeOpenTab: $closeOpenTab/}
 											{param contextPath: $contextPath/}
 											{param collapseInfo: $collapseInfo/}
+											{param checkedConcat: ['a':'b']/}
+
 										{/call}
 									{elseif $field['type'] == 'text'}
 										{call TextLocalizableUI.render}
 											{param id: $field['name'] /}
 											{param type: $field['type'] /}
+
+											{param localizable: $field['localizable'] /}
 											{param labels: $field['label'] /}
 											{param placeholder: $field['tip'] /}
 											{param availableLanguageIds: $availableLanguageIds /}
@@ -144,6 +152,10 @@
 									{else}
 										Ninguno<br/>
 									{/if}
+
+
+
+
 					<div>&nbsp;&nbsp;</div>
 				{/foreach}
 

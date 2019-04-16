@@ -14,11 +14,7 @@ import templates from './NewStructure.soy';
  * View Component
  */
 class NewStructure extends Component {
-    rendered(firstRender) {
-        console.log('-----ViewNested-rendered----'+JSON.stringify(firstRender));
 
-
-    }
 
     closeOpenTab(event) {
         if(event === undefined)

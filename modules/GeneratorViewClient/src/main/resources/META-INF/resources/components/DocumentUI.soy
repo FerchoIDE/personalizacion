@@ -12,11 +12,16 @@
     {@param? closeSelectDocument: ?}
     {@param? saveSelectDocument: ?}
     {@param? deleteDocument: ?}
+    {@param? changeFolder: ?}
+    {@param? searchByName: ?}
+
 
 
     {@param? setSelectedResult: ?}
 
     {@param? itemsResult: list<?>}
+    {@param? foldersDocuments: list<?>}
+
     {@param itemsResultSelected: ?}
     {@param itemsAsociated: ?}
 
@@ -38,16 +43,16 @@
                                             <span class="inline-item">
                                                  <img width="128" style="max-height: 256px;max-width: 100%"
                                                       alt="Not Image"
-                                                      src="http://localhost:8080{$itemsAsociated[$field].fullPath}&imageThumbnail=1"/>
+                                                      src="http://localhost:8080{$itemsAsociated[$field].imageThumbnail}"/>
 
                                             </span>
                                     </div>
 
                                     <div class="autofit-col autofit-col-expand">
                                         <h4 class="list-group-title text-truncate">
-                                            <a href="#1">{$itemsAsociated[$field].idFile}</a>
+                                            <a href="#1">{$itemsAsociated[$field].filename}</a>
                                         </h4>
-                                        <p class="list-group-subtitle text-truncate">{$itemsAsociated[$field].fileName}</p>
+                                        <p class="list-group-subtitle text-truncate">{$itemsAsociated[$field].path}</p>
                                     </div>
                                     <div class="autofit-col">
                                         <a onclick="{$deleteDocument}" href="#1" id="{$field}" style="font-size: 18px">
@@ -111,13 +116,24 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-item input-group-prepend">
-                                        <input aria-label="Search"
+                                        <select onchange="{$changeFolder}"  class="form-control" id="regularSelectElement">
+                                            <option disabled selected>Selecciona una opción o</option>
+
+                                            {if $foldersDocuments}
+                                                {foreach $field in $foldersDocuments}
+                                                    <option value="{$field.folderId}">{$field.nameFolder}</option>
+                                                {/foreach}
+                                            {/if}
+                                        </select>
+                                    </div>
+                                    <div class="input-group-item input-group-prepend">
+                                        <input aria-label="Search" data-onkeyup="changeSearchText"
                                                class="form-control input-group-inset input-group-inset-after"
                                                name="mySearchInputName" placeholder="Ingrese un termino de busqueda"
                                                type="text"/>
                                     </div>
                                     <div class="input-group-append input-group-item input-group-item-shrink">
-                                        <button class="btn btn-monospaced btn-sm" type="button">
+                                        <button onclick="{$searchByName}" class="btn btn-monospaced btn-sm" type="button">
                                             <svg class="lexicon-icon lexicon-icon-plus" focusable="false"
                                                  role="presentation">
                                                 <use href="{$contextPath}/images/icons/icons.svg#search"></use>
@@ -135,14 +151,14 @@
                                         <div class="autofit-col">
                                             <div class="custom-control custom-checkbox">
                                                 <label>
-                                                    {if $itemsResultSelected[$field.path]}
+                                                    {if $itemsResultSelected[$field.idFile]}
                                                         <input checked onclick="{$setSelectedResult}"
                                                                value="{$field.all}"
-                                                               id="{$field.path}" class="custom-control-input"
+                                                               id="{$field.idFile}" class="custom-control-input"
                                                                type="checkbox"/>
                                                     {else}
                                                         <input onclick="{$setSelectedResult}" value="{$field.all}"
-                                                               id="{$field.path}" class="custom-control-input"
+                                                               id="{$field.idFile}" class="custom-control-input"
                                                                type="checkbox"/>
                                                     {/if}
                                                     <span class="custom-control-label"></span>
@@ -153,16 +169,16 @@
                                             <span class="inline-item">
                                                  <img width="128" style="max-height: 256px;max-width: 100%"
                                                       alt="Not Image"
-                                                      src="http://localhost:8080{$field.fullPath}&imageThumbnail=1"/>
+                                                      src="http://localhost:8080{$field.imageThumbnail}"/>
 
                                             </span>
                                         </div>
 
                                         <div class="autofit-col autofit-col-expand">
                                             <h4 class="list-group-title text-truncate">
-                                                <a href="#1">{$field.idFile}</a>
+                                                <a href="#1">{$field.filename}</a>
                                             </h4>
-                                            <p class="list-group-subtitle text-truncate">{$field.fileName}</p>
+                                            <p class="list-group-subtitle text-truncate">{$field.path}</p>
                                         </div>
                                     </li>
                                 {/foreach}
