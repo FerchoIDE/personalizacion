@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -37,8 +38,6 @@ import generatorviewclient.constants.Contants;
 public class QueriesLiferayApi {
 private static final Log log = LogFactoryUtil.getLog(QueriesLiferayApi.class);
 
-	
-	
 	public List<JournalArticle> getFoldersWCByNameAndType(Long groupId,Long parent,String namefile,String type,List<JournalArticle> journalArray) throws PortalException{
 		List<JournalFolder> listFolders = getSubFolderByJournalFolderParent(groupId, new Long(parent));
 		if(listFolders != null && listFolders.size() > 0){
@@ -318,36 +317,5 @@ public JournalFolderImpl getJournalFolderByName(Long siteID,Long parentFolder,St
 		return  DLFileEntryLocalServiceUtil.dynamicQuery(query);
 		
 	}
-	@Activate
-	@Modified
-	public void activate(Map<String, Object> properties) {
-	
-		System.out.println("Configuraciónn actualizada  " + new Date().toString());
-		
-	_configuration = ConfigurableUtil.createConfigurable(generatorviewclient.config.ConfigPersonalizacion.class, properties);
-		
-	if (_configuration != null) {
-		Contants.STRUCTURE_IDS=_configuration.StructureId();
-		Contants.DLFILEENTRY_BASE=_configuration.DLFileEntryFolderBase();
-		Contants.JOURNAL_HOTEL=_configuration.JournalFolderHotelBase();
-		for (String iterable_element : Contants.STRUCTURE_IDS) {
-			System.out.println("Registro actual en la configuración, info="+iterable_element);
 
-		}
-		for (String iterable_element : Contants.DLFILEENTRY_BASE) {
-			System.out.println("Registro actual en la configuración, info="+iterable_element);
-
-		}
-		for (String iterable_element : Contants.JOURNAL_HOTEL) {
-			System.out.println("Registro actual en la configuración, info="+iterable_element);
-
-		}
-		
-	} else {
-		System.out.println("No hay datos en la configuración inicial");
-	}
-	}
-
-    private volatile generatorviewclient.config.ConfigPersonalizacion _configuration;
- 
 }

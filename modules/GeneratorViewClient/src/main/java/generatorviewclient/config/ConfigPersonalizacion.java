@@ -1,7 +1,6 @@
 package generatorviewclient.config;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-
 import aQute.bnd.annotation.metatype.Meta;
 
 @ExtendedObjectClassDefinition(category = "Posadas", scope = ExtendedObjectClassDefinition.Scope.SYSTEM)
@@ -19,5 +18,8 @@ public interface ConfigPersonalizacion {
     
 	@Meta.AD(deflt = "POSADAS|RATES", required = false, description = "Get path Base Folders Rates Webcontent")
     public String[] JournalFolderRateBase();
+	
+	@Meta.AD(deflt = "POSADAS")
+    public String name();
 	
 }

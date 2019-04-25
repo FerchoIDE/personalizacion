@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.Base64;
 
 import generatorviewclient.constants.Contants;
 
-@Component(configurationPid = "generatorviewclient.config.ConfigPersonalizacion")
+@Component(configurationPid = "generatorviewclient.config.ConfigPersonalizacion",immediate=true)
 public class JournalArticleServices {
 	private static final Log log = LogFactoryUtil.getLog(JournalArticleServices.class);
 	private static QueriesLiferayApi query = new QueriesLiferayApi();
@@ -909,40 +909,4 @@ public class JournalArticleServices {
 		}
 		return journalArray;
 	}
-
-
-	@Activate
-	@Modified
-	public void activate(Map<String, Object> properties) {
-
-		System.out.println("Configuraci�nn actualizada  " + new Date().toString());
-
-		_configuration = ConfigurableUtil.createConfigurable(generatorviewclient.config.ConfigPersonalizacion.class, properties);
-
-		if (_configuration != null) {
-			Contants.STRUCTURE_IDS=_configuration.StructureId();
-			//Contants.DLFILEENTRY_BASE=_configuration.DLFileEntryFolderBase();
-			String[] DLFILEENTRY_BASE = { "Marcas","Media" };
-			Contants.DLFILEENTRY_BASE= DLFILEENTRY_BASE;//_configuration.DLFileEntryFolderBase();
-			Contants.JOURNAL_HOTEL=_configuration.JournalFolderHotelBase();
-			/*for (String iterable_element : Contants.STRUCTURE_IDS) {
-				System.out.println("Registro actual en la configuraci�n, info="+iterable_element);
-
-			}
-			for (String iterable_element : Contants.DLFILEENTRY_BASE) {
-				System.out.println("Registro actual en la configuraci�n, info="+iterable_element);
-
-			}
-			for (String iterable_element : Contants.JOURNAL_HOTEL) {
-				System.out.println("Registro actual en la configuraci�n, info="+iterable_element);
-
-			}*/
-
-		} else {
-			System.out.println("No hay datos en la configuraci�n inicial");
-		}
-	}
-
-	private volatile generatorviewclient.config.ConfigPersonalizacion _configuration;
-
 }
