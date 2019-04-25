@@ -563,6 +563,30 @@ public class JournalArticleServices {
 		return new ArrayList<>();
 	}
 
+	
+	
+	//busqueda recursiva de webcontents x M y CH getAllWCAndJournalFolder((portletGroupId,"AQUA","","AQC");
+	/**
+     * getWCByFolder
+     */
+	public List<JournalArticle> getWCByFolder(Long groupId,Long folderId) throws PortalException{
+		List<JournalArticle> journalArray= new ArrayList<>();
+		if(folderId!=null && groupId!=null){
+			journalArray=getJournalFoldersAndWC(groupId, folderId, journalArray);
+			if(query.getWCByJournalFolder(groupId, folderId)!=null){
+			for (JournalArticle journal : query.getWCByJournalFolder(groupId, folderId)) {
+					journalArray.add(journal);
+			}
+			}
+			return journalArray;
+			
+		}
+		return new ArrayList<>();
+		
+		
+		
+	}
+
 	/*************************Termina la secci�n de llamados***************************/
 
 	/*Mapeo entidad DLFILEENTRY*/
