@@ -45,6 +45,15 @@ public class JournalArticleServices {
 	/*************************Inicia la secci�n de llamados***************************/
 
 
+	public Long getBaseFolder(Long groupId,String brand,String code_hotel) throws PortalException {
+		long id_base=getRootFolderByConfiguration(groupId);
+		if(code_hotel!=null && brand!=null) {
+			Long brandFolder = query.getFolder(groupId, brand, id_base);
+			Long hc = query.getFolder(groupId, code_hotel, brandFolder);
+			return hc;
+		}
+		return id_base;
+	}
 
 
 	/**
@@ -253,24 +262,20 @@ public class JournalArticleServices {
 	}
 
 	/*Permite salvar un archivo a trav�s de base64*/
-	public JSONArray saveFile(Long groupId,Long userId,Long folderId,String image,String name,String description,String mimeType) throws FileNotFoundException{
-
-		JSONArray filesArray=JSONFactoryUtil.createJSONArray();
+	public JSONObject saveFile(Long groupId,Long userId,Long folderId,String image,String name,String description,String mimeType) throws FileNotFoundException{
+		JSONObject filesObject=null;
 		try {
 			ServiceContext serviceContext = new ServiceContext();
 			serviceContext.setScopeGroupId(groupId);
 			byte[] imageByte=Base64.decode(image);
 
 			if(query.getFilesByName(groupId, folderId, name)!=null && query.getFilesByName(groupId, folderId, name).size()>0){
-				JSONObject filesObject=null;
 				filesObject=JSONFactoryUtil.createJSONObject();
-				filesObject.put("message","No se a podido guardar");
-				filesObject.put("causa", "El nombre del archivo ya existe");
-				filesArray.put(filesObject);
-				return filesArray;
+				filesObject.put("message","No se a podido guardar:El nombre del archivo ya existe");
+				filesObject.put("status","BAD");
+				return filesObject;
 			}
 			else{
-				JSONObject filesObject=null;
 				FileEntry file = DLAppLocalServiceUtil.addFileEntry(userId, groupId, folderId, name, mimeType, imageByte, serviceContext);
 				filesObject=JSONFactoryUtil.createJSONObject();
 				filesObject.put("idFile", file.getFileEntryId());
@@ -278,15 +283,17 @@ public class JournalArticleServices {
 				String url="/documents/"+file.getGroupId()+"/"+file.getFolderId()+"/"+file.getFileName()+"/"+file.getUuid()+"?t="+System.currentTimeMillis();;
 				filesObject.put("fullPath",url.replace(" ", "%20") );
 				filesObject.put("imageThumbnail",url.replace(" ", "%20")+"&imageThumbnail=1");
-
-				filesArray.put(filesObject);
-				return filesArray;
+				filesObject.put("all",filesObject.toJSONString());
+				return filesObject;
 
 			}
 		} catch (PortalException e) {
 			e.printStackTrace();
+			filesObject=JSONFactoryUtil.createJSONObject();
+			filesObject.put("errorMessage",e.getMessage());
+			filesObject.put("status","BAD");
+			return filesObject;
 		}
-		return filesArray;
 
 	}
 
@@ -563,28 +570,26 @@ public class JournalArticleServices {
 		return new ArrayList<>();
 	}
 
-	
-	
 	//busqueda recursiva de webcontents x M y CH getAllWCAndJournalFolder((portletGroupId,"AQUA","","AQC");
 	/**
-     * getWCByFolder
-     */
+	 * getWCByFolder
+	 */
 	public List<JournalArticle> getWCByFolder(Long groupId,Long folderId) throws PortalException{
 		List<JournalArticle> journalArray= new ArrayList<>();
 		if(folderId!=null && groupId!=null){
 			journalArray=getJournalFoldersAndWC(groupId, folderId, journalArray);
 			if(query.getWCByJournalFolder(groupId, folderId)!=null){
-			for (JournalArticle journal : query.getWCByJournalFolder(groupId, folderId)) {
+				for (JournalArticle journal : query.getWCByJournalFolder(groupId, folderId)) {
 					journalArray.add(journal);
-			}
+				}
 			}
 			return journalArray;
-			
+
 		}
 		return new ArrayList<>();
-		
-		
-		
+
+
+
 	}
 
 	/*************************Termina la secci�n de llamados***************************/
@@ -968,5 +973,4 @@ public class JournalArticleServices {
 	}
 
 	private volatile generatorviewclient.config.ConfigPersonalizacion _configuration;
-
 }
