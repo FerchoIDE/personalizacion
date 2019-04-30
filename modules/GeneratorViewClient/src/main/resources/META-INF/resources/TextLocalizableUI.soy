@@ -5,7 +5,7 @@
  */
 {template .render}
 	{@param id: any}
-
+	{@param? path: string}
 	{@param localizable: bool}
 	{@param labels: map<string,string>}
 	{@param? value: string}
@@ -13,6 +13,7 @@
 	{@param placeholder: ?}
 	{@param availableLanguageIds: list<string>}
 	{@param defaultLanguageId: string}
+	{@param? handleChangeValue: ?}
 
 			{call TextUI.render}
 				{param id: $id /}
@@ -21,7 +22,9 @@
 				{param label: $labels[$defaultLanguageId] /}
 				{param placeholder: $placeholder[$defaultLanguageId] /}
 				{param value: $value /}
+				{param path: $path /}
 				{param availableLanguageIds: $availableLanguageIds /}
 				{param defaultLanguageId: $defaultLanguageId /}
+				{param onChangeValue:  $handleChangeValue /}
 			{/call}
 {/template}

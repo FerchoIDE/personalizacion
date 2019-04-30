@@ -4,15 +4,34 @@
  * Prints the portlet main view.
  */
 {template .render}
-	{@param id: any}
-	{@param? label: ?}
-	{@param? value: string}
-	{@param? placeholder: any}
-	{@param defaultLanguageId: string}
-	{let $finalValue: isNonnull($value) ? $value : '' /}
-	{let $defaultLanguage: $defaultLanguageId /}
-	<div id="{$id}" class="form-group-item">
-			<label for="date_{$id}">{$label}</label>
-			<input class="form-control" type="text" id="date_{$id}" name="date_{$id}" placeholder="{$placeholder}" data-input>
-	</div>
+    {@param id: any}
+    {@param? label: ?}
+    {@param? value: string}
+    {@param? placeholder: any}
+    {@param defaultLanguageId: string}
+    {@param? path: string}
+
+    {let $finalValue: isNonnull($value) ? $value : '' /}
+    {let $defaultLanguage: $defaultLanguageId /}
+
+    <div id="{$id}" class="form-group-item">
+        <label for="date_{$id}">{$label}</label>
+        <div id="date_{$id}" class="flatpickr input-group">
+            <div class="input-group-item input-group-prepend">
+                <input class="form-control" type="text"
+                       data-path="{$path}"
+                       name="date_{$id}" placeholder="{$placeholder}" data-input>
+            </div>
+            <div class="input-group-item input-group-item-shrink input-group-prepend label label-info">
+                <a class="input-button" title="toggle" data-toggle>
+                    <i class="icon-calendar" style="font-size: 14px"></i>
+                </a>
+            </div>
+            <div class="input-group-item input-group-item-shrink input-group-prepend label label-danger">
+                <a class="input-button" title="clear" data-clear>
+                    <i class="icon-remove" style="font-size: 16px"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 {/template}

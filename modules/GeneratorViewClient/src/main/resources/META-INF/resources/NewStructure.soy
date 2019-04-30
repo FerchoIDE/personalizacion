@@ -6,11 +6,22 @@
 {template .render}
 	{@param id: string}
 	{@param structureId: string}
+	{@param isOnLoad: bool}
 
 	{@param data: map<string, ?>}
+	{@param brands: list<?>}
+	{@param hotelsXBrands: list<?>}
 	{@param contextPath: string}
 	{@param? closeOpenTab: ?}
 	{@param? changeLanguage: ?}
+	{@param? changeBrand: ?}
+	{@param? changeHotels: ?}
+	{@param? saveSelectPath: ?}
+	{@param? brandSelected: string}
+	{@param? hotelSelected: string}
+	{@param? handleChangeValue: ?}
+
+
 	{@param collapseInfo: map<string,bool>}
 
 	{let $selectedLanguage: $data['selectedLanguage'] /}
@@ -18,6 +29,51 @@
 	{let $availableLanguageIds: $data['availableLanguageId'] /}
 	{let $availableLanguageIdsStyle: $data['availableLanguageId-style'] /}
 	 <div id="{$id}">
+		  <div aria-labelledby="claySmallModalDlg" id="claySmallModal1" class="fade modal {$isOnLoad ? 'show in' : ''}"
+			  style="{$isOnLoad ? '' : 'display: none'}"  role="dialog" tabindex="-1">
+			 <div class="modal-info modal-dialog modal-sm">
+				 <div class="modal-content">
+					 <div class="modal-header">
+						 <div class="modal-title" id="claySmallModalDlg">Seleccione</div>
+					 </div>
+
+					 <div class="modal-body" >
+						 <div class="container-fluid">
+							 <div class="form-group">
+								 <select onchange="{$changeBrand}"  class="form-control" id="brandSelect">
+									 <option disabled selected>Selecciona una Marca</option>
+									 {foreach $field in $brands}
+										 <option value="{$field.key}">{$field.value}</option>
+									 {/foreach}
+								 </select>
+							 </div>
+							 <div class="form-group">
+								 <select onchange="{$changeHotels}"  class="form-control" id="hotelSelect">
+									 <option disabled selected>Selecciona un Hotel</option>
+									 {foreach $field in $hotelsXBrands}
+										 <option value="{$field.key}">{$field.value}</option>
+									 {/foreach}
+								 </select>
+							 </div>
+						 </div>
+					 </div>
+
+					 <div class="modal-footer">
+						 <div class="modal-item-last">
+							 <div class="btn-group">
+
+								 <div class="btn-group-item" data-dismiss="modal" >
+									 <button id="btnSelectPath" class="btn btn-primary" disabled  onclick="{$saveSelectPath}" type="button">
+										 Seleccionar
+									 </button>
+								 </div>
+							 </div>
+						 </div>
+					 </div>
+				 </div>
+			 </div>
+
+		 </div>
 			 <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
 				 <div class="panel">
 					 <a onclick="{$closeOpenTab}" aria-controls="accordionPrincipalCollapse" aria-expanded="true" class="collapse-icon sheet-subtitle"
@@ -108,6 +164,7 @@
 											{param id: 'id_'+index($field) /}
 											{param structureId: $structureId /}
 											{param name: $field['name'] /}
+											{param path: $field['name'] /}
 											{param data: $field['nestedFields'] /}
 											{param title: $field['label'] /}
 											{param availableLanguageIds: $availableLanguageIds /}
@@ -116,23 +173,29 @@
 											{param contextPath: $contextPath/}
 											{param collapseInfo: $collapseInfo/}
 											{param checkedConcat: ['a':'b']/}
+											{param brandSelected: $brandSelected/}
+											{param hotelSelected: $hotelSelected/}
+											{param handleChangeValue:  $handleChangeValue /}
 
 										{/call}
 									{elseif $field['type'] == 'text'}
 										{call TextLocalizableUI.render}
 											{param id: $field['name'] /}
 											{param type: $field['type'] /}
-
+											{param path: $field['name'] /}
 											{param localizable: $field['localizable'] /}
 											{param labels: $field['label'] /}
 											{param placeholder: $field['tip'] /}
 											{param availableLanguageIds: $availableLanguageIds /}
 											{param defaultLanguageId: $selectedLanguage /}
+											{param handleChangeValue:  $handleChangeValue /}
 										{/call}
 									{elseif $field['type'] == 'checkbox'}
 										{call CheckBoxUI.render}
 											{param id: $field['name'] /}
 											{param label: $field['label'][$selectedLanguage] /}
+											{param path: $field['name'] /}
+											{param handleChangeValue:  $handleChangeValue /}
 										{/call}
 									{elseif $field['type'] == 'ddm-date'}
 										{call DateUI.render}
@@ -140,6 +203,8 @@
 											{param label: $field['label'][$defaultLanguage] /}
 											{param placeholder: $field['tip'][$defaultLanguage] /}
 											{param defaultLanguageId: $selectedLanguage /}
+											{param path: $field['name'] /}
+											{param handleChangeValue:  $handleChangeValue /}
 										{/call}
 									{elseif $field['type'] == 'ddm-text-html'}
 										{call TextAreaUI.render}
@@ -148,9 +213,29 @@
 											{param placeholder: $field['tip'][$selectedLanguage] /}
 											{param availableLanguageIds: $availableLanguageIds /}
 											{param defaultLanguageId: $selectedLanguage /}
+											{param path: $field['name'] /}
+											{param handleChangeValue:  $handleChangeValue /}
+										{/call}
+									{elseif $field['type'] == 'radio'}
+										{call RadioUI.render}
+											{param id: $field['name'] /}
+											{param label: $field['label'][$selectedLanguage] /}
+											{param defaultLanguageId: $selectedLanguage /}
+											{param options: $field['options'] /}
+											{param path: $field['name'] /}
+											{param handleChangeValue:  $handleChangeValue /}
+										{/call}
+									{elseif $field['type'] == 'select'}
+										{call SelectUI.render}
+											{param id: $field['name'] /}
+											{param label: $field['label'][$selectedLanguage] /}
+											{param defaultLanguageId: $selectedLanguage /}
+											{param options: $field['options'] /}
+											{param path: $field['name'] /}
+											{param handleChangeValue:  $handleChangeValue /}
 										{/call}
 									{else}
-										Ninguno<br/>
+										{$field['type']}--{$field['name']}--Ninguno<br/>
 									{/if}
 
 
@@ -158,6 +243,8 @@
 
 					<div>&nbsp;&nbsp;</div>
 				{/foreach}
+
+
 
 	</div>
 {/template}

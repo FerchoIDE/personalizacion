@@ -1,3 +1,11 @@
+/* jshint ignore:start */
+import Component from 'metal-component';
+import Soy from 'metal-soy';
+
+var templates;
+goog.loadModule(function(exports) {
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from SelectUI.soy.
 // Please don't edit this file by hand.
 
@@ -6,27 +14,106 @@
  * @public
  */
 
-if (typeof SelectUI == 'undefined') { var SelectUI = {}; }
+goog.module('SelectUI.incrementaldom');
+
+goog.require('goog.soy.data.SanitizedContent');
+var incrementalDom = goog.require('incrementaldom');
+goog.require('soy.asserts');
+var soyIdom = goog.require('soy.idom');
 
 
-SelectUI.render = function(opt_data, opt_ignored) {
-  goog.asserts.assert(opt_data.label == null || opt_data.label != null, "expected param 'label' of type (?).");
-  var label = /** @type {(?)} */ (opt_data.label);
-  goog.asserts.assert(opt_data.value == null || (opt_data.value instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.value), "expected param 'value' of type null|string|undefined.");
-  var value = /** @type {null|string|undefined} */ (opt_data.value);
-  var options = goog.asserts.assertArray(opt_data.options, "expected parameter 'options' of type list<string>.");
-  var output = '';
-  var finalValue__soy3 = value != null ? value : '';
-  output += '<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '"><div class="form-group"><label for="select_' + soy.$$escapeHtmlAttribute(opt_data.id) + '">' + soy.$$escapeHtml(label) + '</label><select class="form-control"   id="select_' + soy.$$escapeHtmlAttribute(opt_data.id) + '">';
-  var optionList14 = options;
-  var optionListLen14 = optionList14.length;
-  for (var optionIndex14 = 0; optionIndex14 < optionListLen14; optionIndex14++) {
-    var optionData14 = optionList14[optionIndex14];
-    output += '<option>$option</option>';
-  }
-  output += '</select></div></div>';
-  return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);
-};
-if (goog.DEBUG) {
-  SelectUI.render.soyTemplateName = 'SelectUI.render';
+/**
+ * @param {{
+ *  id: *,
+ *  label: (?),
+ *  value: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  options: !Array<?>,
+ *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
+ *  path: (!goog.soy.data.SanitizedContent|null|string|undefined)
+ * }} opt_data
+ * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
+ * @return {void}
+ * @suppress {checkTypes}
+ */
+function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {*} */
+  var id = opt_data.id;
+  /** @type {?} */
+  var label = opt_data.label;
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var value = soy.asserts.assertType(opt_data.value == null || (goog.isString(opt_data.value) || opt_data.value instanceof goog.soy.data.SanitizedContent), 'value', opt_data.value, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  /** @type {!Array<?>} */
+  var options = soy.asserts.assertType(goog.isArray(opt_data.options), 'options', opt_data.options, '!Array<?>');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var path = soy.asserts.assertType(opt_data.path == null || (goog.isString(opt_data.path) || opt_data.path instanceof goog.soy.data.SanitizedContent), 'path', opt_data.path, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  var finalValue__soy1260 = (value != null) ? value : '';
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('id', id);
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'form-group');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('label');
+          incrementalDom.attr('for', 'select_' + id);
+      incrementalDom.elementOpenEnd();
+        soyIdom.print(label);
+      incrementalDom.elementClose('label');
+      incrementalDom.elementOpenStart('select');
+          incrementalDom.attr('class', 'form-control');
+          incrementalDom.attr('data-path', path);
+          incrementalDom.attr('data-onchange', 'handleChange');
+          incrementalDom.attr('id', 'select_' + id);
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('option');
+            incrementalDom.attr('disabled', '');
+            incrementalDom.attr('selected', '');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.text('Selecciona ');
+          soyIdom.print(label);
+        incrementalDom.elementClose('option');
+        var option1279List = options;
+        var option1279ListLen = option1279List.length;
+        for (var option1279Index = 0; option1279Index < option1279ListLen; option1279Index++) {
+            var option1279Data = option1279List[option1279Index];
+            incrementalDom.elementOpenStart('option');
+                incrementalDom.attr('value', option1279Data.value);
+            incrementalDom.elementOpenEnd();
+              soyIdom.print(option1279Data.label[defaultLanguageId]);
+            incrementalDom.elementClose('option');
+          }
+      incrementalDom.elementClose('select');
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
+exports.render = $render;
+/**
+ * @typedef {{
+ *  id: *,
+ *  label: (?),
+ *  value: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  options: !Array<?>,
+ *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
+ *  path: (!goog.soy.data.SanitizedContent|null|string|undefined)
+ * }}
+ */
+$render.Params;
+if (goog.DEBUG) {
+  $render.soyTemplateName = 'SelectUI.render';
+}
+
+exports.render.params = ["id","label","value","options","defaultLanguageId","path"];
+exports.render.types = {"id":"any","label":"?","value":"string","options":"list<?>","defaultLanguageId":"string","path":"string"};
+templates = exports;
+return exports;
+
+});
+
+class SelectUI extends Component {}
+Soy.register(SelectUI, templates);
+export { SelectUI, templates };
+export default templates;
+/* jshint ignore:end */

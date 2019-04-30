@@ -42,4 +42,18 @@ export default class Service{
                 callBack(json)
             } )
     }
+    saveDocument(brand,codeHotel,folderId,description,fileInfo,callBack){
+        wretch("http://localhost:8080/web/guest/home/-/generator/resource/saveDocument")
+            .post({ "brand": brand,"codeHotel":codeHotel,
+            "description":description,"folderId":folderId,
+            "file":fileInfo})
+            .json(json =>{
+                console.log(json)
+                callBack('OK',json)
+            } )
+            .catch(error =>{
+                console.log(error)
+                callBack('BAD',error)
+            })
+    }
 }

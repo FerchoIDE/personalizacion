@@ -1,14 +1,16 @@
-import Component from 'metal-component/src/Component';
+import Component from 'metal-component';
 import TextLocalizableUI from './TextLocalizableUI.es';
 import CheckBoxUI from './CheckBoxUI.es';
 import TextAreaUI from './TextAreaUI.es';
 import TitleLocalizableUI from './TitleLocalizableUI.es';
 import DateUI from './DateUI.es';
+import RadioUI from './RadioUI.es';
+import SelectUI from './SelectUI.es';
 import JournalUI from './components/JournalUI.es';
 import DocumentUI from './components/DocumentUI.es';
 
 
-import Soy from 'metal-soy/src/Soy';
+import Soy from 'metal-soy';
 import templates from './ViewNested.soy';
 import Service from "./service/Service";
 /**
@@ -20,11 +22,6 @@ class ViewNested extends Component {
 
         this.setState({checkedConcat: {} })
         this.setState({checkedSelected: {} })
-    }
-    rendered(firstRender) {
-        console.log('-----ViewNested-rendered----'+JSON.stringify(firstRender));
-
-
     }
     checkedOption(event) {
         if(event === undefined)

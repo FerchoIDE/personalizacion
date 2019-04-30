@@ -41,6 +41,7 @@ public class GetDocumentMedia implements MVCResourceCommand {
                 array = new JournalArticleServices().getFilesByCurrentFolderAndName(portletGroupId,jsonObject.getLong("folderId"),"");
             }else if(jsonObject.has("nameFolder")){
                 array = new JournalArticleServices().getFilesByName(portletGroupId,brand,jsonObject.getString("nameFolder"),codeHotel);
+                //getWCByName
             }else{
                 array =
                         // new JournalArticleServices().getFiles((portletGroupId,"AQUA","","AQC");//busqueda recursiva de archivos x M y CH
@@ -52,6 +53,7 @@ public class GetDocumentMedia implements MVCResourceCommand {
 
                         //new JournalArticleServices().getFilesAndFolder(portletGroupId,"AQUA","AQC");
                         new JournalArticleServices().getFilesAndFolder(portletGroupId,brand,"",codeHotel);
+                //getListJournalFolders
 
             }
             resourceResponse.getPortletOutputStream().write(array.toJSONString().getBytes());

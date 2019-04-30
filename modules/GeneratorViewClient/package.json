@@ -1,18 +1,25 @@
 {
 	"dependencies": {
-		"clay": "^2.7.0",
-		"clay-badge": "^2.7.0",
-		"clay-css": "^2.7.0",
+		"clay-badge": "^2.14.2",
+		"clay-css": "^2.14.2",
 		"flatpickr": "^4.5.7",
-		"metal-component": "^2.4.5",
-		"metal-soy": "^2.4.5",
+		"metal": "^2.16.8",
+		"metal-component": "^2.16.8",
+		"metal-soy": "^2.16.8",
+		"metal-state": "^2.16.8",
 		"wretch": "^1.5.1"
 	},
 	"devDependencies": {
 		"gulp": "^3.9.0",
 		"liferay-module-config-generator": "^1.2.1",
+		"liferay-npm-bridge-generator": "^2.6.2",
+		"liferay-npm-bundler": "^2.6.2",
 		"metal-cli": "^4.0.1"
 	},
+	"scripts": {
+		"build": "metalsoy && babel --source-maps -d build/resources/main/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler"
+	},
 	"name": "GeneratorViewClient",
-	"version": "1.0.5"
+	"version": "1.0.5",
+	"main": "View.es"
 }

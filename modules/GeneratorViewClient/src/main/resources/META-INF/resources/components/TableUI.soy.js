@@ -1,3 +1,11 @@
+/* jshint ignore:start */
+import Component from 'metal-component';
+import Soy from 'metal-soy';
+
+var templates;
+goog.loadModule(function(exports) {
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from TableUI.soy.
 // Please don't edit this file by hand.
 
@@ -6,39 +14,156 @@
  * @public
  */
 
-if (typeof TableUI == 'undefined') { var TableUI = {}; }
+goog.module('TableUI.incrementaldom');
+
+goog.require('goog.soy.data.SanitizedContent');
+var incrementalDom = goog.require('incrementaldom');
+goog.require('soy.asserts');
+var soyIdom = goog.require('soy.idom');
 
 
-TableUI.render = function(opt_data, opt_ignored) {
-  goog.asserts.assert(goog.isString(opt_data.contextPath) || (opt_data.contextPath instanceof goog.soy.data.SanitizedContent), "expected param 'contextPath' of type string|goog.soy.data.SanitizedContent.");
-  var contextPath = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.contextPath);
-  var header = goog.asserts.assertObject(opt_data.header, "expected parameter 'header' of type map<string,string>.");
-  var data = goog.asserts.assertArray(opt_data.data, "expected parameter 'data' of type list<map<string,string>>.");
-  var keys = goog.asserts.assertArray(opt_data.keys, "expected parameter 'keys' of type list<string>.");
-  var output = '<div id="' + soy.$$escapeHtmlAttribute(opt_data.id) + '" class="table-responsive"><table class="show-quick-actions-on-hover table table-autofit table-hover table-list table-nowrap"><thead><tr>';
-  var fieldList324 = keys;
-  var fieldListLen324 = fieldList324.length;
-  for (var fieldIndex324 = 0; fieldIndex324 < fieldListLen324; fieldIndex324++) {
-    var fieldData324 = fieldList324[fieldIndex324];
-    output += '<th class="table-head-title"><a class="inline-item text-truncate-inline" href="#1"><span style="font-size: 10px"  title="' + soy.$$escapeHtmlAttribute(header[fieldData324]) + '">' + soy.$$escapeHtml(header[fieldData324]) + '</span></a></th>';
-  }
-  output += '<th ></th></tr></thead><tbody>';
-  var fieldDataList338 = data;
-  var fieldDataListLen338 = fieldDataList338.length;
-  for (var fieldDataIndex338 = 0; fieldDataIndex338 < fieldDataListLen338; fieldDataIndex338++) {
-    var fieldDataData338 = fieldDataList338[fieldDataIndex338];
-    output += '<tr>';
-    var fieldList331 = keys;
-    var fieldListLen331 = fieldList331.length;
-    for (var fieldIndex331 = 0; fieldIndex331 < fieldListLen331; fieldIndex331++) {
-      var fieldData331 = fieldList331[fieldIndex331];
-      output += '<td>' + soy.$$escapeHtml(fieldDataData338[fieldData331]) + '</td>';
-    }
-    output += '<td><div class="quick-action-menu"><a class="component-action quick-action-item" style="font-size: 14px" href="#1" role="button"><svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation"><use href="' + soy.$$escapeHtmlAttribute(soy.$$filterNormalizeUri(contextPath)) + '/images/icons/icons.svg#trash" /></svg></a><a class="component-action quick-action-item" style="font-size: 14px" href="#1" role="button"><svg class="lexicon-icon lexicon-icon-text-editor" focusable="false" role="presentation"><use href="' + soy.$$escapeHtmlAttribute(soy.$$filterNormalizeUri(contextPath)) + '/images/icons/icons.svg#text-editor" /></svg></a></div></td></tr>';
-  }
-  output += '</tbody></table></div>';
-  return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);
-};
-if (goog.DEBUG) {
-  TableUI.render.soyTemplateName = 'TableUI.render';
+/**
+ * @param {{
+ *  id: *,
+ *  contextPath: (!goog.soy.data.SanitizedContent|string),
+ *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
+ *  data: !Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>,
+ *  keys: !Array<!goog.soy.data.SanitizedContent|string>
+ * }} opt_data
+ * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
+ * @return {void}
+ * @suppress {checkTypes}
+ */
+function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {*} */
+  var id = opt_data.id;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var contextPath = soy.asserts.assertType(goog.isString(opt_data.contextPath) || opt_data.contextPath instanceof goog.soy.data.SanitizedContent, 'contextPath', opt_data.contextPath, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>} */
+  var header = soy.asserts.assertType(goog.isObject(opt_data.header), 'header', opt_data.header, '!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>');
+  /** @type {!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>} */
+  var data = soy.asserts.assertType(goog.isArray(opt_data.data), 'data', opt_data.data, '!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>');
+  /** @type {!Array<!goog.soy.data.SanitizedContent|string>} */
+  var keys = soy.asserts.assertType(goog.isArray(opt_data.keys), 'keys', opt_data.keys, '!Array<!goog.soy.data.SanitizedContent|string>');
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('id', id);
+      incrementalDom.attr('class', 'table-responsive');
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('table');
+        incrementalDom.attr('class', 'show-quick-actions-on-hover table table-autofit table-hover table-list table-nowrap');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpen('thead');
+        incrementalDom.elementOpen('tr');
+          var field5832List = keys;
+          var field5832ListLen = field5832List.length;
+          for (var field5832Index = 0; field5832Index < field5832ListLen; field5832Index++) {
+              var field5832Data = field5832List[field5832Index];
+              incrementalDom.elementOpenStart('th');
+                  incrementalDom.attr('class', 'table-head-title');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpenStart('a');
+                    incrementalDom.attr('class', 'inline-item text-truncate-inline');
+                    incrementalDom.attr('href', '#1');
+                incrementalDom.elementOpenEnd();
+                  incrementalDom.elementOpenStart('span');
+                      incrementalDom.attr('style', 'font-size: 10px');
+                      incrementalDom.attr('title', header[field5832Data]);
+                  incrementalDom.elementOpenEnd();
+                    soyIdom.print(header[field5832Data]);
+                  incrementalDom.elementClose('span');
+                incrementalDom.elementClose('a');
+              incrementalDom.elementClose('th');
+            }
+          incrementalDom.elementOpen('th');
+          incrementalDom.elementClose('th');
+        incrementalDom.elementClose('tr');
+      incrementalDom.elementClose('thead');
+      incrementalDom.elementOpen('tbody');
+        var fieldData5846List = data;
+        var fieldData5846ListLen = fieldData5846List.length;
+        for (var fieldData5846Index = 0; fieldData5846Index < fieldData5846ListLen; fieldData5846Index++) {
+            var fieldData5846Data = fieldData5846List[fieldData5846Index];
+            incrementalDom.elementOpen('tr');
+              var field5839List = keys;
+              var field5839ListLen = field5839List.length;
+              for (var field5839Index = 0; field5839Index < field5839ListLen; field5839Index++) {
+                  var field5839Data = field5839List[field5839Index];
+                  incrementalDom.elementOpen('td');
+                    soyIdom.print(fieldData5846Data[field5839Data]);
+                  incrementalDom.elementClose('td');
+                }
+              incrementalDom.elementOpen('td');
+                incrementalDom.elementOpenStart('div');
+                    incrementalDom.attr('class', 'quick-action-menu');
+                incrementalDom.elementOpenEnd();
+                  incrementalDom.elementOpenStart('a');
+                      incrementalDom.attr('class', 'component-action quick-action-item');
+                      incrementalDom.attr('style', 'font-size: 14px');
+                      incrementalDom.attr('href', '#1');
+                      incrementalDom.attr('role', 'button');
+                  incrementalDom.elementOpenEnd();
+                    incrementalDom.elementOpenStart('svg');
+                        incrementalDom.attr('class', 'lexicon-icon lexicon-icon-trash');
+                        incrementalDom.attr('focusable', 'false');
+                        incrementalDom.attr('role', 'presentation');
+                    incrementalDom.elementOpenEnd();
+                      incrementalDom.elementOpenStart('use');
+                          incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#trash');
+                      incrementalDom.elementOpenEnd();
+                      incrementalDom.elementClose('use');
+                    incrementalDom.elementClose('svg');
+                  incrementalDom.elementClose('a');
+                  incrementalDom.elementOpenStart('a');
+                      incrementalDom.attr('class', 'component-action quick-action-item');
+                      incrementalDom.attr('style', 'font-size: 14px');
+                      incrementalDom.attr('href', '#1');
+                      incrementalDom.attr('role', 'button');
+                  incrementalDom.elementOpenEnd();
+                    incrementalDom.elementOpenStart('svg');
+                        incrementalDom.attr('class', 'lexicon-icon lexicon-icon-text-editor');
+                        incrementalDom.attr('focusable', 'false');
+                        incrementalDom.attr('role', 'presentation');
+                    incrementalDom.elementOpenEnd();
+                      incrementalDom.elementOpenStart('use');
+                          incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#text-editor');
+                      incrementalDom.elementOpenEnd();
+                      incrementalDom.elementClose('use');
+                    incrementalDom.elementClose('svg');
+                  incrementalDom.elementClose('a');
+                incrementalDom.elementClose('div');
+              incrementalDom.elementClose('td');
+            incrementalDom.elementClose('tr');
+          }
+      incrementalDom.elementClose('tbody');
+    incrementalDom.elementClose('table');
+  incrementalDom.elementClose('div');
 }
+exports.render = $render;
+/**
+ * @typedef {{
+ *  id: *,
+ *  contextPath: (!goog.soy.data.SanitizedContent|string),
+ *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
+ *  data: !Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>,
+ *  keys: !Array<!goog.soy.data.SanitizedContent|string>
+ * }}
+ */
+$render.Params;
+if (goog.DEBUG) {
+  $render.soyTemplateName = 'TableUI.render';
+}
+
+exports.render.params = ["id","contextPath","header","data","keys"];
+exports.render.types = {"id":"any","contextPath":"string","header":"map<string,string>","data":"list<map<string,string>>","keys":"list<string>"};
+templates = exports;
+return exports;
+
+});
+
+class TableUI extends Component {}
+Soy.register(TableUI, templates);
+export { TableUI, templates };
+export default templates;
+/* jshint ignore:end */

@@ -6,14 +6,19 @@
 	{@param id: any}
 	{@param? label: ?}
 	{@param? value: string}
-	{@param options: list<string>}
+	{@param options: list<?>}
+	{@param defaultLanguageId: string}
+	{@param? path: string}
 	{let $finalValue: isNonnull($value) ? $value : '' /}
 	<div id="{$id}">
 		<div class="form-group">
 			<label for="select_{$id}">{$label}</label>
-			 <select class="form-control"   id="select_{$id}">
+			 <select class="form-control" data-path="{$path}"
+					 data-onchange="handleChange"
+					 id="select_{$id}">
+				 <option disabled selected>Selecciona {$label}</option>
 				{foreach $option in $options}
-					<option>$option</option>
+					<option value="{$option.value}">{$option.label[$defaultLanguageId]}</option>
 				{/foreach}
 			</select>
 		</div>

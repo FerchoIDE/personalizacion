@@ -1,3 +1,11 @@
+/* jshint ignore:start */
+import Component from 'metal-component';
+import Soy from 'metal-soy';
+
+var templates;
+goog.loadModule(function(exports) {
+var soy = goog.require('soy');
+var soydata = goog.require('soydata');
 // This file was automatically generated from TitleLocalizableUI.soy.
 // Please don't edit this file by hand.
 
@@ -6,40 +14,201 @@
  * @public
  */
 
-if (typeof TitleLocalizableUI == 'undefined') { var TitleLocalizableUI = {}; }
+goog.module('TitleLocalizableUI.incrementaldom');
+
+goog.require('goog.soy.data.SanitizedContent');
+var incrementalDom = goog.require('incrementaldom');
+goog.require('soy.asserts');
+var soyIdom = goog.require('soy.idom');
 
 
-TitleLocalizableUI.render = function(opt_data, opt_ignored) {
-  goog.asserts.assert(goog.isString(opt_data.id) || (opt_data.id instanceof goog.soy.data.SanitizedContent), "expected param 'id' of type string|goog.soy.data.SanitizedContent.");
-  var id = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.id);
-  goog.asserts.assert(opt_data.label == null || (opt_data.label instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.label), "expected param 'label' of type null|string|undefined.");
-  var label = /** @type {null|string|undefined} */ (opt_data.label);
-  goog.asserts.assert(opt_data.value == null || (opt_data.value instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.value), "expected param 'value' of type null|string|undefined.");
-  var value = /** @type {null|string|undefined} */ (opt_data.value);
-  goog.asserts.assert(opt_data.placeholder == null || (opt_data.placeholder instanceof goog.soy.data.SanitizedContent) || goog.isString(opt_data.placeholder), "expected param 'placeholder' of type null|string|undefined.");
-  var placeholder = /** @type {null|string|undefined} */ (opt_data.placeholder);
-  goog.asserts.assert(goog.isString(opt_data.contextPath) || (opt_data.contextPath instanceof goog.soy.data.SanitizedContent), "expected param 'contextPath' of type string|goog.soy.data.SanitizedContent.");
-  var contextPath = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.contextPath);
-  var availableLanguageIds = goog.asserts.assertArray(opt_data.availableLanguageIds, "expected parameter 'availableLanguageIds' of type list<string>.");
-  goog.asserts.assert(goog.isString(opt_data.defaultLanguage) || (opt_data.defaultLanguage instanceof goog.soy.data.SanitizedContent), "expected param 'defaultLanguage' of type string|goog.soy.data.SanitizedContent.");
-  var defaultLanguage = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.defaultLanguage);
-  var availableLanguageIdsStyle = goog.asserts.assertObject(opt_data.availableLanguageIdsStyle, "expected parameter 'availableLanguageIdsStyle' of type map<string,string>.");
-  goog.asserts.assert(goog.isString(opt_data.selectedLanguage) || (opt_data.selectedLanguage instanceof goog.soy.data.SanitizedContent), "expected param 'selectedLanguage' of type string|goog.soy.data.SanitizedContent.");
-  var selectedLanguage = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.selectedLanguage);
-  goog.asserts.assert(opt_data.changeLanguage == null || opt_data.changeLanguage != null, "expected param 'changeLanguage' of type (?).");
-  var changeLanguage = /** @type {(?)} */ (opt_data.changeLanguage);
-  var output = '';
-  var finalValue__soy343 = value != null ? value : '';
-  output += '<div id="' + soy.$$escapeHtmlAttribute(id) + '"><div class="form-group"><label for="localizableInput1">' + soy.$$escapeHtml(label) + '</label><div class="input-group"><div class="input-group-append input-group-item"><input class="form-control" id="input_' + soy.$$escapeHtmlAttribute(id) + '" placeholder="' + soy.$$escapeHtmlAttribute(placeholder) + '" type="text" value="' + soy.$$escapeHtmlAttribute(finalValue__soy343) + '"/></div><div class="input-group-item input-group-item-shrink"><button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-' + soy.$$escapeHtmlAttribute(availableLanguageIdsStyle[selectedLanguage]) + '" focusable="false" role="presentation"><use href="' + soy.$$escapeHtmlAttribute(soy.$$filterNormalizeUri(contextPath)) + '/images/icons/icons.svg#' + soy.$$escapeHtmlAttribute(availableLanguageIdsStyle[selectedLanguage]) + '"></use></svg></span><span class="btn-section">' + soy.$$escapeHtml(selectedLanguage) + '</span></button><ul class="dropdown-menu dropdown-menu-right">';
-  var languageIdList382 = availableLanguageIds;
-  var languageIdListLen382 = languageIdList382.length;
-  for (var languageIdIndex382 = 0; languageIdIndex382 < languageIdListLen382; languageIdIndex382++) {
-    var languageIdData382 = languageIdList382[languageIdIndex382];
-    output += '<li><a id="' + soy.$$escapeHtmlAttribute(languageIdData382) + '" onclick="' + soy.$$escapeHtmlAttribute(soy.$$escapeJsValue(changeLanguage)) + '" class="active autofit-row dropdown-item" href="#' + soy.$$escapeHtmlAttribute(languageIdIndex382 + 1) + '"><span class="autofit-col autofit-col-expand"><span class="autofit-section"><span class="inline-item inline-item-before"><svg class="lexicon-icon lexicon-icon-' + soy.$$escapeHtmlAttribute(availableLanguageIdsStyle[languageIdData382]) + '" focusable="false" role="presentation"><use href="' + soy.$$escapeHtmlAttribute(soy.$$filterNormalizeUri(contextPath)) + '/images/icons/icons.svg#' + soy.$$escapeHtmlAttribute(availableLanguageIdsStyle[languageIdData382]) + '"></use></svg></span>' + soy.$$escapeHtml(languageIdData382) + '</span></span>' + ((languageIdData382 == defaultLanguage) ? '<span class="autofit-col"><span class="label label-info"><span class="label-item label-item-expand">Default</span></span></span>' : '') + '</a></li>';
-  }
-  output += '</ul></div></div></div></div>';
-  return soydata.VERY_UNSAFE.ordainSanitizedHtml(output);
-};
-if (goog.DEBUG) {
-  TitleLocalizableUI.render.soyTemplateName = 'TitleLocalizableUI.render';
+/**
+ * @param {{
+ *  id: (!goog.soy.data.SanitizedContent|string),
+ *  label: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  value: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  placeholder: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  contextPath: (!goog.soy.data.SanitizedContent|string),
+ *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
+ *  defaultLanguage: (!goog.soy.data.SanitizedContent|string),
+ *  availableLanguageIdsStyle: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
+ *  selectedLanguage: (!goog.soy.data.SanitizedContent|string),
+ *  changeLanguage: (?)
+ * }} opt_data
+ * @param {Object<string, *>=} opt_ijData
+ * @param {Object<string, *>=} opt_ijData_deprecated
+ * @return {void}
+ * @suppress {checkTypes}
+ */
+function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
+  opt_ijData = opt_ijData_deprecated || opt_ijData;
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var id = soy.asserts.assertType(goog.isString(opt_data.id) || opt_data.id instanceof goog.soy.data.SanitizedContent, 'id', opt_data.id, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var label = soy.asserts.assertType(opt_data.label == null || (goog.isString(opt_data.label) || opt_data.label instanceof goog.soy.data.SanitizedContent), 'label', opt_data.label, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var value = soy.asserts.assertType(opt_data.value == null || (goog.isString(opt_data.value) || opt_data.value instanceof goog.soy.data.SanitizedContent), 'value', opt_data.value, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var placeholder = soy.asserts.assertType(opt_data.placeholder == null || (goog.isString(opt_data.placeholder) || opt_data.placeholder instanceof goog.soy.data.SanitizedContent), 'placeholder', opt_data.placeholder, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var contextPath = soy.asserts.assertType(goog.isString(opt_data.contextPath) || opt_data.contextPath instanceof goog.soy.data.SanitizedContent, 'contextPath', opt_data.contextPath, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!Array<!goog.soy.data.SanitizedContent|string>} */
+  var availableLanguageIds = soy.asserts.assertType(goog.isArray(opt_data.availableLanguageIds), 'availableLanguageIds', opt_data.availableLanguageIds, '!Array<!goog.soy.data.SanitizedContent|string>');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var defaultLanguage = soy.asserts.assertType(goog.isString(opt_data.defaultLanguage) || opt_data.defaultLanguage instanceof goog.soy.data.SanitizedContent, 'defaultLanguage', opt_data.defaultLanguage, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>} */
+  var availableLanguageIdsStyle = soy.asserts.assertType(goog.isObject(opt_data.availableLanguageIdsStyle), 'availableLanguageIdsStyle', opt_data.availableLanguageIdsStyle, '!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var selectedLanguage = soy.asserts.assertType(goog.isString(opt_data.selectedLanguage) || opt_data.selectedLanguage instanceof goog.soy.data.SanitizedContent, 'selectedLanguage', opt_data.selectedLanguage, '!goog.soy.data.SanitizedContent|string');
+  /** @type {?} */
+  var changeLanguage = opt_data.changeLanguage;
+  var finalValue__soy1677 = (value != null) ? value : '';
+  incrementalDom.elementOpenStart('div');
+      incrementalDom.attr('id', id);
+  incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'form-group');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('label');
+          incrementalDom.attr('for', 'localizableInput1');
+      incrementalDom.elementOpenEnd();
+        soyIdom.print(label);
+      incrementalDom.elementClose('label');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'input-group');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'input-group-append input-group-item');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('input');
+              incrementalDom.attr('class', 'form-control');
+              incrementalDom.attr('id', 'input_' + id);
+              incrementalDom.attr('placeholder', placeholder);
+              incrementalDom.attr('type', 'text');
+              incrementalDom.attr('value', finalValue__soy1677);
+          incrementalDom.elementOpenEnd();
+          incrementalDom.elementClose('input');
+        incrementalDom.elementClose('div');
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'input-group-item input-group-item-shrink');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('button');
+              incrementalDom.attr('aria-expanded', 'false');
+              incrementalDom.attr('aria-haspopup', 'true');
+              incrementalDom.attr('class', 'btn btn-monospaced btn-secondary dropdown-toggle');
+              incrementalDom.attr('data-toggle', 'dropdown');
+              incrementalDom.attr('type', 'button');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('span');
+                incrementalDom.attr('class', 'inline-item');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('svg');
+                  incrementalDom.attr('class', 'lexicon-icon lexicon-icon-' + availableLanguageIdsStyle[selectedLanguage]);
+                  incrementalDom.attr('focusable', 'false');
+                  incrementalDom.attr('role', 'presentation');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpenStart('use');
+                    incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#' + availableLanguageIdsStyle[selectedLanguage]);
+                incrementalDom.elementOpenEnd();
+                incrementalDom.elementClose('use');
+              incrementalDom.elementClose('svg');
+            incrementalDom.elementClose('span');
+            incrementalDom.elementOpenStart('span');
+                incrementalDom.attr('class', 'btn-section');
+            incrementalDom.elementOpenEnd();
+              soyIdom.print(selectedLanguage);
+            incrementalDom.elementClose('span');
+          incrementalDom.elementClose('button');
+          incrementalDom.elementOpenStart('ul');
+              incrementalDom.attr('class', 'dropdown-menu dropdown-menu-right');
+          incrementalDom.elementOpenEnd();
+            var languageId1716List = availableLanguageIds;
+            var languageId1716ListLen = languageId1716List.length;
+            for (var languageId1716Index = 0; languageId1716Index < languageId1716ListLen; languageId1716Index++) {
+                var languageId1716Data = languageId1716List[languageId1716Index];
+                incrementalDom.elementOpen('li');
+                  incrementalDom.elementOpenStart('a');
+                      incrementalDom.attr('id', languageId1716Data);
+                      incrementalDom.attr('onclick', changeLanguage);
+                      incrementalDom.attr('class', 'active autofit-row dropdown-item');
+                      incrementalDom.attr('href', '#' + (languageId1716Index + 1));
+                  incrementalDom.elementOpenEnd();
+                    incrementalDom.elementOpenStart('span');
+                        incrementalDom.attr('class', 'autofit-col autofit-col-expand');
+                    incrementalDom.elementOpenEnd();
+                      incrementalDom.elementOpenStart('span');
+                          incrementalDom.attr('class', 'autofit-section');
+                      incrementalDom.elementOpenEnd();
+                        incrementalDom.elementOpenStart('span');
+                            incrementalDom.attr('class', 'inline-item inline-item-before');
+                        incrementalDom.elementOpenEnd();
+                          incrementalDom.elementOpenStart('svg');
+                              incrementalDom.attr('class', 'lexicon-icon lexicon-icon-' + availableLanguageIdsStyle[languageId1716Data]);
+                              incrementalDom.attr('focusable', 'false');
+                              incrementalDom.attr('role', 'presentation');
+                          incrementalDom.elementOpenEnd();
+                            incrementalDom.elementOpenStart('use');
+                                incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#' + availableLanguageIdsStyle[languageId1716Data]);
+                            incrementalDom.elementOpenEnd();
+                            incrementalDom.elementClose('use');
+                          incrementalDom.elementClose('svg');
+                        incrementalDom.elementClose('span');
+                        soyIdom.print(languageId1716Data);
+                      incrementalDom.elementClose('span');
+                    incrementalDom.elementClose('span');
+                    if (languageId1716Data == defaultLanguage) {
+                      incrementalDom.elementOpenStart('span');
+                          incrementalDom.attr('class', 'autofit-col');
+                      incrementalDom.elementOpenEnd();
+                        incrementalDom.elementOpenStart('span');
+                            incrementalDom.attr('class', 'label label-info');
+                        incrementalDom.elementOpenEnd();
+                          incrementalDom.elementOpenStart('span');
+                              incrementalDom.attr('class', 'label-item label-item-expand');
+                          incrementalDom.elementOpenEnd();
+                            incrementalDom.text('Default');
+                          incrementalDom.elementClose('span');
+                        incrementalDom.elementClose('span');
+                      incrementalDom.elementClose('span');
+                    }
+                  incrementalDom.elementClose('a');
+                incrementalDom.elementClose('li');
+              }
+          incrementalDom.elementClose('ul');
+        incrementalDom.elementClose('div');
+      incrementalDom.elementClose('div');
+    incrementalDom.elementClose('div');
+  incrementalDom.elementClose('div');
 }
+exports.render = $render;
+/**
+ * @typedef {{
+ *  id: (!goog.soy.data.SanitizedContent|string),
+ *  label: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  value: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  placeholder: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  contextPath: (!goog.soy.data.SanitizedContent|string),
+ *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
+ *  defaultLanguage: (!goog.soy.data.SanitizedContent|string),
+ *  availableLanguageIdsStyle: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
+ *  selectedLanguage: (!goog.soy.data.SanitizedContent|string),
+ *  changeLanguage: (?)
+ * }}
+ */
+$render.Params;
+if (goog.DEBUG) {
+  $render.soyTemplateName = 'TitleLocalizableUI.render';
+}
+
+exports.render.params = ["id","label","value","placeholder","contextPath","availableLanguageIds","defaultLanguage","availableLanguageIdsStyle","selectedLanguage","changeLanguage"];
+exports.render.types = {"id":"string","label":"string","value":"string","placeholder":"string","contextPath":"string","availableLanguageIds":"list<string>","defaultLanguage":"string","availableLanguageIdsStyle":"map<string,string>","selectedLanguage":"string","changeLanguage":"?"};
+templates = exports;
+return exports;
+
+});
+
+class TitleLocalizableUI extends Component {}
+Soy.register(TitleLocalizableUI, templates);
+export { TitleLocalizableUI, templates };
+export default templates;
+/* jshint ignore:end */

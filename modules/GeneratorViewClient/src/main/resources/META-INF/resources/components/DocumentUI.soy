@@ -6,8 +6,8 @@
 {template .render}
     {@param id: any}
     {@param? label: ?}
-    {@param? isOpenSelect: bool}
 
+    {@param? isOpenSelect: bool}
     {@param? openSelectDocument: ?}
     {@param? closeSelectDocument: ?}
     {@param? saveSelectDocument: ?}
@@ -15,6 +15,11 @@
     {@param? changeFolder: ?}
     {@param? searchByName: ?}
 
+    {@param? isOpenNew: bool}
+    {@param? openNewDocument: ?}
+    {@param? closeNewDocument: ?}
+    {@param? saveNewDocument: ?}
+    {@param? fileNew: ?}
 
 
     {@param? setSelectedResult: ?}
@@ -26,9 +31,13 @@
     {@param itemsAsociated: ?}
 
 
+    {@param? brandSelected: string}
+    {@param? hotelSelected: string}
+
     {@param contextPath: string}
 
     <div id="{$id}" class="container">
+        <div style="display: none">{$hotelSelected}/{$brandSelected}</div>
         <div class="row">
             <div class="col-10">
                 <div class="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
@@ -84,12 +93,12 @@
                         </div>
                         &nbsp;
                         <div class="upload-btn-wrapper-custom">
-                            <button class="btn  btn-monospaced btn-sm btn-primary" type="button">
+                            <button onclick="{$openNewDocument}" class="btn  btn-monospaced btn-sm btn-primary" type="button">
                                 <svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
                                     <use href="{$contextPath}/images/icons/icons.svg#plus"></use>
                                 </svg>
                             </button>
-                            <input type="file" name="myfile"/>
+
                         </div>
 
                     </li>
@@ -208,4 +217,81 @@
 
         </div>
 
+        <div aria-labelledby="clayLargeModalLabelNew" class="fade modal {$isOpenNew ? 'show in' : ''}"
+             style="{$isOpenNew ? '' : 'display: none'}" id="{$id}_ModalNew" role="dialog" tabindex="-1">
+            <div class="modal-info modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title" id="claySmallModalLabelNew">Nuevo {$label}</div>
+
+                        <button aria-labelledby="Close" onclick="{$closeNewDocument}" class="close"
+                                data-dismiss="modal" role="button" type="button">
+                            <svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
+                                <use href="{$contextPath}/images/icons/icons.svg#times"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="container-fluid">
+
+                            <div class="alert alert-danger" id="{$id}_AlertErrorNew" style="display:none" role="alert">
+                                <span class="alert-indicator">
+                                    <svg class="lexicon-icon lexicon-icon-exclamation-full" focusable="false" role="presentation">
+                                        <use href="{$contextPath}/images/icons/icons.svg#exclamation-full"></use>
+                                    </svg>
+                                </span>
+                                <strong class="lead">Error:</strong><div id="{$id}_MsgErrorNew"></div>
+                            </div>
+
+
+
+
+                                <div class="form-group">
+                                    <select  class="form-control" id="{$id}_FolderNew">
+                                        <option disabled selected>Selecciona la carpeta donde se almacenara el nuevo recurso</option>
+
+                                        {if $foldersDocuments}
+                                            {foreach $field in $foldersDocuments}
+                                                <option value="{$field.folderId}">{$field.nameFolder}</option>
+                                            {/foreach}
+                                        {/if}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input id="{$id}_DescriptionNew"  class="form-control"
+                                           class="form-control input-group-inset input-group-inset-after"
+                                           name="mySearchInputName" placeholder="Ingrese la descripción del nuevo recurso"
+                                           type="text"/>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" onchange="{$fileNew}" type="file" name="myfile"/>
+                                </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="modal-item-last">
+                            <div class="btn-group">
+                                <div class="btn-group-item">
+                                    <button class="btn btn-secondary" onclick="{$closeNewDocument}"
+                                            data-dismiss="modal" type="button">Cancelar
+                                    </button>
+                                </div>
+
+                                <div class="btn-group-item" data-dismiss="modal" >
+                                    <button class="btn btn-primary" id="{$id}_BtnNew" disabled onclick="{$saveNewDocument}" type="button">
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 {/template}
