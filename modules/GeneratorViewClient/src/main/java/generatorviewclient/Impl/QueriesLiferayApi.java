@@ -1,19 +1,20 @@
-package generatorviewclient.liferayservice;
+package generatorviewclient.Impl;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-
+import generatorviewclient.constants.Contants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -22,22 +23,28 @@ import com.liferay.journal.model.impl.JournalFolderImpl;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-
-import generatorviewclient.constants.Contants;
+import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 public class QueriesLiferayApi {
-private static final Log log = LogFactoryUtil.getLog(QueriesLiferayApi.class);
+	private static final Log log = LogFactoryUtil.getLog(QueriesLiferayApi.class);
 
+	
+	
 	public List<JournalArticle> getFoldersWCByNameAndType(Long groupId,Long parent,String namefile,String type,List<JournalArticle> journalArray) throws PortalException{
 		List<JournalFolder> listFolders = getSubFolderByJournalFolderParent(groupId, new Long(parent));
 		if(listFolders != null && listFolders.size() > 0){
@@ -83,7 +90,7 @@ private static final Log log = LogFactoryUtil.getLog(QueriesLiferayApi.class);
 	}
 	
 	
-	
+
 	
 	  public List<JournalFolderImpl> getRateFolder1(long parentFolder,String nameFolder,Long siteID){
 		DynamicQuery query_journal_folder = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalFolderImpl.class, "journalFolder",PortalClassLoaderUtil.getClassLoader());
@@ -108,6 +115,11 @@ private static final Log log = LogFactoryUtil.getLog(QueriesLiferayApi.class);
 		}
 		return listIdFolders.get(0);
 	}
+
+public JournalArticle copyJorunal(Long userId,Long groupId,String oldArticleId,String newArticleId) throws PortalException{
+	return JournalArticleLocalServiceUtil.copyArticle(userId, groupId, oldArticleId, newArticleId, true, 1.0);
+
+}	
 	
 public List<JournalFolder> getSubFolderByJournalFolderParent(Long groupId,Long idFolder){
 	    List<JournalFolder> dlFolders = JournalFolderLocalServiceUtil.getFolders(groupId, idFolder);
@@ -125,7 +137,7 @@ public JournalFolderImpl getJournalFolderByName(Long siteID,Long parentFolder,St
 	return journalfolderResults.get(0);
 }
 
-	public List<JournalArticleImpl> getWCByJournalFolderAndType(Long groupId,Long folderId,String structureKey) throws PortalException{
+	public List<JournalArticleImpl> getWCByJournalFolderAndTypeStructure(Long groupId,Long folderId,String structureKey) throws PortalException{
 		DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
 		queryJournal.add(RestrictionsFactoryUtil.eq("DDMStructureKey", structureKey));
 		queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
@@ -317,6 +329,279 @@ public JournalFolderImpl getJournalFolderByName(Long siteID,Long parentFolder,St
 		return  DLFileEntryLocalServiceUtil.dynamicQuery(query);
 		
 	}
+	
+	
+	
+	public String validateType(String key){
+		switch (key) {
+		case "ddm-text-html":
+		return "text_area";
+		case "checkbox":
+		return "boolean";
+		case "select":
+		return "list";
+		default:
+		return key;
+		}
+	}
+	
+	public JournalArticle insertWebContent(Long folderId,
+										   Long userId,
+										   Long groupId,
+										   Locale locale,String xml, String title,long folder, DDMStructure ddmStructure1, DDMTemplate ddmTemplate1)
+			throws PortalException {
+		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		titleMap.put(locale, title);
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		descriptionMap.put(locale, title);
+		ServiceContext serviceContext = new ServiceContext();
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		JournalArticle objectSave = JournalArticleLocalServiceUtil.addArticle(userId,
+				groupId, folderId, titleMap, null, xml,
+				ddmStructure1.getStructureKey(), ddmTemplate1.getTemplateKey(), serviceContext);
+		return objectSave;
+	}
+	
+	public String parseJsonToXML(String code) throws PortalException{
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(code);
+		System.out.println(jsonObj.toJSONString());
+		System.out.println(jsonObj.get("folderId"));
+		JSONArray campos = jsonObj.getJSONArray("fields");
+		String xmlFinal = "";
+		for (int i = 0; i < campos.length(); i++) {
+			if(campos.getJSONObject(i).get("nestedFields")!=null){
+				if(campos.getJSONObject(i).get("type").equals("ddm-separator")){
+					xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
+							"selection_break",
+							"",
+							campos.getJSONObject(i).get("indexType").toString(),
+							readJson(campos.getJSONObject(i).get("nestedFields").toString()));
+		}else{
+					xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+						validateType(campos.getJSONObject(i).get("type").toString()),
+						evaluateContent(campos.getJSONObject(i).get("type").toString()
+								, campos.getJSONObject(i).getJSONArray("values")),
+						campos.getJSONObject(i).get("indexType").toString(),
+						readJson(campos.getJSONObject(i).get("nestedFields").toString()));
+			}
+		}else{
+			if(campos.getJSONObject(i).get("type").equals("ddm-separator")){
+					xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
+							"selection_break",
+							"",
+							campos.getJSONObject(i).get("indexType").toString(),
+							"");
+				}
+				else{
+				xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
+						validateType(campos.getJSONObject(i).get("type").toString()),
+						evaluateContent(campos.getJSONObject(i).get("type").toString()
+								, campos.getJSONObject(i).getJSONArray("values")),
+						campos.getJSONObject(i).get("indexType").toString(),
+						"");
+				}
+			}
+			
+		}
+		System.out.println("xmlFinal");
+		System.out.println(xmlFinal);
+		return xmlFinal;
+	}
+	
+	
+	public String readJson(String nested) throws JSONException{
+		JSONArray campos = JSONFactoryUtil.createJSONArray(nested);
+		String xmlFinal = "";
+		for (int i = 0; i < campos.length(); i++) {
+			if(campos.getJSONObject(i).get("nestedFields")!=null){
+				if(campos.getJSONObject(i).get("type").equals("ddm-separator")){
+					xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
+							"selection_break",
+							"",
+							campos.getJSONObject(i).get("indexType").toString(),
+							readJson(campos.getJSONObject(i).get("nestedFields").toString()));
+		
+				}
+				else{
+				
+				xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
+						validateType(campos.getJSONObject(i).get("type").toString()),
+						evaluateContent(campos.getJSONObject(i).get("type").toString()
+								, campos.getJSONObject(i).getJSONArray("values")),
+						campos.getJSONObject(i).get("indexType").toString(),
+						readJson(campos.getJSONObject(i).get("nestedFields").toString()));
+				}
+			}else{
+				if(campos.getJSONObject(i).get("type").equals("ddm-separator")){
+					xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
+							"selection_break",
+							"",
+							campos.getJSONObject(i).get("indexType").toString(),
+							"");
+				}
+				else{
+				xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
+						validateType(campos.getJSONObject(i).get("type").toString()),
+						evaluateContent(campos.getJSONObject(i).get("type").toString()
+								, campos.getJSONObject(i).getJSONArray("values")),
+						campos.getJSONObject(i).get("indexType").toString(),
+						"");
+				}
+			}
+		}
+		return xmlFinal;
+		}
+	
+	
+	  public String getBaseXML(String name,String type,String values,String indexType,String child){
+	  return"<dynamic-element name=\""+name+"\" instance-id=\""+getInstance()+"\" type=\""+type+"\" index-type=\""+indexType+"\">"+ values + child + "</dynamic-element>";
+	  } 
+	
+	public JSONArray example(long ddmStructureId) throws PortalException{
+		
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+				ddmStructureId);
+
+			DDMForm ddmForm = ddmStructure.getDDMForm();
+
+			Map<String, DDMFormField> ddmFormFieldsMap =
+				ddmForm.getDDMFormFieldsMap(true);
+			
+			System.out.println(itStructure(ddmFormFieldsMap));
+			return itStructure(ddmFormFieldsMap);
+	}
+	
+	public JSONArray itStructure(Map<String, DDMFormField> ddmFormFieldsMap){
+		JSONArray array =JSONFactoryUtil.createJSONArray();
+		JSONObject structureObject =null;
+		for (Map.Entry<String, DDMFormField> entry : ddmFormFieldsMap.entrySet()) {
+			structureObject = JSONFactoryUtil.createJSONObject();
+			structureObject.put("name", entry.getKey());
+			structureObject.put("type", entry.getValue().getType());
+			structureObject.put("localizable", entry.getValue().isLocalizable());
+			structureObject.put("repetible", entry.getValue().isRepeatable());
+			Locale locale = new Locale("en", "US");
+			structureObject.put("label", entry.getValue().getLabel().getString(locale));
+			structureObject.put("aviableLocales", entry.getValue().getLabel().getAvailableLocales());
+			System.out.println(entry.getKey());
+		    System.out.println(entry.getValue().getType());	    
+			if(entry.getValue().getNestedDDMFormFieldsMap()!=null){
+				if(!itStructure(entry.getValue().getNestedDDMFormFieldsMap()).isNull(0))
+				structureObject.put("child",itStructure(entry.getValue().getNestedDDMFormFieldsMap()));
+			}
+			array.put(structureObject);
+	
+		}
+		
+		return array;
+
+	}
+	
+	
+	
+	
+	public JSONArray itStructureParse(Map<String, DDMFormField> ddmFormFieldsMap){
+		JSONArray array =JSONFactoryUtil.createJSONArray();
+		JSONObject structureObject =null;
+		for (Map.Entry<String, DDMFormField> entry : ddmFormFieldsMap.entrySet()) {
+			structureObject = JSONFactoryUtil.createJSONObject();
+			structureObject.put("name", entry.getKey());
+			structureObject.put("type", entry.getValue().getType());
+			structureObject.put("localizable", entry.getValue().isLocalizable());
+			structureObject.put("repetible", entry.getValue().isRepeatable());
+			Locale locale = new Locale("en", "US");
+			structureObject.put("label", entry.getValue().getLabel().getString(locale));
+			structureObject.put("aviableLocales", entry.getValue().getLabel().getAvailableLocales());
+			System.out.println(entry.getKey());
+		    System.out.println(entry.getValue().getType());	    
+			if(entry.getValue().getNestedDDMFormFieldsMap()!=null){
+				if(!itStructure(entry.getValue().getNestedDDMFormFieldsMap()).isNull(0))
+				structureObject.put("child",itStructure(entry.getValue().getNestedDDMFormFieldsMap()));
+			}
+			array.put(structureObject);
+	
+		}
+		
+		return array;
+
+	}
+	
+   public String setCDATA(String data){
+     return "<![CDATA["+data+"]]>";
+   }
+
+   public StringBuilder getInstance(){
+   StringBuilder instanceId = new StringBuilder(8);
+   String key = PwdGenerator.KEY1 + PwdGenerator.KEY2 + PwdGenerator.KEY3;
+     for (int i = 0; i< 8; i++) {
+            int pos = (int)Math.floor(Math.random() * key.length());
+            instanceId.append(key.charAt(pos));
+        }
+     return instanceId;
+   }
+ 
+  
+   public String getValueXML(String value_ES,String value_EN){
+	     return "<dynamic-content language-id=\"es_ES\">"+setCDATA(value_ES)+"</dynamic-content>" +
+	    		"<dynamic-content language-id=\"en_US\">"+setCDATA(value_ES)+"</dynamic-content>";
+
+	   } 
+   
+   
+   
+   public String evaluateContent(String type,JSONArray values){
+	   String xml="";
+	  	switch (type) {
+		case "ddm-text-html":
+			if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
+				xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
+			    		"<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
+		return xml;
+		case "checkbox":
+			if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
+				xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
+			    		"<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
+		return xml;
+		case "ddm-journal-article":
+			if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
+				xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
+			    		"<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
+		return xml;
+		case "select":
+			String options_en="";
+			String options_es="";
+			for (int i = 0; i < values.length(); i++) {
+				if(values.getJSONObject(i).get("en_US")!=null && values.getJSONObject(i).get("es_ES")!=null)
+					options_en+= "<option>"+setCDATA(values.getJSONObject(i).get("en_US").toString())+"</option>";
+				    options_es+= "<option>"+setCDATA(values.getJSONObject(i).get("es_ES").toString())+"</option>";
+						
+		}
+		xml="<dynamic-content language-id=\"en_US\">"+options_en+"</dynamic-content>"+
+			"<dynamic-content language-id=\"es_ES\">"+options_es+"</dynamic-content>";
+		return xml;
+		default:
+		if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
+		xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
+		      "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
+		return xml;
+		}
+	 
+   } 
+   
+	public List<JournalArticleImpl> getWCByCode(Long groupId,String structureId,String code) throws PortalException{
+		DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
+		queryJournal.add(RestrictionsFactoryUtil.ilike("content", new StringBuilder("%><![CDATA[").append(code).append("]]></dynamic-content>%").toString()));
+		queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
+		queryJournal.add(PropertyFactoryUtil.forName("DDMStructureKey").eq(new String(structureId)));
+		List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);		
+		if(journalResults.size()>0){
+		return journalResults;
+		}
+		return new ArrayList<>();
+	}
+	
+	
 	public List<JournalArticle> getFoldersWCByCode(Long groupId,String nameStructure,String code) throws PortalException{
 		List<JournalArticle> journalArray = new ArrayList<>();
 		List<DDMStructure> structureKey = getStruct("%>"+nameStructure+"<%", groupId);
@@ -333,15 +618,24 @@ public JournalFolderImpl getJournalFolderByName(Long siteID,Long parentFolder,St
 		return journalArray;
 	}
 	
-	public List<JournalArticleImpl> getWCByCode(Long groupId,String structureId,String code) throws PortalException{
-		DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
-		queryJournal.add(RestrictionsFactoryUtil.ilike("content", new StringBuilder("%><![CDATA[").append(code).append("]]></dynamic-content>%").toString()));
-		queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
-		queryJournal.add(PropertyFactoryUtil.forName("DDMStructureKey").eq(new String(structureId)));
-		List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);		
-		if(journalResults.size()>0){
-		return journalResults;
+	public List<DDMStructure> getStructureByName(String nameStructure,Long siteID) {
+		DynamicQuery query = DDMStructureLocalServiceUtil.dynamicQuery()
+                 .add(PropertyFactoryUtil.forName("name").like("%>"+nameStructure+"<%"))
+                 .add(PropertyFactoryUtil.forName("groupId").eq(new Long(siteID)));
+        List<DDMStructure> structures = DDMStructureLocalServiceUtil.dynamicQuery(query);
+        List<DDMStructure> valid_structures = new ArrayList<DDMStructure>();
+        for (DDMStructure ddmStructure : structures) {
+        	if(validStructure(ddmStructure.getStructureId())){
+        		valid_structures.add(ddmStructure);
+        	}
 		}
-		return new ArrayList<>();
-	}
+        if (valid_structures.size() > 0) {
+        	log.info("Estrucruras Validas:"+valid_structures.size() );
+            return valid_structures;
+        }
+        return new ArrayList<>();
+    }
+	
+	
+	
 }
