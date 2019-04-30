@@ -1,9 +1,7 @@
 package generatorviewclient.portlet.resource;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
-import generatorviewclient.liferayservice.JournalArticleServices;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.osgi.service.component.annotations.Component;

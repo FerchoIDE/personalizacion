@@ -4,8 +4,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import generatorviewclient.Impl.FileEntryApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
-import generatorviewclient.liferayservice.JournalArticleServices;
 import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.PortletException;
@@ -34,7 +35,7 @@ public class GetDocumentMedia implements MVCResourceCommand {
 
 
             com.liferay.portal.kernel.json.JSONArray array =
-                    new JournalArticleServices().getFilesAndFolder(portletGroupId,"AQUA","","AQC");
+                    new FileEntryApi().getFilesAndFolder(portletGroupId,"AQUA","","AQC");
             System.out.println("after  service ");
             System.out.println(array.toJSONString());
 
