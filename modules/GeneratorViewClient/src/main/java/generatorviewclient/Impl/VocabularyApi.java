@@ -30,8 +30,8 @@ public class VocabularyApi {
 	
 
 	 /**
-    * Método getCategoriesByGroupAndVacabularyIdAllLevels
-    * @param groupId Id del sítio
+    * Mï¿½todo getCategoriesByGroupAndVacabularyIdAllLevels
+    * @param groupId Id del sï¿½tio
     * @param vocabularyId Id del vocabulario a iterar
     * @return <ul>
     *  <li>JSONArray, Todos los objetos dentro del vocabulario</li>
@@ -46,7 +46,6 @@ public class VocabularyApi {
 				categoryObject=JSONFactoryUtil.createJSONObject();
 				categoryObject.put("category", listCategories.get(i).getName());
 				categoryObject.put("key", listCategories.get(i).getPrimaryKey());
-				categoryObject.put("key", listCategories.get(i));
 				if(getSubCategories(listCategories.get(i).getPrimaryKey()) != null && !getSubCategories(listCategories.get(i).getPrimaryKey()).isNull(0)){
 					categoryObject.put("nested", getSubCategories(listCategories.get(i).getPrimaryKey()));
 				}
@@ -56,8 +55,8 @@ public class VocabularyApi {
 		return categoryArray;
 	}
 	 /**
-	    * Método getCategoriesByGroupAndVacabularyFirstLevel
-	    * @param groupId Id del sítio
+	    * Mï¿½todo getCategoriesByGroupAndVacabularyFirstLevel
+	    * @param groupId Id del sï¿½tio
 	    * @param vocabularyId Id del vocabulario a iterar
 	    * @return <ul>
 	    *  <li>JSONArray, Obtiene el primer nivel de objetos dentro del vocabulario</li>
@@ -78,8 +77,8 @@ public class VocabularyApi {
 		return categoryArray;
 	}
 	
-	/* Método getVocabulariesByGroup
-		    * @param groupId Id del sítio
+	/* Mï¿½todo getVocabulariesByGroup
+		    * @param groupId Id del sï¿½tio
 		    * @return <ul>
 		    *  <li>JSONArray, Obtiene el listado de vocabularios</li>
 		    *  </ul>
@@ -100,8 +99,8 @@ public class VocabularyApi {
 	 * {uuid=a0fa0e84-7f79-bf24-1cba-e35ee2b5d2fc, categoryId=177089, groupId=20142, companyId=20115, userId=20155, userName=Test Test, createDate=Fri Aug 31 04:00:50 GMT 2018, modifiedDate=Fri Aug 31 04:00:50 GMT 2018, parentCategoryId=0, leftCategoryId=573, rightCategoryId=574, name=Place, title=<?xml version='1.0' encoding='UTF-8'?><root available-locales="en_US,es_ES," default-locale="en_US"><Title language-id="es_ES">Place</Title><Title language-id="en_US">Place</Title></root>, description=, vocabularyId=121399, lastPublishDate=null}*/
 	
 	 /**
-	    * Método getCategories
-	    * @param groupId Id del sítio
+	    * Mï¿½todo getCategories
+	    * @param groupId Id del sï¿½tio
 	    * @return <ul>
 	    *  <li>JSONArray, Todos los vocabularios del sitio con sus elementos anidados recursivamente</li>
 	    *  </ul>
@@ -116,6 +115,7 @@ public class VocabularyApi {
 		vocabularyObject=JSONFactoryUtil.createJSONObject();
 		vocabularyObject.put("vocabularyName", assetVocabulary.getName());
 		vocabularyObject.put("vocabularykey", assetVocabulary.getVocabularyId());
+		vocabularyObject.put("multivalue", assetVocabulary.isMultiValued());
 		List<AssetCategory> listCategories = assetVocabulary.getCategories();
 		if(listCategories != null && listCategories.size() > 0){
 			for (int i = 0; i < listCategories.size(); i++) {
@@ -138,10 +138,10 @@ public class VocabularyApi {
 	
 	
 	 /**
-	    * Método getSubCategories
+	    * Mï¿½todo getSubCategories
 	    * @param parentCategoryId id de padre de categoria
 	    * @return <ul>
-	    *  <li>JSONArray, Todos las subcategorias  del sitio con sus elementos anidados recursivamente, sin discriminar ningún valor</li>
+	    *  <li>JSONArray, Todos las subcategorias  del sitio con sus elementos anidados recursivamente, sin discriminar ningï¿½n valor</li>
 	    *  </ul>
 	    */
 	private JSONArray getSubCategories(long parentCategoryId){
@@ -163,7 +163,7 @@ public class VocabularyApi {
 		return subCategoryArray;
 	}
 	
-	/********************************Sección de consultas*****************************************/
+	/********************************Secciï¿½n de consultas*****************************************/
 	@SuppressWarnings("unused")
 	private List<AssetCategory> getCategoriesByGroupID(Long groupId){
 		List<AssetCategory> listCategories=_category.getAssetCategories(0,_category.getAssetCategoriesCount());
@@ -206,7 +206,7 @@ public class VocabularyApi {
 	
 	/*
 	 * {uuid=a0fa0e84-7f79-bf24-1cba-e35ee2b5d2fc, categoryId=177089, groupId=20142, companyId=20115, userId=20155, userName=Test Test, createDate=Fri Aug 31 04:00:50 GMT 2018, modifiedDate=Fri Aug 31 04:00:50 GMT 2018, parentCategoryId=0, leftCategoryId=573, rightCategoryId=574, name=Place, title=<?xml version='1.0' encoding='UTF-8'?><root available-locales="en_US,es_ES," default-locale="en_US"><Title language-id="es_ES">Place</Title><Title language-id="en_US">Place</Title></root>, description=, vocabularyId=121399, lastPublishDate=null}*/
-	/********************************Sección de consultas*****************************************/
+	/********************************Secciï¿½n de consultas*****************************************/
 
 	
 }
