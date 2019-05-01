@@ -94,8 +94,6 @@ public class JournalApi implements IJournalApi {
 			for (JournalArticle journal : _query.getWCByJournalFolder(groupId, hotelCode)) {
 				if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 		    		 journalArray.add(journal);
-		    	 }else{
-		    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 		    	 }
 			}
 			}
@@ -109,8 +107,6 @@ public class JournalApi implements IJournalApi {
 			for (JournalArticle journal : _query.getWCByJournalFolderAndName(groupId, brandFolder,name)) {
 				if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 		    		 journalArray.add(journal);
-		    	 }else{
-		    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 		    	 }
 			}
 			}
@@ -122,8 +118,6 @@ public class JournalApi implements IJournalApi {
 			for (JournalArticle journal : _query.getWCByJournalFolderAndName(groupId, idBase,name)) {
 				if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 		    		 journalArray.add(journal);
-		    	 }else{
-		    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 		    	 }
 			}
 			}
@@ -134,8 +128,6 @@ public class JournalApi implements IJournalApi {
 			for (JournalArticle journal : _query.getWCByJournalFolderAndName(groupId, idBase,name)) {
 				if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 		    		 journalArray.add(journal);
-		    	 }else{
-		    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 		    	 }
 			}
 			}
@@ -155,8 +147,6 @@ public class JournalApi implements IJournalApi {
 			for (JournalArticle journal : _query.getWCByJournalFolder(groupId, hotelCode)) {
 				if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 		    		 journalArray.add(journal);
-		    	 }else{
-		    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 		    	 }
 			}
 			}
@@ -170,8 +160,6 @@ public class JournalApi implements IJournalApi {
 			for (JournalArticle journal : _query.getWCByJournalFolder(groupId, brandFolder)) {
 				if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 		    		 journalArray.add(journal);
-		    	 }else{
-		    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 		    	 }
 			}
 			}
@@ -183,8 +171,6 @@ public class JournalApi implements IJournalApi {
 			for (JournalArticle journal : _query.getWCByJournalFolder(groupId, idBase)) {
 				if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 		    		 journalArray.add(journal);
-		    	 }else{
-		    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 		    	 }
 			}
 			}
@@ -195,8 +181,6 @@ public class JournalApi implements IJournalApi {
 			for (JournalArticle journal : _query.getWCByJournalFolder(groupId, idBase)) {
 				if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 		    		 journalArray.add(journal);
-		    	 }else{
-		    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 		    	 }
 			}
 			}
@@ -220,8 +204,6 @@ public class JournalApi implements IJournalApi {
 					for (JournalArticle journal : _query.getWCByJournalFolderAndTypeStructure(groupId, hotelCode,ddm.get(0).getStructureKey())) {
 						if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 				    		 journalArray.add(journal);
-				    	 }else{
-				    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 				    	 }
 					}
 					}
@@ -234,8 +216,6 @@ public class JournalApi implements IJournalApi {
 					for (JournalArticle journal : _query.getWCByJournalFolderAndTypeStructure(groupId, brandFolder,ddm.get(0).getStructureKey())) {
 						if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 				    		 journalArray.add(journal);
-				    	 }else{
-				    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 				    	 }
 					}
 					}
@@ -247,8 +227,6 @@ public class JournalApi implements IJournalApi {
 					for (JournalArticle journal : _query.getWCByJournalFolderAndTypeStructure(groupId, idBase,ddm.get(0).getStructureKey())) {
 						if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 				    		 journalArray.add(journal);
-				    	 }else{
-				    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 				    	 }
 					}
 					}
@@ -272,8 +250,6 @@ public class JournalApi implements IJournalApi {
 			for (JournalArticle journal : _query.getWCByJournalFolder(groupId, hotelCode)) {
 				if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 		    		 journalArray.add(journal);
-		    	 }else{
-		    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 		    	 }
 			}
 			}
@@ -287,8 +263,6 @@ public class JournalApi implements IJournalApi {
 			for (JournalArticle journal : _query.getWCByJournalFolderAndName(groupId, brandFolder,name)) {
 				if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 		    		 journalArray.add(journal);
-		    	 }else{
-		    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 		    	 }
 			}
 			}
@@ -300,8 +274,6 @@ public class JournalApi implements IJournalApi {
 			for (JournalArticle journal : _query.getWCByJournalFolderAndName(groupId, idBase,name)) {
 				if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 		    		 journalArray.add(journal);
-		    	 }else{
-		    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 		    	 }
 			}
 			}
@@ -312,8 +284,6 @@ public class JournalApi implements IJournalApi {
 			for (JournalArticle journal : _query.getWCByJournalFolderAndName(groupId, idBase,name)) {
 				if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 		    		 journalArray.add(journal);
-		    	 }else{
-		    		 journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(journal.getResourcePrimKey()));
 		    	 }
 			}
 			}
