@@ -9,11 +9,11 @@ import com.liferay.portal.kernel.json.JSONArray;
 public interface IJournalApi {
 
 	/**
-     * Método getListJournalFolders
-     * @param groupId Id del sítio
-     * @param brand Nombre de la carpeta marca donde se hace la búsqueda
+     * Mï¿½todo getListJournalFolders
+     * @param groupId Id del sï¿½tio
+     * @param brand Nombre de la carpeta marca donde se hace la bï¿½squeda
      * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta códifgo de hotel para la búsqueda
+     * @param code_hotel Nombre de la carpeta cï¿½difgo de hotel para la bï¿½squeda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -24,9 +24,9 @@ public interface IJournalApi {
      */
 	public JSONArray getListJournalFolders(Long groupId,String brand,String code_hotel) throws PortalException;
 	/**
-     * Método getListJournalFoldersByCode
-     * @param groupId Id del sítio
-     * @param codeBrand codigo carpeta donde se hace la búsqueda
+     * Mï¿½todo getListJournalFoldersByCode
+     * @param groupId Id del sï¿½tio
+     * @param codeBrand codigo carpeta donde se hace la bï¿½squeda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -37,9 +37,9 @@ public interface IJournalApi {
      */
 	public JSONArray getListJournalFoldersByCode(Long groupId,Long codeBrand) throws PortalException;
 	/**
-     * Método getWCByFolder 
-     * @param groupId Id del sítio
-     * @param folderID codigo carpeta/marca donde se hace la búsqueda
+     * Mï¿½todo getWCByFolder 
+     * @param groupId Id del sï¿½tio
+     * @param folderID codigo carpeta/marca donde se hace la bï¿½squeda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -50,11 +50,11 @@ public interface IJournalApi {
      */
 	public List<JournalArticle> getWCByFolder(Long groupId,Long folderId) throws PortalException;
 	/**
-     * Método createFolderNestedFolderId
-     * @param groupId Id del sítio
-     * @param brand Nombre de la carpeta marca donde se hace la búsqueda
+     * Mï¿½todo createFolderNestedFolderId
+     * @param groupId Id del sï¿½tio
+     * @param brand Nombre de la carpeta marca donde se hace la bï¿½squeda
      * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta códifgo de hotel para la búsqueda
+     * @param code_hotel Nombre de la carpeta cï¿½difgo de hotel para la bï¿½squeda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -65,11 +65,11 @@ public interface IJournalApi {
      */
 	public JSONArray createFolderNestedFolderId(Long userId,Long groupId,Long parentFolderId,String name) throws PortalException;
 	/**
-     * Método getWCByName
-     * @param groupId Id del sítio
-     * @param brand Nombre de la carpeta marca donde se hace la búsqueda
+     * Mï¿½todo getWCByName
+     * @param groupId Id del sï¿½tio
+     * @param brand Nombre de la carpeta marca donde se hace la bï¿½squeda
      * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta códifgo de hotel para la búsqueda
+     * @param code_hotel Nombre de la carpeta cï¿½difgo de hotel para la bï¿½squeda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -80,11 +80,11 @@ public interface IJournalApi {
 	public List<JournalArticle> getWCByName(Long groupId,String brand,String code_hotel,String name) throws PortalException;
 	//busqueda recursiva de webcontents x M y CH getAllWCAndJournalFolder((portletGroupId,"AQUA","","AQC");
 			/**
-		     * Método getWCAndJournalFolder
-		     * @param groupId Id del sítio
-		     * @param brand Nombre de la carpeta marca donde se hace la búsqueda
+		     * Mï¿½todo getWCAndJournalFolder
+		     * @param groupId Id del sï¿½tio
+		     * @param brand Nombre de la carpeta marca donde se hace la bï¿½squeda
 		     * @param type tipo de archivo a buscar(No se filtra)
-		     * @param code_hotel Nombre de la carpeta códifgo de hotel para la búsqueda
+		     * @param code_hotel Nombre de la carpeta cï¿½difgo de hotel para la bï¿½squeda
 		     * @return <ul>
 		     *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
 		     *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -96,11 +96,11 @@ public interface IJournalApi {
 	public List<JournalArticle> getWCAndJournalFolder(Long groupId,String brand,String code_hotel) throws PortalException;
 	//busqueda recursiva de webcontents x M, CH y tipo getWCAndJournalFolderType((portletGroupId,"AQUA","","AQC");
 	/**
-     * Método getWCAndJournalFolderType
-     * @param groupId Id del sítio
-     * @param brand Nombre de la carpeta marca donde se hace la búsqueda
+     * Mï¿½todo getWCAndJournalFolderType
+     * @param groupId Id del sï¿½tio
+     * @param brand Nombre de la carpeta marca donde se hace la bï¿½squeda
      * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta códifgo de hotel para la búsqueda
+     * @param code_hotel Nombre de la carpeta cï¿½difgo de hotel para la bï¿½squeda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -111,11 +111,11 @@ public interface IJournalApi {
      */
 	public List<JournalArticle> getWCByJournalFolderAndStructureType(Long groupId,String brand,String code_hotel,String type) throws PortalException;
 	/**
-     * Método getWCAndJournalFolderByName
-     * @param groupId Id del sítio
-     * @param brand Nombre de la carpeta marca donde se hace la búsqueda
+     * Mï¿½todo getWCAndJournalFolderByName
+     * @param groupId Id del sï¿½tio
+     * @param brand Nombre de la carpeta marca donde se hace la bï¿½squeda
      * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta códifgo de hotel para la búsqueda
+     * @param code_hotel Nombre de la carpeta cï¿½difgo de hotel para la bï¿½squeda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -126,14 +126,20 @@ public interface IJournalApi {
      */
 	public List<JournalArticle> getWCAndJournalFolderByName(Long groupId,String brand,String code_hotel,String name,String type) throws PortalException;
 	/**
-     * Método searchWebContentByCodeHotel, Búsqueda a primer nivel,si existe devuelve el webcontent,sino un array vacio
-     * @param groupId Id del sítio
-     * @param folderId Id de la carpeta marca donde se hace la búsqueda
-     * @param code Código de hotel para la búsqueda
+     * Mï¿½todo searchWebContentByCodeHotel, Bï¿½squeda a primer nivel,si existe devuelve el webcontent,sino un array vacio
+     * @param groupId Id del sï¿½tio
+     * @param folderId Id de la carpeta marca donde se hace la bï¿½squeda
+     * @param code Cï¿½digo de hotel para la bï¿½squeda
      * @return <ul>
-     *  <li>Resultados de la búsqueda List<JournalArticle></li>
+     *  <li>Resultados de la bï¿½squeda List<JournalArticle></li>
      *  </ul>
      */
 	public List<JournalArticle> searchWebContentByCodeHotelFirstLevel(Long groupId,String structureName,String code) throws PortalException;
 
+	public JournalArticle saveWC(String json) throws PortalException;
+	
+	public JournalArticle updateWC(String json) throws PortalException;
+
+	
+	
 }

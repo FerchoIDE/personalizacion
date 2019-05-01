@@ -212,7 +212,7 @@ public class JournalApi implements IJournalApi {
 			List<DDMStructure> ddm = _query.getStructureByName(nameStructure, groupId);
 			List<JournalArticle> journalArray= new ArrayList<>();
 			long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
-			if(brand!=null && codeHotel!=null){//Búsqueda por Marca y Codigo de Hotlel
+			if(brand!=null && codeHotel!=null){//Bï¿½squeda por Marca y Codigo de Hotlel
 				Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
 				Long hotelCode=_query.getFolderWC(groupId, codeHotel, brandFolder);
 				journalArray=getJournalFoldersAndWCByType(groupId, hotelCode,ddm.get(0).getStructureKey(), journalArray);
@@ -227,7 +227,7 @@ public class JournalApi implements IJournalApi {
 					}
 				return journalArray;
 			}
-			else if(brand!=null && codeHotel==null){//Búsqueda por marca 
+			else if(brand!=null && codeHotel==null){//Bï¿½squeda por marca 
 				Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
 				journalArray=getJournalFoldersAndWCByType(groupId, brandFolder,ddm.get(0).getStructureKey(), journalArray);
 				if(_query.getWCByJournalFolderAndTypeStructure(groupId, brandFolder,ddm.get(0).getStructureKey())!=null){
@@ -241,7 +241,7 @@ public class JournalApi implements IJournalApi {
 					}
 				return journalArray;
 			}
-			else{//Si no se cumplen estos casos B´squeda desde la raiz 
+			else{//Si no se cumplen estos casos Bï¿½squeda desde la raiz 
 				journalArray=getJournalFoldersAndWCByType(groupId, idBase,ddm.get(0).getStructureKey(), journalArray);
 				if(_query.getWCByJournalFolderAndTypeStructure(groupId, idBase,ddm.get(0).getStructureKey())!=null){
 					for (JournalArticle journal : _query.getWCByJournalFolderAndTypeStructure(groupId, idBase,ddm.get(0).getStructureKey())) {
@@ -332,7 +332,7 @@ public class JournalApi implements IJournalApi {
 	}
 
 	
-	/***Métodos privados****/
+	/***Mï¿½todos privados****/
 	
 	private long getHotelFolderRootByConfigurationFolderWebcontent(Long groupId) throws PortalException{
 		JournalFolderImpl idFolder = null;
@@ -405,6 +405,17 @@ public class JournalApi implements IJournalApi {
 				}
 			}
 			return journalArray;
+		}
+
+		@Override
+		public JournalArticle saveWC(String json) throws PortalException {
+		return _query.createNewWC(json);
+		}
+
+		@Override
+		public JournalArticle updateWC(String json) throws PortalException {
+			// TODO Auto-generated method stub
+			return _query.UpdateWC(json);
 		}
 
 

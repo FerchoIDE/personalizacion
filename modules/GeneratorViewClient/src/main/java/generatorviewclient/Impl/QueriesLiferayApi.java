@@ -101,7 +101,7 @@ public class QueriesLiferayApi {
 		return ja_1;
 		}
 
-	/*Sección de journal folders*/	
+	/*Secciï¿½n de journal folders*/	
 	
 	public Long getFolderWC(Long siteID,String nameFolder,Long parentFolder){
 		List<Long> listIdFolders = new ArrayList<>();
@@ -345,28 +345,31 @@ public JournalFolderImpl getJournalFolderByName(Long siteID,Long parentFolder,St
 		}
 	}
 	
-	public JournalArticle insertWebContent(Long folderId,
-										   Long userId,
-										   Long groupId,
-										   Locale locale,String xml, String title,long folder, DDMStructure ddmStructure1, DDMTemplate ddmTemplate1)
-			throws PortalException {
+	
+	public JournalArticle createNewWC(String json) throws PortalException{
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(json);
+		System.out.println(jsonObj.toJSONString());
+		System.out.println(jsonObj.get("folderId"));
+		
+		String folderId = jsonObj.get("folderId").toString();
+		String userId = jsonObj.get("userId").toString();
+		String groupId = jsonObj.get("groupId").toString();
+		String localeDefault= jsonObj.get("localeDefault").toString();
+		String title= jsonObj.get("title").toString();
+		String ddmStructure= jsonObj.get("ddmStructure").toString();
+		String ddmTemplate= jsonObj.get("ddmTemplate").toString();
+		String description= jsonObj.get("description").toString();
+		
+		ServiceContext serviceContext = new ServiceContext();
+		serviceContext.setScopeGroupId(Long.parseLong(groupId));
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		
+		Locale locale= new Locale(localeDefault);
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
 		titleMap.put(locale, title);
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
-		descriptionMap.put(locale, title);
-		ServiceContext serviceContext = new ServiceContext();
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-		JournalArticle objectSave = JournalArticleLocalServiceUtil.addArticle(userId,
-				groupId, folderId, titleMap, null, xml,
-				ddmStructure1.getStructureKey(), ddmTemplate1.getTemplateKey(), serviceContext);
-		return objectSave;
-	}
-	
-	public String parseJsonToXML(String code) throws PortalException{
-		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(code);
-		System.out.println(jsonObj.toJSONString());
-		System.out.println(jsonObj.get("folderId"));
+		descriptionMap.put(locale, description);
+
 		JSONArray campos = jsonObj.getJSONArray("fields");
 		String xmlFinal = "";
 		for (int i = 0; i < campos.length(); i++) {
@@ -406,8 +409,90 @@ public JournalFolderImpl getJournalFolderByName(Long siteID,Long parentFolder,St
 		}
 		System.out.println("xmlFinal");
 		System.out.println(xmlFinal);
-		return xmlFinal;
+		String rootElement="<?xml version=\"1.0\"?><root available-locales=\"es_ES,en_US\" default-locale=\""+localeDefault+"\">"+xmlFinal+"</root>";
+		
+		JournalArticle objectSave = JournalArticleLocalServiceUtil.addArticle(Long.parseLong(userId),
+				Long.parseLong(groupId), Long.parseLong(folderId), titleMap, null, rootElement,
+				ddmStructure, ddmTemplate, serviceContext);
+		return objectSave;
 	}
+	
+	
+	
+	
+	public JournalArticle UpdateWC(String json) throws PortalException{
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(json);
+		System.out.println(jsonObj.toJSONString());
+		System.out.println(jsonObj.get("folderId"));
+		
+		String folderId = jsonObj.get("folderId").toString();
+		String userId = jsonObj.get("userId").toString();
+		String groupId = jsonObj.get("groupId").toString();
+		String localeDefault= jsonObj.get("localeDefault").toString();
+		String title= jsonObj.get("title").toString();
+		String articleId= jsonObj.get("articleId").toString();
+		ServiceContext serviceContext = new ServiceContext();
+		serviceContext.setScopeGroupId(Long.parseLong(groupId));
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		
+		Locale locale= new Locale(localeDefault);
+		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		titleMap.put(locale, title);
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		descriptionMap.put(locale, title);
+
+		JSONArray campos = jsonObj.getJSONArray("fields");
+		String xmlFinal = "";
+		for (int i = 0; i < campos.length(); i++) {
+			if(campos.getJSONObject(i).get("nestedFields")!=null){
+				if(campos.getJSONObject(i).get("type").equals("ddm-separator")){
+					xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
+							"selection_break",
+							"",
+							campos.getJSONObject(i).get("indexType").toString(),
+							readJson(campos.getJSONObject(i).get("nestedFields").toString()));
+		}else{
+					xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+						validateType(campos.getJSONObject(i).get("type").toString()),
+						evaluateContent(campos.getJSONObject(i).get("type").toString()
+								, campos.getJSONObject(i).getJSONArray("values")),
+						campos.getJSONObject(i).get("indexType").toString(),
+						readJson(campos.getJSONObject(i).get("nestedFields").toString()));
+			}
+		}else{
+			if(campos.getJSONObject(i).get("type").equals("ddm-separator")){
+					xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
+							"selection_break",
+							"",
+							campos.getJSONObject(i).get("indexType").toString(),
+							"");
+				}
+				else{
+				xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
+						validateType(campos.getJSONObject(i).get("type").toString()),
+						evaluateContent(campos.getJSONObject(i).get("type").toString()
+								, campos.getJSONObject(i).getJSONArray("values")),
+						campos.getJSONObject(i).get("indexType").toString(),
+						"");
+				}
+			}
+			
+		}
+		System.out.println("xmlFinal");
+		System.out.println(xmlFinal);
+		String rootElement="<?xml version=\"1.0\"?><root available-locales=\"es_ES,en_US\" default-locale=\""+localeDefault+"\">"+xmlFinal+"</root>";
+		
+		JournalArticle JournalToUpdate = JournalArticleLocalServiceUtil.getArticle(Long.parseLong(articleId));
+		JournalArticle JournalToInfo = JournalArticleLocalServiceUtil.getLatestArticle(JournalToUpdate.getResourcePrimKey());
+		JournalToInfo.setFolderId(Long.parseLong(folderId));
+		JournalToInfo.setUserId(Long.parseLong(userId));
+		JournalToInfo.setTitle(folderId);
+		JournalToInfo.setContent(rootElement);
+		JournalArticle objectSave = JournalArticleLocalServiceUtil.updateArticle(JournalToInfo.getUserId(), JournalToInfo.getGroupId(), JournalToInfo.getFolderId(), JournalToInfo.getArticleId(), JournalToInfo.getVersion()+0.1, JournalToInfo.getContent(), serviceContext);
+		return objectSave;
+	}
+	
+	
 	
 	
 	public String readJson(String nested) throws JSONException{
