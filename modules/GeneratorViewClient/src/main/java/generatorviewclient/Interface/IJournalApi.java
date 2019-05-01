@@ -140,6 +140,7 @@ public interface IJournalApi {
 	
 	public JournalArticle updateWC(String json) throws PortalException;
 
+	/**/
 	
 	
 }
