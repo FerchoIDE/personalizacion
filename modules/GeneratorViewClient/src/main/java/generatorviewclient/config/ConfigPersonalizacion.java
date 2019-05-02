@@ -22,4 +22,7 @@ public interface ConfigPersonalizacion {
 	@Meta.AD(deflt = "POSADAS|RATES", required = true, description = "Get path Base Folders Rates Webcontent")
 	public String[] JournalFolderRateBase();
 
+	@Meta.AD(deflt = "POSADAS")
+	public String name();
+
 }

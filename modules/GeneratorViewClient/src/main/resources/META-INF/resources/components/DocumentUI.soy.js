@@ -44,8 +44,6 @@ var soyIdom = goog.require('soy.idom');
  *  foldersDocuments: (!Array<?>|null|undefined),
  *  itemsResultSelected: (?),
  *  itemsAsociated: (?),
- *  brandSelected: (!goog.soy.data.SanitizedContent|null|string|undefined),
- *  hotelSelected: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  contextPath: (!goog.soy.data.SanitizedContent|string)
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
@@ -93,23 +91,12 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var itemsResultSelected = opt_data.itemsResultSelected;
   /** @type {?} */
   var itemsAsociated = opt_data.itemsAsociated;
-  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
-  var brandSelected = soy.asserts.assertType(opt_data.brandSelected == null || (goog.isString(opt_data.brandSelected) || opt_data.brandSelected instanceof goog.soy.data.SanitizedContent), 'brandSelected', opt_data.brandSelected, '!goog.soy.data.SanitizedContent|null|string|undefined');
-  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
-  var hotelSelected = soy.asserts.assertType(opt_data.hotelSelected == null || (goog.isString(opt_data.hotelSelected) || opt_data.hotelSelected instanceof goog.soy.data.SanitizedContent), 'hotelSelected', opt_data.hotelSelected, '!goog.soy.data.SanitizedContent|null|string|undefined');
   /** @type {!goog.soy.data.SanitizedContent|string} */
   var contextPath = soy.asserts.assertType(goog.isString(opt_data.contextPath) || opt_data.contextPath instanceof goog.soy.data.SanitizedContent, 'contextPath', opt_data.contextPath, '!goog.soy.data.SanitizedContent|string');
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'container');
   incrementalDom.elementOpenEnd();
-    incrementalDom.elementOpenStart('div');
-        incrementalDom.attr('style', 'display: none');
-    incrementalDom.elementOpenEnd();
-      soyIdom.print(hotelSelected);
-      incrementalDom.text('/');
-      soyIdom.print(brandSelected);
-    incrementalDom.elementClose('div');
     incrementalDom.elementOpenStart('div');
         incrementalDom.attr('class', 'row');
     incrementalDom.elementOpenEnd();
@@ -125,11 +112,11 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.elementOpenStart('ul');
                 incrementalDom.attr('class', 'list-group show-quick-actions-on-hover');
             incrementalDom.elementOpenEnd();
-              var field3794List = (soy.$$getMapKeys(itemsAsociated));
-              var field3794ListLen = field3794List.length;
-              for (var field3794Index = 0; field3794Index < field3794ListLen; field3794Index++) {
-                  var field3794Data = field3794List[field3794Index];
-                  if (field3794Data != '_XX_') {
+              if (itemsAsociated != null) {
+                var field3790List = (soy.$$getMapKeys(itemsAsociated));
+                var field3790ListLen = field3790List.length;
+                for (var field3790Index = 0; field3790Index < field3790ListLen; field3790Index++) {
+                    var field3790Data = field3790List[field3790Index];
                     incrementalDom.elementOpenStart('li');
                         incrementalDom.attr('class', 'list-group-item list-group-item-flex');
                     incrementalDom.elementOpenEnd();
@@ -143,7 +130,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                               incrementalDom.attr('width', '128');
                               incrementalDom.attr('style', 'max-height: 256px;max-width: 100%');
                               incrementalDom.attr('alt', 'Not Image');
-                              incrementalDom.attr('src', 'http://localhost:8080' + itemsAsociated[field3794Data].imageThumbnail);
+                              incrementalDom.attr('src', 'http://localhost:8080' + itemsAsociated[field3790Data].imageThumbnail);
                           incrementalDom.elementOpenEnd();
                           incrementalDom.elementClose('img');
                         incrementalDom.elementClose('span');
@@ -157,13 +144,13 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                           incrementalDom.elementOpenStart('a');
                               incrementalDom.attr('href', '#1');
                           incrementalDom.elementOpenEnd();
-                            soyIdom.print(itemsAsociated[field3794Data].filename);
+                            soyIdom.print(itemsAsociated[field3790Data].filename);
                           incrementalDom.elementClose('a');
                         incrementalDom.elementClose('h4');
                         incrementalDom.elementOpenStart('p');
                             incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(itemsAsociated[field3794Data].path);
+                          soyIdom.print(itemsAsociated[field3790Data].path);
                         incrementalDom.elementClose('p');
                       incrementalDom.elementClose('div');
                       incrementalDom.elementOpenStart('div');
@@ -172,7 +159,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.elementOpenStart('a');
                             incrementalDom.attr('onclick', deleteDocument);
                             incrementalDom.attr('href', '#1');
-                            incrementalDom.attr('id', field3794Data);
+                            incrementalDom.attr('id', field3790Data);
                             incrementalDom.attr('style', 'font-size: 18px');
                         incrementalDom.elementOpenEnd();
                           incrementalDom.elementOpenStart('svg');
@@ -189,7 +176,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                       incrementalDom.elementClose('div');
                     incrementalDom.elementClose('li');
                   }
-                }
+              }
             incrementalDom.elementClose('ul');
           incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');
@@ -321,14 +308,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.text('Selecciona una opci\u00F3n o');
                       incrementalDom.elementClose('option');
                       if (foldersDocuments) {
-                        var field3829List = foldersDocuments;
-                        var field3829ListLen = field3829List.length;
-                        for (var field3829Index = 0; field3829Index < field3829ListLen; field3829Index++) {
-                            var field3829Data = field3829List[field3829Index];
+                        var field3826List = foldersDocuments;
+                        var field3826ListLen = field3826List.length;
+                        for (var field3826Index = 0; field3826Index < field3826ListLen; field3826Index++) {
+                            var field3826Data = field3826List[field3826Index];
                             incrementalDom.elementOpenStart('option');
-                                incrementalDom.attr('value', field3829Data.folderId);
+                                incrementalDom.attr('value', field3826Data.folderId);
                             incrementalDom.elementOpenEnd();
-                              soyIdom.print(field3829Data.nameFolder);
+                              soyIdom.print(field3826Data.nameFolder);
                             incrementalDom.elementClose('option');
                           }
                       }
@@ -374,10 +361,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.attr('class', 'list-group show-quick-actions-on-hover');
             incrementalDom.elementOpenEnd();
               if (itemsResult) {
-                var field3865List = itemsResult;
-                var field3865ListLen = field3865List.length;
-                for (var field3865Index = 0; field3865Index < field3865ListLen; field3865Index++) {
-                    var field3865Data = field3865List[field3865Index];
+                var field3866List = itemsResult;
+                var field3866ListLen = field3866List.length;
+                for (var field3866Index = 0; field3866Index < field3866ListLen; field3866Index++) {
+                    var field3866Data = field3866List[field3866Index];
                     incrementalDom.elementOpenStart('li');
                         incrementalDom.attr('class', 'list-group-item list-group-item-flex');
                     incrementalDom.elementOpenEnd();
@@ -388,25 +375,27 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                             incrementalDom.attr('class', 'custom-control custom-checkbox');
                         incrementalDom.elementOpenEnd();
                           incrementalDom.elementOpen('label');
-                            if (itemsResultSelected[field3865Data.idFile]) {
-                              incrementalDom.elementOpenStart('input');
-                                  incrementalDom.attr('checked', '');
-                                  incrementalDom.attr('onclick', setSelectedResult);
-                                  incrementalDom.attr('value', field3865Data.all);
-                                  incrementalDom.attr('id', field3865Data.idFile);
-                                  incrementalDom.attr('class', 'custom-control-input');
-                                  incrementalDom.attr('type', 'checkbox');
-                              incrementalDom.elementOpenEnd();
-                              incrementalDom.elementClose('input');
-                            } else {
-                              incrementalDom.elementOpenStart('input');
-                                  incrementalDom.attr('onclick', setSelectedResult);
-                                  incrementalDom.attr('value', field3865Data.all);
-                                  incrementalDom.attr('id', field3865Data.idFile);
-                                  incrementalDom.attr('class', 'custom-control-input');
-                                  incrementalDom.attr('type', 'checkbox');
-                              incrementalDom.elementOpenEnd();
-                              incrementalDom.elementClose('input');
+                            if ((itemsResultSelected != null)) {
+                              if (itemsResultSelected[field3866Data.idFile]) {
+                                incrementalDom.elementOpenStart('input');
+                                    incrementalDom.attr('checked', '');
+                                    incrementalDom.attr('onclick', setSelectedResult);
+                                    incrementalDom.attr('value', field3866Data.all);
+                                    incrementalDom.attr('id', field3866Data.idFile);
+                                    incrementalDom.attr('class', 'custom-control-input');
+                                    incrementalDom.attr('type', 'checkbox');
+                                incrementalDom.elementOpenEnd();
+                                incrementalDom.elementClose('input');
+                              } else {
+                                incrementalDom.elementOpenStart('input');
+                                    incrementalDom.attr('onclick', setSelectedResult);
+                                    incrementalDom.attr('value', field3866Data.all);
+                                    incrementalDom.attr('id', field3866Data.idFile);
+                                    incrementalDom.attr('class', 'custom-control-input');
+                                    incrementalDom.attr('type', 'checkbox');
+                                incrementalDom.elementOpenEnd();
+                                incrementalDom.elementClose('input');
+                              }
                             }
                             incrementalDom.elementOpenStart('span');
                                 incrementalDom.attr('class', 'custom-control-label');
@@ -425,7 +414,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                               incrementalDom.attr('width', '128');
                               incrementalDom.attr('style', 'max-height: 256px;max-width: 100%');
                               incrementalDom.attr('alt', 'Not Image');
-                              incrementalDom.attr('src', 'http://localhost:8080' + field3865Data.imageThumbnail);
+                              incrementalDom.attr('src', 'http://localhost:8080' + field3866Data.imageThumbnail);
                           incrementalDom.elementOpenEnd();
                           incrementalDom.elementClose('img');
                         incrementalDom.elementClose('span');
@@ -439,13 +428,13 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                           incrementalDom.elementOpenStart('a');
                               incrementalDom.attr('href', '#1');
                           incrementalDom.elementOpenEnd();
-                            soyIdom.print(field3865Data.filename);
+                            soyIdom.print(field3866Data.filename);
                           incrementalDom.elementClose('a');
                         incrementalDom.elementClose('h4');
                         incrementalDom.elementOpenStart('p');
                             incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(field3865Data.path);
+                          soyIdom.print(field3866Data.path);
                         incrementalDom.elementClose('p');
                       incrementalDom.elementClose('div');
                     incrementalDom.elementClose('li');
@@ -586,14 +575,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                     incrementalDom.text('Selecciona la carpeta donde se almacenara el nuevo recurso');
                   incrementalDom.elementClose('option');
                   if (foldersDocuments) {
-                    var field3901List = foldersDocuments;
-                    var field3901ListLen = field3901List.length;
-                    for (var field3901Index = 0; field3901Index < field3901ListLen; field3901Index++) {
-                        var field3901Data = field3901List[field3901Index];
+                    var field3902List = foldersDocuments;
+                    var field3902ListLen = field3902List.length;
+                    for (var field3902Index = 0; field3902Index < field3902ListLen; field3902Index++) {
+                        var field3902Data = field3902List[field3902Index];
                         incrementalDom.elementOpenStart('option');
-                            incrementalDom.attr('value', field3901Data.folderId);
+                            incrementalDom.attr('value', field3902Data.folderId);
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(field3901Data.nameFolder);
+                          soyIdom.print(field3902Data.nameFolder);
                         incrementalDom.elementClose('option');
                       }
                   }
@@ -690,8 +679,6 @@ exports.render = $render;
  *  foldersDocuments: (!Array<?>|null|undefined),
  *  itemsResultSelected: (?),
  *  itemsAsociated: (?),
- *  brandSelected: (!goog.soy.data.SanitizedContent|null|string|undefined),
- *  hotelSelected: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  contextPath: (!goog.soy.data.SanitizedContent|string)
  * }}
  */
@@ -700,8 +687,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'DocumentUI.render';
 }
 
-exports.render.params = ["id","label","isOpenSelect","openSelectDocument","closeSelectDocument","saveSelectDocument","deleteDocument","changeFolder","searchByName","isOpenNew","openNewDocument","closeNewDocument","saveNewDocument","fileNew","setSelectedResult","itemsResult","foldersDocuments","itemsResultSelected","itemsAsociated","brandSelected","hotelSelected","contextPath"];
-exports.render.types = {"id":"any","label":"?","isOpenSelect":"bool","openSelectDocument":"?","closeSelectDocument":"?","saveSelectDocument":"?","deleteDocument":"?","changeFolder":"?","searchByName":"?","isOpenNew":"bool","openNewDocument":"?","closeNewDocument":"?","saveNewDocument":"?","fileNew":"?","setSelectedResult":"?","itemsResult":"list<?>","foldersDocuments":"list<?>","itemsResultSelected":"?","itemsAsociated":"?","brandSelected":"string","hotelSelected":"string","contextPath":"string"};
+exports.render.params = ["id","label","isOpenSelect","openSelectDocument","closeSelectDocument","saveSelectDocument","deleteDocument","changeFolder","searchByName","isOpenNew","openNewDocument","closeNewDocument","saveNewDocument","fileNew","setSelectedResult","itemsResult","foldersDocuments","itemsResultSelected","itemsAsociated","contextPath"];
+exports.render.types = {"id":"any","label":"?","isOpenSelect":"bool","openSelectDocument":"?","closeSelectDocument":"?","saveSelectDocument":"?","deleteDocument":"?","changeFolder":"?","searchByName":"?","isOpenNew":"bool","openNewDocument":"?","closeNewDocument":"?","saveNewDocument":"?","fileNew":"?","setSelectedResult":"?","itemsResult":"list<?>","foldersDocuments":"list<?>","itemsResultSelected":"?","itemsAsociated":"?","contextPath":"string"};
 templates = exports;
 return exports;
 

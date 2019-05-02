@@ -62,7 +62,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var selectedLanguage = soy.asserts.assertType(goog.isString(opt_data.selectedLanguage) || opt_data.selectedLanguage instanceof goog.soy.data.SanitizedContent, 'selectedLanguage', opt_data.selectedLanguage, '!goog.soy.data.SanitizedContent|string');
   /** @type {?} */
   var changeLanguage = opt_data.changeLanguage;
-  var finalValue__soy1677 = (value != null) ? value : '';
+  var finalValue__soy1676 = (value != null) ? value : '';
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
@@ -85,7 +85,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.attr('id', 'input_' + id);
               incrementalDom.attr('placeholder', placeholder);
               incrementalDom.attr('type', 'text');
-              incrementalDom.attr('value', finalValue__soy1677);
+              incrementalDom.attr('value', finalValue__soy1676);
           incrementalDom.elementOpenEnd();
           incrementalDom.elementClose('input');
         incrementalDom.elementClose('div');
@@ -122,16 +122,16 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenStart('ul');
               incrementalDom.attr('class', 'dropdown-menu dropdown-menu-right');
           incrementalDom.elementOpenEnd();
-            var languageId1716List = availableLanguageIds;
-            var languageId1716ListLen = languageId1716List.length;
-            for (var languageId1716Index = 0; languageId1716Index < languageId1716ListLen; languageId1716Index++) {
-                var languageId1716Data = languageId1716List[languageId1716Index];
+            var languageId1715List = availableLanguageIds;
+            var languageId1715ListLen = languageId1715List.length;
+            for (var languageId1715Index = 0; languageId1715Index < languageId1715ListLen; languageId1715Index++) {
+                var languageId1715Data = languageId1715List[languageId1715Index];
                 incrementalDom.elementOpen('li');
                   incrementalDom.elementOpenStart('a');
-                      incrementalDom.attr('id', languageId1716Data);
+                      incrementalDom.attr('id', languageId1715Data);
                       incrementalDom.attr('onclick', changeLanguage);
                       incrementalDom.attr('class', 'active autofit-row dropdown-item');
-                      incrementalDom.attr('href', '#' + (languageId1716Index + 1));
+                      incrementalDom.attr('href', '#' + (languageId1715Index + 1));
                   incrementalDom.elementOpenEnd();
                     incrementalDom.elementOpenStart('span');
                         incrementalDom.attr('class', 'autofit-col autofit-col-expand');
@@ -143,20 +143,20 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                             incrementalDom.attr('class', 'inline-item inline-item-before');
                         incrementalDom.elementOpenEnd();
                           incrementalDom.elementOpenStart('svg');
-                              incrementalDom.attr('class', 'lexicon-icon lexicon-icon-' + availableLanguageIdsStyle[languageId1716Data]);
+                              incrementalDom.attr('class', 'lexicon-icon lexicon-icon-' + availableLanguageIdsStyle[languageId1715Data]);
                               incrementalDom.attr('focusable', 'false');
                               incrementalDom.attr('role', 'presentation');
                           incrementalDom.elementOpenEnd();
                             incrementalDom.elementOpenStart('use');
-                                incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#' + availableLanguageIdsStyle[languageId1716Data]);
+                                incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#' + availableLanguageIdsStyle[languageId1715Data]);
                             incrementalDom.elementOpenEnd();
                             incrementalDom.elementClose('use');
                           incrementalDom.elementClose('svg');
                         incrementalDom.elementClose('span');
-                        soyIdom.print(languageId1716Data);
+                        soyIdom.print(languageId1715Data);
                       incrementalDom.elementClose('span');
                     incrementalDom.elementClose('span');
-                    if (languageId1716Data == defaultLanguage) {
+                    if (languageId1715Data == defaultLanguage) {
                       incrementalDom.elementOpenStart('span');
                           incrementalDom.attr('class', 'autofit-col');
                       incrementalDom.elementOpenEnd();

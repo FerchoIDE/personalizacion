@@ -16,7 +16,7 @@ class JournalUI extends Component {
         console.log('-----receive event openSelectJournal----')
         event.preventDefault();
 
-        new Service().getJournals('cod-1','rooms',this.setResultJournal)
+        new Service().getJournals(this.brandSelected,this.hotelSelected,this.setResultJournal)
 
     }
 
@@ -59,6 +59,8 @@ JournalUI.STATE = {
     itemsAsociated:{value:[]},
     itemsResult:{value:[]},
     itemsResultSelected:{value:{}},
+    brandSelected:{},
+    hotelSelected:{}
 }
 // Register component
 Soy.register(JournalUI, templates);

@@ -7,6 +7,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import generatorviewclient.api.impl.FileEntryApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import generatorviewclient.liferayservice.JournalArticleServices;
 import generatorviewclient.util.FileUtil;
@@ -49,11 +50,11 @@ public class SaveDocumentMedia implements MVCResourceCommand {
             String description = jsonObject.getString("description");
             Long folderId = jsonObject.getLong("folderId");
             if (folderId == null) {
-                folderId = new JournalArticleServices().getBaseFolder(portletGroupId, brand, codeHotel);
+                folderId = new FileEntryApi().getBaseFolder(portletGroupId, brand, codeHotel);
             }
             JSONObject jsonFile = jsonObject.getJSONObject("file");
 
-            com.liferay.portal.kernel.json.JSONObject resp = new JournalArticleServices().saveFile(portletGroupId, userId, folderId,
+            com.liferay.portal.kernel.json.JSONObject resp = new FileEntryApi().saveFile(portletGroupId, userId, folderId,
                     jsonFile.getString("fileData"), jsonFile.getString("fileName"),
                     description, jsonFile.getString("fileType"));
             if (!resp.getString("status").equalsIgnoreCase("BAD")) {

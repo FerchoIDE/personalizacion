@@ -953,7 +953,8 @@ public class JournalArticleServices {
 			//Contants.DLFILEENTRY_BASE=_configuration.DLFileEntryFolderBase();
 			String[] DLFILEENTRY_BASE = { "Marcas","Media" };
 			Contants.DLFILEENTRY_BASE= DLFILEENTRY_BASE;//_configuration.DLFileEntryFolderBase();
-			Contants.JOURNAL_HOTEL=_configuration.JournalFolderHotelBase();
+            String[] JOURNAL_HOTEL={"Posadas","Hotel"};
+			Contants.JOURNAL_HOTEL=JOURNAL_HOTEL;//_configuration.JournalFolderHotelBase();
 			/*for (String iterable_element : Contants.STRUCTURE_IDS) {
 				System.out.println("Registro actual en la configuraci�n, info="+iterable_element);
 

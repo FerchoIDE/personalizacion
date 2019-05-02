@@ -1,12 +1,12 @@
 package generatorviewclient.portlet.resource;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import generatorviewclient.liferayservice.JournalArticleServices;
 import generatorviewclient.util.FileUtil;
+import generatorviewclient.api.impl.FileEntryApi;
 import org.json.JSONObject;
 import org.osgi.service.component.annotations.Component;
 
@@ -38,21 +38,13 @@ public class GetDocumentMedia implements MVCResourceCommand {
             com.liferay.portal.kernel.json.JSONArray array;
             if(jsonObject.has("folderId")){
 
-                array = new JournalArticleServices().getFilesByCurrentFolderAndName(portletGroupId,jsonObject.getLong("folderId"),"");
+                array = new FileEntryApi().getFilesByCurrentFolderAndName(portletGroupId,jsonObject.getLong("folderId"),"");
             }else if(jsonObject.has("nameFolder")){
-                array = new JournalArticleServices().getFilesByName(portletGroupId,brand,jsonObject.getString("nameFolder"),codeHotel);
+                array = new FileEntryApi().getFilesByName(portletGroupId,brand,jsonObject.getString("nameFolder"),codeHotel);
                 //getWCByName
             }else{
                 array =
-                        // new JournalArticleServices().getFiles((portletGroupId,"AQUA","","AQC");//busqueda recursiva de archivos x M y CH
-                        // new JournalArticleServices().getFilesByName((portletGroupId,"AQUA","","AQC","junior");//busqueda recursiva de folder y archivos x M, CH y NH
-                        // new JournalArticleServices().getFolders((portletGroupId,"AQUA","","AQC");//busqueda recursiva de folder  x M y CH
-                        // new JournalArticleServices().getFilesByCurrentFolder((portletGroupId,currentFolder);//busqueda recursiva de Files  x M y CH
-                        // new JournalArticleServices().getFilesByByCurrentFolderAndName((portletGroupId,currentFolder,"junior");//busqueda recursiva de Files  x M y CH
-
-
-                        //new JournalArticleServices().getFilesAndFolder(portletGroupId,"AQUA","AQC");
-                        new JournalArticleServices().getFilesAndFolder(portletGroupId,brand,"",codeHotel);
+                       new FileEntryApi().getFilesAndFolder(portletGroupId,brand,"",codeHotel);
                 //getListJournalFolders
 
             }

@@ -3,6 +3,7 @@ package generatorviewclient.portlet.resource;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import generatorviewclient.api.impl.FileEntryApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import generatorviewclient.liferayservice.JournalArticleServices;
 import generatorviewclient.util.FileUtil;
@@ -39,7 +40,7 @@ public class GetFoldersMedia implements MVCResourceCommand {
             com.liferay.portal.kernel.json.JSONArray array =
 
                     //new JournalArticleServices().getFilesAndFolder(portletGroupId,"AQUA","AQC");
-                    new JournalArticleServices().getListFolders(portletGroupId, brand,  codeHotel);
+                    new FileEntryApi().getListFolders(portletGroupId, brand,  codeHotel);
 
             // System.out.println("after  service ");
             //  System.out.println(array.toJSONString());

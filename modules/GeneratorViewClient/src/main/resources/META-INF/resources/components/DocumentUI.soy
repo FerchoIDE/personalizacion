@@ -27,55 +27,49 @@
     {@param? itemsResult: list<?>}
     {@param? foldersDocuments: list<?>}
 
-    {@param itemsResultSelected: ?}
-    {@param itemsAsociated: ?}
+    {@param? itemsResultSelected: ?}
+    {@param? itemsAsociated: ?}
 
-
-    {@param? brandSelected: string}
-    {@param? hotelSelected: string}
 
     {@param contextPath: string}
 
     <div id="{$id}" class="container">
-        <div style="display: none">{$hotelSelected}/{$brandSelected}</div>
         <div class="row">
             <div class="col-10">
                 <div class="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
                     <div class="container">
                         <ul class="list-group show-quick-actions-on-hover">
+                            {if $itemsAsociated !=null}
+                                {foreach $field in keys($itemsAsociated)}
+                                    <li class="list-group-item list-group-item-flex">
 
-                            {foreach $field in keys($itemsAsociated)}
-                                {if $field !='_XX_'}
-                                <li class="list-group-item list-group-item-flex">
+                                        <div class="autofit-col">
+                                                <span class="inline-item">
+                                                     <img width="128" style="max-height: 256px;max-width: 100%"
+                                                          alt="Not Image"
+                                                          src="http://localhost:8080{$itemsAsociated[$field].imageThumbnail}"/>
 
-                                    <div class="autofit-col">
-                                            <span class="inline-item">
-                                                 <img width="128" style="max-height: 256px;max-width: 100%"
-                                                      alt="Not Image"
-                                                      src="http://localhost:8080{$itemsAsociated[$field].imageThumbnail}"/>
+                                                </span>
+                                        </div>
 
-                                            </span>
-                                    </div>
+                                        <div class="autofit-col autofit-col-expand">
+                                            <h4 class="list-group-title text-truncate">
+                                                <a href="#1">{$itemsAsociated[$field].filename}</a>
+                                            </h4>
+                                            <p class="list-group-subtitle text-truncate">{$itemsAsociated[$field].path}</p>
+                                        </div>
+                                        <div class="autofit-col">
+                                            <a onclick="{$deleteDocument}" href="#1" id="{$field}" style="font-size: 18px">
+                                                <svg class="lexicon-icon lexicon-icon-trash" focusable="false"
+                                                     role="presentation">
+                                                    <use href="{$contextPath}/images/icons/icons.svg#trash"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
 
-                                    <div class="autofit-col autofit-col-expand">
-                                        <h4 class="list-group-title text-truncate">
-                                            <a href="#1">{$itemsAsociated[$field].filename}</a>
-                                        </h4>
-                                        <p class="list-group-subtitle text-truncate">{$itemsAsociated[$field].path}</p>
-                                    </div>
-                                    <div class="autofit-col">
-                                        <a onclick="{$deleteDocument}" href="#1" id="{$field}" style="font-size: 18px">
-                                            <svg class="lexicon-icon lexicon-icon-trash" focusable="false"
-                                                 role="presentation">
-                                                <use href="{$contextPath}/images/icons/icons.svg#trash"></use>
-                                            </svg>
-                                        </a>
-                                    </div>
-
-                                </li>
-
-                                {/if}
-                            {/foreach}
+                                    </li>
+                                {/foreach}
+                            {/if}
                         </ul>
                     </div>
                 </div>
@@ -127,7 +121,6 @@
                                     <div class="input-group-item input-group-prepend">
                                         <select onchange="{$changeFolder}"  class="form-control" id="regularSelectElement">
                                             <option disabled selected>Selecciona una opción o</option>
-
                                             {if $foldersDocuments}
                                                 {foreach $field in $foldersDocuments}
                                                     <option value="{$field.folderId}">{$field.nameFolder}</option>
@@ -160,15 +153,17 @@
                                         <div class="autofit-col">
                                             <div class="custom-control custom-checkbox">
                                                 <label>
-                                                    {if $itemsResultSelected[$field.idFile]}
-                                                        <input checked onclick="{$setSelectedResult}"
-                                                               value="{$field.all}"
-                                                               id="{$field.idFile}" class="custom-control-input"
-                                                               type="checkbox"/>
-                                                    {else}
-                                                        <input onclick="{$setSelectedResult}" value="{$field.all}"
-                                                               id="{$field.idFile}" class="custom-control-input"
-                                                               type="checkbox"/>
+                                                    {if  isNonnull($itemsResultSelected)}
+                                                        {if  $itemsResultSelected[$field.idFile]}
+                                                            <input checked onclick="{$setSelectedResult}"
+                                                                   value="{$field.all}"
+                                                                   id="{$field.idFile}" class="custom-control-input"
+                                                                   type="checkbox"/>
+                                                        {else}
+                                                            <input onclick="{$setSelectedResult}" value="{$field.all}"
+                                                                   id="{$field.idFile}" class="custom-control-input"
+                                                                   type="checkbox"/>
+                                                        {/if}
                                                     {/if}
                                                     <span class="custom-control-label"></span>
                                                 </label>

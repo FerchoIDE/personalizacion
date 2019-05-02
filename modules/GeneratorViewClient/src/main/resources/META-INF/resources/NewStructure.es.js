@@ -23,6 +23,9 @@ class NewStructure extends Component {
         this.model.idStructure=this.structureId
         this.model.fields=this.data
         this.model.localeDefault=this.data['defaultLanguage']
+        this.on('modelChanged',function(event){
+            console.log('--------change model --- ')
+        })
     }
     closeOpenTab(event) {
         if(event === undefined)
@@ -84,6 +87,9 @@ class NewStructure extends Component {
         console.log('-------NewStructure-handleChangeValue-- v6********path='+event.path+"--value="+event.value)
         var result =this.model.setValue(event.path, event.value, event.language)
         console.log('-------NewStructure-handleChangeValue-- resut=='+result)
+    }
+    rendered(firstRender) {
+        console.log('----NewStructure ----rendered----'+this.id)
     }
 }
 

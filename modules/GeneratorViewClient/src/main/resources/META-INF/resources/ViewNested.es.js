@@ -18,6 +18,7 @@ import Service from "./service/Service";
  */
 class ViewNested extends Component {
     created() {
+        console.log('-----ViewNested event created----')
         this.checkedOption = this.checkedOption.bind(this);
 
         this.setState({checkedConcat: {} })
@@ -42,8 +43,9 @@ class ViewNested extends Component {
         this.setState({checkedConcat: _checkedConcat })
         this.setState({checkedSelected: _checkedSelected })
         console.log('finishh event checkedOption')
-
-
+    }
+    rendered(firstRender) {
+        console.log('----ViewNested ----rendered----'+this.id)
     }
 }
 ViewNested.STATE = {

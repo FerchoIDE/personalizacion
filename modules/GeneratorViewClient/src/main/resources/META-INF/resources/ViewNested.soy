@@ -16,7 +16,7 @@
 	{@param? closeOpenTab: ?}
 	{@param collapseInfo: map<string,bool>}
 	{@param? checkedOption: ?}
-	{@param checkedConcat: ?}
+	{@param? checkedConcat: ?}
 
 	{@param? brandSelected: string}
 	{@param? hotelSelected: string}
@@ -105,6 +105,8 @@
 												{param label: $field['label'][$defaultLanguage] /}
 												{param contextPath: $contextPath /}
 												{param itemsResultSelected: ['aa':'bb'] /}
+												{param brandSelected: $brandSelected/}
+												{param hotelSelected: $hotelSelected/}
 
 											{/call}
 										{elseif $field['type'] == 'ddm-documentlibrary'}
@@ -112,8 +114,6 @@
 												{param id: $field['name'] /}
 												{param label: $field['label'][$defaultLanguage] /}
 												{param contextPath: $contextPath /}
-												{param itemsResultSelected: ['aa':'bb'] /}
-												{param itemsAsociated: ['_XX_':'bb'] /}
 												{param brandSelected: $brandSelected/}
 												{param hotelSelected: $hotelSelected/}
 
@@ -141,13 +141,15 @@
 										{/if}
 										<div>&nbsp;&nbsp;</div>
 									{/foreach}
-									{if $structureId == '35796' and isNonnull($checkedConcat[$name]) and  ($name == 'Restrictions' or $name == 'Benefits1' or $name == 'occupationRate')}
-										</div>
+									{if isNonnull($checkedConcat)}
+										{if $structureId == '35796' and isNonnull($checkedConcat[$name]) and  ($name == 'Restrictions' or $name == 'Benefits1' or $name == 'occupationRate')}
+											</div>
 
-										<div class="input-group">
-										<span class="label label-info">
-											<span class="label-item label-item-expand">{$checkedConcat[$name]}</span>
-										</span>
+											<div class="input-group">
+											<span class="label label-info">
+												<span class="label-item label-item-expand">{$checkedConcat[$name]}</span>
+											</span>
+										{/if}
 									{/if}
 								</div>
 							</div>
