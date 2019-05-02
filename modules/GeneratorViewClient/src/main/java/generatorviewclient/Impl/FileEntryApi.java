@@ -24,25 +24,32 @@ public class FileEntryApi implements generatorviewclient.Interface.IFileEntryApi
 	private static final Log _log = LogFactoryUtil.getLog(FileEntryApi.class);
 	private static QueriesLiferayApi _query = new QueriesLiferayApi();
 
+	public Long getBaseFolder(Long groupId,String brand,String code_hotel) throws PortalException {
+		long id_base=getRootFolderByConfiguration(groupId);
+		if(code_hotel!=null && brand!=null) {
+			Long brandFolder = _query.getFolder(groupId, brand, id_base);
+			Long hc = _query.getFolder(groupId, code_hotel, brandFolder);
+			return hc;
+		}
+		return id_base;
+	}
+
 	@Override
-	public JSONArray saveFile(Long groupId,Long userId,Long folderId,String image,String name,String description,String mimeType) throws FileNotFoundException{
-		
-		JSONArray filesArray=JSONFactoryUtil.createJSONArray();
+	public JSONObject saveFile(Long groupId,Long userId,Long folderId,String image,String name,String description,String mimeType) throws FileNotFoundException{
+
+		JSONObject filesObject=null;
 		try {
 		ServiceContext serviceContext = new ServiceContext();
 		serviceContext.setScopeGroupId(groupId);
 		byte[] imageByte=Base64.decode(image);
 		
 		if(_query.getFilesByName(groupId, folderId, name)!=null && _query.getFilesByName(groupId, folderId, name).size()>0){
-			JSONObject filesObject=null;
 			filesObject=JSONFactoryUtil.createJSONObject();
-			filesObject.put("message","No se a podido guardar");
-			filesObject.put("causa", "El nombre del archivo ya existe");
-			filesArray.put(filesObject);
-			return filesArray;
+			filesObject.put("errorMessage","No se a podido guardar:El nombre del archivo ya existe");
+			filesObject.put("status","BAD");
+			return filesObject;
 		}
 		else{
-		JSONObject filesObject=null;
 		FileEntry file = DLAppLocalServiceUtil.addFileEntry(userId, groupId, folderId, name, mimeType, imageByte, serviceContext);
 		filesObject=JSONFactoryUtil.createJSONObject();
 		filesObject.put("idFile", file.getFileEntryId());
@@ -50,14 +57,17 @@ public class FileEntryApi implements generatorviewclient.Interface.IFileEntryApi
 		String url="/documents/"+file.getGroupId()+"/"+file.getFolderId()+"/"+file.getFileName()+"/"+file.getUuid()+"?t="+System.currentTimeMillis();;
 		filesObject.put("fullPath",url.replace(" ", "%20") );
 		filesObject.put("imageThumbnail",url.replace(" ", "%20")+"&imageThumbnail=1");
-		filesArray.put(filesObject);
-		return filesArray;
+		filesObject.put("all",filesObject.toJSONString());
+		return filesObject;
 		
 		}
 		} catch (PortalException e) {
-		e.printStackTrace();		
+			e.printStackTrace();
+			filesObject=JSONFactoryUtil.createJSONObject();
+			filesObject.put("errorMessage",e.getMessage());
+			filesObject.put("status","BAD");
+			return filesObject;
 		}
-	return filesArray;
 	
 }
 
@@ -128,19 +138,19 @@ public class FileEntryApi implements generatorviewclient.Interface.IFileEntryApi
 		if(code_hotel!=null && brand!=null){
 			Long brandFolder=_query.getFolder(groupId, brand, id_base);
 			Long hc=_query.getFolder(groupId, code_hotel, brandFolder);
-			return getFoldersJson(groupId, hc, filesArray);
+			return getFoldersJson(groupId, hc, null, filesArray);
 		}
 		else if(brand!=null && code_hotel==null){
 			Long brandFolder=_query.getFolder(groupId, brand, id_base);
 
-			return getFoldersJson(groupId, brandFolder, filesArray);
+			return getFoldersJson(groupId, brandFolder,null,  filesArray);
 		}
 		else if(code_hotel!=null && brand==null){
-			return getFoldersJson(groupId, id_base, filesArray);
+			return getFoldersJson(groupId, id_base,null, filesArray);
 		}else{
-			return getFoldersJson(groupId, id_base, filesArray);
+			return getFoldersJson(groupId, id_base,null,  filesArray);
 		}
-		
+
 	}
 
 	@Override
@@ -236,6 +246,7 @@ public JSONArray getFilesAndFolder(Long groupId,String brand,String type,String 
 			String url="/documents/"+file.getGroupId()+"/"+file.getFolderId()+"/"+file.getFileName()+"/"+file.getUuid()+"?t="+System.currentTimeMillis();;
 			filesObject.put("fullPath",url.replace(" ", "%20") );
 			filesObject.put("imageThumbnail",url.replace(" ", "%20")+"&imageThumbnail=1");
+			filesObject.put("all", filesObject.toJSONString());
 			return filesObject;
 
 	}
@@ -256,18 +267,26 @@ public JSONArray getFilesAndFolder(Long groupId,String brand,String type,String 
 		}
 		
 		/*Recupera la informacion de los folders*/
-		private JSONArray getFoldersJson(Long groupId,Long parent,JSONArray filesArray) throws PortalException{
+		private JSONArray getFoldersJson(Long groupId,Long parent,String nameParent,JSONArray filesArray) throws PortalException{
 			List<DLFolder> listFolders = getSubFolderByFolderParent(groupId, new Long(parent));
 			if(listFolders != null && listFolders.size() > 0){
 				JSONObject filesObject=null;
 				for (DLFolder object : listFolders) {
 					filesObject=JSONFactoryUtil.createJSONObject();
 					filesObject.put("folderId", object.getFolderId());
-					filesObject.put("nameFolder", object.getName());
-					filesArray.put(filesObject);
-					if(getFoldersJson(groupId,object.getFolderId(),filesArray)!= null && !getFoldersJson(groupId,object.getFolderId(),filesArray).isNull(0)){
-					 getFoldersJson(groupId,object.getFolderId(),filesArray);
+					String newNameParent;
+					if(nameParent==null) {
+						filesObject.put("nameFolder", object.getName());
+						newNameParent=object.getName();
+					}else {
+						filesObject.put("nameFolder", nameParent + "/" + object.getName());
+						newNameParent=nameParent + "/" + object.getName();
 					}
+					filesArray.put(filesObject);
+					///ojo con esto// TODO: 2019-04-15
+					//if(getFoldersJson(groupId,object.getFolderId(),newNameParent,filesArray)!= null && !getFoldersJson(groupId,object.getFolderId(),newNameParent,filesArray).isNull(0)){
+					getFoldersJson(groupId,object.getFolderId(),newNameParent,filesArray);
+					//}
 					
 				}
 			}
@@ -329,6 +348,7 @@ public JSONArray getFilesAndFolder(Long groupId,String brand,String type,String 
 							String url="/documents/"+file.getGroupId()+"/"+file.getFolderId()+"/"+file.getFileName()+"/"+file.getUuid()+"?t="+System.currentTimeMillis();;
 							filesObject.put("fullPath",url.replace(" ", "%20") );
 							filesObject.put("imageThumbnail",url.replace(" ", "%20")+"&imageThumbnail=1");
+							filesObject.put("all", filesObject.toJSONString());
 							filesArray.put(filesObject);
 						}
 						
