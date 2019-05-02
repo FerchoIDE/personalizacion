@@ -14,8 +14,7 @@ import org.osgi.service.component.annotations.Component;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Component(
         immediate = true,
@@ -84,8 +83,54 @@ else if (structureId.equalsIgnoreCase("201291"))
         collapseInfo.put("accordionPrincipalHeading", false);
         collapseInfo.put("accordionGeneralHeading", true);
         template.put("collapseInfo", collapseInfo);
+        template.put("structureId", structureId);
+
+        template.put("brands", getBrands());
+        template.put("hotels", getHotels());
+        template.put("isOnLoad", true);
+        template.put("hotelsXBrands", new LinkedList<>());
+
 
         return "NewStructure";
     }
 
+    public List<AbstractMap.SimpleEntry> getBrands(){
+        List<AbstractMap.SimpleEntry> result = new LinkedList<>();
+        result.add(new AbstractMap.SimpleEntry("FI","Fiesta Inn"));
+        result.add(new AbstractMap.SimpleEntry("FA","Fiesta Americana"));
+        result.add(new AbstractMap.SimpleEntry("FAG","Grand Fiesta Americana"));
+        result.add(new AbstractMap.SimpleEntry("EX","Explorean"));
+        result.add(new AbstractMap.SimpleEntry("AQUA","Live Aqua"));
+        return result;
+
+    }
+    public Map<String,List<AbstractMap.SimpleEntry>> getHotels(){
+        Map<String,List<AbstractMap.SimpleEntry>> result = new HashMap<>();
+        List<AbstractMap.SimpleEntry> lst1 = new LinkedList<>();
+        lst1.add(new AbstractMap.SimpleEntry("AGP","AGP"));
+        result.put("FI",lst1);
+
+        List<AbstractMap.SimpleEntry> lst2 = new LinkedList<>();
+        lst2.add(new AbstractMap.SimpleEntry("GAL","GAL"));
+        lst2.add(new AbstractMap.SimpleEntry("HSA","HSA"));
+        lst2.add(new AbstractMap.SimpleEntry("FAA","FAA"));
+        lst2.add(new AbstractMap.SimpleEntry("FAV","FAV"));
+        lst2.add(new AbstractMap.SimpleEntry("FAC","FAC"));
+        lst2.add(new AbstractMap.SimpleEntry("FAM","FAM"));
+        lst2.add(new AbstractMap.SimpleEntry("FXS","FXS"));
+        lst2.add(new AbstractMap.SimpleEntry("FCC","FCC"));
+        result.put("FA",lst2);
+
+
+        List<AbstractMap.SimpleEntry> lst3 = new LinkedList<>();
+        lst3.add(new AbstractMap.SimpleEntry("GPV","GPV"));
+        lst3.add(new AbstractMap.SimpleEntry("FCB","FCB"));
+        lst3.add(new AbstractMap.SimpleEntry("FLC","FLC"));
+        lst3.add(new AbstractMap.SimpleEntry("FBC","FBC"));
+        lst3.add(new AbstractMap.SimpleEntry("FGG","FGG"));
+        result.put("FAG",lst3);
+
+        return result;
+
+    }
 }

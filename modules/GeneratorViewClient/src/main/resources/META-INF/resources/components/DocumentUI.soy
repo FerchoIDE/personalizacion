@@ -6,19 +6,29 @@
 {template .render}
     {@param id: any}
     {@param? label: ?}
-    {@param? isOpenSelect: bool}
 
+    {@param? isOpenSelect: bool}
     {@param? openSelectDocument: ?}
     {@param? closeSelectDocument: ?}
     {@param? saveSelectDocument: ?}
     {@param? deleteDocument: ?}
+    {@param? changeFolder: ?}
+    {@param? searchByName: ?}
+
+    {@param? isOpenNew: bool}
+    {@param? openNewDocument: ?}
+    {@param? closeNewDocument: ?}
+    {@param? saveNewDocument: ?}
+    {@param? fileNew: ?}
 
 
     {@param? setSelectedResult: ?}
 
     {@param? itemsResult: list<?>}
-    {@param itemsResultSelected: ?}
-    {@param itemsAsociated: ?}
+    {@param? foldersDocuments: list<?>}
+
+    {@param? itemsResultSelected: ?}
+    {@param? itemsAsociated: ?}
 
 
     {@param contextPath: string}
@@ -29,39 +39,37 @@
                 <div class="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
                     <div class="container">
                         <ul class="list-group show-quick-actions-on-hover">
+                            {if $itemsAsociated !=null}
+                                {foreach $field in keys($itemsAsociated)}
+                                    <li class="list-group-item list-group-item-flex">
 
-                            {foreach $field in keys($itemsAsociated)}
-                                {if $field !='_XX_'}
-                                <li class="list-group-item list-group-item-flex">
+                                        <div class="autofit-col">
+                                                <span class="inline-item">
+                                                     <img width="128" style="max-height: 256px;max-width: 100%"
+                                                          alt="Not Image"
+                                                          src="http://localhost:8080{$itemsAsociated[$field].imageThumbnail}"/>
 
-                                    <div class="autofit-col">
-                                            <span class="inline-item">
-                                                 <img width="128" style="max-height: 256px;max-width: 100%"
-                                                      alt="Not Image"
-                                                      src="http://localhost:8080{$itemsAsociated[$field].fullPath}&imageThumbnail=1"/>
+                                                </span>
+                                        </div>
 
-                                            </span>
-                                    </div>
+                                        <div class="autofit-col autofit-col-expand">
+                                            <h4 class="list-group-title text-truncate">
+                                                <a href="#1">{$itemsAsociated[$field].filename}</a>
+                                            </h4>
+                                            <p class="list-group-subtitle text-truncate">{$itemsAsociated[$field].path}</p>
+                                        </div>
+                                        <div class="autofit-col">
+                                            <a onclick="{$deleteDocument}" href="#1" id="{$field}" style="font-size: 18px">
+                                                <svg class="lexicon-icon lexicon-icon-trash" focusable="false"
+                                                     role="presentation">
+                                                    <use href="{$contextPath}/images/icons/icons.svg#trash"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
 
-                                    <div class="autofit-col autofit-col-expand">
-                                        <h4 class="list-group-title text-truncate">
-                                            <a href="#1">{$itemsAsociated[$field].idFile}</a>
-                                        </h4>
-                                        <p class="list-group-subtitle text-truncate">{$itemsAsociated[$field].fileName}</p>
-                                    </div>
-                                    <div class="autofit-col">
-                                        <a onclick="{$deleteDocument}" href="#1" id="{$field}" style="font-size: 18px">
-                                            <svg class="lexicon-icon lexicon-icon-trash" focusable="false"
-                                                 role="presentation">
-                                                <use href="{$contextPath}/images/icons/icons.svg#trash"></use>
-                                            </svg>
-                                        </a>
-                                    </div>
-
-                                </li>
-
-                                {/if}
-                            {/foreach}
+                                    </li>
+                                {/foreach}
+                            {/if}
                         </ul>
                     </div>
                 </div>
@@ -79,12 +87,12 @@
                         </div>
                         &nbsp;
                         <div class="upload-btn-wrapper-custom">
-                            <button class="btn  btn-monospaced btn-sm btn-primary" type="button">
+                            <button onclick="{$openNewDocument}" class="btn  btn-monospaced btn-sm btn-primary" type="button">
                                 <svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
                                     <use href="{$contextPath}/images/icons/icons.svg#plus"></use>
                                 </svg>
                             </button>
-                            <input type="file" name="myfile"/>
+
                         </div>
 
                     </li>
@@ -111,13 +119,23 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-item input-group-prepend">
-                                        <input aria-label="Search"
+                                        <select onchange="{$changeFolder}"  class="form-control" id="regularSelectElement">
+                                            <option disabled selected>Selecciona una opción o</option>
+                                            {if $foldersDocuments}
+                                                {foreach $field in $foldersDocuments}
+                                                    <option value="{$field.folderId}">{$field.nameFolder}</option>
+                                                {/foreach}
+                                            {/if}
+                                        </select>
+                                    </div>
+                                    <div class="input-group-item input-group-prepend">
+                                        <input aria-label="Search" data-onkeyup="changeSearchText"
                                                class="form-control input-group-inset input-group-inset-after"
                                                name="mySearchInputName" placeholder="Ingrese un termino de busqueda"
                                                type="text"/>
                                     </div>
                                     <div class="input-group-append input-group-item input-group-item-shrink">
-                                        <button class="btn btn-monospaced btn-sm" type="button">
+                                        <button onclick="{$searchByName}" class="btn btn-monospaced btn-sm" type="button">
                                             <svg class="lexicon-icon lexicon-icon-plus" focusable="false"
                                                  role="presentation">
                                                 <use href="{$contextPath}/images/icons/icons.svg#search"></use>
@@ -135,15 +153,17 @@
                                         <div class="autofit-col">
                                             <div class="custom-control custom-checkbox">
                                                 <label>
-                                                    {if $itemsResultSelected[$field.path]}
-                                                        <input checked onclick="{$setSelectedResult}"
-                                                               value="{$field.all}"
-                                                               id="{$field.path}" class="custom-control-input"
-                                                               type="checkbox"/>
-                                                    {else}
-                                                        <input onclick="{$setSelectedResult}" value="{$field.all}"
-                                                               id="{$field.path}" class="custom-control-input"
-                                                               type="checkbox"/>
+                                                    {if  isNonnull($itemsResultSelected)}
+                                                        {if  $itemsResultSelected[$field.idFile]}
+                                                            <input checked onclick="{$setSelectedResult}"
+                                                                   value="{$field.all}"
+                                                                   id="{$field.idFile}" class="custom-control-input"
+                                                                   type="checkbox"/>
+                                                        {else}
+                                                            <input onclick="{$setSelectedResult}" value="{$field.all}"
+                                                                   id="{$field.idFile}" class="custom-control-input"
+                                                                   type="checkbox"/>
+                                                        {/if}
                                                     {/if}
                                                     <span class="custom-control-label"></span>
                                                 </label>
@@ -153,16 +173,16 @@
                                             <span class="inline-item">
                                                  <img width="128" style="max-height: 256px;max-width: 100%"
                                                       alt="Not Image"
-                                                      src="http://localhost:8080{$field.fullPath}&imageThumbnail=1"/>
+                                                      src="http://localhost:8080{$field.imageThumbnail}"/>
 
                                             </span>
                                         </div>
 
                                         <div class="autofit-col autofit-col-expand">
                                             <h4 class="list-group-title text-truncate">
-                                                <a href="#1">{$field.idFile}</a>
+                                                <a href="#1">{$field.filename}</a>
                                             </h4>
-                                            <p class="list-group-subtitle text-truncate">{$field.fileName}</p>
+                                            <p class="list-group-subtitle text-truncate">{$field.path}</p>
                                         </div>
                                     </li>
                                 {/foreach}
@@ -192,4 +212,81 @@
 
         </div>
 
+        <div aria-labelledby="clayLargeModalLabelNew" class="fade modal {$isOpenNew ? 'show in' : ''}"
+             style="{$isOpenNew ? '' : 'display: none'}" id="{$id}_ModalNew" role="dialog" tabindex="-1">
+            <div class="modal-info modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title" id="claySmallModalLabelNew">Nuevo {$label}</div>
+
+                        <button aria-labelledby="Close" onclick="{$closeNewDocument}" class="close"
+                                data-dismiss="modal" role="button" type="button">
+                            <svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
+                                <use href="{$contextPath}/images/icons/icons.svg#times"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="container-fluid">
+
+                            <div class="alert alert-danger" id="{$id}_AlertErrorNew" style="display:none" role="alert">
+                                <span class="alert-indicator">
+                                    <svg class="lexicon-icon lexicon-icon-exclamation-full" focusable="false" role="presentation">
+                                        <use href="{$contextPath}/images/icons/icons.svg#exclamation-full"></use>
+                                    </svg>
+                                </span>
+                                <strong class="lead">Error:</strong><div id="{$id}_MsgErrorNew"></div>
+                            </div>
+
+
+
+
+                                <div class="form-group">
+                                    <select  class="form-control" id="{$id}_FolderNew">
+                                        <option disabled selected>Selecciona la carpeta donde se almacenara el nuevo recurso</option>
+
+                                        {if $foldersDocuments}
+                                            {foreach $field in $foldersDocuments}
+                                                <option value="{$field.folderId}">{$field.nameFolder}</option>
+                                            {/foreach}
+                                        {/if}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input id="{$id}_DescriptionNew"  class="form-control"
+                                           class="form-control input-group-inset input-group-inset-after"
+                                           name="mySearchInputName" placeholder="Ingrese la descripción del nuevo recurso"
+                                           type="text"/>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" onchange="{$fileNew}" type="file" name="myfile"/>
+                                </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="modal-item-last">
+                            <div class="btn-group">
+                                <div class="btn-group-item">
+                                    <button class="btn btn-secondary" onclick="{$closeNewDocument}"
+                                            data-dismiss="modal" type="button">Cancelar
+                                    </button>
+                                </div>
+
+                                <div class="btn-group-item" data-dismiss="modal" >
+                                    <button class="btn btn-primary" id="{$id}_BtnNew" disabled onclick="{$saveNewDocument}" type="button">
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 {/template}

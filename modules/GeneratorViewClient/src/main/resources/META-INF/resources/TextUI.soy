@@ -6,6 +6,8 @@
 {template .render}
 	{@param id: any}
 	{@param? label: ?}
+	{@param localizable: bool}
+	{@param? path: string}
 	{@param? value: string}
 	{@param? placeholder: any}
 	{@param type: any}
@@ -14,13 +16,24 @@
 	{let $finalValue: isNonnull($value) ? $value : '' /}
 	<div id="{$id}" class="form-group-item">
 			<label for="input_{$id}">{$label}</label>
+
+		{if $localizable == true}
 			{foreach $language in $availableLanguageIds}
 				{if $language == $defaultLanguageId}
-					<input class="form-control"  id="input_{$id}_{$language}" placeholder="{$placeholder}"  type="{$type}"/>{\t}
+					<input class="form-control" data-onkeyup="handleChange" id="input_{$id}_{$language}"
+						   data-language="{$language}" data-path="{$path}"
+						   placeholder="{$placeholder}" type="{$type}"/>{\t}
 				{else}
-					<input class="form-control"   id="input_{$id}_{$language}" placeholder="{$placeholder}" style="display: none"  type="{$type}"/>{\t}
+					<input class="form-control" id="input_{$id}_{$language}" placeholder="{$placeholder}"
+						   data-language="{$language}" data-path="{$path}"
+						   style="display: none" type="{$type}"/>{\t}
 				{/if}
 
 			{/foreach}
+		{else}
+			<input class="form-control" data-onkeyup="handleChange" id="input_{$id}"
+				    data-path="{$path}"
+				   placeholder="{$placeholder}" type="{$type}"/>
+		{/if}
 		 </div>
 {/template}

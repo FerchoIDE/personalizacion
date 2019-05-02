@@ -1,11 +1,12 @@
-import Component from 'metal-component/src/Component';
-import Soy from 'metal-soy/src/Soy';
+import Component from 'metal-component';
+import Soy from 'metal-soy';
 import templates from './TextLocalizableUI.soy';
 import TextUI from './TextUI.es'
 /**
  * TextUI Component
  */
 class TextLocalizableUI extends Component {
+
 }
 
 // Register component
