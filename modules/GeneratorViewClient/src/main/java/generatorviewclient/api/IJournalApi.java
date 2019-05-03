@@ -1,4 +1,4 @@
-package generatorviewclient.Interface;
+package generatorviewclient.api;
 
 import java.util.List;
 
@@ -143,4 +143,59 @@ public interface IJournalApi {
     /**/
 
 
+
+    /*busqueda tosdos los contenidos recursivos de un tipo
+    groupid,
+    marca,(podria ser opcional)
+    code hotel(podria ser opcional)
+    tipo de contenido (Id de la estructura) si este es null es sobre todos los contenidos
+     */
+
+
+
+
+    /*busqueda todos los contenidos recursivos de un tipo que conincidan en el titulo
+    groupid,
+    marca,(podria ser opcional)
+    code hotel(podria ser opcional)
+    tipo de contenido (Id de la estructura) si este es null es sobre todos los contenidos
+    titulo del contenido, considerar usar like y no sensible a mayusculas minusculas
+     */
+
+
+
+    /*busqueda todos los contenidos recursivos dentro de un folder
+    groupid,
+    folderid
+    tipo de contenido (Id de la estructura) si este es null es sobre todos los contenidos
+     */
+
+
+    /*todas las carpetas dentro de
+    groupid,
+    marca,(podria ser opcional)
+    code hotel(podria ser opcional)
+     */
+
+
+
+    /*buscar si un codigo de hotel ya existe, si existe indicar el titulo dle hotel
+    code hotel
+
+     */
+
+
+    /* un arreglo de listado de marcas
+    groupid,
+     */
+
+    /* un arreglo de listado hoteles
+    groupid,
+    marca
+     */
+
+    /*
+    Recuperar un contenido y la estructura asociada a este
+
+     */
 }

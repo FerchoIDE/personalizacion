@@ -3,6 +3,7 @@ package generatorviewclient.api.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import generatorviewclient.api.IJournalApi;
 import generatorviewclient.constants.Contants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.model.JournalArticle;
@@ -19,9 +20,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 
-public class JournalApi implements generatorviewclient.Interface.IJournalApi {
+public class JournalApi implements IJournalApi {
     private static final Log _log = LogFactoryUtil.getLog(JournalApi.class);
     private static QueriesLiferayApi _query = new QueriesLiferayApi();
+
 
     @Override
     public JSONArray getListJournalFolders(Long groupId,String brand,String codeHotel) throws PortalException{

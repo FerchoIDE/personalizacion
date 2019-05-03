@@ -1,20 +1,17 @@
 package generatorviewclient.portlet.resource;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import generatorviewclient.api.impl.JournalApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
-import generatorviewclient.liferayservice.JournalArticleServices;
 import generatorviewclient.util.FileUtil;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -44,15 +41,15 @@ public class GetJournalsResource implements MVCResourceCommand {
 
             String brand = jsonObject.getString("brand");
             String codeHotel = jsonObject.getString("codeHotel");
-            com.liferay.portal.kernel.json.JSONArray array;
+            com.liferay.portal.kernel.json.JSONArray array=null;
             if(jsonObject.has("folderId")){
 
-                array = new JournalArticleServices().getFilesByCurrentFolderAndName(portletGroupId,jsonObject.getLong("folderId"),"");
+               // array = new JournalApi().getFilesByCurrentFolderAndName(portletGroupId,jsonObject.getLong("folderId"),"");
             }else if(jsonObject.has("nameFolder")){
-                array = new JournalArticleServices().getWCByName(portletGroupId,brand,jsonObject.getString("nameFolder"),codeHotel);
+               // array = new JournalApi().getWCByName(portletGroupId,brand,jsonObject.getString("nameFolder"),codeHotel);
                 //getWCByName
             }else{
-                array = new JournalArticleServices().getListJournalFolders(portletGroupId,brand,codeHotel);
+                array = new JournalApi().getListJournalFolders(portletGroupId,brand,codeHotel);
                 //getListJournalFolders
             }
 
