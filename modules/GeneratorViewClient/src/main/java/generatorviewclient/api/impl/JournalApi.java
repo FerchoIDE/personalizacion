@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 
-public class JournalApi implements generatorviewclient.Interface.IJournalApi {
+public class JournalApi implements generatorviewclient.api.IJournalApi {
     private static final Log _log = LogFactoryUtil.getLog(JournalApi.class);
     private static QueriesLiferayApi _query = new QueriesLiferayApi();
 

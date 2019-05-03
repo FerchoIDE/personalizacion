@@ -25,21 +25,5 @@ public interface ConfigPersonalizacion {
 	@Meta.AD(deflt = "POSADAS")
     public String name();
 	
-=======
-	@Meta.AD(deflt = "119201|119204|121330|121324|119207|121327|121333|121321|121312|121309|121318|121315|119198|32880", required = true, description = "Get id Base Structures Liferay")
-	public String[] StructureId();
 
-	@Meta.AD(deflt = "POSADAS|HOTEL", required = true, description = "Get path Base Folders FileSystem")
-	public String[] DLFileEntryFolderBase();
-
-	@Meta.AD(deflt = "POSADAS|HOTEL", required = true, description = "Get path Base Folders Hotel Webcontent")
-	public String[] JournalFolderHotelBase();
-
-	@Meta.AD(deflt = "POSADAS|RATES", required = true, description = "Get path Base Folders Rates Webcontent")
-	public String[] JournalFolderRateBase();
-
-	@Meta.AD(deflt = "POSADAS")
-	public String name();
-
->>>>>>> origin/develop
 }
