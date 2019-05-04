@@ -5,7 +5,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import generatorviewclient.Impl.FileEntryApi;
+import generatorviewclient.api.impl.FileEntryApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import org.osgi.service.component.annotations.Component;
 
