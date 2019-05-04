@@ -117,6 +117,8 @@ public interface IJournalApi {
     
     public List<JournalArticle> getWebcontentRecursiveByType(Long groupId,Long folderId,Long typeContent) throws PortalException;
 
+    public List<JournalArticle> getWebcontentRecursiveByType(Long groupId,String marca,String codeHotel,Long typeContent) throws PortalException;
+
 
 
     /*busqueda todos los contenidos recursivos de un tipo que conincidan en el titulo
@@ -126,10 +128,11 @@ public interface IJournalApi {
     tipo de contenido (Id de la estructura) si este es null es sobre todos los contenidos
     titulo del contenido, considerar usar like y no sensible a mayusculas minusculas
      */
-    public void getWebcontentRecursiveByTitle(Long groupId,String marca,String codeHotel,String title,String contentType);
+    public List<JournalArticle> getWebcontentRecursiveByTitle(Long groupId,String marca,String codeHotel,String title,String contentType) throws PortalException;
     
-    public void getWebcontentRecursiveByTitle(Long groupId,Long folderId,String title,Long contentType);
+    public List<JournalArticle> getWebcontentRecursiveByTitle(Long groupId,Long folderId,String title,Long structureId) throws PortalException;
 
+    public List<JournalArticle> getWebcontentRecursiveByTitle(Long groupId,String marca,String codeHotel,String title,Long structureId) throws PortalException;
 
 
     /*busqueda todos los contenidos recursivos dentro de un folder
@@ -139,6 +142,9 @@ public interface IJournalApi {
      */
     public List<JournalArticle> getWCAndJournalFolderByName(Long groupId,String brand,String code_hotel,String name) throws PortalException;
 
+    public List<JournalArticle> getWCAndJournalFolderByName(Long groupId,String brand,String code_hotel,String name,Long structureId) throws PortalException;
+
+    public List<JournalArticle> getWCByFolderId(Long groupId, Long folderId) throws PortalException;
 
     /*todas las carpetas dentro de
     groupid,
@@ -154,6 +160,8 @@ public interface IJournalApi {
 
      */
     public List<JournalArticle> searchWebContentByCodeHotelFirstLevel(Long groupId,String structureName,String code) throws PortalException;
+   
+    public List<JournalArticle> searchWebContentByCodeHotelFirstLevelByFolder(Long groupId,String structureName,String code,Long folderId) throws PortalException;
 
 
     /* un arreglo de listado de marcas
@@ -168,7 +176,9 @@ public interface IJournalApi {
      */
     
     public JSONArray getListJournalFoldersByBrand(Long groupId,Long brand) throws PortalException;
-    public List<JournalArticle> getWCByFolderId(Long groupId, Long folderId) throws PortalException;
+    
+   
+    public JSONArray getListJournalFoldersByBrand(Long groupId,String brand) throws PortalException;
 
    
     /*

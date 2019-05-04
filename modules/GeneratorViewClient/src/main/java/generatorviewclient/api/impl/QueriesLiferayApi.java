@@ -70,13 +70,10 @@ public class QueriesLiferayApi {
         List<JournalFolder> listFolders = getSubFolderByJournalFolderParent(groupId, new Long(parent));
         if(listFolders != null && listFolders.size() > 0){
             for (JournalFolder object : listFolders) {
-                System.out.println("folder:"+ object.getFolderId());
                 if(getWCByJournalFolderAndName(groupId, object.getFolderId(),namefile)!= null && !getWCByJournalFolderAndName(groupId, object.getFolderId(),namefile).isEmpty()){
                     for (JournalArticle ja : getWCByJournalFolderAndName(groupId, object.getFolderId(),namefile)) {
                         if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion())){
                             journalArray.add(ja);
-                        }else{
-                            journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(ja.getResourcePrimKey()));
                         }
                     }
                 }
@@ -88,7 +85,24 @@ public class QueriesLiferayApi {
         return journalArray;
     }
 
-
+    public List<JournalArticle> getFoldersWCByNameSI(Long groupId,Long parent,String namefile,Long structureId,List<JournalArticle> journalArray) throws PortalException{
+        List<JournalFolder> listFolders = getSubFolderByJournalFolderParent(groupId, new Long(parent));
+        if(listFolders != null && listFolders.size() > 0){
+            for (JournalFolder object : listFolders) {
+                if(getWCByJournalFolderAndNameSI(groupId, object.getFolderId(),namefile,structureId)!= null && !getWCByJournalFolderAndNameSI(groupId, object.getFolderId(),namefile,structureId).isEmpty()){
+                    for (JournalArticle ja : getWCByJournalFolderAndName(groupId, object.getFolderId(),namefile)) {
+                        if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion())){
+                            journalArray.add(ja);
+                        }
+                    }
+                }
+                if(getFoldersWCByNameSI(groupId,object.getFolderId(),namefile,structureId,journalArray)!= null && !getFoldersWCByNameSI(groupId,object.getFolderId(),namefile,structureId,journalArray).isEmpty()){
+                    getFoldersWCByNameSI(groupId,object.getFolderId(),namefile,structureId,journalArray);
+                }
+            }
+        }
+        return journalArray;
+    }
 
 
     public List<JournalFolderImpl> getRateFolder1(long parentFolder,String nameFolder,Long siteID){
@@ -120,12 +134,31 @@ public class QueriesLiferayApi {
 
     }
 
-    public List<JournalFolder> getSubFolderByJournalFolderParent(Long groupId,Long idFolder){
-        List<JournalFolder> dlFolders = JournalFolderLocalServiceUtil.getFolders(groupId, idFolder);
-        if(dlFolders.size()>0){
-            return dlFolders;
-        }
-        return new ArrayList<>();
+    public List<JournalFolder> getSubFolderByJournalFolderParent(Long groupId,Long idFolder) throws PortalException{
+    	List<JournalFolder> dlFolders= new ArrayList<>();
+    	if(idFolder!=0){
+    	JournalFolder folder=JournalFolderLocalServiceUtil.getFolder(idFolder);  
+    	if(folder!=null){
+        for (JournalFolder journalFolder : JournalFolderLocalServiceUtil.getFolders(groupId, idFolder)) {
+        	dlFolders.add(journalFolder);
+    	}
+    	dlFolders.add(folder);
+    	if(dlFolders.size()>0){
+    	return dlFolders;
+    	}
+    	}
+    	}
+    	else {
+    	return	getALLJournalFolders(groupId);
+    	}
+    	return new ArrayList<>();
+    } 
+    
+    public List<JournalFolder> getALLJournalFolders(Long siteID){
+    	DynamicQuery queryJournalFolder = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalFolderImpl.class, "journalFolder",PortalClassLoaderUtil.getClassLoader());
+    	queryJournalFolder.add( RestrictionsFactoryUtil.eq("groupId",new Long(siteID)));
+    	List<JournalFolder> journalfolderResults = JournalArticleResourceLocalServiceUtil.dynamicQuery(queryJournalFolder);		
+    	return journalfolderResults;
     }
     public JournalFolderImpl getJournalFolderByName(Long siteID,Long parentFolder,String nameFolder){
         DynamicQuery queryJournalFolder = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalFolderImpl.class, "journalFolder",PortalClassLoaderUtil.getClassLoader());
@@ -141,6 +174,34 @@ public class QueriesLiferayApi {
         queryJournal.add(RestrictionsFactoryUtil.eq("DDMStructureKey", structureKey));
         queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
         queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
+        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
+        if(journalResults.size()>0){
+            return journalResults;
+        }
+        return new ArrayList<>();
+    }
+    
+    public List<JournalArticleImpl> getWCByJournalFolderAndTypeStructureTitle(Long groupId,Long folderId,String structureKey,String title) throws PortalException{
+        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
+        queryJournal.add(RestrictionsFactoryUtil.eq("DDMStructureKey", structureKey));
+        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
+        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
+        queryJournal.add(RestrictionsFactoryUtil.ilike("title", new StringBuilder("%>").append(title).append("<%").toString()));
+
+        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
+        if(journalResults.size()>0){
+            return journalResults;
+        }
+        return new ArrayList<>();
+    }
+    
+    public List<JournalArticleImpl> getWCByJournalFolderAndTypeStructureTitleStructureId(Long groupId,Long folderId,Long structureId,String title) throws PortalException{
+        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
+        queryJournal.add(RestrictionsFactoryUtil.eq("structureId", structureId));
+        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
+        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
+        queryJournal.add(RestrictionsFactoryUtil.ilike("title", new StringBuilder("%>").append(title).append("<%").toString()));
+
         List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
         if(journalResults.size()>0){
             return journalResults;
@@ -207,7 +268,21 @@ public class QueriesLiferayApi {
         }
         return new ArrayList<>();
     }
+    public List<JournalArticleImpl> getWCByJournalFolderAndNameSI(Long groupId,Long folderId,String namefile,Long structureId) throws PortalException{
+        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
+        queryJournal.add(RestrictionsFactoryUtil.ilike("title", new StringBuilder("%>").append(namefile).append("<%").toString()));
+        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
+        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
+        queryJournal.add( RestrictionsFactoryUtil.eq("structureId",new Long(structureId)));
 
+        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
+        if(journalResults.size()>0){
+            return journalResults;
+        }
+        return new ArrayList<>();
+    }
+    
+    
     public List<Long> journalByBrandFolder(long parentFolder,Long siteID){
         List<Long> listIdFolders = new ArrayList<>();
         DynamicQuery query_journal_folder = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalFolderImpl.class, "journalFolder",PortalClassLoaderUtil.getClassLoader());
@@ -698,6 +773,18 @@ public class QueriesLiferayApi {
         return new ArrayList<>();
     }
 
+    public List<JournalArticleImpl> getWCByCodeFolder(Long groupId,String structureId,String code,Long parentFolderId) throws PortalException{
+        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
+        queryJournal.add(RestrictionsFactoryUtil.ilike("content", new StringBuilder("%><![CDATA[").append(code).append("]]></dynamic-content>%").toString()));
+        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
+        queryJournal.add( RestrictionsFactoryUtil.eq("parentFolderId",new Long(parentFolderId)));
+        queryJournal.add(PropertyFactoryUtil.forName("DDMStructureKey").eq(new String(structureId)));
+        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
+        if(journalResults.size()>0){
+            return journalResults;
+        }
+        return new ArrayList<>();
+    }
 
     public List<JournalArticle> getFoldersWCByCode(Long groupId,String nameStructure,String code) throws PortalException{
         List<JournalArticle> journalArray = new ArrayList<>();
@@ -706,8 +793,35 @@ public class QueriesLiferayApi {
             for (JournalArticle ja : getWCByCode(groupId,structureKey.get(0).getStructureKey(),code)) {
                 if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion())){
                     journalArray.add(ja);
-                }else{
-                    journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(ja.getResourcePrimKey()));
+                }
+            }
+        }
+
+        return journalArray;
+    }
+    
+    public List<JournalArticle> getFoldersWCByCodeFolderId(Long groupId,String nameStructure,String code,Long folderId) throws PortalException{
+        List<JournalArticle> journalArray = new ArrayList<>();
+        List<DDMStructure> structureKey = getStruct("%>"+nameStructure+"<%", groupId);
+        if(getWCByCodeFolder(groupId,structureKey.get(0).getStructureKey(),code,folderId)!= null && !getWCByCodeFolder(groupId,structureKey.get(0).getStructureKey(),code,folderId).isEmpty()){
+            for (JournalArticle ja : getWCByCodeFolder(groupId,structureKey.get(0).getStructureKey(),code,folderId)) {
+                if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion())){
+                    journalArray.add(ja);
+                }
+            }
+        }
+
+        return journalArray;
+    }
+    
+    
+    public List<JournalArticle> getFoldersWCByCode(Long groupId,String nameStructure,String code,Long filderId) throws PortalException{
+        List<JournalArticle> journalArray = new ArrayList<>();
+        List<DDMStructure> structureKey = getStruct("%>"+nameStructure+"<%", groupId);
+        if(getWCByCode(groupId,structureKey.get(0).getStructureKey(),code)!= null && !getWCByCode(groupId,structureKey.get(0).getStructureKey(),code).isEmpty()){
+            for (JournalArticle ja : getWCByCode(groupId,structureKey.get(0).getStructureKey(),code)) {
+                if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion())){
+                    journalArray.add(ja);
                 }
             }
         }

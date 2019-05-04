@@ -89,49 +89,19 @@ public class JournalApi implements IJournalApi {
         if(codeHotel!=null && brand!=null){
             Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
             Long hotelCode=_query.getFolderWC(groupId, codeHotel, brandFolder);
-            journalArray=_query.getFoldersWCByName(groupId, idBase,name, journalArray);
-            if(_query.getWCByJournalFolder(groupId, hotelCode)!=null){
-                for (JournalArticle journal : _query.getWCByJournalFolder(groupId, hotelCode)) {
-                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                        journalArray.add(journal);
-                    }
-                }
-            }
-            return journalArray;
-
+            return _query.getFoldersWCByName(groupId, hotelCode,name, journalArray);
+           
         }
         else if(brand!=null && codeHotel==null){
             Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
-            journalArray=_query.getFoldersWCByName(groupId, idBase,name, journalArray);
-            if(_query.getWCByJournalFolderAndName(groupId, idBase,name)!=null){
-                for (JournalArticle journal : _query.getWCByJournalFolderAndName(groupId, brandFolder,name)) {
-                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                        journalArray.add(journal);
-                    }
-                }
-            }
-            return journalArray;
+            return _query.getFoldersWCByName(groupId, brandFolder,name, journalArray);
+     
         }
         else if(codeHotel!=null && brand==null){
-            journalArray=_query.getFoldersWCByName(groupId, idBase,name, journalArray);
-            if(_query.getWCByJournalFolderAndName(groupId, idBase,name)!=null){
-                for (JournalArticle journal : _query.getWCByJournalFolderAndName(groupId, idBase,name)) {
-                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                        journalArray.add(journal);
-                    }
-                }
-            }
-            return journalArray;
+            return _query.getFoldersWCByName(groupId, idBase,name, journalArray);
+          
         }else{
-            journalArray=_query.getFoldersWCByName(groupId, idBase,name, journalArray);
-            if(_query.getWCByJournalFolderAndName(groupId, idBase,name)!=null){
-                for (JournalArticle journal : _query.getWCByJournalFolderAndName(groupId, idBase,name)) {
-                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                        journalArray.add(journal);
-                    }
-                }
-            }
-            return journalArray;
+            return _query.getFoldersWCByName(groupId, idBase,name, journalArray);
         }
 
     }
@@ -142,49 +112,21 @@ public class JournalApi implements IJournalApi {
         if(codeHotel!=null && brand!=null){
             Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
             Long hotelCode=_query.getFolderWC(groupId, codeHotel, brandFolder);
-            journalArray=getJournalFoldersAndWC(groupId, hotelCode, journalArray);
-            if(_query.getWCByJournalFolder(groupId, hotelCode)!=null){
-                for (JournalArticle journal : _query.getWCByJournalFolder(groupId, hotelCode)) {
-                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                        journalArray.add(journal);
-                    }
-                }
-            }
-            return journalArray;
+            return getJournalFoldersAndWC(groupId, hotelCode, journalArray);
+           
 
         }
         else if(brand!=null && codeHotel==null){
             Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
-            journalArray=getJournalFoldersAndWC(groupId, brandFolder, journalArray);
-            if(_query.getWCByJournalFolder(groupId, brandFolder)!=null){
-                for (JournalArticle journal : _query.getWCByJournalFolder(groupId, brandFolder)) {
-                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                        journalArray.add(journal);
-                    }
-                }
-            }
-            return journalArray;
+            return getJournalFoldersAndWC(groupId, brandFolder, journalArray);
+           
         }
         else if(codeHotel!=null && brand==null){
-            journalArray=getJournalFoldersAndWC(groupId, idBase, journalArray);
-            if(_query.getWCByJournalFolder(groupId, idBase)!=null){
-                for (JournalArticle journal : _query.getWCByJournalFolder(groupId, idBase)) {
-                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                        journalArray.add(journal);
-                    }
-                }
-            }
-            return journalArray;
+            return getJournalFoldersAndWC(groupId, idBase, journalArray);
+
         }else{
-            journalArray=getJournalFoldersAndWC(groupId, idBase, journalArray);
-            if(_query.getWCByJournalFolder(groupId, idBase)!=null){
-                for (JournalArticle journal : _query.getWCByJournalFolder(groupId, idBase)) {
-                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                        journalArray.add(journal);
-                    }
-                }
-            }
-            return journalArray;
+            return getJournalFoldersAndWC(groupId, idBase, journalArray);
+
         }
 
 
@@ -199,38 +141,17 @@ public class JournalApi implements IJournalApi {
             if(brand!=null && codeHotel!=null){//B�squeda por Marca y Codigo de Hotlel
                 Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
                 Long hotelCode=_query.getFolderWC(groupId, codeHotel, brandFolder);
-                journalArray=getJournalFoldersAndWCByType(groupId, hotelCode,ddm.get(0).getStructureKey(), journalArray);
-                if(_query.getWCByJournalFolderAndTypeStructure(groupId, hotelCode,ddm.get(0).getStructureKey())!=null){
-                    for (JournalArticle journal : _query.getWCByJournalFolderAndTypeStructure(groupId, hotelCode,ddm.get(0).getStructureKey())) {
-                        if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                            journalArray.add(journal);
-                        }
-                    }
-                }
-                return journalArray;
+                return getJournalFoldersAndWCByType(groupId, hotelCode,ddm.get(0).getStructureKey(), journalArray);
+              
             }
             else if(brand!=null && codeHotel==null){//B�squeda por marca
                 Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
-                journalArray=getJournalFoldersAndWCByType(groupId, brandFolder,ddm.get(0).getStructureKey(), journalArray);
-                if(_query.getWCByJournalFolderAndTypeStructure(groupId, brandFolder,ddm.get(0).getStructureKey())!=null){
-                    for (JournalArticle journal : _query.getWCByJournalFolderAndTypeStructure(groupId, brandFolder,ddm.get(0).getStructureKey())) {
-                        if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                            journalArray.add(journal);
-                        }
-                    }
-                }
-                return journalArray;
+                return getJournalFoldersAndWCByType(groupId, brandFolder,ddm.get(0).getStructureKey(), journalArray);
+
             }
             else{//Si no se cumplen estos casos B�squeda desde la raiz
-                journalArray=getJournalFoldersAndWCByType(groupId, idBase,ddm.get(0).getStructureKey(), journalArray);
-                if(_query.getWCByJournalFolderAndTypeStructure(groupId, idBase,ddm.get(0).getStructureKey())!=null){
-                    for (JournalArticle journal : _query.getWCByJournalFolderAndTypeStructure(groupId, idBase,ddm.get(0).getStructureKey())) {
-                        if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                            journalArray.add(journal);
-                        }
-                    }
-                }
-                return journalArray;
+                return getJournalFoldersAndWCByType(groupId, idBase,ddm.get(0).getStructureKey(), journalArray);
+
             }
         }
         else{
@@ -245,53 +166,51 @@ public class JournalApi implements IJournalApi {
         if(codeHotel!=null && brand!=null){
             Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
             Long hotelCode=_query.getFolderWC(groupId, codeHotel, brandFolder);
-            journalArray=_query.getFoldersWCByName(groupId, idBase,name, journalArray);
-            if(_query.getWCByJournalFolder(groupId, hotelCode)!=null){
-                for (JournalArticle journal : _query.getWCByJournalFolder(groupId, hotelCode)) {
-                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                        journalArray.add(journal);
-                    }
-                }
-            }
-            return journalArray;
+            return _query.getFoldersWCByName(groupId, hotelCode,name, journalArray);
+           
 
         }
         else if(brand!=null && codeHotel==null){
             Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
-            journalArray=_query.getFoldersWCByName(groupId, idBase,name, journalArray);
-            if(_query.getWCByJournalFolderAndName(groupId, idBase,name)!=null){
-                for (JournalArticle journal : _query.getWCByJournalFolderAndName(groupId, brandFolder,name)) {
-                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                        journalArray.add(journal);
-                    }
-                }
-            }
-            return journalArray;
+            return _query.getFoldersWCByName(groupId, brandFolder,name, journalArray);
+
         }
         else if(codeHotel!=null && brand==null){
-            journalArray=_query.getFoldersWCByName(groupId, idBase,name, journalArray);
-            if(_query.getWCByJournalFolderAndName(groupId, idBase,name)!=null){
-                for (JournalArticle journal : _query.getWCByJournalFolderAndName(groupId, idBase,name)) {
-                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                        journalArray.add(journal);
-                    }
-                }
-            }
-            return journalArray;
+        	return _query.getFoldersWCByName(groupId, idBase,name, journalArray);
+
         }else{
-            journalArray=_query.getFoldersWCByName(groupId, idBase,name, journalArray);
-            if(_query.getWCByJournalFolderAndName(groupId, idBase,name)!=null){
-                for (JournalArticle journal : _query.getWCByJournalFolderAndName(groupId, idBase,name)) {
-                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
-                        journalArray.add(journal);
-                    }
-                }
-            }
-            return journalArray;
+        	return _query.getFoldersWCByName(groupId, idBase,name, journalArray);
+
         }
 
 
     }
+    @Override
+	public List<JournalArticle> getWCAndJournalFolderByName(Long groupId, String brand, String codeHotel, String name,
+			Long structureId) throws PortalException {
+    	  List<JournalArticle> journalArray= new ArrayList<>();
+          long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
+          if(codeHotel!=null && brand!=null){
+              Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
+              Long hotelCode=_query.getFolderWC(groupId, codeHotel, brandFolder);
+              return _query.getFoldersWCByNameSI(groupId, hotelCode,name,structureId, journalArray);
+          }
+          else if(brand!=null && codeHotel==null){
+              Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
+              return _query.getFoldersWCByNameSI(groupId, brandFolder,name,structureId, journalArray);
+
+          }
+          else if(codeHotel!=null && brand==null){
+              return _query.getFoldersWCByNameSI(groupId, idBase,name,structureId, journalArray);
+
+          }else{
+              journalArray=_query.getFoldersWCByName(groupId, idBase,name, journalArray);
+              return _query.getFoldersWCByNameSI(groupId, idBase,name,structureId, journalArray);
+
+          }
+	}
+    
+    
     @Override
     public List<JournalArticle> searchWebContentByCodeHotelFirstLevel(Long groupId,String structureName,String code) throws PortalException{
         if(_query.getFoldersWCByCode(groupId, structureName, code)!=null){
@@ -300,7 +219,16 @@ public class JournalApi implements IJournalApi {
             return new ArrayList<>();
         }
     }
-
+    @Override
+	public List<JournalArticle> searchWebContentByCodeHotelFirstLevelByFolder(Long groupId, String structureName,
+			String code,Long folderId) throws PortalException {
+    	if(_query.getFoldersWCByCodeFolderId(groupId, structureName, code,folderId)!=null){
+            return _query.getFoldersWCByCodeFolderId(groupId, structureName, code,folderId);
+        }else{
+            return new ArrayList<>();
+        }
+	}
+    
 
     /***M�todos privados****/
 
@@ -445,25 +373,133 @@ public class JournalApi implements IJournalApi {
 		List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
 		return getJournalFoldersAndWCByTypeId(groupId, folderId, structureId, journalArray);	
 	}
-
+	
+	
 	@Override
-	public void getWebcontentRecursiveByTitle(Long groupId, String marca, String codeHotel, String title,String type) {
-		// TODO Auto-generated method stub
-		
+	public List<JournalArticle> getWebcontentRecursiveByType(Long groupId, String brand, String codeHotel,
+			Long structureId) throws PortalException {
+		List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
+		Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
+		if(codeHotel!=null && brand!=null){
+		Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
+		Long hotelCode=_query.getFolderWC(groupId, codeHotel, brandFolder);
+		return getJournalFoldersAndWCByTypeId(groupId, hotelCode, structureId, journalArray);
+		}
+		else if(codeHotel==null && brand!=null){
+			Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
+			return getJournalFoldersAndWCByTypeId(groupId, brandFolder, structureId, journalArray);
+		}
+		else if(brand==null){
+			return getJournalFoldersAndWCByTypeId(groupId, idBase,structureId, journalArray);
+		}
+		return journalArray;
 	}
 
 	@Override
-	public void getWebcontentRecursiveByTitle(Long groupId, Long folderId, String title,Long type) {
-		// TODO Auto-generated method stub
+	public List<JournalArticle> getWebcontentRecursiveByTitle(Long groupId, String brand, String codeHotel, String title,String TypeContent) throws PortalException {
+		List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
+		Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
+		List<DDMStructure> ddmSt = _query.getStructureByName(TypeContent, groupId);
+		if(codeHotel!=null && brand!=null){
+		Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
+		Long hotelCode=_query.getFolderWC(groupId, codeHotel, brandFolder);
+		return getJournalFoldersAndWCByTypeTitle(groupId, hotelCode, ddmSt.get(0).getStructureKey(),title, journalArray);
+		}
+		else if(codeHotel==null && brand!=null){
+			Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
+			return getJournalFoldersAndWCByTypeTitle(groupId, brandFolder, ddmSt.get(0).getStructureKey(),title, journalArray);
+		}
+		else if(brand==null){
+			return getJournalFoldersAndWCByTypeTitle(groupId, idBase, ddmSt.get(0).getStructureKey(),title, journalArray);
+		}
+		return journalArray;
 		
 	}
 
+	private List<JournalArticle> getJournalFoldersAndWCByTypeTitle(Long groupId, Long hotelCode, String type,
+			String title, List<JournalArticle> journalArray) throws PortalException {
+		 List<JournalFolder> listFolders = _query.getSubFolderByJournalFolderParent(groupId, new Long(hotelCode));
+	        if(listFolders != null && listFolders.size() > 0){
+	            for (JournalFolder object : listFolders) {
+	                if(_query.getWCByJournalFolderAndTypeStructureTitle(groupId, object.getFolderId(),type,title)!= null && !_query.getWCByJournalFolderAndTypeStructure(groupId, object.getFolderId(),type).isEmpty()){
+	                    for (JournalArticle ja : _query.getWCByJournalFolderAndTypeStructureTitle(groupId, object.getFolderId(),type,title)) {
+	                        if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion())){
+	                            journalArray.add(ja);
+	                        }
+	                    }
+	                }
+	                if(getJournalFoldersAndWCByTypeTitle(groupId,object.getFolderId(),type,title,journalArray)!= null && !getJournalFoldersAndWCByTypeTitle(groupId,object.getFolderId(),type,title,journalArray).isEmpty()){
+	                	getJournalFoldersAndWCByTypeTitle(groupId,object.getFolderId(),type,title,journalArray);
+	                }
+	            }
+	        }
+	        return journalArray;
+	}
+
+	@Override
+	public List<JournalArticle> getWebcontentRecursiveByTitle(Long groupId, Long folderId, String title,Long structureId) throws PortalException {
+		List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
+		return getJournalFoldersAndWCByTypeTitleS(groupId, folderId,title,structureId, journalArray);
+		
+	}
+	
+	@Override
+	public List<JournalArticle> getWebcontentRecursiveByTitle(Long groupId, String brand, String codeHotel, String title,
+			Long structureId) throws PortalException {
+		List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
+		Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
+		if(codeHotel!=null && brand!=null){
+		Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
+		Long hotelCode=_query.getFolderWC(groupId, codeHotel, brandFolder);
+		return getJournalFoldersAndWCByTypeTitleS(groupId, hotelCode,title,structureId, journalArray);
+		}
+		else if(codeHotel==null && brand!=null){
+			Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
+			return getJournalFoldersAndWCByTypeTitleS(groupId, brandFolder,title,structureId, journalArray);
+		}
+		else if(brand==null){
+			return getJournalFoldersAndWCByTypeTitleS(groupId, idBase,title,structureId, journalArray);
+		}
+		return journalArray;
+		
+	}
+	
+	private List<JournalArticle> getJournalFoldersAndWCByTypeTitleS(Long groupId, Long folderId, String title,Long structureId, List<JournalArticle> journalArray) throws PortalException {
+		List<JournalFolder> listFolders = _query.getSubFolderByJournalFolderParent(groupId, new Long(folderId));
+        if(listFolders != null && listFolders.size() > 0){
+            for (JournalFolder object : listFolders) {
+                if(_query.getWCByJournalFolderAndTypeStructureTitleStructureId(groupId, object.getFolderId(),structureId,title)!= null && !_query.getWCByJournalFolderAndTypeStructureTitleStructureId(groupId, object.getFolderId(),structureId,title).isEmpty()){
+                    for (JournalArticle ja : _query.getWCByJournalFolderAndTypeStructureTitleStructureId(groupId, object.getFolderId(),structureId,title)) {
+                        if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion())){
+                            journalArray.add(ja);
+                        }
+                    }
+                }
+                if(getJournalFoldersAndWCByTypeTitleS(groupId,object.getFolderId(),title,structureId,journalArray)!= null && !getJournalFoldersAndWCByTypeTitleS(groupId,object.getFolderId(),title,structureId,journalArray).isEmpty()){
+                	getJournalFoldersAndWCByTypeTitleS(groupId,object.getFolderId(),title,structureId,journalArray);
+                }
+            }
+        }
+        return journalArray;
+	}
 	@Override
 	public JSONArray getListJournalFoldersByBrand(Long groupId, Long brand)
 			throws PortalException {
 		JSONArray filesArray=JSONFactoryUtil.createJSONArray();
         return getJournalFoldersJsonOneLevel(groupId, brand, filesArray);
         
+	}
+	
+	
+	@Override
+	public JSONArray getListJournalFoldersByBrand(Long groupId, String brand) throws PortalException {
+		JSONArray filesArray=JSONFactoryUtil.createJSONArray();
+		Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
+		if(brand!=null){
+			Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
+			 return getJournalFoldersJsonOneLevel(groupId, brandFolder, filesArray);
+		}
+		return filesArray;
 	}
 
 	@Override
@@ -486,5 +522,15 @@ public class JournalApi implements IJournalApi {
             return journalArray;
 
     }
+
+	
+
+	
+
+	
+
+	
+
+	
 }
 
