@@ -4,12 +4,12 @@ Bundle-Version: 1.0.5
 Provide-Capability:\
 	soy;\
 		type="GeneratorViewClient";\
-		version:Version="1.0.0"
+		version:Version="1.0.5"
 Require-Capability:\
 	soy;\
 		filter:="(type=metal)"
 -metatype: *
--includeresource: package.json,\
+-includeresource: package.json = build/resources/main/META-INF/resources/package.json,\
                   META-INF/resources/flatpickr.js = node_modules/flatpickr/dist/flatpickr.js,\
                   META-INF/resources/flatpickr/dist/l10n/es.js = node_modules/flatpickr/dist/l10n/es.js,\
                   META-INF/resources/wretch.js =node_modules/wretch/dist/bundle/wretch.js,\

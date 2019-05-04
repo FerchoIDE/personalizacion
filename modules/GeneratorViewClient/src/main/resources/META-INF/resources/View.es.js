@@ -1,8 +1,19 @@
-import Component from 'metal-component/src/Component';
+import Component from 'metal-component';
+//var Component = require('metal-component')
+//import Router from 'metal-router';
+//var Router = require('metal-router')
 
-import Soy from 'metal-soy/src/Soy';
+import Soy from 'metal-soy';
+//var Soy = require('metal-soy')
+
 import templates from './View.soy';
+//var templates = require('View.soy')
+
 import TableUI from './components/TableUI.soy';
+//import ClayBadge from 'clay-badge';
+//import   'clay-css';
+//var TableUI = require('components/TableUI.soy')
+
 /**
  * View Component
  */
@@ -13,6 +24,10 @@ class View extends Component {
         console.log('-----changeTab----'+event.currentTarget.attributes['id'].value);
         var st=event.currentTarget.attributes['id'].value
         this.setState({selectedTab: st })
+    }
+    attached() {
+        // Dispatch router to the current browser url ----------------------------------
+      //  Router.router().dispatch();
     }
 
 
@@ -38,6 +53,15 @@ View.STATE = {
         value: 'navUnderlineHotelsTab'
     }
 }
+
+/*Component.render(Router, {
+    component: View,
+    data: {
+        title: 'Home Page'
+    },
+    element: '#main > div',
+    path: '/view'
+});*/
 
 Soy.register(View, templates);
 

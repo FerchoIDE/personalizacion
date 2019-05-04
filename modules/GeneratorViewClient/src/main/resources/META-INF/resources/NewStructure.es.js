@@ -1,30 +1,37 @@
-import Component from 'metal-component/src/Component';
+import Component from 'metal-component';
 import TextLocalizableUI from './TextLocalizableUI.es';
 import CheckBoxUI from './CheckBoxUI.es';
 import TextAreaUI from './TextAreaUI.es';
 import TitleLocalizableUI from './TitleLocalizableUI.es';
 import ViewNested from './ViewNested.es';
 import DateUI from './DateUI.es';
+import RadioUI from './RadioUI.es';
+import SelectUI from './SelectUI.es';
 
 
 
-import Soy from 'metal-soy/src/Soy';
+import Soy from 'metal-soy';
 import templates from './NewStructure.soy';
+import DocumentUI from "./components/DocumentUI.es";
+import NewStructureState from "./state/NewStructureState"
 /**
  * View Component
  */
 class NewStructure extends Component {
-    rendered(firstRender) {
-        console.log('-----ViewNested-rendered----'+JSON.stringify(firstRender));
 
-
+    created() {
+        this.model.idStructure=this.structureId
+        this.model.fields=this.data
+        this.model.localeDefault=this.data['defaultLanguage']
+        this.on('modelChanged',function(event){
+            console.log('--------change model --- ')
+        })
     }
-
     closeOpenTab(event) {
         if(event === undefined)
             return
         console.log('-----receive event closeOpenTab----')
-       event.preventDefault();
+       //event.preventDefault();
         console.log('-----closeOpenTab----'+event.currentTarget.attributes['aria-expanded'].value);
         var collapseInfo1 = this.collapseInfo;
         collapseInfo1[event.currentTarget.id]=event.currentTarget.attributes['aria-expanded'].value=='true'
@@ -42,8 +49,55 @@ class NewStructure extends Component {
         //abierto: true, '', 'show'
     }
 
+    changeBrand(event){
+        console.log('-----changeBrand----')
+       // event.preventDefault();
+        let _brandSelect = event.currentTarget.value
+
+        let _hotelsXBrands = this.initialConfig_.hotels[_brandSelect]
+
+        var myselect = $("select#hotelSelect.form-control");
+        myselect[0].selectedIndex = 0;
+        $("#btnSelectPath").attr('disabled','disabled');
+       // myselect.selectmenu("refresh");
+
+        this.setState({brandSelected: _brandSelect })
+        this.setState({hotelsXBrands: _hotelsXBrands })
+        this.setState({hotelSelected: undefined })
+        this.model.setBrand(_brandSelect)
+    }
+
+    changeHotels(event){
+        console.log('-----changeHotels----')
+      //  event.preventDefault();
+        let _hotelSelected = event.currentTarget.value
+        if(_hotelSelected!==undefined && this.brandSelected !==undefined)
+            $("#btnSelectPath").removeAttr('disabled');
+        this.setState({hotelSelected: _hotelSelected })
+        this.model.setHotel(_hotelSelected)
+    }
+
+    saveSelectPath(event){
+        console.log('-----saveSelectPath----')
+        event.preventDefault();
+        this.setState({isOnLoad: false })
+    }
+
+    handleChangeValue(event) {
+        console.log('-------NewStructure-handleChangeValue-- v6********path='+event.path+"--value="+event.value)
+        var result =this.model.setValue(event.path, event.value, event.language)
+        console.log('-------NewStructure-handleChangeValue-- resut=='+result)
+    }
+    rendered(firstRender) {
+        console.log('----NewStructure ----rendered----'+this.id)
+    }
 }
 
+NewStructure.STATE = {
+    brandSelected:{value:undefined},
+    hotelSelected:{value:undefined},
+    model:{value : new NewStructureState()}
+}
 Soy.register(NewStructure, templates);
 
 export default NewStructure;

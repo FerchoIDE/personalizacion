@@ -24,7 +24,7 @@ public class ConfigurationAction extends DefaultConfigurationAction{
 	@Activate
 	@Modified
 	public void activate(Map<Object, Object> properties) {
-	System.out.println("Configuraciónn actualizada  " + new Date().toString());
+	System.out.println("Configuraciï¿½nn actualizada  " + new Date().toString());
 	_configuration = ConfigurableUtil.createConfigurable(ConfigPersonalizacion.class, properties);	
 	if (_configuration != null) {
 		System.out.println(_configuration.name());
@@ -32,23 +32,24 @@ public class ConfigurationAction extends DefaultConfigurationAction{
 		Contants.DLFILEENTRY_BASE=_configuration.DLFileEntryFolderBase();
 		Contants.JOURNAL_HOTEL=_configuration.JournalFolderHotelBase();
 		for (String iterable_element : Contants.STRUCTURE_IDS) {
-			System.out.println("Registro actual en la configuración, info="+iterable_element);
+			System.out.println("Registro actual en la configuraciï¿½n, info="+iterable_element);
 
 		}
 		for (String iterable_element : Contants.DLFILEENTRY_BASE) {
-			System.out.println("Registro actual en la configuración, info="+iterable_element);
+			System.out.println("Registro actual en la configuraciï¿½n, info="+iterable_element);
 
 		}
 		for (String iterable_element : Contants.JOURNAL_HOTEL) {
-			System.out.println("Registro actual en la configuración, info="+iterable_element);
+			System.out.println("Registro actual en la configuraciï¿½n, info="+iterable_element);
 
 		}
 		
 	} else {
-		System.out.println("No hay datos en la configuración inicial");
+		System.out.println("No hay datos en la configuraciï¿½n inicial");
 	}
 	}
 
     private volatile ConfigPersonalizacion _configuration;
  
+
 }

@@ -5,13 +5,28 @@
  */
 {template .render}
 	{@param id: any}
+	{@param? nameParent: string}
+	{@param? checkedOption: ?}
 	{@param? label: ?}
-	{@param? value: string}
+	{@param? checked: bool}
+	{@param? path: string}
 
-	{let $finalValue: isNonnull($value) ? $value : false /}
+	{let $finalValue: isNonnull($checked) ? $checked : false /}
 	<div id="{$id}" class="custom-control custom-checkbox custom-control-inline">
 			 <label>
-				<input checked="{$finalValue}" id="checkbox_{$id}" class="custom-control-input" type="checkbox"/>
+				 {if $checkedOption!=null}
+
+						 <input data-onclick="handleChange" onclick="{$checkedOption}" pattern="{$nameParent}" data-path="{$path}"
+								title="{$label}" id="checkbox_{$id}" class="custom-control-input" type="checkbox"/>
+
+				 {else}
+
+
+						 <input data-onclick="handleChange"  pattern="{$nameParent}" data-path="{$path}"
+								title="{$label}" id="checkbox_{$id}" class="custom-control-input" type="checkbox"/>
+
+				 {/if}
+
 				<span class="custom-control-label">
 					<span class="custom-control-label-text">{$label}</span>
 				</span>

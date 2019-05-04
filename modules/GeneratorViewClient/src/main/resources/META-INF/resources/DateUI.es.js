@@ -1,13 +1,39 @@
-import Component from 'metal-component/src/Component';
-import Soy from 'metal-soy/src/Soy';
+import Component from 'metal-component';
+import Soy from 'metal-soy';
 import templates from './DateUI.soy';
 import flatpickr from "./flatpickr";
 import { Spanish } from "./flatpickr/dist/l10n/es.js"
+import CheckBoxUI from "./CheckBoxUI.es";
 /**
  * TextUI Component
  */
 class DateUI extends Component {
-    rendered(firstRender) {
+    created() {
+        const _parent = this;
+        const _path = this.initialConfig_.path;
+        if(this.initialConfig_.defaultLanguageId==='en_US')
+            flatpickr("#date_"+this.initialConfig_.id, {
+                wrap: true,
+                onChange: function(selectedDates, dateStr, instance) {
+                    _parent.handleChangeValue( {
+                        value: dateStr,
+                        language:undefined,
+                        path: _path
+                    });
+                }
+            });
+        else
+            flatpickr("#date_"+this.initialConfig_.id, {"locale": Spanish,
+                wrap: true,
+                onChange: function(selectedDates, dateStr, instance) {
+                    _parent.handleChangeValue( {
+                        value: dateStr,
+                        path: _path
+                    });
+
+                }});
+    }
+    /*rendered(firstRender) {
         console.log('-----ViewNested-rendered----'+JSON.stringify(firstRender)+'---'+this.initialConfig_.defaultLanguageId);
         if(firstRender){
             if(this.initialConfig_.defaultLanguageId==='en_US')
@@ -16,18 +42,12 @@ class DateUI extends Component {
                 flatpickr("#date_"+this.initialConfig_.id, {"locale": Spanish});
         }
 
-    }
-    willReceiveState(changes) {
-        console.log('-----willReceiveState-rendered----');
-    }
-    willReceiveProps(propsChanges) {
-        console.log('-----willReceiveProps-rendered----');
-    }
-    willUpdate(changes, propsChanges) {
-        console.log('-----willUpdate-rendered----');
-    }
-}
+    }*/
 
+}
+DateUI.STATE = {
+    handleChangeValue: {}
+}
 // Register component
 Soy.register(DateUI, templates);
 

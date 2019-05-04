@@ -10,14 +10,18 @@
 	{@param? placeholder: any}
 	{@param availableLanguageIds: list<string>}
 	{@param defaultLanguageId: string}
+	{@param? path: string}
+
 	{let $finalValue: isNonnull($value) ? $value : '' /}
 	<div id="{$id}" class="form-group-item">
 			<label for="input_{$id}">{$label}</label>
 			{foreach $language in $availableLanguageIds}
 				{if $language == $defaultLanguageId}
-					<textarea class="form-control" id="inputarea_{$id}_{$language}" placeholder="{$placeholder}" value="{$finalValue}"></textarea>
+					<textarea class="form-control" data-onkeyup="handleChange" data-path="{$path}" data-language="{$language}"
+							  id="inputarea_{$id}_{$language}" placeholder="{$placeholder}" value="{$finalValue}"></textarea>
 				{else}
-					<textarea class="form-control" id="inputarea_{$id}_{$language}" placeholder="{$placeholder}" style="display: none" value="{$finalValue}"></textarea>
+					<textarea class="form-control" data-onkeyup="handleChange" data-path="{$path}"  data-language="{$language}"
+							  id="inputarea_{$id}_{$language}" placeholder="{$placeholder}" style="display: none" value="{$finalValue}"></textarea>
 				{/if}
 			{/foreach}
 	</div>

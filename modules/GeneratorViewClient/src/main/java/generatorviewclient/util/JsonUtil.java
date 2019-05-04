@@ -240,6 +240,8 @@ public class JsonUtil {
 		Map<String, Object> mapResult = new HashMap<>();
 		mapResult.put("label", objectParent.get("label"));
 		mapResult.put("type", "ddm-separator");
+		mapResult.put("name", objectParent.get("name"));
+		mapResult.put("localizable", objectParent.get("localizable"));
 
 		List<Object> fieldsResult = ((List<Object>)objectParent.get("nestedFields")).stream()
 				.map(object -> {

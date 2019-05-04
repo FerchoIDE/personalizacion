@@ -1,5 +1,6 @@
 package generatorviewclient.config;
 
+
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import aQute.bnd.annotation.metatype.Meta;
 

@@ -1,7 +1,7 @@
-import Component from 'metal-component/src/Component';
+import Component from 'metal-component';
 import Footer from './Footer.es';
 import Header from './Header.es';
-import Soy from 'metal-soy/src/Soy';
+import Soy from 'metal-soy';
 import templates from './Navigation.soy';
 
 /**

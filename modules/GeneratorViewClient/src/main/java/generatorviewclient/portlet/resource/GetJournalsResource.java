@@ -1,6 +1,9 @@
 package generatorviewclient.portlet.resource;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import generatorviewclient.api.impl.JournalApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -9,7 +12,6 @@ import org.osgi.service.component.annotations.Component;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;

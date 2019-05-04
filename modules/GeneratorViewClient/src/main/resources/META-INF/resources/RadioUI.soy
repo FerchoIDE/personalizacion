@@ -7,16 +7,32 @@
 	{@param id: any}
 	{@param? label: ?}
 	{@param? value: string}
+	{@param options: list<?>}
+	{@param defaultLanguageId: string}
+	{@param? path: string}
 
 	{let $finalValue: isNonnull($value) ? $value : '' /}
 	<div id="{$id}">
-		<div class="custom-control custom-radio">
-			<label>
-				<input checked="{$finalValue}" id="radio_{$id}" class="custom-control-input"   type="radio"/>
-				<span class="custom-control-label">
+		<h4>
 			<span class="custom-control-label-text">{$label}</span>
-		</span>
-			</label>
+		</h4>
+		<div class="sheet">
+			<div class="form-group">
+				{foreach $option in $options}
+					<div class="custom-control custom-radio custom-control-inline">
+						<label>
+							<input value="{$option.value}"  class="custom-control-input"
+								   data-path="{$path}" data-onclick="handleChange"
+								   id="radio_{$id}_1" name="radio_{$id}" type="radio">
+							<span class="custom-control-label">
+								<span class="custom-control-label-text">{$option.label[$defaultLanguageId]}</span>
+							</span>
+						</label>
+					</div>
+				{/foreach}
+
+			</div>
 		</div>
+
 	</div>
 {/template}

@@ -1,0 +1,22 @@
+{
+  "dump-report": true,
+  "/": {
+    "plugins": [],
+    ".babelrc": {
+      "presets": ["liferay-standard"]
+    },
+    "post-plugins": []
+  },
+  "*": {
+    "copy-plugins": ["exclude-imports"],
+    "plugins": ["replace-browser-modules"],
+    ".babelrc": {
+      "presets": ["liferay-standard"]
+    },
+    "post-plugins": [
+      "namespace-packages",
+      "inject-imports-dependencies",
+      "inject-peer-dependencies"
+    ]
+  }
+}
