@@ -34,11 +34,11 @@ public class JournalApi implements IJournalApi {
             Long hotelCode=_query.getFolderWC(groupId, codeHotel, brandFolder);
             return getJournalFoldersJson(groupId, hotelCode, filesArray);
         }
-        else if(brand!=null && codeHotel==null){
+        else if(codeHotel==null && brand!=null){
             Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
             return getJournalFoldersJson(groupId, brandFolder, filesArray);
         }
-        else if(codeHotel!=null && brand==null){
+        else if(brand==null && codeHotel!=null){
             return getJournalFoldersJson(groupId, idBase, filesArray);
         }else{
             return getJournalFoldersJson(groupId, idBase, filesArray);
@@ -239,7 +239,7 @@ public class JournalApi implements IJournalApi {
 
     }
     @Override
-    public List<JournalArticle> getWCAndJournalFolderByName(Long groupId,String brand,String codeHotel,String name,String types) throws PortalException{
+    public List<JournalArticle> getWCAndJournalFolderByName(Long groupId,String brand,String codeHotel,String name) throws PortalException{
         List<JournalArticle> journalArray= new ArrayList<>();
         long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
         if(codeHotel!=null && brand!=null){
@@ -334,6 +334,20 @@ public class JournalApi implements IJournalApi {
         }
         return filesArray;
     }
+    
+    private JSONArray getJournalFoldersJsonOneLevel(Long groupId,Long parent,JSONArray filesArray) throws PortalException{
+        List<JournalFolder> listFolders =JournalFolderLocalServiceUtil.getFolders(groupId, new Long(parent));
+        if(listFolders != null && listFolders.size() > 0){
+            JSONObject filesObject=null;
+            for (JournalFolder object : listFolders) {
+                filesObject=JSONFactoryUtil.createJSONObject();
+                filesObject.put("folderId", object.getFolderId());
+                filesObject.put("nameFolder", object.getName());
+                filesArray.put(filesObject);
+            }
+        }
+        return filesArray;
+    }
 
 
     private List<JournalArticle> getJournalFoldersAndWC(Long groupId,Long parent,List<JournalArticle> journalArray) throws PortalException{
@@ -364,13 +378,30 @@ public class JournalApi implements IJournalApi {
                     for (JournalArticle ja : _query.getWCByJournalFolderAndTypeStructure(groupId, object.getFolderId(),type)) {
                         if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion())){
                             journalArray.add(ja);
-                        }else{
-                            journalArray.add(JournalArticleLocalServiceUtil.getLatestArticle(ja.getResourcePrimKey()));
                         }
                     }
                 }
                 if(getJournalFoldersAndWCByType(groupId,object.getFolderId(),type,journalArray)!= null && !getJournalFoldersAndWCByType(groupId,object.getFolderId(),type,journalArray).isEmpty()){
                     getJournalFoldersAndWCByType(groupId,object.getFolderId(),type,journalArray);
+                }
+            }
+        }
+        return journalArray;
+    }
+    
+    private List<JournalArticle> getJournalFoldersAndWCByTypeId(Long groupId,Long parent,Long structureId,List<JournalArticle> journalArray) throws PortalException{
+        List<JournalFolder> listFolders = _query.getSubFolderByJournalFolderParent(groupId, new Long(parent));
+        if(listFolders != null && listFolders.size() > 0){
+            for (JournalFolder object : listFolders) {
+                if(_query.getWCByJournalFolderAndTypeStructureId(groupId, object.getFolderId(),structureId)!= null && !_query.getWCByJournalFolderAndTypeStructureId(groupId, object.getFolderId(),structureId).isEmpty()){
+                    for (JournalArticle ja : _query.getWCByJournalFolderAndTypeStructureId(groupId, object.getFolderId(),structureId)) {
+                        if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion())){
+                            journalArray.add(ja);
+                        }
+                    }
+                }
+                if(getJournalFoldersAndWCByTypeId(groupId,object.getFolderId(),structureId,journalArray)!= null && !getJournalFoldersAndWCByTypeId(groupId,object.getFolderId(),structureId,journalArray).isEmpty()){
+                	getJournalFoldersAndWCByTypeId(groupId,object.getFolderId(),structureId,journalArray);
                 }
             }
         }
@@ -388,7 +419,72 @@ public class JournalApi implements IJournalApi {
         return _query.UpdateWC(json);
     }
 
+	@Override
+	public List<JournalArticle> getWebcontentRecursiveByType(Long groupId, String brand, String codeHotel, String TypeContent) throws PortalException {
+		List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
+		Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
+		List<DDMStructure> ddmSt = _query.getStructureByName(TypeContent, groupId);
+		if(codeHotel!=null && brand!=null){
+		Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
+		Long hotelCode=_query.getFolderWC(groupId, codeHotel, brandFolder);
+		return getJournalFoldersAndWCByType(groupId, hotelCode, ddmSt.get(0).getStructureKey(), journalArray);
+		}
+		else if(codeHotel==null && brand!=null){
+			Long brandFolder=_query.getFolderWC(groupId, brand, idBase);
+			return getJournalFoldersAndWCByType(groupId, brandFolder, ddmSt.get(0).getStructureKey(), journalArray);
+		}
+		else if(brand==null){
+			return getJournalFoldersAndWCByType(groupId, idBase, ddmSt.get(0).getStructureKey(), journalArray);
+		}
+		return journalArray;
+		
+	}
 
+	@Override
+	public List<JournalArticle> getWebcontentRecursiveByType(Long groupId, Long folderId, Long structureId) throws PortalException {
+		List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
+		return getJournalFoldersAndWCByTypeId(groupId, folderId, structureId, journalArray);	
+	}
 
+	@Override
+	public void getWebcontentRecursiveByTitle(Long groupId, String marca, String codeHotel, String title,String type) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getWebcontentRecursiveByTitle(Long groupId, Long folderId, String title,Long type) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public JSONArray getListJournalFoldersByBrand(Long groupId, Long brand)
+			throws PortalException {
+		JSONArray filesArray=JSONFactoryUtil.createJSONArray();
+        return getJournalFoldersJsonOneLevel(groupId, brand, filesArray);
+        
+	}
+
+	@Override
+	public JSONArray getListJournalFoldersBrand(Long groupId) throws PortalException {
+		Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
+		JSONArray filesArray=JSONFactoryUtil.createJSONArray();
+        return getJournalFoldersJsonOneLevel(groupId, idBase, filesArray);
+	}
+
+	@Override
+	public List<JournalArticle> getWCByFolderId(Long groupId,Long folderId) throws PortalException{
+        List<JournalArticle> journalArray= new ArrayList<>();   
+            if(_query.getWCByJournalFolder(groupId, folderId)!=null){
+                for (JournalArticle journal : _query.getWCByJournalFolder(groupId, folderId)) {
+                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+                        journalArray.add(journal);
+                    }
+                }
+            }
+            return journalArray;
+
+    }
 }
 

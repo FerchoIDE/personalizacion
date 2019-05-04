@@ -147,6 +147,19 @@ public class QueriesLiferayApi {
         }
         return new ArrayList<>();
     }
+    
+    
+    public List<JournalArticleImpl> getWCByJournalFolderAndTypeStructureId(Long groupId,Long folderId,Long structureId) throws PortalException{
+        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
+        queryJournal.add(RestrictionsFactoryUtil.eq("structureId", new Long(structureId)));
+        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
+        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
+        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
+        if(journalResults.size()>0){
+            return journalResults;
+        }
+        return new ArrayList<>();
+    }
 
     public List<JournalArticle> getWCByJournalFolder(Long groupId,Long folderId) throws PortalException{
         List<JournalArticle> results = JournalArticleLocalServiceUtil.getArticles(groupId, folderId);

@@ -8,21 +8,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 
 public interface IJournalApi {
 
-    /**
-     * M�todo getListJournalFolders
-     * @param groupId Id del s�tio
-     * @param brand Nombre de la carpeta marca donde se hace la b�squeda
-     * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta c�difgo de hotel para la b�squeda
-     * @return <ul>
-     *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
-     *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
-     *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
-     *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
-     *  </ul>
-     *  @throws PortalException
-     */
-    public JSONArray getListJournalFolders(Long groupId,String brand,String code_hotel) throws PortalException;
+ 
     /**
      * M�todo getListJournalFoldersByCode
      * @param groupId Id del s�tio
@@ -110,31 +96,8 @@ public interface IJournalApi {
      *  @throws PortalException
      */
     public List<JournalArticle> getWCByJournalFolderAndStructureType(Long groupId,String brand,String code_hotel,String type) throws PortalException;
-    /**
-     * M�todo getWCAndJournalFolderByName
-     * @param groupId Id del s�tio
-     * @param brand Nombre de la carpeta marca donde se hace la b�squeda
-     * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta c�difgo de hotel para la b�squeda
-     * @return <ul>
-     *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
-     *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
-     *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
-     *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
-     *  </ul>
-     *  @throws PortalException
-     */
-    public List<JournalArticle> getWCAndJournalFolderByName(Long groupId,String brand,String code_hotel,String name,String type) throws PortalException;
-    /**
-     * M�todo searchWebContentByCodeHotel, B�squeda a primer nivel,si existe devuelve el webcontent,sino un array vacio
-     * @param groupId Id del s�tio
-     * @param folderId Id de la carpeta marca donde se hace la b�squeda
-     * @param code C�digo de hotel para la b�squeda
-     * @return <ul>
-     *  <li>Resultados de la b�squeda List<JournalArticle></li>
-     *  </ul>
-     */
-    public List<JournalArticle> searchWebContentByCodeHotelFirstLevel(Long groupId,String structureName,String code) throws PortalException;
+   
+  
 
     public JournalArticle saveWC(String json) throws PortalException;
 
@@ -150,7 +113,9 @@ public interface IJournalApi {
     code hotel(podria ser opcional)
     tipo de contenido (Id de la estructura) si este es null es sobre todos los contenidos
      */
-
+    public List<JournalArticle> getWebcontentRecursiveByType(Long groupId,String marca,String codeHotel,String TypeContent) throws PortalException;
+    
+    public List<JournalArticle> getWebcontentRecursiveByType(Long groupId,Long folderId,Long typeContent) throws PortalException;
 
 
 
@@ -161,6 +126,9 @@ public interface IJournalApi {
     tipo de contenido (Id de la estructura) si este es null es sobre todos los contenidos
     titulo del contenido, considerar usar like y no sensible a mayusculas minusculas
      */
+    public void getWebcontentRecursiveByTitle(Long groupId,String marca,String codeHotel,String title,String contentType);
+    
+    public void getWebcontentRecursiveByTitle(Long groupId,Long folderId,String title,Long contentType);
 
 
 
@@ -169,6 +137,7 @@ public interface IJournalApi {
     folderid
     tipo de contenido (Id de la estructura) si este es null es sobre todos los contenidos
      */
+    public List<JournalArticle> getWCAndJournalFolderByName(Long groupId,String brand,String code_hotel,String name) throws PortalException;
 
 
     /*todas las carpetas dentro de
@@ -177,23 +146,31 @@ public interface IJournalApi {
     code hotel(podria ser opcional)
      */
 
+    public JSONArray getListJournalFolders(Long groupId,String brand,String code_hotel) throws PortalException;
 
 
     /*buscar si un codigo de hotel ya existe, si existe indicar el titulo dle hotel
     code hotel
 
      */
+    public List<JournalArticle> searchWebContentByCodeHotelFirstLevel(Long groupId,String structureName,String code) throws PortalException;
 
 
     /* un arreglo de listado de marcas
     groupid,
      */
 
+    public JSONArray getListJournalFoldersBrand(Long groupId) throws PortalException;
+
     /* un arreglo de listado hoteles
     groupid,
     marca
      */
+    
+    public JSONArray getListJournalFoldersByBrand(Long groupId,Long brand) throws PortalException;
+    public List<JournalArticle> getWCByFolderId(Long groupId, Long folderId) throws PortalException;
 
+   
     /*
     Recuperar un contenido y la estructura asociada a este
 

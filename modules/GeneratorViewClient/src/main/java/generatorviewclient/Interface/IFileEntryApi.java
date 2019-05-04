@@ -4,15 +4,16 @@ import java.io.FileNotFoundException;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 
 public interface IFileEntryApi {
 
-	public JSONArray saveFile(Long groupId,Long userId,Long folderId,String image,String name,String description,String mimeType) throws FileNotFoundException;
+	public JSONObject saveFile(Long groupId,Long userId,Long folderId,String image,String name,String description,String mimeType) throws FileNotFoundException;
 	 /**
-     * Método getFilesByCurrentFolderAndName
-     * @param groupId Id del sítio
+     * Mï¿½todo getFilesByCurrentFolderAndName
+     * @param groupId Id del sï¿½tio
      * @param name filrado por este campo
-     * @param currentFolder Nombre de la carpeta marca donde se hace la búsqueda
+     * @param currentFolder Nombre de la carpeta marca donde se hace la bï¿½squeda
      * @return <ul>
      *  <li>JSONArray </li>
      *  </ul>
@@ -20,11 +21,11 @@ public interface IFileEntryApi {
      */
 	public JSONArray getFilesByCurrentFolderAndName(Long groupId,Long currentFolder,String name) throws PortalException;
 	 /**
-     * Método getFilesByName
-     * @param groupId Id del sítio
+     * Mï¿½todo getFilesByName
+     * @param groupId Id del sï¿½tio
      * @param name filrado por este campo
-     * @param brand Nombre de la carpeta marca donde se hace la búsqueda
-     * @param code_hotel Nombre de la carpeta códifgo de hotel para la búsqueda
+     * @param brand Nombre de la carpeta marca donde se hace la bï¿½squeda
+     * @param code_hotel Nombre de la carpeta cï¿½difgo de hotel para la bï¿½squeda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -34,10 +35,10 @@ public interface IFileEntryApi {
      */
 	public JSONArray getFilesByName(Long groupId,String brand,String name,String code_hotel) throws PortalException;
 	 /**
-     * Método getFolders
-     * @param groupId Id del sítio
-     * @param brand Nombre de la carpeta marca donde se hace la búsqueda
-     * @param code_hotel Nombre de la carpeta códifgo de hotel para la búsqueda
+     * Mï¿½todo getFolders
+     * @param groupId Id del sï¿½tio
+     * @param brand Nombre de la carpeta marca donde se hace la bï¿½squeda
+     * @param code_hotel Nombre de la carpeta cï¿½difgo de hotel para la bï¿½squeda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -47,11 +48,11 @@ public interface IFileEntryApi {
      */
 	public JSONArray getListFolders(Long groupId,String brand,String code_hotel) throws PortalException;
 	 /**
-     * Método getFilesAndFolder
-     * @param groupId Id del sítio
-     * @param brand Nombre de la carpeta marca donde se hace la búsqueda
+     * Mï¿½todo getFilesAndFolder
+     * @param groupId Id del sï¿½tio
+     * @param brand Nombre de la carpeta marca donde se hace la bï¿½squeda
      * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta códifgo de hotel para la búsqueda
+     * @param code_hotel Nombre de la carpeta cï¿½difgo de hotel para la bï¿½squeda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
