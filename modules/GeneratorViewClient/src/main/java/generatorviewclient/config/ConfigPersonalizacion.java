@@ -9,7 +9,6 @@ import aQute.bnd.annotation.metatype.Meta;
 		,name = "Liferay api personalization")
 public interface ConfigPersonalizacion {
 	/*Restaurant,Meeting room,Gym,Bar,Spa,Fiesta Kids Club,Generic,Brand,Destination,Rate,Hotels,Room,Facility*/
-<<<<<<< HEAD
 	@Meta.AD(deflt = "119201|119204|121330|121324|119207|121327|121333|121321|121312|121309|121318|121315|119198|32880", required = false, description = "Get id Base Structures Liferay")
     public String[] StructureId();
 	
