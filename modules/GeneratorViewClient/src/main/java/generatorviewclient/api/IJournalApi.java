@@ -1,4 +1,4 @@
-package generatorviewclient.Interface;
+package generatorviewclient.api;
 
 import java.util.List;
 
