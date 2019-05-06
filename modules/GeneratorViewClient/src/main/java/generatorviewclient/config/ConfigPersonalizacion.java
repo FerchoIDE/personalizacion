@@ -24,5 +24,4 @@ public interface ConfigPersonalizacion {
 	@Meta.AD(deflt = "POSADAS")
     public String name();
 	
-
 }
