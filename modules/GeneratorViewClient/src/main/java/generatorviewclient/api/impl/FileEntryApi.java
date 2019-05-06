@@ -21,15 +21,14 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Base64;
 
-public class FileEntryApi implements IFileEntryApi {
+public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
     private static final Log _log = LogFactoryUtil.getLog(FileEntryApi.class);
-    private static QueriesLiferayApi _query = new QueriesLiferayApi();
 
     public Long getBaseFolder(Long groupId,String brand,String code_hotel) throws PortalException {
         long id_base=getRootFolderByConfiguration(groupId);
         if(code_hotel!=null && brand!=null) {
-            Long brandFolder = _query.getFolder(groupId, brand, id_base);
-            Long hc = _query.getFolder(groupId, code_hotel, brandFolder);
+            Long brandFolder =  getFolder(groupId, brand, id_base);
+            Long hc =  getFolder(groupId, code_hotel, brandFolder);
             return hc;
         }
         return id_base;
@@ -44,7 +43,7 @@ public class FileEntryApi implements IFileEntryApi {
             serviceContext.setScopeGroupId(groupId);
             byte[] imageByte = Base64.decode(image);
 
-            if (_query.getFilesByName(groupId, folderId, name) != null && _query.getFilesByName(groupId, folderId, name).size() > 0) {
+            if ( getFilesByName(groupId, folderId, name) != null &&  getFilesByName(groupId, folderId, name).size() > 0) {
                 filesObject = JSONFactoryUtil.createJSONObject();
                 filesObject.put("errorMessage","No se a podido guardar:El nombre del archivo ya existe");
                 filesObject.put("status","BAD");
@@ -74,8 +73,8 @@ public class FileEntryApi implements IFileEntryApi {
     public JSONArray getFilesByCurrentFolderAndName(Long groupId,Long currentFolder,String name) throws PortalException{
         JSONArray filesArray=JSONFactoryUtil.createJSONArray();
         filesArray=getFoldersAndFilesByName(groupId, currentFolder, name, filesArray);
-        if(_query.getFilesByName(groupId, currentFolder, name)!=null){
-            for (DLFileEntry file : _query.getFilesByName(groupId, currentFolder, name)) {
+        if( getFilesByName(groupId, currentFolder, name)!=null){
+            for (DLFileEntry file :  getFilesByName(groupId, currentFolder, name)) {
                 filesArray.put(mapping(file));
 
             }
@@ -90,21 +89,21 @@ public class FileEntryApi implements IFileEntryApi {
         JSONArray filesArray=JSONFactoryUtil.createJSONArray();
         long id_base=getRootFolderByConfiguration(groupId);
         if(code_hotel!=null && brand!=null){
-            Long brandFolder=_query.getFolder(groupId, brand, id_base);
-            Long hc=_query.getFolder(groupId, code_hotel, brandFolder);
+            Long brandFolder= getFolder(groupId, brand, id_base);
+            Long hc= getFolder(groupId, code_hotel, brandFolder);
             filesArray=getFoldersAndFilesByName(groupId, hc, name, filesArray);
-            if(_query.getFilesByName(groupId, hc, name)!=null){
-                for (DLFileEntry file : _query.getFilesByName(groupId, hc, name)) {
+            if( getFilesByName(groupId, hc, name)!=null){
+                for (DLFileEntry file :  getFilesByName(groupId, hc, name)) {
                     filesArray.put(mapping(file));
                 }
             }
             return filesArray;
         }
         else if(brand!=null && code_hotel==null){
-            Long brandFolder=_query.getFolder(groupId, brand, id_base);
+            Long brandFolder= getFolder(groupId, brand, id_base);
             filesArray=getFoldersAndFilesByName(groupId, brandFolder, name, filesArray);
-            if(_query.getFilesByName(groupId, brandFolder, name)!=null){
-                for (DLFileEntry file : _query.getFilesByName(groupId, brandFolder, name)) {
+            if( getFilesByName(groupId, brandFolder, name)!=null){
+                for (DLFileEntry file :  getFilesByName(groupId, brandFolder, name)) {
                     filesArray.put(mapping(file));
                 }
             }
@@ -112,16 +111,16 @@ public class FileEntryApi implements IFileEntryApi {
         }
         else if(code_hotel!=null && brand==null){
             filesArray=getFoldersAndFilesByName(groupId, id_base, name, filesArray);
-            if(_query.getFilesByName(groupId, id_base, name)!=null){
-                for (DLFileEntry file : _query.getFilesByName(groupId, id_base, name)) {
+            if( getFilesByName(groupId, id_base, name)!=null){
+                for (DLFileEntry file :  getFilesByName(groupId, id_base, name)) {
                     filesArray.put(mapping(file));
                 }
             }
             return filesArray;
         }else{
             filesArray=getFoldersAndFilesByName(groupId, id_base, name, filesArray);
-            if(_query.getFilesByName(groupId, id_base, name)!=null){
-                for (DLFileEntry file : _query.getFilesByName(groupId, id_base, name)) {
+            if( getFilesByName(groupId, id_base, name)!=null){
+                for (DLFileEntry file :  getFilesByName(groupId, id_base, name)) {
                     filesArray.put(mapping(file));
                 }
             }
@@ -135,12 +134,12 @@ public class FileEntryApi implements IFileEntryApi {
         JSONArray filesArray=JSONFactoryUtil.createJSONArray();
         long id_base=getRootFolderByConfiguration(groupId);
         if(code_hotel!=null && brand!=null){
-            Long brandFolder=_query.getFolder(groupId, brand, id_base);
-            Long hc=_query.getFolder(groupId, code_hotel, brandFolder);
+            Long brandFolder= getFolder(groupId, brand, id_base);
+            Long hc= getFolder(groupId, code_hotel, brandFolder);
             return getFoldersJson(groupId, hc, null, filesArray);
         }
         else if(brand!=null && code_hotel==null){
-            Long brandFolder=_query.getFolder(groupId, brand, id_base);
+            Long brandFolder= getFolder(groupId, brand, id_base);
 
             return getFoldersJson(groupId, brandFolder,null,  filesArray);
         }
@@ -158,8 +157,8 @@ public class FileEntryApi implements IFileEntryApi {
         JSONArray filesArray=JSONFactoryUtil.createJSONArray();
         long id_base=getRootFolderByConfiguration(groupId);
         if(code_hotel!=null && brand!=null){
-            Long brandFolder=_query.getFolder(groupId, brand, id_base);
-            Long hc=_query.getFolder(groupId, code_hotel, brandFolder);
+            Long brandFolder= getFolder(groupId, brand, id_base);
+            Long hc= getFolder(groupId, code_hotel, brandFolder);
             filesArray=getFoldersAndFilesByfolderJson(groupId, hc, type, filesArray);
             if(getFilesByFolder(groupId, hc)!=null){
                 for (DLFileEntry file : getFilesByFolder(groupId, hc)) {
@@ -169,7 +168,7 @@ public class FileEntryApi implements IFileEntryApi {
             return filesArray;
         }
         else if(brand!=null && code_hotel==null){
-            Long brandFolder=_query.getFolder(groupId, brand, id_base);
+            Long brandFolder= getFolder(groupId, brand, id_base);
             filesArray=getFoldersAndFilesByfolderJson(groupId, brandFolder, type, filesArray);
             if(getFilesByFolder(groupId, brandFolder)!=null){
                 for (DLFileEntry file : getFilesByFolder(groupId, brandFolder)) {
@@ -207,8 +206,8 @@ public class FileEntryApi implements IFileEntryApi {
             JSONObject filesObject=null;
             for (DLFolder object : listFolders) {
                 System.out.println("folder:"+ object.getFolderId());
-                if(_query.getFilesByName(groupId, object.getFolderId(),namefile)!= null && !_query.getFilesByName(groupId, object.getFolderId(),namefile).isEmpty()){
-                    for (DLFileEntry file : _query.getFilesByName(groupId, object.getFolderId(),namefile)) {
+                if( getFilesByName(groupId, object.getFolderId(),namefile)!= null && ! getFilesByName(groupId, object.getFolderId(),namefile).isEmpty()){
+                    for (DLFileEntry file :  getFilesByName(groupId, object.getFolderId(),namefile)) {
                         filesObject=JSONFactoryUtil.createJSONObject();
                         filesObject.put("idFile", file.getFileEntryId());
                         filesObject.put("filename", file.getFileName());

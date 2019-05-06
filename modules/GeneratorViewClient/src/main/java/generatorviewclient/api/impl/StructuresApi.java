@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-public class StructuresApi implements IStructuresApi {
+public class StructuresApi extends QueriesLiferayApi implements IStructuresApi {
     private static final Log _log = LogFactoryUtil.getLog(JournalApi.class);
 
     @Override
@@ -71,7 +71,7 @@ public class StructuresApi implements IStructuresApi {
         return new ArrayList<>();
     }
 
-    private boolean validStructure(Long id){
+    protected boolean validStructure(Long id){
         for (String structureID : Contants.STRUCTURE_IDS) {
             if(structureID.equals(String.valueOf(id))) return true;
         }
