@@ -5,13 +5,15 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import generatorviewclient.api.impl.JournalApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
-import generatorviewclient.util.FileUtil;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -31,34 +33,16 @@ public class GetJournalsResource implements MVCResourceCommand {
     public boolean serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException {
         System.out.println("--------------+++++++++------");
         try {
-            ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
-            long portletGroupId = themeDisplay.getLayout().getGroupId();
-            String body = FileUtil.getBuffer(resourceRequest.getReader());
+            String body = getBuffer(resourceRequest.getReader());
             JSONObject jsonObject =  new JSONObject(body);
             System.out.println(jsonObject);
             resourceResponse.setCharacterEncoding("UTF-8");
             resourceResponse.setContentType("application/json");
+            String result = new JSONArray(getData()).toString();
+            System.out.println(result);
 
-            String brand = jsonObject.getString("brand");
-            String codeHotel = jsonObject.getString("codeHotel");
-            com.liferay.portal.kernel.json.JSONArray array=null;
-            if(jsonObject.has("folderId")){
-
-               // array = new JournalApi().getFilesByCurrentFolderAndName(portletGroupId,jsonObject.getLong("folderId"),"");
-            }else if(jsonObject.has("nameFolder")){
-               // array = new JournalApi().getWCByName(portletGroupId,brand,jsonObject.getString("nameFolder"),codeHotel);
-                //getWCByName
-            }else{
-                array = new JournalApi().getListJournalFolders(portletGroupId,brand,codeHotel);
-                //getListJournalFolders
-            }
-
-
-
-           // String result = new JSONArray(getData()).toString();
-            System.out.println(array.toJSONString());
-            resourceResponse.getPortletOutputStream().write(array.toJSONString().getBytes());
-        } catch (Exception e) {
+            resourceResponse.getPortletOutputStream().write(result.getBytes());
+        } catch (IOException e) {
             e.printStackTrace();
             try {
                 resourceResponse.getWriter().write(e.getMessage());
@@ -70,7 +54,22 @@ public class GetJournalsResource implements MVCResourceCommand {
         return false;
     }
 
+    public static String getBuffer(BufferedReader buffer) throws IOException {
+        String retorno = null;
 
+        String lineaSalida = "";
+        StringBuffer contenido = new StringBuffer();
+        String separador = "";
+
+        while ((lineaSalida = buffer.readLine()) != null) {
+            contenido.append(separador + lineaSalida);
+            separador = "\n";
+        }
+
+        retorno = contenido.toString();
+
+        return retorno;
+    }
 
 
     public static List getData(){
