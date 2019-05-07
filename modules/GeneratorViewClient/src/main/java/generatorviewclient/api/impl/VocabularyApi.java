@@ -17,7 +17,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
-public class VocabularyApi {
+import generatorviewclient.api.IVocabularyApi;
+
+public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
 
     private AssetCategoryLocalService _category;
 
@@ -37,6 +39,7 @@ public class VocabularyApi {
      *  <li>JSONArray, Todos los objetos dentro del vocabulario</li>
      *  </ul>
      */
+    
     public JSONArray getCategoriesByGroupAndVacabularyIdAllLevels(Long groupId,Long vocabularyId) throws PortalException{
         JSONObject categoryObject=null;
         JSONArray categoryArray = JSONFactoryUtil.createJSONArray();

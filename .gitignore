@@ -78,3 +78,9 @@ gradle-app.setting
 
 /.idea/
 /.gradle/
+/modules/memory/
+/modules/queries/
+/modules/queries-impl/
+/.classpath
+/.project
+/.clover/

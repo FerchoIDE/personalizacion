@@ -1,11 +1,13 @@
 package generatorviewclient.portlet.resource;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import generatorviewclient.util.FileUtil;
 import generatorviewclient.api.impl.FileEntryApi;
+import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import org.json.JSONObject;
 import org.osgi.service.component.annotations.Component;
 
