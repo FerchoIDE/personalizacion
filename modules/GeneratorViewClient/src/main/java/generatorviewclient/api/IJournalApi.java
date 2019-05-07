@@ -10,9 +10,9 @@ public interface IJournalApi {
 
  
     /**
-     * M�todo getListJournalFoldersByCode
-     * @param groupId Id del s�tio
-     * @param codeBrand codigo carpeta donde se hace la b�squeda
+     * Método getListJournalFoldersByCode
+     * @param groupId Id del sítio
+     * @param codeBrand codigo carpeta donde se hace la búsqueda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -23,9 +23,9 @@ public interface IJournalApi {
      */
     public JSONArray getListJournalFoldersByCode(Long groupId,Long codeBrand) throws PortalException;
     /**
-     * M�todo getWCByFolder
-     * @param groupId Id del s�tio
-     * @param folderID codigo carpeta/marca donde se hace la b�squeda
+     * Método getWCByFolder
+     * @param groupId Id del sítio
+     * @param folderID codigo carpeta/marca donde se hace la búsqueda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -36,11 +36,11 @@ public interface IJournalApi {
      */
     public List<JournalArticle> getWCByFolder(Long groupId,Long folderId) throws PortalException;
     /**
-     * M�todo createFolderNestedFolderId
-     * @param groupId Id del s�tio
-     * @param brand Nombre de la carpeta marca donde se hace la b�squeda
+     * Método createFolderNestedFolderId
+     * @param groupId Id del sítio
+     * @param brand Nombre de la carpeta marca donde se hace la búsqueda
      * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta c�difgo de hotel para la b�squeda
+     * @param code_hotel Nombre de la carpeta código de hotel para la búsqueda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -51,11 +51,11 @@ public interface IJournalApi {
      */
     public JSONArray createFolderNestedFolderId(Long userId,Long groupId,Long parentFolderId,String name) throws PortalException;
     /**
-     * M�todo getWCByName
-     * @param groupId Id del s�tio
-     * @param brand Nombre de la carpeta marca donde se hace la b�squeda
+     * Método getWCByName
+     * @param groupId Id del sítio
+     * @param brand Nombre de la carpeta marca donde se hace la búsqueda
      * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta c�difgo de hotel para la b�squeda
+     * @param code_hotel Nombre de la carpeta código de hotel para la búsqueda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -66,11 +66,11 @@ public interface IJournalApi {
     public List<JournalArticle> getWCByName(Long groupId,String brand,String code_hotel,String name) throws PortalException;
     //busqueda recursiva de webcontents x M y CH getAllWCAndJournalFolder((portletGroupId,"AQUA","","AQC");
     /**
-     * M�todo getWCAndJournalFolder
-     * @param groupId Id del s�tio
-     * @param brand Nombre de la carpeta marca donde se hace la b�squeda
+     * Método getWCAndJournalFolder
+     * @param groupId Id del sítio
+     * @param brand Nombre de la carpeta marca donde se hace la búsqueda
      * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta c�difgo de hotel para la b�squeda
+     * @param code_hotel Nombre de la carpeta código de hotel para la búsqueda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -82,11 +82,11 @@ public interface IJournalApi {
     public List<JournalArticle> getWCAndJournalFolder(Long groupId,String brand,String code_hotel) throws PortalException;
     //busqueda recursiva de webcontents x M, CH y tipo getWCAndJournalFolderType((portletGroupId,"AQUA","","AQC");
     /**
-     * M�todo getWCAndJournalFolderType
-     * @param groupId Id del s�tio
-     * @param brand Nombre de la carpeta marca donde se hace la b�squeda
+     * Método getWCAndJournalFolderType
+     * @param groupId Id del sítio
+     * @param brand Nombre de la carpeta marca donde se hace la búsqueda
      * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta c�difgo de hotel para la b�squeda
+     * @param code_hotel Nombre de la carpeta código de hotel para la búsqueda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -198,7 +198,7 @@ public interface IJournalApi {
     /*buscar si un codigo de hotel ya existe, si existe indicar el titulo dle hotel
     code hotel
     Busca sin recursividad, solo obtiene el primer nivel 
-    groupId Id del s�tio
+    groupId Id del sítio
     structureName Nombre de la estructura Hotels
     code Es el codigo de Hotel dentro del xml
     
@@ -210,9 +210,9 @@ public interface IJournalApi {
     /*buscar si un codigo de hotel ya existe, si existe indicar el titulo dle hotel
     code hotel
     Busca sin recursividad, solo obtiene el primer nivel 
-    groupId Id del s�tio
+    groupId Id del sítioo
     structureName Nombre de la estructura Hotels
-    folderId Parte a trav�s del folder que le indiques 
+    folderId Parte a través del folder que le indiques
     code Es el codigo de Hotel dentro del xml
     
         public List<JournalArticle> searchWebContentByCodeHotelFirstLevel(Long groupId,String structureName,String code) throws PortalException;
@@ -248,8 +248,8 @@ public interface IJournalApi {
     marca
     Nota: Todo parte de la ruta base
    
-    brand/marca Busca a trav�s de un string el nombre de la carpeta,convierte en Id y hace la misma operaci�n 
-                 que el m�todo de arriba.
+    brand/marca Busca a través de un string el nombre de la carpeta,convierte en Id y hace la misma operación
+                 que el método de arriba.
            
     groupid Id del sitio
     getListJournalFoldersByBrand(groupid,brand);

@@ -1,4 +1,0 @@
-Bundle-Name: queries
-Bundle-SymbolicName: com.posadas.api
-Bundle-Version: 1.0.0
-Export-Package: com.posadas.api
