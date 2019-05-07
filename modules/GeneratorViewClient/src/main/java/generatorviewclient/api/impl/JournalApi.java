@@ -1,12 +1,15 @@
 package generatorviewclient.api.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import generatorviewclient.api.IJournalApi;
 import generatorviewclient.constants.Contants;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.impl.JournalFolderImpl;
@@ -649,5 +652,19 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		        filesArray.put(filesObject);
 		        return filesArray;
 		    }
+
+/*
+ * 
+ * */
+		@Override
+		public Map<JournalArticle, DDMStructure> getWCandStructureById(Long articleId) throws PortalException {
+			Map<JournalArticle, DDMStructure> map = new HashMap<JournalArticle, DDMStructure>();
+			JournalArticle curentArticle = JournalArticleLocalServiceUtil.getJournalArticle(articleId);
+			if(curentArticle!=null){
+				DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getDDMStructure(curentArticle.getDDMStructure().getStructureId());
+				map.put(curentArticle, ddmStructure);
+			}
+			return map;
+		}
 }
 

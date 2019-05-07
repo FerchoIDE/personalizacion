@@ -1,7 +1,9 @@
 package generatorviewclient.api;
 
 import java.util.List;
+import java.util.Map;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -66,11 +68,11 @@ public interface IJournalApi {
     public List<JournalArticle> getWCByName(Long groupId,String brand,String code_hotel,String name) throws PortalException;
     //busqueda recursiva de webcontents x M y CH getAllWCAndJournalFolder((portletGroupId,"AQUA","","AQC");
     /**
-     * M�todo getWCAndJournalFolder
-     * @param groupId Id del s�tio
-     * @param brand Nombre de la carpeta marca donde se hace la b�squeda
+     * Mï¿½todo getWCAndJournalFolder
+     * @param groupId Id del sï¿½tio
+     * @param brand Nombre de la carpeta marca donde se hace la bï¿½squeda
      * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta c�difgo de hotel para la b�squeda
+     * @param code_hotel Nombre de la carpeta cï¿½difgo de hotel para la bï¿½squeda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -82,11 +84,11 @@ public interface IJournalApi {
     public List<JournalArticle> getWCAndJournalFolder(Long groupId,String brand,String code_hotel) throws PortalException;
     //busqueda recursiva de webcontents x M, CH y tipo getWCAndJournalFolderType((portletGroupId,"AQUA","","AQC");
     /**
-     * M�todo getWCAndJournalFolderType
-     * @param groupId Id del s�tio
-     * @param brand Nombre de la carpeta marca donde se hace la b�squeda
+     * Mï¿½todo getWCAndJournalFolderType
+     * @param groupId Id del sï¿½tio
+     * @param brand Nombre de la carpeta marca donde se hace la bï¿½squeda
      * @param type tipo de archivo a buscar(No se filtra)
-     * @param code_hotel Nombre de la carpeta c�difgo de hotel para la b�squeda
+     * @param code_hotel Nombre de la carpeta cï¿½difgo de hotel para la bï¿½squeda
      * @return <ul>
      *  <li>case 1: code_hotel!=null && brand!=null JSONArray </li>
      *  <li>case 2: brand!=null && code_hotel==null JSONArray </li>
@@ -259,6 +261,23 @@ public interface IJournalApi {
    
     /*
     Recuperar un contenido y la estructura asociada a este IdArticle Map 
-
+    uuid=ca0ec3c4-5b54-11e8-9cfb-5bb8e3634f62,
+    id=126317, Se consulta por este elemento de la estructura de Webcontet
+    resourcePrimKey=126318,
+    groupId=20142,
+    companyId=20115,
+    userId=20155,
+    userName=Test Test,
+    createDate=2018-11-09 12:31:53.481,
+    modifiedDate=2019-03-07 07:16:03.851,
+    folderId=119341,
+    classNameId=0,
+    classPK=0,
+    
+    Map<JournalArticle, DDMStructure> map = new JournalApi().getWCandStructureById(126317);
+ 			for (Map.Entry<JournalArticle, DDMStructure> entry : map.entrySet()) {
+ 			    System.out.println(entry.getKey() + "VS" + entry.getValue());
+ 			}
      */
+    public Map<JournalArticle, DDMStructure> getWCandStructureById(Long articleId) throws PortalException;
 }
