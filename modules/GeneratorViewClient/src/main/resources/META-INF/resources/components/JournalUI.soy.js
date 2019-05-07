@@ -218,7 +218,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.attr('tabindex', '-1');
     incrementalDom.elementOpenEnd();
       incrementalDom.elementOpenStart('div');
-          incrementalDom.attr('class', 'modal-dialog modal-sm');
+          incrementalDom.attr('class', 'modal-info modal-dialog modal-full-screen-sm-down');
       incrementalDom.elementOpenEnd();
         incrementalDom.elementOpenStart('div');
             incrementalDom.attr('class', 'modal-content');
@@ -259,10 +259,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.attr('class', 'list-group show-quick-actions-on-hover');
             incrementalDom.elementOpenEnd();
               if (itemsResult) {
-                var field5163List = itemsResult;
-                var field5163ListLen = field5163List.length;
-                for (var field5163Index = 0; field5163Index < field5163ListLen; field5163Index++) {
-                    var field5163Data = field5163List[field5163Index];
+                var field5169List = itemsResult;
+                var field5169ListLen = field5169List.length;
+                for (var field5169Index = 0; field5169Index < field5169ListLen; field5169Index++) {
+                    var field5169Data = field5169List[field5169Index];
                     incrementalDom.elementOpenStart('li');
                         incrementalDom.attr('class', 'list-group-item list-group-item-flex');
                     incrementalDom.elementOpenEnd();
@@ -273,12 +273,12 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                             incrementalDom.attr('class', 'custom-control custom-checkbox');
                         incrementalDom.elementOpenEnd();
                           incrementalDom.elementOpen('label');
-                            if (itemsResultSelected[field5163Data.idFile]) {
+                            if (itemsResultSelected[field5169Data.idFile]) {
                               incrementalDom.elementOpenStart('input');
                                   incrementalDom.attr('checked', '');
                                   incrementalDom.attr('onclick', setSelectedResult);
-                                  incrementalDom.attr('value', field5163Data);
-                                  incrementalDom.attr('id', field5163Data.idFile);
+                                  incrementalDom.attr('value', field5169Data);
+                                  incrementalDom.attr('id', field5169Data.idFile);
                                   incrementalDom.attr('class', 'custom-control-input');
                                   incrementalDom.attr('type', 'checkbox');
                               incrementalDom.elementOpenEnd();
@@ -286,8 +286,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                             } else {
                               incrementalDom.elementOpenStart('input');
                                   incrementalDom.attr('onclick', setSelectedResult);
-                                  incrementalDom.attr('value', field5163Data);
-                                  incrementalDom.attr('id', field5163Data.idFile);
+                                  incrementalDom.attr('value', field5169Data);
+                                  incrementalDom.attr('id', field5169Data.idFile);
                                   incrementalDom.attr('class', 'custom-control-input');
                                   incrementalDom.attr('type', 'checkbox');
                               incrementalDom.elementOpenEnd();
@@ -301,6 +301,19 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.elementClose('div');
                       incrementalDom.elementClose('div');
                       incrementalDom.elementOpenStart('div');
+                          incrementalDom.attr('class', 'autofit-col');
+                      incrementalDom.elementOpenEnd();
+                        incrementalDom.elementOpenStart('span');
+                            incrementalDom.attr('class', 'badge badge-primary');
+                        incrementalDom.elementOpenEnd();
+                          incrementalDom.elementOpenStart('span');
+                              incrementalDom.attr('class', 'badge-item badge-item-expand');
+                          incrementalDom.elementOpenEnd();
+                            soyIdom.print(field5169Data.structureName);
+                          incrementalDom.elementClose('span');
+                        incrementalDom.elementClose('span');
+                      incrementalDom.elementClose('div');
+                      incrementalDom.elementOpenStart('div');
                           incrementalDom.attr('class', 'autofit-col autofit-col-expand');
                       incrementalDom.elementOpenEnd();
                         incrementalDom.elementOpenStart('h4');
@@ -309,18 +322,25 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                           incrementalDom.elementOpenStart('a');
                               incrementalDom.attr('href', '#1');
                           incrementalDom.elementOpenEnd();
-                            soyIdom.print(field5163Data.filename);
+                            soyIdom.print(field5169Data.title);
                           incrementalDom.elementClose('a');
                         incrementalDom.elementClose('h4');
                         incrementalDom.elementOpenStart('p');
                             incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(field5163Data.description);
+                          soyIdom.print(field5169Data.path);
                         incrementalDom.elementClose('p');
                         incrementalDom.elementOpenStart('p');
                             incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(field5163Data.path);
+                          soyIdom.print(field5169Data.user);
+                          incrementalDom.text('hace  ');
+                          soyIdom.print(field5169Data.date);
+                        incrementalDom.elementClose('p');
+                        incrementalDom.elementOpenStart('p');
+                            incrementalDom.attr('class', 'list-group-subtitle text-truncate');
+                        incrementalDom.elementOpenEnd();
+                          soyIdom.print(field5169Data.status);
                         incrementalDom.elementClose('p');
                       incrementalDom.elementClose('div');
                     incrementalDom.elementClose('li');

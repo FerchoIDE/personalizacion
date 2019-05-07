@@ -8,7 +8,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 
 public interface IJournalApi {
 
- 
     /**
      * M�todo getListJournalFoldersByCode
      * @param groupId Id del s�tio
@@ -96,8 +95,7 @@ public interface IJournalApi {
      *  @throws PortalException
      */
     public List<JournalArticle> getWCByJournalFolderAndStructureType(Long groupId,String brand,String code_hotel,String type) throws PortalException;
-   
-  
+
 
     public JournalArticle saveWC(String json) throws PortalException;
 
@@ -113,8 +111,12 @@ public interface IJournalApi {
     code hotel(podria ser opcional)
     tipo de contenido (Id de la estructura) si este es null es sobre todos los contenidos
      */
+    /*
+    ejemplo de invocacion
+    21331,FI,GAL,habitacion
+     */
     public List<JournalArticle> getWebcontentRecursiveByType(Long groupId,String marca,String codeHotel,String TypeContent) throws PortalException;
-    
+
     public List<JournalArticle> getWebcontentRecursiveByType(Long groupId,Long folderId,Long typeContent) throws PortalException;
 
     public List<JournalArticle> getWebcontentRecursiveByType(Long groupId,String marca,String codeHotel,Long typeContent) throws PortalException;
@@ -129,7 +131,7 @@ public interface IJournalApi {
     titulo del contenido, considerar usar like y no sensible a mayusculas minusculas
      */
     public List<JournalArticle> getWebcontentRecursiveByTitle(Long groupId,String marca,String codeHotel,String title,String contentType) throws PortalException;
-    
+
     public List<JournalArticle> getWebcontentRecursiveByTitle(Long groupId,Long folderId,String title,Long structureId) throws PortalException;
 
     public List<JournalArticle> getWebcontentRecursiveByTitle(Long groupId,String marca,String codeHotel,String title,Long structureId) throws PortalException;
@@ -160,7 +162,7 @@ public interface IJournalApi {
 
      */
     public List<JournalArticle> searchWebContentByCodeHotelFirstLevel(Long groupId,String structureName,String code) throws PortalException;
-   
+
     public List<JournalArticle> searchWebContentByCodeHotelFirstLevelByFolder(Long groupId,String structureName,String code,Long folderId) throws PortalException;
 
 
@@ -174,13 +176,13 @@ public interface IJournalApi {
     groupid,
     marca
      */
-    
+
     public JSONArray getListJournalFoldersByBrand(Long groupId,Long brand) throws PortalException;
-    
-   
+
+
     public JSONArray getListJournalFoldersByBrand(Long groupId,String brand) throws PortalException;
 
-   
+
     /*
     Recuperar un contenido y la estructura asociada a este
 
