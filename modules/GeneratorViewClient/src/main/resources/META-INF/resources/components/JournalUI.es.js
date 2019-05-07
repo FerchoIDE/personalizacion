@@ -13,7 +13,7 @@ class JournalUI extends Component {
     openSelectJournal(event) {
         if(event === undefined)
             return
-        console.log('-----receive event openSelectJournal----')
+        console.log('-----receive event openSelectJournal----'+this.id)
         event.preventDefault();
 
         new Service().getJournals(this.brandSelected,this.hotelSelected,this.setResultJournal)

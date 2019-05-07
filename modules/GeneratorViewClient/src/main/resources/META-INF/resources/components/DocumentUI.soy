@@ -38,10 +38,20 @@
             <div class="col-10">
                 <div class="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
                     <div class="container">
-                        <ul class="list-group show-quick-actions-on-hover">
-                            {if $itemsAsociated !=null}
+                        <div class="table-responsive">
+                            <table class="table table-autofit table-list">
+                                <tbody>
+                            {if $itemsAsociated != null}
                                 {foreach $field in keys($itemsAsociated)}
-                                    <li class="list-group-item list-group-item-flex">
+                                    {if isFirst($field)}
+                                     <tr>
+                                    {/if}
+                                    {if (index($field)+3)%3==0 and not isFirst($field)}
+                                        </tr>
+                                        <tr>
+                                    {/if}
+                                    <td class="table-cell-expand">
+                                                    <div class="list-group-item list-group-item-flex">
 
                                         <div class="autofit-col">
                                                 <span class="inline-item">
@@ -52,14 +62,15 @@
                                                 </span>
                                         </div>
 
-                                        <div class="autofit-col autofit-col-expand">
-                                            <h4 class="list-group-title text-truncate">
+                                        <div class="autofit-col">
+                                            <h4 class="table-list-title">
                                                 <a href="#1">{$itemsAsociated[$field].filename}</a>
                                             </h4>
-                                            <p class="list-group-subtitle text-truncate">{$itemsAsociated[$field].path}</p>
+                                            <p class="text-truncate-inline">{$itemsAsociated[$field].path}</p>
                                         </div>
                                         <div class="autofit-col">
-                                            <a onclick="{$deleteDocument}" href="#1" id="{$field}" style="font-size: 18px">
+                                            <a onclick="{$deleteDocument}" href="#1" id="{$field}"
+                                               style="font-size: 18px">
                                                 <svg class="lexicon-icon lexicon-icon-trash" focusable="false"
                                                      role="presentation">
                                                     <use href="{$contextPath}/images/icons/icons.svg#trash"></use>
@@ -67,10 +78,16 @@
                                             </a>
                                         </div>
 
-                                    </li>
+                                                    </div>
+                                    </td>
+                                    {if isLast($field)}
+                                        </tr>
+                                    {/if}
                                 {/foreach}
                             {/if}
-                        </ul>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,7 +104,8 @@
                         </div>
                         &nbsp;
                         <div class="upload-btn-wrapper-custom">
-                            <button onclick="{$openNewDocument}" class="btn  btn-monospaced btn-sm btn-primary" type="button">
+                            <button onclick="{$openNewDocument}" class="btn  btn-monospaced btn-sm btn-primary"
+                                    type="button">
                                 <svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
                                     <use href="{$contextPath}/images/icons/icons.svg#plus"></use>
                                 </svg>
@@ -101,7 +119,7 @@
         </div>
         <div aria-labelledby="clayLargeModalLabel" class="fade modal {$isOpenSelect ? 'show' : ''}"
              style="{$isOpenSelect ? '' : 'display: none'}" id="{$id}_Modal" role="dialog" tabindex="-1">
-            <div class="modal-info modal-dialog modal-full-screen-sm-down">
+            <div class="modal-info modal-dialog modal-full-screen-sm-down"  style="min-width: 850px; max-width: 850px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="modal-title" id="claySmallModalLabel">{$label}</div>
@@ -114,12 +132,13 @@
                         </button>
                     </div>
 
-                    <div class="modal-body inline-scroller" style="min-height: 700px;max-height: 700px;!important;">
+                    <div class="modal-body inline-scroller" style="min-height: 700px;max-height: 700px">
                         <div class="container-fluid container-fluid-max-xl">
                             <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-item input-group-prepend">
-                                        <select onchange="{$changeFolder}"  class="form-control" id="regularSelectElement">
+                                        <select onchange="{$changeFolder}" class="form-control"
+                                                id="regularSelectElement">
                                             <option disabled selected>Selecciona una opción o</option>
                                             {if $foldersDocuments}
                                                 {foreach $field in $foldersDocuments}
@@ -135,7 +154,8 @@
                                                type="text"/>
                                     </div>
                                     <div class="input-group-append input-group-item input-group-item-shrink">
-                                        <button onclick="{$searchByName}" class="btn btn-monospaced btn-sm" type="button">
+                                        <button onclick="{$searchByName}" class="btn btn-monospaced btn-sm"
+                                                type="button">
                                             <svg class="lexicon-icon lexicon-icon-plus" focusable="false"
                                                  role="presentation">
                                                 <use href="{$contextPath}/images/icons/icons.svg#search"></use>
@@ -145,49 +165,68 @@
                                 </div>
                             </div>
                         </div>
-                        <ul class="list-group show-quick-actions-on-hover">
-                            {if $itemsResult}
-                                {foreach $field in $itemsResult}
+                            <div class="table-responsive">
+                                <table class="table table-autofit table-list">
+                                    <tbody>
+                                        {if $itemsResult}
+                                            {foreach $field in $itemsResult}
+                                                {if isFirst($field)}
+                                                    <tr>
+                                                {/if}
+                                                {if (index($field)+2)%2==0 and not isFirst($field)}
+                                                    </tr>
+                                                    <tr>
+                                                {/if}
 
-                                    <li class="list-group-item list-group-item-flex">
-                                        <div class="autofit-col">
-                                            <div class="custom-control custom-checkbox">
-                                                <label>
-                                                    {if  isNonnull($itemsResultSelected)}
-                                                        {if  $itemsResultSelected[$field.idFile]}
-                                                            <input checked onclick="{$setSelectedResult}"
-                                                                   value="{$field.all}"
-                                                                   id="{$field.idFile}" class="custom-control-input"
-                                                                   type="checkbox"/>
-                                                        {else}
-                                                            <input onclick="{$setSelectedResult}" value="{$field.all}"
-                                                                   id="{$field.idFile}" class="custom-control-input"
-                                                                   type="checkbox"/>
-                                                        {/if}
-                                                    {/if}
-                                                    <span class="custom-control-label"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="autofit-col">
-                                            <span class="inline-item">
-                                                 <img width="128" style="max-height: 256px;max-width: 100%"
-                                                      alt="Not Image"
-                                                      src="http://localhost:8080{$field.imageThumbnail}"/>
+                                                <td class="table-cell-expand">
+                                                    <div class="list-group-item list-group-item-flex">
+                                                        <div class="autofit-col">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <label>
+                                                                    {if isNonnull($itemsResultSelected)}
+                                                                        {if $itemsResultSelected[$field.idFile]}
+                                                                            <input checked
+                                                                                   onclick="{$setSelectedResult}"
+                                                                                   value="{$field.all}"
+                                                                                   id="{$field.idFile}"
+                                                                                   class="custom-control-input"
+                                                                                   type="checkbox"/>
+                                                                        {else}
+                                                                            <input onclick="{$setSelectedResult}"
+                                                                                   value="{$field.all}"
+                                                                                   id="{$field.idFile}"
+                                                                                   class="custom-control-input"
+                                                                                   type="checkbox"/>
+                                                                        {/if}
+                                                                    {/if}
+                                                                    <span class="custom-control-label"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="autofit-col">
+                                                            <span class="inline-item">
+                                                                 <img width="128" style="max-height: 256px;max-width: 100%"
+                                                                      alt="Not Image"
+                                                                      src="http://localhost:8080{$field.imageThumbnail}"/>
 
-                                            </span>
-                                        </div>
-
-                                        <div class="autofit-col autofit-col-expand">
-                                            <h4 class="list-group-title text-truncate">
-                                                <a href="#1">{$field.filename}</a>
-                                            </h4>
-                                            <p class="list-group-subtitle text-truncate">{$field.path}</p>
-                                        </div>
-                                    </li>
-                                {/foreach}
-                            {/if}
-                        </ul>
+                                                            </span>
+                                                        </div>
+                                                        <div class="autofit-col">
+                                                            <h4 class="table-list-title">
+                                                                <a href="#1">{$field.filename}</a>
+                                                            </h4>
+                                                            <p class="text-truncate-inline">{$field.path}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                {if isLast($field)}
+                                                </tr>
+                                                {/if}
+                                            {/foreach}
+                                        {/if}
+                                    </tbody>
+                                </table>
+                            </div>
                     </div>
 
                     <div class="modal-footer">
@@ -199,7 +238,7 @@
                                     </button>
                                 </div>
 
-                                <div class="btn-group-item" data-dismiss="modal" >
+                                <div class="btn-group-item" data-dismiss="modal">
                                     <button class="btn btn-primary" onclick="{$saveSelectDocument}" type="button">
                                         Guardar
                                     </button>
@@ -232,36 +271,38 @@
 
                             <div class="alert alert-danger" id="{$id}_AlertErrorNew" style="display:none" role="alert">
                                 <span class="alert-indicator">
-                                    <svg class="lexicon-icon lexicon-icon-exclamation-full" focusable="false" role="presentation">
+                                    <svg class="lexicon-icon lexicon-icon-exclamation-full" focusable="false"
+                                         role="presentation">
                                         <use href="{$contextPath}/images/icons/icons.svg#exclamation-full"></use>
                                     </svg>
                                 </span>
-                                <strong class="lead">Error:</strong><div id="{$id}_MsgErrorNew"></div>
+                                <strong class="lead">Error:</strong>
+                                <div id="{$id}_MsgErrorNew"></div>
                             </div>
 
 
+                            <div class="form-group">
+                                <select class="form-control" id="{$id}_FolderNew">
+                                    <option disabled selected>Selecciona la carpeta donde se almacenara el nuevo
+                                        recurso
+                                    </option>
 
-
-                                <div class="form-group">
-                                    <select  class="form-control" id="{$id}_FolderNew">
-                                        <option disabled selected>Selecciona la carpeta donde se almacenara el nuevo recurso</option>
-
-                                        {if $foldersDocuments}
-                                            {foreach $field in $foldersDocuments}
-                                                <option value="{$field.folderId}">{$field.nameFolder}</option>
-                                            {/foreach}
-                                        {/if}
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <input id="{$id}_DescriptionNew"  class="form-control"
-                                           class="form-control input-group-inset input-group-inset-after"
-                                           name="mySearchInputName" placeholder="Ingrese la descripción del nuevo recurso"
-                                           type="text"/>
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" onchange="{$fileNew}" type="file" name="myfile"/>
-                                </div>
+                                    {if $foldersDocuments}
+                                        {foreach $field in $foldersDocuments}
+                                            <option value="{$field.folderId}">{$field.nameFolder}</option>
+                                        {/foreach}
+                                    {/if}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input id="{$id}_DescriptionNew" class="form-control"
+                                       class="form-control input-group-inset input-group-inset-after"
+                                       name="mySearchInputName" placeholder="Ingrese la descripción del nuevo recurso"
+                                       type="text"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" onchange="{$fileNew}" type="file" name="myfile"/>
+                            </div>
 
                         </div>
 
@@ -276,8 +317,9 @@
                                     </button>
                                 </div>
 
-                                <div class="btn-group-item" data-dismiss="modal" >
-                                    <button class="btn btn-primary" id="{$id}_BtnNew" disabled onclick="{$saveNewDocument}" type="button">
+                                <div class="btn-group-item" data-dismiss="modal">
+                                    <button class="btn btn-primary" id="{$id}_BtnNew" disabled
+                                            onclick="{$saveNewDocument}" type="button">
                                         Guardar
                                     </button>
                                 </div>

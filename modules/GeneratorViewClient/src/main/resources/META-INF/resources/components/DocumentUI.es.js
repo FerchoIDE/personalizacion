@@ -186,15 +186,19 @@ class DocumentUI extends Component {
 
     }
     resultSaveDocument(status,response){
-        if(status==='OK'){
-            this.setState({isOpenNew: false })
-            var _itemsAsociated = this.itemsAsociated
+        var _this =this
+        window.setTimeout(handler =>{
+            if(status==='OK'){
+                _this.setState({isOpenNew: false })
+                var _itemsAsociated = _this.itemsAsociated
                 _itemsAsociated[response['idFile']]=response
-            this.setState({itemsAsociated: _itemsAsociated })
-        }else{
-            $("div#"+this.id+"_AlertErrorNew").css('display','block');
-            $("div#"+this.id+"_MsgErrorNew").text(response)
-        }
+                _this.setState({itemsAsociated: _itemsAsociated })
+            }else{
+                $("div#"+this.id+"_AlertErrorNew").css('display','block');
+                $("div#"+this.id+"_MsgErrorNew").text(response)
+            }
+        },1000)
+
     }
 }
 DocumentUI.STATE = {

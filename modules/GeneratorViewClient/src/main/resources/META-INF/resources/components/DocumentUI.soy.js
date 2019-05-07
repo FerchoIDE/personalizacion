@@ -109,75 +109,95 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenStart('div');
               incrementalDom.attr('class', 'container');
           incrementalDom.elementOpenEnd();
-            incrementalDom.elementOpenStart('ul');
-                incrementalDom.attr('class', 'list-group show-quick-actions-on-hover');
+            incrementalDom.elementOpenStart('div');
+                incrementalDom.attr('class', 'table-responsive');
             incrementalDom.elementOpenEnd();
-              if (itemsAsociated != null) {
-                var field3790List = (soy.$$getMapKeys(itemsAsociated));
-                var field3790ListLen = field3790List.length;
-                for (var field3790Index = 0; field3790Index < field3790ListLen; field3790Index++) {
-                    var field3790Data = field3790List[field3790Index];
-                    incrementalDom.elementOpenStart('li');
-                        incrementalDom.attr('class', 'list-group-item list-group-item-flex');
-                    incrementalDom.elementOpenEnd();
-                      incrementalDom.elementOpenStart('div');
-                          incrementalDom.attr('class', 'autofit-col');
-                      incrementalDom.elementOpenEnd();
-                        incrementalDom.elementOpenStart('span');
-                            incrementalDom.attr('class', 'inline-item');
-                        incrementalDom.elementOpenEnd();
-                          incrementalDom.elementOpenStart('img');
-                              incrementalDom.attr('width', '128');
-                              incrementalDom.attr('style', 'max-height: 256px;max-width: 100%');
-                              incrementalDom.attr('alt', 'Not Image');
-                              incrementalDom.attr('src', 'http://localhost:8080' + itemsAsociated[field3790Data].imageThumbnail);
+              incrementalDom.elementOpenStart('table');
+                  incrementalDom.attr('class', 'table table-autofit table-list');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpen('tbody');
+                  if (itemsAsociated != null) {
+                    var field3802List = (soy.$$getMapKeys(itemsAsociated));
+                    var field3802ListLen = field3802List.length;
+                    for (var field3802Index = 0; field3802Index < field3802ListLen; field3802Index++) {
+                        var field3802Data = field3802List[field3802Index];
+                        if (field3802Index == 0) {
+                            incrementalDom.elementOpen('tr');
+                          }
+                          if ((field3802Index + 3) % 3 == 0 && !(field3802Index == 0)) {
+                            incrementalDom.elementClose('tr');
+                          incrementalDom.elementOpen('tr');
+                          }
+                          incrementalDom.elementOpenStart('td');
+                              incrementalDom.attr('class', 'table-cell-expand');
                           incrementalDom.elementOpenEnd();
-                          incrementalDom.elementClose('img');
-                        incrementalDom.elementClose('span');
-                      incrementalDom.elementClose('div');
-                      incrementalDom.elementOpenStart('div');
-                          incrementalDom.attr('class', 'autofit-col autofit-col-expand');
-                      incrementalDom.elementOpenEnd();
-                        incrementalDom.elementOpenStart('h4');
-                            incrementalDom.attr('class', 'list-group-title text-truncate');
-                        incrementalDom.elementOpenEnd();
-                          incrementalDom.elementOpenStart('a');
-                              incrementalDom.attr('href', '#1');
-                          incrementalDom.elementOpenEnd();
-                            soyIdom.print(itemsAsociated[field3790Data].filename);
-                          incrementalDom.elementClose('a');
-                        incrementalDom.elementClose('h4');
-                        incrementalDom.elementOpenStart('p');
-                            incrementalDom.attr('class', 'list-group-subtitle text-truncate');
-                        incrementalDom.elementOpenEnd();
-                          soyIdom.print(itemsAsociated[field3790Data].path);
-                        incrementalDom.elementClose('p');
-                      incrementalDom.elementClose('div');
-                      incrementalDom.elementOpenStart('div');
-                          incrementalDom.attr('class', 'autofit-col');
-                      incrementalDom.elementOpenEnd();
-                        incrementalDom.elementOpenStart('a');
-                            incrementalDom.attr('onclick', deleteDocument);
-                            incrementalDom.attr('href', '#1');
-                            incrementalDom.attr('id', field3790Data);
-                            incrementalDom.attr('style', 'font-size: 18px');
-                        incrementalDom.elementOpenEnd();
-                          incrementalDom.elementOpenStart('svg');
-                              incrementalDom.attr('class', 'lexicon-icon lexicon-icon-trash');
-                              incrementalDom.attr('focusable', 'false');
-                              incrementalDom.attr('role', 'presentation');
-                          incrementalDom.elementOpenEnd();
-                            incrementalDom.elementOpenStart('use');
-                                incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#trash');
+                            incrementalDom.elementOpenStart('div');
+                                incrementalDom.attr('class', 'list-group-item list-group-item-flex');
                             incrementalDom.elementOpenEnd();
-                            incrementalDom.elementClose('use');
-                          incrementalDom.elementClose('svg');
-                        incrementalDom.elementClose('a');
-                      incrementalDom.elementClose('div');
-                    incrementalDom.elementClose('li');
+                              incrementalDom.elementOpenStart('div');
+                                  incrementalDom.attr('class', 'autofit-col');
+                              incrementalDom.elementOpenEnd();
+                                incrementalDom.elementOpenStart('span');
+                                    incrementalDom.attr('class', 'inline-item');
+                                incrementalDom.elementOpenEnd();
+                                  incrementalDom.elementOpenStart('img');
+                                      incrementalDom.attr('width', '128');
+                                      incrementalDom.attr('style', 'max-height: 256px;max-width: 100%');
+                                      incrementalDom.attr('alt', 'Not Image');
+                                      incrementalDom.attr('src', 'http://localhost:8080' + itemsAsociated[field3802Data].imageThumbnail);
+                                  incrementalDom.elementOpenEnd();
+                                  incrementalDom.elementClose('img');
+                                incrementalDom.elementClose('span');
+                              incrementalDom.elementClose('div');
+                              incrementalDom.elementOpenStart('div');
+                                  incrementalDom.attr('class', 'autofit-col');
+                              incrementalDom.elementOpenEnd();
+                                incrementalDom.elementOpenStart('h4');
+                                    incrementalDom.attr('class', 'table-list-title');
+                                incrementalDom.elementOpenEnd();
+                                  incrementalDom.elementOpenStart('a');
+                                      incrementalDom.attr('href', '#1');
+                                  incrementalDom.elementOpenEnd();
+                                    soyIdom.print(itemsAsociated[field3802Data].filename);
+                                  incrementalDom.elementClose('a');
+                                incrementalDom.elementClose('h4');
+                                incrementalDom.elementOpenStart('p');
+                                    incrementalDom.attr('class', 'text-truncate-inline');
+                                incrementalDom.elementOpenEnd();
+                                  soyIdom.print(itemsAsociated[field3802Data].path);
+                                incrementalDom.elementClose('p');
+                              incrementalDom.elementClose('div');
+                              incrementalDom.elementOpenStart('div');
+                                  incrementalDom.attr('class', 'autofit-col');
+                              incrementalDom.elementOpenEnd();
+                                incrementalDom.elementOpenStart('a');
+                                    incrementalDom.attr('onclick', deleteDocument);
+                                    incrementalDom.attr('href', '#1');
+                                    incrementalDom.attr('id', field3802Data);
+                                    incrementalDom.attr('style', 'font-size: 18px');
+                                incrementalDom.elementOpenEnd();
+                                  incrementalDom.elementOpenStart('svg');
+                                      incrementalDom.attr('class', 'lexicon-icon lexicon-icon-trash');
+                                      incrementalDom.attr('focusable', 'false');
+                                      incrementalDom.attr('role', 'presentation');
+                                  incrementalDom.elementOpenEnd();
+                                    incrementalDom.elementOpenStart('use');
+                                        incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#trash');
+                                    incrementalDom.elementOpenEnd();
+                                    incrementalDom.elementClose('use');
+                                  incrementalDom.elementClose('svg');
+                                incrementalDom.elementClose('a');
+                              incrementalDom.elementClose('div');
+                            incrementalDom.elementClose('div');
+                          incrementalDom.elementClose('td');
+                        if (field3802Index == field3802ListLen - 1) {
+                          incrementalDom.elementClose('tr');
+                        }
+                      }
                   }
-              }
-            incrementalDom.elementClose('ul');
+                incrementalDom.elementClose('tbody');
+              incrementalDom.elementClose('table');
+            incrementalDom.elementClose('div');
           incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');
       incrementalDom.elementClose('div');
@@ -247,6 +267,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
     incrementalDom.elementOpenEnd();
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('class', 'modal-info modal-dialog modal-full-screen-sm-down');
+          incrementalDom.attr('style', 'min-width: 850px; max-width: 850px;');
       incrementalDom.elementOpenEnd();
         incrementalDom.elementOpenStart('div');
             incrementalDom.attr('class', 'modal-content');
@@ -282,7 +303,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementClose('div');
           incrementalDom.elementOpenStart('div');
               incrementalDom.attr('class', 'modal-body inline-scroller');
-              incrementalDom.attr('style', 'min-height: 700px;max-height: 700px;!important;');
+              incrementalDom.attr('style', 'min-height: 700px;max-height: 700px');
           incrementalDom.elementOpenEnd();
             incrementalDom.elementOpenStart('div');
                 incrementalDom.attr('class', 'container-fluid container-fluid-max-xl');
@@ -308,14 +329,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.text('Selecciona una opci\u00F3n o');
                       incrementalDom.elementClose('option');
                       if (foldersDocuments) {
-                        var field3826List = foldersDocuments;
-                        var field3826ListLen = field3826List.length;
-                        for (var field3826Index = 0; field3826Index < field3826ListLen; field3826Index++) {
-                            var field3826Data = field3826List[field3826Index];
+                        var field3838List = foldersDocuments;
+                        var field3838ListLen = field3838List.length;
+                        for (var field3838Index = 0; field3838Index < field3838ListLen; field3838Index++) {
+                            var field3838Data = field3838List[field3838Index];
                             incrementalDom.elementOpenStart('option');
-                                incrementalDom.attr('value', field3826Data.folderId);
+                                incrementalDom.attr('value', field3838Data.folderId);
                             incrementalDom.elementOpenEnd();
-                              soyIdom.print(field3826Data.nameFolder);
+                              soyIdom.print(field3838Data.nameFolder);
                             incrementalDom.elementClose('option');
                           }
                       }
@@ -357,90 +378,110 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementClose('div');
               incrementalDom.elementClose('div');
             incrementalDom.elementClose('div');
-            incrementalDom.elementOpenStart('ul');
-                incrementalDom.attr('class', 'list-group show-quick-actions-on-hover');
+            incrementalDom.elementOpenStart('div');
+                incrementalDom.attr('class', 'table-responsive');
             incrementalDom.elementOpenEnd();
-              if (itemsResult) {
-                var field3866List = itemsResult;
-                var field3866ListLen = field3866List.length;
-                for (var field3866Index = 0; field3866Index < field3866ListLen; field3866Index++) {
-                    var field3866Data = field3866List[field3866Index];
-                    incrementalDom.elementOpenStart('li');
-                        incrementalDom.attr('class', 'list-group-item list-group-item-flex');
-                    incrementalDom.elementOpenEnd();
-                      incrementalDom.elementOpenStart('div');
-                          incrementalDom.attr('class', 'autofit-col');
-                      incrementalDom.elementOpenEnd();
-                        incrementalDom.elementOpenStart('div');
-                            incrementalDom.attr('class', 'custom-control custom-checkbox');
-                        incrementalDom.elementOpenEnd();
-                          incrementalDom.elementOpen('label');
-                            if ((itemsResultSelected != null)) {
-                              if (itemsResultSelected[field3866Data.idFile]) {
-                                incrementalDom.elementOpenStart('input');
-                                    incrementalDom.attr('checked', '');
-                                    incrementalDom.attr('onclick', setSelectedResult);
-                                    incrementalDom.attr('value', field3866Data.all);
-                                    incrementalDom.attr('id', field3866Data.idFile);
-                                    incrementalDom.attr('class', 'custom-control-input');
-                                    incrementalDom.attr('type', 'checkbox');
-                                incrementalDom.elementOpenEnd();
-                                incrementalDom.elementClose('input');
-                              } else {
-                                incrementalDom.elementOpenStart('input');
-                                    incrementalDom.attr('onclick', setSelectedResult);
-                                    incrementalDom.attr('value', field3866Data.all);
-                                    incrementalDom.attr('id', field3866Data.idFile);
-                                    incrementalDom.attr('class', 'custom-control-input');
-                                    incrementalDom.attr('type', 'checkbox');
-                                incrementalDom.elementOpenEnd();
-                                incrementalDom.elementClose('input');
-                              }
-                            }
-                            incrementalDom.elementOpenStart('span');
-                                incrementalDom.attr('class', 'custom-control-label');
+              incrementalDom.elementOpenStart('table');
+                  incrementalDom.attr('class', 'table table-autofit table-list');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpen('tbody');
+                  if (itemsResult) {
+                    var field3890List = itemsResult;
+                    var field3890ListLen = field3890List.length;
+                    for (var field3890Index = 0; field3890Index < field3890ListLen; field3890Index++) {
+                        var field3890Data = field3890List[field3890Index];
+                        if (field3890Index == 0) {
+                            incrementalDom.elementOpen('tr');
+                          }
+                          if ((field3890Index + 2) % 2 == 0 && !(field3890Index == 0)) {
+                            incrementalDom.elementClose('tr');
+                          incrementalDom.elementOpen('tr');
+                          }
+                          incrementalDom.elementOpenStart('td');
+                              incrementalDom.attr('class', 'table-cell-expand');
+                          incrementalDom.elementOpenEnd();
+                            incrementalDom.elementOpenStart('div');
+                                incrementalDom.attr('class', 'list-group-item list-group-item-flex');
                             incrementalDom.elementOpenEnd();
-                            incrementalDom.elementClose('span');
-                          incrementalDom.elementClose('label');
-                        incrementalDom.elementClose('div');
-                      incrementalDom.elementClose('div');
-                      incrementalDom.elementOpenStart('div');
-                          incrementalDom.attr('class', 'autofit-col');
-                      incrementalDom.elementOpenEnd();
-                        incrementalDom.elementOpenStart('span');
-                            incrementalDom.attr('class', 'inline-item');
-                        incrementalDom.elementOpenEnd();
-                          incrementalDom.elementOpenStart('img');
-                              incrementalDom.attr('width', '128');
-                              incrementalDom.attr('style', 'max-height: 256px;max-width: 100%');
-                              incrementalDom.attr('alt', 'Not Image');
-                              incrementalDom.attr('src', 'http://localhost:8080' + field3866Data.imageThumbnail);
-                          incrementalDom.elementOpenEnd();
-                          incrementalDom.elementClose('img');
-                        incrementalDom.elementClose('span');
-                      incrementalDom.elementClose('div');
-                      incrementalDom.elementOpenStart('div');
-                          incrementalDom.attr('class', 'autofit-col autofit-col-expand');
-                      incrementalDom.elementOpenEnd();
-                        incrementalDom.elementOpenStart('h4');
-                            incrementalDom.attr('class', 'list-group-title text-truncate');
-                        incrementalDom.elementOpenEnd();
-                          incrementalDom.elementOpenStart('a');
-                              incrementalDom.attr('href', '#1');
-                          incrementalDom.elementOpenEnd();
-                            soyIdom.print(field3866Data.filename);
-                          incrementalDom.elementClose('a');
-                        incrementalDom.elementClose('h4');
-                        incrementalDom.elementOpenStart('p');
-                            incrementalDom.attr('class', 'list-group-subtitle text-truncate');
-                        incrementalDom.elementOpenEnd();
-                          soyIdom.print(field3866Data.path);
-                        incrementalDom.elementClose('p');
-                      incrementalDom.elementClose('div');
-                    incrementalDom.elementClose('li');
+                              incrementalDom.elementOpenStart('div');
+                                  incrementalDom.attr('class', 'autofit-col');
+                              incrementalDom.elementOpenEnd();
+                                incrementalDom.elementOpenStart('div');
+                                    incrementalDom.attr('class', 'custom-control custom-checkbox');
+                                incrementalDom.elementOpenEnd();
+                                  incrementalDom.elementOpen('label');
+                                    if ((itemsResultSelected != null)) {
+                                      if (itemsResultSelected[field3890Data.idFile]) {
+                                        incrementalDom.elementOpenStart('input');
+                                            incrementalDom.attr('checked', '');
+                                            incrementalDom.attr('onclick', setSelectedResult);
+                                            incrementalDom.attr('value', field3890Data.all);
+                                            incrementalDom.attr('id', field3890Data.idFile);
+                                            incrementalDom.attr('class', 'custom-control-input');
+                                            incrementalDom.attr('type', 'checkbox');
+                                        incrementalDom.elementOpenEnd();
+                                        incrementalDom.elementClose('input');
+                                      } else {
+                                        incrementalDom.elementOpenStart('input');
+                                            incrementalDom.attr('onclick', setSelectedResult);
+                                            incrementalDom.attr('value', field3890Data.all);
+                                            incrementalDom.attr('id', field3890Data.idFile);
+                                            incrementalDom.attr('class', 'custom-control-input');
+                                            incrementalDom.attr('type', 'checkbox');
+                                        incrementalDom.elementOpenEnd();
+                                        incrementalDom.elementClose('input');
+                                      }
+                                    }
+                                    incrementalDom.elementOpenStart('span');
+                                        incrementalDom.attr('class', 'custom-control-label');
+                                    incrementalDom.elementOpenEnd();
+                                    incrementalDom.elementClose('span');
+                                  incrementalDom.elementClose('label');
+                                incrementalDom.elementClose('div');
+                              incrementalDom.elementClose('div');
+                              incrementalDom.elementOpenStart('div');
+                                  incrementalDom.attr('class', 'autofit-col');
+                              incrementalDom.elementOpenEnd();
+                                incrementalDom.elementOpenStart('span');
+                                    incrementalDom.attr('class', 'inline-item');
+                                incrementalDom.elementOpenEnd();
+                                  incrementalDom.elementOpenStart('img');
+                                      incrementalDom.attr('width', '128');
+                                      incrementalDom.attr('style', 'max-height: 256px;max-width: 100%');
+                                      incrementalDom.attr('alt', 'Not Image');
+                                      incrementalDom.attr('src', 'http://localhost:8080' + field3890Data.imageThumbnail);
+                                  incrementalDom.elementOpenEnd();
+                                  incrementalDom.elementClose('img');
+                                incrementalDom.elementClose('span');
+                              incrementalDom.elementClose('div');
+                              incrementalDom.elementOpenStart('div');
+                                  incrementalDom.attr('class', 'autofit-col');
+                              incrementalDom.elementOpenEnd();
+                                incrementalDom.elementOpenStart('h4');
+                                    incrementalDom.attr('class', 'table-list-title');
+                                incrementalDom.elementOpenEnd();
+                                  incrementalDom.elementOpenStart('a');
+                                      incrementalDom.attr('href', '#1');
+                                  incrementalDom.elementOpenEnd();
+                                    soyIdom.print(field3890Data.filename);
+                                  incrementalDom.elementClose('a');
+                                incrementalDom.elementClose('h4');
+                                incrementalDom.elementOpenStart('p');
+                                    incrementalDom.attr('class', 'text-truncate-inline');
+                                incrementalDom.elementOpenEnd();
+                                  soyIdom.print(field3890Data.path);
+                                incrementalDom.elementClose('p');
+                              incrementalDom.elementClose('div');
+                            incrementalDom.elementClose('div');
+                          incrementalDom.elementClose('td');
+                        if (field3890Index == field3890ListLen - 1) {
+                          incrementalDom.elementClose('tr');
+                        }
+                      }
                   }
-              }
-            incrementalDom.elementClose('ul');
+                incrementalDom.elementClose('tbody');
+              incrementalDom.elementClose('table');
+            incrementalDom.elementClose('div');
           incrementalDom.elementClose('div');
           incrementalDom.elementOpenStart('div');
               incrementalDom.attr('class', 'modal-footer');
@@ -575,14 +616,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                     incrementalDom.text('Selecciona la carpeta donde se almacenara el nuevo recurso');
                   incrementalDom.elementClose('option');
                   if (foldersDocuments) {
-                    var field3902List = foldersDocuments;
-                    var field3902ListLen = field3902List.length;
-                    for (var field3902Index = 0; field3902Index < field3902ListLen; field3902Index++) {
-                        var field3902Data = field3902List[field3902Index];
+                    var field3926List = foldersDocuments;
+                    var field3926ListLen = field3926List.length;
+                    for (var field3926Index = 0; field3926Index < field3926ListLen; field3926Index++) {
+                        var field3926Data = field3926List[field3926Index];
                         incrementalDom.elementOpenStart('option');
-                            incrementalDom.attr('value', field3902Data.folderId);
+                            incrementalDom.attr('value', field3926Data.folderId);
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(field3902Data.nameFolder);
+                          soyIdom.print(field3926Data.nameFolder);
                         incrementalDom.elementClose('option');
                       }
                   }

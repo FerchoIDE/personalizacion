@@ -50,6 +50,7 @@ public class SaveDocumentMedia implements MVCResourceCommand {
                 folderId = new FileEntryApi().getBaseFolder(portletGroupId, brand, codeHotel);
             }
             JSONObject jsonFile = jsonObject.getJSONObject("file");
+            System.out.println(jsonFile.getString("fileData"));
 
             com.liferay.portal.kernel.json.JSONObject resp = new FileEntryApi().saveFile(portletGroupId, userId, folderId,
                     jsonFile.getString("fileData"), jsonFile.getString("fileName"),
