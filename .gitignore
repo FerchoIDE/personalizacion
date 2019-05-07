@@ -84,3 +84,5 @@ gradle-app.setting
 /.classpath
 /.project
 /.clover/
+/modules/GeneratorViewClient/package-lock.json
+/modules/GeneratorViewClient/src/main/resources/META-INF/config.json
