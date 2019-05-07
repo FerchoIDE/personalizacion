@@ -7,7 +7,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import generatorviewclient.util.FileUtil;
 import generatorviewclient.api.impl.FileEntryApi;
-import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import org.json.JSONObject;
 import org.osgi.service.component.annotations.Component;
 
