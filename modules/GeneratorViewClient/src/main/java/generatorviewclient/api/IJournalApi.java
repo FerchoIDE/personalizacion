@@ -1,7 +1,10 @@
 package generatorviewclient.api;
 
 import java.util.List;
+import java.util.Map;
 
+import com.consistent.service.application.domain.JournalApi;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -259,6 +262,23 @@ public interface IJournalApi {
    
     /*
     Recuperar un contenido y la estructura asociada a este IdArticle Map 
-
+    uuid=ca0ec3c4-5b54-11e8-9cfb-5bb8e3634f62,
+    id=126317, Se consulta por este elemento de la estructura de Webcontet
+    resourcePrimKey=126318,
+    groupId=20142,
+    companyId=20115,
+    userId=20155,
+    userName=Test Test,
+    createDate=2018-11-09 12:31:53.481,
+    modifiedDate=2019-03-07 07:16:03.851,
+    folderId=119341,
+    classNameId=0,
+    classPK=0,
+    
+    Map<JournalArticle, DDMStructure> map = new JournalApi().getWCandStructureById(126317);
+ 			for (Map.Entry<JournalArticle, DDMStructure> entry : map.entrySet()) {
+ 			    System.out.println(entry.getKey() + "VS" + entry.getValue());
+ 			}
      */
+    public Map<JournalArticle, DDMStructure> getWCandStructureById(Long articleId) throws PortalException;
 }
