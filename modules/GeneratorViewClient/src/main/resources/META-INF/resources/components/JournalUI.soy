@@ -16,7 +16,6 @@
     {@param itemsResultSelected: ?}
 
 
-
     {@param contextPath: string}
 
     <div id="{$id}" class="container">
@@ -86,11 +85,12 @@
         </div>
         <div aria-labelledby="clayLargeModalLabel" class="fade modal {$isOpenSelect ? 'show' : ''}"
              style="{$isOpenSelect ? '' : 'display: none'}" id="{$id}_Modal" role="dialog" tabindex="-1">
-            <div class="modal-dialog modal-sm">
+            <div class="modal-info modal-dialog modal-full-screen-sm-down">
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="modal-title" id="claySmallModalLabel">{$label}</div>
-                        <button aria-labelledby="Close" onclick="{$closeSelectJournal}" class="close" data-dismiss="modal" role="button" type="button">
+                        <button aria-labelledby="Close" onclick="{$closeSelectJournal}" class="close"
+                                data-dismiss="modal" role="button" type="button">
                             <svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
                                 <use href="{$contextPath}/images/icons/icons.svg#times"/>
                             </svg>
@@ -103,28 +103,38 @@
                                 {foreach $field in $itemsResult}
 
                                     <li class="list-group-item list-group-item-flex">
-                                    <div class="autofit-col">
-                                        <div class="custom-control custom-checkbox">
-                                            <label>
-                                                 {if $itemsResultSelected[$field.idFile]}
-                                                     <input checked onclick="{$setSelectedResult}" value="{$field}" id="{$field.idFile}" class="custom-control-input" type="checkbox"/>
-                                                 {else}
-                                                     <input onclick="{$setSelectedResult}" value="{$field}" id="{$field.idFile}" class="custom-control-input" type="checkbox"/>
-                                                 {/if}
-                                                <span class="custom-control-label"></span>
-                                            </label>
+                                        <div class="autofit-col">
+                                            <div class="custom-control custom-checkbox">
+                                                <label>
+                                                    {if $itemsResultSelected[$field.idFile]}
+                                                        <input checked onclick="{$setSelectedResult}" value="{$field}"
+                                                               id="{$field.idFile}" class="custom-control-input"
+                                                               type="checkbox"/>
+                                                    {else}
+                                                        <input onclick="{$setSelectedResult}" value="{$field}"
+                                                               id="{$field.idFile}" class="custom-control-input"
+                                                               type="checkbox"/>
+                                                    {/if}
+                                                    <span class="custom-control-label"></span>
+                                                </label>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="autofit-col">
+                                            <span class="badge badge-primary">
+                                                <span class="badge-item badge-item-expand">{$field.structureName}</span>
+                                            </span>
+                                        </div>
 
-                                    <div class="autofit-col autofit-col-expand">
-                                        <h4 class="list-group-title text-truncate">
-                                            <a href="#1">{$field.filename}</a>
-                                        </h4>
-
-                                        <p class="list-group-subtitle text-truncate">{$field.description}</p>
-                                        <p class="list-group-subtitle text-truncate">{$field.path}</p>
-                                    </div>
-                                </li>
+                                        <div class="autofit-col autofit-col-expand">
+                                            <h4 class="list-group-title text-truncate">
+                                                <a href="#1">{$field.title}</a>
+                                            </h4>
+                                            <p class="list-group-subtitle text-truncate">{$field.path}</p>
+                                            <p class="list-group-subtitle text-truncate">{$field.user}
+                                                hace  {$field.date}</p>
+                                            <p class="list-group-subtitle text-truncate">{$field.status}</p>
+                                        </div>
+                                    </li>
                                 {/foreach}
                             {/if}
                         </ul>
@@ -134,7 +144,8 @@
                         <div class="modal-item-last">
                             <div class="btn-group">
                                 <div class="btn-group-item">
-                                    <button class="btn btn-secondary" onclick="{$closeSelectJournal}" data-dismiss="modal" type="button">Cancelar
+                                    <button class="btn btn-secondary" onclick="{$closeSelectJournal}"
+                                            data-dismiss="modal" type="button">Cancelar
                                     </button>
                                 </div>
 
@@ -147,6 +158,6 @@
                 </div>
             </div>
 
-    </div>
+        </div>
 
 {/template}

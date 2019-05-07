@@ -4,7 +4,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
-import generatorviewclient.liferayservice.JournalArticleServices;
 import generatorviewclient.util.FileUtil;
 import generatorviewclient.api.impl.FileEntryApi;
 import org.json.JSONObject;

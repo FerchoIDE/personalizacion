@@ -24,7 +24,7 @@ public class ConfigurationAction extends DefaultConfigurationAction{
     @Activate
     @Modified
     public void activate(Map<Object, Object> properties) {
-        System.out.println("Configuración actualizada  " + new Date().toString());
+        System.out.println("Configuración actualizada 1.3  " + new Date().toString());
         _configuration = ConfigurableUtil.createConfigurable(ConfigPersonalizacion.class, properties);
         if (_configuration != null) {
             System.out.println(_configuration.name());
@@ -33,7 +33,11 @@ public class ConfigurationAction extends DefaultConfigurationAction{
             Contants.DLFILEENTRY_BASE= DLFILEENTRY_BASE;//_configuration.DLFileEntryFolderBase();
             String[] JOURNAL_HOTEL={"Posadas","Hotel"};
             Contants.JOURNAL_HOTEL=JOURNAL_HOTEL;//_configuration.JournalFolderHotelBase();
-            Contants.JOURNAL_HOTEL=_configuration.JournalFolderHotelBase();
+
+            String[] STRUCTURE_IDS={"35835","35826","35796","35956","35832","35823","35912","35962","35812","35968","35820","35965","35959","35823"};
+            Contants.STRUCTURE_IDS=STRUCTURE_IDS;//_configuration.JournalFolderHotelBase();
+
+           // Contants.JOURNAL_HOTEL=_configuration.JournalFolderHotelBase();
 /*            for (String iterable_element : Contants.STRUCTURE_IDS) {
                 System.out.println("Registro actual en la configuración, info="+iterable_element);
 
