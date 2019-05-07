@@ -3,7 +3,6 @@ package generatorviewclient.api;
 import java.util.List;
 import java.util.Map;
 
-import com.consistent.service.application.domain.JournalApi;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
