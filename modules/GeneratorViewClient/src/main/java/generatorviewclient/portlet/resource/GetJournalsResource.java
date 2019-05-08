@@ -49,10 +49,9 @@ public class GetJournalsResource implements MVCResourceCommand {
             String codeHotel = jsonObject.getString("codeHotel");
             List<JournalArticle> array = new LinkedList<>();
             if (jsonObject.has("folderId")) {
-
-                // array = new JournalApi().getFilesByCurrentFolderAndName(portletGroupId,jsonObject.getLong("folderId"),"");
+                 array = new JournalApi().getWebcontentRecursiveByType(portletGroupId,jsonObject.getLong("folderId"),35826L);
             } else if (jsonObject.has("nameFolder")) {
-                // array = new JournalApi().getWCByName(portletGroupId,brand,jsonObject.getString("nameFolder"),codeHotel);
+                array = new JournalApi().getWebcontentRecursiveByTitle(portletGroupId,brand,codeHotel,jsonObject.getString("nameFolder"),"Habitación");
                 //getWCByName
             } else {
                 array = new JournalApi().getWebcontentRecursiveByType(portletGroupId, brand, codeHotel, "Habitación");

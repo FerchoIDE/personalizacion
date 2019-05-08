@@ -7,7 +7,7 @@
     {@param id: any}
     {@param? label: ?}
 
-    {@param? isOpenSelect: bool}
+    {@param? isOpenJournalSelect: bool}
     {@param? openSelectJournal: ?}
     {@param? closeSelectJournal: ?}
     {@param? saveSelectJournal: ?}
@@ -27,7 +27,7 @@
 
     <div id="{$id}" class="container">
         <div class="row">
-            <div class="col-10">
+            <div class="col-11">
                 <div class="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
                     <div class="container">
                         <div class="table-responsive">
@@ -99,12 +99,12 @@
                 </ul>
             </div>
         </div>
-        <div aria-labelledby="clayLargeModalLabel" class="fade modal {$isOpenSelect ? 'show' : ''}"
-             style="{$isOpenSelect ? '' : 'display: none'}" id="{$id}_Modal" role="dialog" tabindex="-1">
+        <div aria-labelledby="clayLargeModalLabel" class="fade modal {$isOpenJournalSelect ? 'show' : ''}"
+             style="{$isOpenJournalSelect ? '' : 'display: none'}" id="{$id}_Modal" role="dialog" tabindex="-1">
             <div class="modal-info modal-dialog modal-full-screen-sm-down" style="min-width: 850px; max-width: 850px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <div class="modal-title" id="claySmallModalLabel">{$label}</div>
+                        <div class="modal-title">{$label}</div>
                         <button aria-labelledby="Close" onclick="{$closeSelectJournal}" class="close"
                                 data-dismiss="modal" role="button" type="button">
                             <svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
@@ -119,7 +119,7 @@
                                 <div class="input-group">
                                     <div class="input-group-item input-group-prepend">
                                         <select onchange="{$changeFolder}" class="form-control"
-                                                id="regularSelectElement">
+                                               >
                                             <option disabled selected>Selecciona una opción o</option>
                                             {if $foldersJournals}
                                                 {foreach $field in $foldersJournals}
@@ -212,7 +212,7 @@
                                 </div>
 
                                 <div class="btn-group-item">
-                                    <button class="btn btn-primary" onclick="{$saveSelectJournal}" type="button">Guardar</button>
+                                    <button class="btn btn-primary" data-dismiss="modal"  onclick="{$saveSelectJournal}" type="button">Guardar</button>
                                 </div>
                             </div>
                         </div>

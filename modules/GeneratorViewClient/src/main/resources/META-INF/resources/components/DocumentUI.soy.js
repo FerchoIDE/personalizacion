@@ -277,7 +277,6 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenEnd();
             incrementalDom.elementOpenStart('div');
                 incrementalDom.attr('class', 'modal-title');
-                incrementalDom.attr('id', 'claySmallModalLabel');
             incrementalDom.elementOpenEnd();
               soyIdom.print(label);
             incrementalDom.elementClose('div');

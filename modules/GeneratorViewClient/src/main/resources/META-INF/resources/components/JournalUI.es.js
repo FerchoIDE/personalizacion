@@ -51,7 +51,7 @@ class JournalUI extends Component {
         }
         console.log(_itemsResult)
         this.setState({itemsResult: _itemsResult })
-        this.setState({isOpenSelect: true })
+        this.setState({isOpenJournalSelect: true })
         this.setState({itemsResultSelected: {} })
     }
     setFoldersJournal(resultFolders){
@@ -79,7 +79,7 @@ class JournalUI extends Component {
             return
         console.log('-----receive event closeSelectJournal----')
         event.preventDefault();
-        this.setState({isOpenSelect: false })
+        this.setState({isOpenJournalSelect: false })
         this.setState({itemsResult: [] })
         this.setState({itemsResultSelected: {} })
     }
@@ -107,14 +107,14 @@ class JournalUI extends Component {
             _itemsAsociated[result]=JSON.parse(this.itemsResultSelected[result])
         }
         this.setState({itemsJournalAsociated: _itemsAsociated })
-        this.setState({isOpenSelect: false })
+        this.setState({isOpenJournalSelect: false })
 
         this.setState({itemsResult: [] })
         this.setState({itemsResultSelected: {} })
     }
 }
 JournalUI.STATE = {
-    isOpenSelect:{value:false},
+    isOpenJournalSelect:{value:false},
     selectedFolder:{value:undefined},
     searchJournalText:{value:undefined},
     itemsJournalAsociated:{value:[]},

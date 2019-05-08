@@ -27,7 +27,7 @@ var soyIdom = goog.require('soy.idom');
  * @param {{
  *  id: *,
  *  label: (?),
- *  isOpenSelect: (boolean|null|undefined),
+ *  isOpenJournalSelect: (boolean|null|undefined),
  *  openSelectJournal: (?),
  *  closeSelectJournal: (?),
  *  saveSelectJournal: (?),
@@ -53,7 +53,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   /** @type {?} */
   var label = opt_data.label;
   /** @type {boolean|null|undefined} */
-  var isOpenSelect = soy.asserts.assertType(opt_data.isOpenSelect == null || (goog.isBoolean(opt_data.isOpenSelect) || opt_data.isOpenSelect === 1 || opt_data.isOpenSelect === 0), 'isOpenSelect', opt_data.isOpenSelect, 'boolean|null|undefined');
+  var isOpenJournalSelect = soy.asserts.assertType(opt_data.isOpenJournalSelect == null || (goog.isBoolean(opt_data.isOpenJournalSelect) || opt_data.isOpenJournalSelect === 1 || opt_data.isOpenJournalSelect === 0), 'isOpenJournalSelect', opt_data.isOpenJournalSelect, 'boolean|null|undefined');
   /** @type {?} */
   var openSelectJournal = opt_data.openSelectJournal;
   /** @type {?} */
@@ -86,7 +86,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.attr('class', 'row');
     incrementalDom.elementOpenEnd();
       incrementalDom.elementOpenStart('div');
-          incrementalDom.attr('class', 'col-10');
+          incrementalDom.attr('class', 'col-11');
       incrementalDom.elementOpenEnd();
         incrementalDom.elementOpenStart('div');
             incrementalDom.attr('class', 'navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down');
@@ -102,14 +102,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
                   if (itemsJournalAsociated != null) {
-                    var field5235List = (soy.$$getMapKeys(itemsJournalAsociated));
-                    var field5235ListLen = field5235List.length;
-                    for (var field5235Index = 0; field5235Index < field5235ListLen; field5235Index++) {
-                        var field5235Data = field5235List[field5235Index];
-                        if (field5235Index == 0) {
+                    var field5231List = (soy.$$getMapKeys(itemsJournalAsociated));
+                    var field5231ListLen = field5231List.length;
+                    for (var field5231Index = 0; field5231Index < field5231ListLen; field5231Index++) {
+                        var field5231Data = field5231List[field5231Index];
+                        if (field5231Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field5235Index + 4) % 4 == 0 && !(field5235Index == 0)) {
+                          if ((field5231Index + 4) % 4 == 0 && !(field5231Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -128,7 +128,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('span');
                                       incrementalDom.attr('class', 'badge-item badge-item-expand');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(itemsJournalAsociated[field5235Data].structureName);
+                                    soyIdom.print(itemsJournalAsociated[field5231Data].structureName);
                                   incrementalDom.elementClose('span');
                                 incrementalDom.elementClose('span');
                               incrementalDom.elementClose('div');
@@ -141,25 +141,25 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(itemsJournalAsociated[field5235Data].title);
+                                    soyIdom.print(itemsJournalAsociated[field5231Data].title);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(itemsJournalAsociated[field5235Data].path);
+                                  soyIdom.print(itemsJournalAsociated[field5231Data].path);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(itemsJournalAsociated[field5235Data].user);
+                                  soyIdom.print(itemsJournalAsociated[field5231Data].user);
                                   incrementalDom.text('\u00A0 hace  ');
-                                  soyIdom.print(itemsJournalAsociated[field5235Data].date);
+                                  soyIdom.print(itemsJournalAsociated[field5231Data].date);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(itemsJournalAsociated[field5235Data].status);
+                                  soyIdom.print(itemsJournalAsociated[field5231Data].status);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                               incrementalDom.elementOpenStart('div');
@@ -168,7 +168,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                 incrementalDom.elementOpenStart('a');
                                     incrementalDom.attr('onclick', deleteJournal);
                                     incrementalDom.attr('href', '#1');
-                                    incrementalDom.attr('id', field5235Data);
+                                    incrementalDom.attr('id', field5231Data);
                                     incrementalDom.attr('style', 'font-size: 18px');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpenStart('svg');
@@ -185,7 +185,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field5235Index == field5235ListLen - 1) {
+                        if (field5231Index == field5231ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -245,8 +245,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
     incrementalDom.elementClose('div');
     incrementalDom.elementOpenStart('div');
         incrementalDom.attr('aria-labelledby', 'clayLargeModalLabel');
-        incrementalDom.attr('class', 'fade modal ' + (isOpenSelect ? 'show' : ''));
-        incrementalDom.attr('style', isOpenSelect ? '' : 'display: none');
+        incrementalDom.attr('class', 'fade modal ' + (isOpenJournalSelect ? 'show' : ''));
+        incrementalDom.attr('style', isOpenJournalSelect ? '' : 'display: none');
         incrementalDom.attr('id', id + '_Modal');
         incrementalDom.attr('role', 'dialog');
         incrementalDom.attr('tabindex', '-1');
@@ -263,7 +263,6 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenEnd();
             incrementalDom.elementOpenStart('div');
                 incrementalDom.attr('class', 'modal-title');
-                incrementalDom.attr('id', 'claySmallModalLabel');
             incrementalDom.elementOpenEnd();
               soyIdom.print(label);
             incrementalDom.elementClose('div');
@@ -306,7 +305,6 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                     incrementalDom.elementOpenStart('select');
                         incrementalDom.attr('onchange', changeFolder);
                         incrementalDom.attr('class', 'form-control');
-                        incrementalDom.attr('id', 'regularSelectElement');
                     incrementalDom.elementOpenEnd();
                       incrementalDom.elementOpenStart('option');
                           incrementalDom.attr('disabled', '');
@@ -315,14 +313,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.text('Selecciona una opci\u00F3n o');
                       incrementalDom.elementClose('option');
                       if (foldersJournals) {
-                        var field5269List = foldersJournals;
-                        var field5269ListLen = field5269List.length;
-                        for (var field5269Index = 0; field5269Index < field5269ListLen; field5269Index++) {
-                            var field5269Data = field5269List[field5269Index];
+                        var field5265List = foldersJournals;
+                        var field5265ListLen = field5265List.length;
+                        for (var field5265Index = 0; field5265Index < field5265ListLen; field5265Index++) {
+                            var field5265Data = field5265List[field5265Index];
                             incrementalDom.elementOpenStart('option');
-                                incrementalDom.attr('value', field5269Data.folderId);
+                                incrementalDom.attr('value', field5265Data.folderId);
                             incrementalDom.elementOpenEnd();
-                              soyIdom.print(field5269Data.nameFolder);
+                              soyIdom.print(field5265Data.nameFolder);
                             incrementalDom.elementClose('option');
                           }
                       }
@@ -372,14 +370,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
                   if (itemsResult) {
-                    var field5323List = itemsResult;
-                    var field5323ListLen = field5323List.length;
-                    for (var field5323Index = 0; field5323Index < field5323ListLen; field5323Index++) {
-                        var field5323Data = field5323List[field5323Index];
-                        if (field5323Index == 0) {
+                    var field5319List = itemsResult;
+                    var field5319ListLen = field5319List.length;
+                    for (var field5319Index = 0; field5319Index < field5319ListLen; field5319Index++) {
+                        var field5319Data = field5319List[field5319Index];
+                        if (field5319Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field5323Index + 3) % 3 == 0 && !(field5323Index == 0)) {
+                          if ((field5319Index + 3) % 3 == 0 && !(field5319Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -396,12 +394,12 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                     incrementalDom.attr('class', 'custom-control custom-checkbox');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpen('label');
-                                    if (itemsResultSelected[field5323Data.id]) {
+                                    if (itemsResultSelected[field5319Data.id]) {
                                       incrementalDom.elementOpenStart('input');
                                           incrementalDom.attr('checked', '');
                                           incrementalDom.attr('onclick', setSelectedResult);
-                                          incrementalDom.attr('value', field5323Data.all);
-                                          incrementalDom.attr('id', field5323Data.id);
+                                          incrementalDom.attr('value', field5319Data.all);
+                                          incrementalDom.attr('id', field5319Data.id);
                                           incrementalDom.attr('class', 'custom-control-input');
                                           incrementalDom.attr('type', 'checkbox');
                                       incrementalDom.elementOpenEnd();
@@ -409,8 +407,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                     } else {
                                       incrementalDom.elementOpenStart('input');
                                           incrementalDom.attr('onclick', setSelectedResult);
-                                          incrementalDom.attr('value', field5323Data.all);
-                                          incrementalDom.attr('id', field5323Data.id);
+                                          incrementalDom.attr('value', field5319Data.all);
+                                          incrementalDom.attr('id', field5319Data.id);
                                           incrementalDom.attr('class', 'custom-control-input');
                                           incrementalDom.attr('type', 'checkbox');
                                       incrementalDom.elementOpenEnd();
@@ -432,7 +430,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('span');
                                       incrementalDom.attr('class', 'badge-item badge-item-expand');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(field5323Data.structureName);
+                                    soyIdom.print(field5319Data.structureName);
                                   incrementalDom.elementClose('span');
                                 incrementalDom.elementClose('span');
                               incrementalDom.elementClose('div');
@@ -445,30 +443,30 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(field5323Data.title);
+                                    soyIdom.print(field5319Data.title);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field5323Data.path);
+                                  soyIdom.print(field5319Data.path);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field5323Data.user);
+                                  soyIdom.print(field5319Data.user);
                                   incrementalDom.text('\u00A0 hace  ');
-                                  soyIdom.print(field5323Data.date);
+                                  soyIdom.print(field5319Data.date);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field5323Data.status);
+                                  soyIdom.print(field5319Data.status);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field5323Index == field5323ListLen - 1) {
+                        if (field5319Index == field5319ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -503,6 +501,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementOpenEnd();
                   incrementalDom.elementOpenStart('button');
                       incrementalDom.attr('class', 'btn btn-primary');
+                      incrementalDom.attr('data-dismiss', 'modal');
                       incrementalDom.attr('onclick', saveSelectJournal);
                       incrementalDom.attr('type', 'button');
                   incrementalDom.elementOpenEnd();
@@ -521,7 +520,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
    * @typedef {{
  *  id: *,
  *  label: (?),
- *  isOpenSelect: (boolean|null|undefined),
+ *  isOpenJournalSelect: (boolean|null|undefined),
  *  openSelectJournal: (?),
  *  closeSelectJournal: (?),
  *  saveSelectJournal: (?),
@@ -541,8 +540,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
     $render.soyTemplateName = 'JournalUI.render';
   }
 
-exports.render.params = ["id","label","isOpenSelect","openSelectJournal","closeSelectJournal","saveSelectJournal","deleteJournal","changeFolder","searchJournalByName","setSelectedResult","itemsResult","foldersJournals","itemsResultSelected","itemsJournalAsociated","contextPath"];
-exports.render.types = {"id":"any","label":"?","isOpenSelect":"bool","openSelectJournal":"?","closeSelectJournal":"?","saveSelectJournal":"?","deleteJournal":"?","changeFolder":"?","searchJournalByName":"?","setSelectedResult":"?","itemsResult":"list<?>","foldersJournals":"list<?>","itemsResultSelected":"?","itemsJournalAsociated":"?","contextPath":"string"};
+exports.render.params = ["id","label","isOpenJournalSelect","openSelectJournal","closeSelectJournal","saveSelectJournal","deleteJournal","changeFolder","searchJournalByName","setSelectedResult","itemsResult","foldersJournals","itemsResultSelected","itemsJournalAsociated","contextPath"];
+exports.render.types = {"id":"any","label":"?","isOpenJournalSelect":"bool","openSelectJournal":"?","closeSelectJournal":"?","saveSelectJournal":"?","deleteJournal":"?","changeFolder":"?","searchJournalByName":"?","setSelectedResult":"?","itemsResult":"list<?>","foldersJournals":"list<?>","itemsResultSelected":"?","itemsJournalAsociated":"?","contextPath":"string"};
 templates = exports;
 return exports;
 
