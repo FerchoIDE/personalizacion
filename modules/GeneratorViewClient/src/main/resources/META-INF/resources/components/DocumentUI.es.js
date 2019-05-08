@@ -7,7 +7,6 @@ import Service from "../service/Service"
  */
 class DocumentUI extends Component {
     created() {
-        console.log('-----DocumentUI event created----')
         this.setResultDocument = this.setResultDocument.bind(this);
         this.setFoldersDocument = this.setFoldersDocument.bind(this);
         this.setFileInfo = this.setFileInfo.bind(this);
@@ -15,15 +14,7 @@ class DocumentUI extends Component {
 
         this.setState({itemsAsociated: {} })
         this.setState({searchText: undefined })
-        this.on('itemsAsociatedChanged',function(event){
-            console.log('--------change itemsAsociated --- ')
-        })
-    }
 
-    rendered(firstRender) {
-       /* if(firstRender){
-            this.setState({itemsAsociated: {} })
-        }*/
     }
 
     openSelectDocument(event) {

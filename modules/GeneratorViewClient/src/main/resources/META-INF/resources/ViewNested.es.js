@@ -44,9 +44,6 @@ class ViewNested extends Component {
         this.setState({checkedSelected: _checkedSelected })
         console.log('finishh event checkedOption')
     }
-    rendered(firstRender) {
-        console.log('----ViewNested ----rendered----'+this.id)
-    }
 }
 ViewNested.STATE = {
     checkedConcat:{value:{}},

@@ -1,6 +1,5 @@
 package generatorviewclient.portlet.resource;
 
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -19,11 +18,11 @@ import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.*;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.*;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.LinkedList;
+import java.util.List;
 
 @Component(
         immediate = true,
@@ -59,36 +58,38 @@ public class GetJournalsResource implements MVCResourceCommand {
                 array = new JournalApi().getWebcontentRecursiveByType(portletGroupId, brand, codeHotel, "Habitación");
                 //getListJournalFolders
             }
-            List lsResult = new LinkedList();
+            JSONArray lsResult = new JSONArray();
 
             array.forEach(journalArticle -> {
-                Map<String, Object> mpObject = new HashMap<>();
+                JSONObject mpObject = new JSONObject();
                 mpObject.put("description", journalArticle.getDescriptionMap());
                 mpObject.put("id", journalArticle.getId());
                 mpObject.put("image", journalArticle.getArticleImageURL(themeDisplay));
                 mpObject.put("title", journalArticle.getTitleCurrentValue());
                 long _month = Period.between(journalArticle.getStatusDate().toInstant().atZone(ZoneId.systemDefault())
                         .toLocalDate(), LocalDate.now()).toTotalMonths();
-                mpObject.put("date", String.format("%d meses",_month));
+                mpObject.put("date", String.format("%d meses", _month));
                 mpObject.put("status", WorkflowConstants.getStatusLabel(journalArticle.getStatus()));
                 mpObject.put("user", journalArticle.getStatusByUserName());
                 try {
-                    mpObject.put("structureName",journalArticle.getDDMStructure().getNameCurrentValue());
-                    mpObject.put("structureId",journalArticle.getDDMStructure().getStructureId());
-                }catch (Exception e){}
+                    mpObject.put("structureName", journalArticle.getDDMStructure().getNameCurrentValue());
+                    mpObject.put("structureId", journalArticle.getDDMStructure().getStructureId());
+                } catch (Exception e) {
+                }
 
 
                 try {
                     mpObject.put("path", fullPath(journalArticle.getFolder()));
-                }catch(Exception ex){
+                } catch (Exception ex) {
 
                 }
-
-                 lsResult.add(mpObject);
+                mpObject.put("all", mpObject.toString());
+                lsResult.put(mpObject);
 
             });
 
-            resourceResponse.getPortletOutputStream().write(new JSONArray(lsResult).toString().getBytes());
+//            System.out.println(new JSONArray(lsResult).toString());
+            resourceResponse.getPortletOutputStream().write(lsResult.toString().getBytes());
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -100,7 +101,8 @@ public class GetJournalsResource implements MVCResourceCommand {
         }
         return false;
     }
-    protected String fullPath(JournalFolder folder)  {
+
+    protected String fullPath(JournalFolder folder) {
         String folderName = folder.getName();
         JournalFolder parent = null;
         try {
@@ -111,9 +113,8 @@ public class GetJournalsResource implements MVCResourceCommand {
 
         if (parent == null) {
             return "/" + folderName;
-        }
-        else {
-            return fullPath(parent) +"/"+ folderName;
+        } else {
+            return fullPath(parent) + "/" + folderName;
         }
     }
 }

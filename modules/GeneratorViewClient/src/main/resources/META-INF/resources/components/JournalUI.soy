@@ -6,15 +6,22 @@
 {template .render}
     {@param id: any}
     {@param? label: ?}
-    {@param? isOpenSelect: bool}
 
+    {@param? isOpenSelect: bool}
     {@param? openSelectJournal: ?}
     {@param? closeSelectJournal: ?}
+    {@param? saveSelectJournal: ?}
+    {@param? deleteJournal: ?}
+    {@param? changeFolder: ?}
+    {@param? searchJournalByName: ?}
+
     {@param? setSelectedResult: ?}
 
     {@param? itemsResult: list<?>}
+    {@param? foldersJournals: list<?>}
     {@param itemsResultSelected: ?}
 
+    {@param? itemsJournalAsociated: ?}
 
     {@param contextPath: string}
 
@@ -23,44 +30,53 @@
             <div class="col-10">
                 <div class="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
                     <div class="container">
-                        <ul class="list-group show-quick-actions-on-hover">
-                            <li class="list-group-item list-group-item-flex">
-                                <div class="autofit-col">
-                                    <a href="#1">
-                                        <svg class="lexicon-icon lexicon-icon-trash" focusable="false"
-                                             role="presentation">
-                                            <use href="{$contextPath}/images/icons/icons.svg#trash"></use>
-                                        </svg>
-                                    </a>
-                                </div>
-
-                                <div class="autofit-col autofit-col-expand">
-                                    <h4 class="list-group-title text-truncate">
-                                        <a href="#1">Item 6</a>
-                                    </h4>
-
-                                    <p class="list-group-subtitle text-truncate">Description 6</p>
-                                </div>
-                            </li>
-                            <li class="list-group-item list-group-item-flex">
-                                <div class="autofit-col">
-                                    <a href="#1">
-                                        <svg class="lexicon-icon lexicon-icon-trash" focusable="false"
-                                             role="presentation">
-                                            <use href="{$contextPath}/images/icons/icons.svg#trash"></use>
-                                        </svg>
-                                    </a>
-                                </div>
-
-                                <div class="autofit-col autofit-col-expand">
-                                    <h4 class="list-group-title text-truncate">
-                                        <a href="#1">Item 20</a>
-                                    </h4>
-
-                                    <p class="list-group-subtitle text-truncate">Description 20</p>
-                                </div>
-                            </li>
-                        </ul>
+                        <div class="table-responsive">
+                            <table class="table table-autofit table-list">
+                                <tbody>
+                                    {if $itemsJournalAsociated != null}
+                                        {foreach $field in keys($itemsJournalAsociated)}
+                                            {if isFirst($field)}
+                                                <tr>
+                                            {/if}
+                                            {if (index($field)+4)%4==0 and not isFirst($field)}
+                                                </tr>
+                                                <tr>
+                                            {/if}
+                                                <td class="table-cell-expand">
+                                                    <div class="list-group-item list-group-item-flex">
+                                                        <div class="autofit-col">
+                                                            <span class="badge badge-primary">
+                                                                <span class="badge-item badge-item-expand">{$itemsJournalAsociated[$field].structureName}</span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="autofit-col">
+                                                            <h4 class="list-group-title text-truncate">
+                                                                <a href="#1">{$itemsJournalAsociated[$field].title}</a>
+                                                            </h4>
+                                                            <p class="text-truncate-inline">{$itemsJournalAsociated[$field].path}</p>
+                                                            <p class="text-truncate-inline">{$itemsJournalAsociated[$field].user}&nbsp;
+                                                                hace  {$itemsJournalAsociated[$field].date}</p>
+                                                            <p class="text-truncate-inline">{$itemsJournalAsociated[$field].status}</p>
+                                                        </div>
+                                                        <div class="autofit-col">
+                                                            <a onclick="{$deleteJournal}" href="#1" id="{$field}"
+                                                               style="font-size: 18px">
+                                                                <svg class="lexicon-icon lexicon-icon-trash" focusable="false"
+                                                                     role="presentation">
+                                                                    <use href="{$contextPath}/images/icons/icons.svg#trash"></use>
+                                                                </svg>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            {if isLast($field)}
+                                                </tr>
+                                            {/if}
+                                        {/foreach}
+                                    {/if}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -85,7 +101,7 @@
         </div>
         <div aria-labelledby="clayLargeModalLabel" class="fade modal {$isOpenSelect ? 'show' : ''}"
              style="{$isOpenSelect ? '' : 'display: none'}" id="{$id}_Modal" role="dialog" tabindex="-1">
-            <div class="modal-info modal-dialog modal-full-screen-sm-down">
+            <div class="modal-info modal-dialog modal-full-screen-sm-down" style="min-width: 850px; max-width: 850px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="modal-title" id="claySmallModalLabel">{$label}</div>
@@ -97,47 +113,93 @@
                         </button>
                     </div>
 
-                    <div class="modal-body">
-                        <ul class="list-group show-quick-actions-on-hover">
-                            {if $itemsResult}
-                                {foreach $field in $itemsResult}
-
-                                    <li class="list-group-item list-group-item-flex">
-                                        <div class="autofit-col">
-                                            <div class="custom-control custom-checkbox">
-                                                <label>
-                                                    {if $itemsResultSelected[$field.idFile]}
-                                                        <input checked onclick="{$setSelectedResult}" value="{$field}"
-                                                               id="{$field.idFile}" class="custom-control-input"
-                                                               type="checkbox"/>
-                                                    {else}
-                                                        <input onclick="{$setSelectedResult}" value="{$field}"
-                                                               id="{$field.idFile}" class="custom-control-input"
-                                                               type="checkbox"/>
-                                                    {/if}
-                                                    <span class="custom-control-label"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="autofit-col">
-                                            <span class="badge badge-primary">
-                                                <span class="badge-item badge-item-expand">{$field.structureName}</span>
-                                            </span>
-                                        </div>
-
-                                        <div class="autofit-col autofit-col-expand">
-                                            <h4 class="list-group-title text-truncate">
-                                                <a href="#1">{$field.title}</a>
-                                            </h4>
-                                            <p class="list-group-subtitle text-truncate">{$field.path}</p>
-                                            <p class="list-group-subtitle text-truncate">{$field.user}
-                                                hace  {$field.date}</p>
-                                            <p class="list-group-subtitle text-truncate">{$field.status}</p>
-                                        </div>
-                                    </li>
-                                {/foreach}
-                            {/if}
-                        </ul>
+                    <div class="modal-body inline-scroller" style="min-height: 600px;max-height: 600px">
+                        <div class="container-fluid container-fluid-max-xl">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-item input-group-prepend">
+                                        <select onchange="{$changeFolder}" class="form-control"
+                                                id="regularSelectElement">
+                                            <option disabled selected>Selecciona una opción o</option>
+                                            {if $foldersJournals}
+                                                {foreach $field in $foldersJournals}
+                                                    <option value="{$field.folderId}">{$field.nameFolder}</option>
+                                                {/foreach}
+                                            {/if}
+                                        </select>
+                                    </div>
+                                    <div class="input-group-item input-group-prepend">
+                                        <input aria-label="Search" data-onkeyup="changeJournalSearchText"
+                                               class="form-control input-group-inset input-group-inset-after"
+                                               name="mySearchInputName" placeholder="Ingrese un termino de busqueda"
+                                               type="text"/>
+                                    </div>
+                                    <div class="input-group-append input-group-item input-group-item-shrink">
+                                        <button onclick="{$searchJournalByName}" class="btn btn-monospaced btn-sm"
+                                                type="button">
+                                            <svg class="lexicon-icon lexicon-icon-plus" focusable="false"
+                                                 role="presentation">
+                                                <use href="{$contextPath}/images/icons/icons.svg#search"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-autofit table-list">
+                                <tbody>
+                                    {if $itemsResult}
+                                        {foreach $field in $itemsResult}
+                                            {if isFirst($field)}
+                                                <tr>
+                                            {/if}
+                                            {if (index($field)+3)%3==0 and not isFirst($field)}
+                                                </tr>
+                                                <tr>
+                                            {/if}
+                                                <td class="table-cell-expand">
+                                                    <div class="list-group-item list-group-item-flex">
+                                                        <div class="autofit-col">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <label>
+                                                                    {if $itemsResultSelected[$field.id]}
+                                                                        <input checked onclick="{$setSelectedResult}" value="{$field.all}"
+                                                                               id="{$field.id}" class="custom-control-input"
+                                                                               type="checkbox"/>
+                                                                    {else}
+                                                                        <input onclick="{$setSelectedResult}" value="{$field.all}"
+                                                                               id="{$field.id}" class="custom-control-input"
+                                                                               type="checkbox"/>
+                                                                    {/if}
+                                                                    <span class="custom-control-label"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="autofit-col">
+                                                            <span class="badge badge-primary">
+                                                                <span class="badge-item badge-item-expand">{$field.structureName}</span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="autofit-col autofit-col-expand">
+                                                            <h4 class="list-group-title text-truncate">
+                                                                <a href="#1">{$field.title}</a>
+                                                            </h4>
+                                                            <p class="list-group-subtitle text-truncate">{$field.path}</p>
+                                                            <p class="list-group-subtitle text-truncate">{$field.user}&nbsp;
+                                                                hace  {$field.date}</p>
+                                                            <p class="list-group-subtitle text-truncate">{$field.status}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            {if isLast($field)}
+                                                </tr>
+                                            {/if}
+                                        {/foreach}
+                                    {/if}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
@@ -150,7 +212,7 @@
                                 </div>
 
                                 <div class="btn-group-item">
-                                    <button class="btn btn-primary" type="button">Guardar</button>
+                                    <button class="btn btn-primary" onclick="{$saveSelectJournal}" type="button">Guardar</button>
                                 </div>
                             </div>
                         </div>
