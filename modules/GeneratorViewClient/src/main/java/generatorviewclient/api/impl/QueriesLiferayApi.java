@@ -42,8 +42,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 public class QueriesLiferayApi {
 	   private static final Log log = LogFactoryUtil.getLog(QueriesLiferayApi.class);
-
-	    protected List<JournalArticle> getFoldersWCByNameAndType(Long groupId,Long parent,String namefile,String type,List<JournalArticle> journalArray) throws PortalException{
+	   
+	   protected List<JournalArticle> getFoldersWCByNameAndType(Long groupId,Long parent,String namefile,String type,List<JournalArticle> journalArray) throws PortalException{
 	        List<JournalFolder> listFolders = getSubFolderByJournalFolderParent(groupId, new Long(parent));
 	        if(listFolders != null && listFolders.size() > 0){
 	            for (JournalFolder object : listFolders) {
@@ -110,7 +110,7 @@ public class QueriesLiferayApi {
 	        return ja_1;
 	    }
 
-	    /*Secci�n de journal folders*/
+	    /*Secciï¿½n de journal folders*/
 
 	    protected Long getFolderWC(Long siteID,String nameFolder,Long parentFolder){
 	        List<Long> listIdFolders = new ArrayList<>();
@@ -132,12 +132,12 @@ public class QueriesLiferayApi {
 
 	    	protected List<JournalFolder> getSubFolderByJournalFolderParent(Long groupId,Long idFolder) throws PortalException{
 	          	return  JournalFolderLocalServiceUtil.getFolders(groupId, idFolder);
-	        }
-
+	        } 	     
+	    
 	    protected List<JournalFolder> getALLJournalFolders(Long siteID){
 	    	DynamicQuery queryJournalFolder = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalFolderImpl.class, "journalFolder",PortalClassLoaderUtil.getClassLoader());
 	    	queryJournalFolder.add( RestrictionsFactoryUtil.eq("groupId",new Long(siteID)));
-	    	List<JournalFolder> journalfolderResults = JournalArticleResourceLocalServiceUtil.dynamicQuery(queryJournalFolder);
+	    	List<JournalFolder> journalfolderResults = JournalArticleResourceLocalServiceUtil.dynamicQuery(queryJournalFolder);		
 	    	return journalfolderResults;
 	    }
 	    protected JournalFolderImpl getJournalFolderByName(Long siteID,Long parentFolder,String nameFolder){
@@ -160,38 +160,13 @@ public class QueriesLiferayApi {
 	        }
 	        return new ArrayList<>();
 	    }
-
-	    protected List<JournalArticleImpl> getWCByJournalFolderAndName(Long groupId,Long folderId,String namefile) throws PortalException{
-	        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
-	        queryJournal.add(RestrictionsFactoryUtil.ilike("title", new StringBuilder("%>").append(namefile).append("</Title>%").toString()));
-	        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
-	        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
-	        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
-	        if(journalResults.size()>0){
-	            return journalResults;
-	        }
-	        return new ArrayList<>();
-	    }
-	    protected List<JournalArticleImpl> getWCByJournalFolderAndNameSI(Long groupId,Long folderId,String namefile,Long structureId) throws PortalException{
-	        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
-	        queryJournal.add(RestrictionsFactoryUtil.ilike("title", new StringBuilder("%>").append(namefile).append("</Title>%").toString()));
-	        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
-	        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
-	        queryJournal.add( RestrictionsFactoryUtil.eq("structureId",new Long(structureId)));
-
-	        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
-	        if(journalResults.size()>0){
-	            return journalResults;
-	        }
-	        return new ArrayList<>();
-	    }
-
+	    
 	    protected List<JournalArticleImpl> getWCByJournalFolderAndTypeStructureTitle(Long groupId,Long folderId,String structureKey,String title) throws PortalException{
 	        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
 	        queryJournal.add(RestrictionsFactoryUtil.eq("DDMStructureKey", structureKey));
 	        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
 	        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
-	        queryJournal.add(RestrictionsFactoryUtil.ilike("title", new StringBuilder("%>").append(title).append("</Title>%").toString()));
+	        queryJournal.add(RestrictionsFactoryUtil.ilike("urlTitle", new StringBuilder("%").append(title).append("%").toString()));
 
 	        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
 	        if(journalResults.size()>0){
@@ -201,11 +176,12 @@ public class QueriesLiferayApi {
 	    }
 
 	    protected List<JournalArticleImpl> getWCByJournalFolderAndTypeStructureTitleStructureId(Long groupId,Long folderId,Long structureId,String title) throws PortalException{
+	    	DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(structureId);
 	        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
 	        queryJournal.add(RestrictionsFactoryUtil.eq("structureId", structureId));
-	        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
+		    queryJournal.add( RestrictionsFactoryUtil.eq("DDMStructureKey",ddmStructure.getStructureKey()));	   
 	        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
-	        queryJournal.add(RestrictionsFactoryUtil.ilike("title", new StringBuilder("%>").append(title).append("<%").toString()));
+	        queryJournal.add(RestrictionsFactoryUtil.ilike("urlTitle", new StringBuilder("%").append(title).append("%").toString()));
 
 	        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
 	        if(journalResults.size()>0){
@@ -213,11 +189,12 @@ public class QueriesLiferayApi {
 	        }
 	        return new ArrayList<>();
 	    }
-
-
+	    
+	    //Ancla
 	    protected List<JournalArticleImpl> getWCByJournalFolderAndTypeStructureId(Long groupId,Long folderId,Long structureId) throws PortalException{
-	        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
-	        queryJournal.add(RestrictionsFactoryUtil.eq("structureId", new Long(structureId)));
+	        DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(structureId);
+	    	DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
+	        queryJournal.add( RestrictionsFactoryUtil.eq("DDMStructureKey",ddmStructure.getStructureKey()));	   
 	        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
 	        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
 	        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
@@ -227,6 +204,11 @@ public class QueriesLiferayApi {
 	        return new ArrayList<>();
 	    }
 
+	    
+	    protected List<JournalArticle> getWCByJournalFolders(Long groupId,Long parentFolderId) throws PortalException{
+	    	return JournalArticleLocalServiceUtil.getArticles(groupId, parentFolderId);
+	    }
+	    
 	    protected List<JournalArticle> getWCByJournalFolder(Long groupId,Long folderId) throws PortalException{
 	    	  DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
 		        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
@@ -241,7 +223,7 @@ public class QueriesLiferayApi {
 	    //getWCByJournalFolderAndName
 	    protected List<JournalArticleImpl> getWCByJournalFolderAndName(Long groupId,Long folderId,String structureKey,String namefile) throws PortalException{
 	        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
-	        queryJournal.add(RestrictionsFactoryUtil.ilike("title", new StringBuilder("%>").append(namefile).append("<%").toString()));
+	        queryJournal.add(RestrictionsFactoryUtil.ilike("urlTitle", new StringBuilder("%").append(namefile).append("%").toString()));
 	        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
 	        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
 	        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
@@ -254,7 +236,7 @@ public class QueriesLiferayApi {
 
 	    protected List<JournalArticleImpl> getWCByJournalFolderAndTypeAndName(Long groupId,Long folderId,String structureKey,String namefile) throws PortalException{
 	        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
-	        queryJournal.add(RestrictionsFactoryUtil.ilike("title", new StringBuilder("%>").append(namefile).append("<%").toString()));
+	        queryJournal.add(RestrictionsFactoryUtil.ilike("urlTitle", new StringBuilder("%").append(namefile).append("%").toString()));
 	        queryJournal.add(RestrictionsFactoryUtil.eq("DDMStructureKey", structureKey));
 	        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
 	        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
@@ -265,8 +247,38 @@ public class QueriesLiferayApi {
 	        return new ArrayList<>();
 	    }
 
+	    
+	    
+	    
+	    protected List<JournalArticleImpl> getWCByJournalFolderAndName(Long groupId,Long folderId,String namefile) throws PortalException{
+	    	DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
+	        queryJournal.add(RestrictionsFactoryUtil.like("urlTitle", new StringBuilder("%").append(namefile).append("%").toString()));
+	        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
+	        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
+	        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
+	        if(journalResults.size()>0){
+	            return journalResults;
+	        }
+	        return new ArrayList<>();
+	    }
+	    protected List<JournalArticleImpl> getWCByJournalFolderAndNameSI(Long groupId,Long folderId,String namefile,Long structureId) throws PortalException{
+	        DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(structureId);
+	    	System.out.println("DDM"+ddmStructure.getStructureKey());
+	        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
+	        queryJournal.add( RestrictionsFactoryUtil.eq("folderId", new Long(folderId)));
+	        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
+	        queryJournal.add( RestrictionsFactoryUtil.eq("DDMStructureKey",ddmStructure.getStructureKey()));
+	        queryJournal.add(RestrictionsFactoryUtil.ilike("urlTitle", new StringBuilder("%").append(namefile).append("%").toString()));
 
-	  	    protected List<Long> journalByBrandFolder(long parentFolder,Long siteID){
+	        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
+	        if(journalResults.size()>0){
+	            return journalResults;
+	        }
+	        return new ArrayList<>();
+	    }
+	    
+	    
+	    protected List<Long> journalByBrandFolder(long parentFolder,Long siteID){
 	        List<Long> listIdFolders = new ArrayList<>();
 	        DynamicQuery query_journal_folder = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalFolderImpl.class, "journalFolder",PortalClassLoaderUtil.getClassLoader());
 	        query_journal_folder.add( RestrictionsFactoryUtil.eq("parentFolderId", new Long(parentFolder)));
@@ -767,7 +779,7 @@ public class QueriesLiferayApi {
 
 	        return journalArray;
 	    }
-
+	    
 	    protected List<JournalArticle> getFoldersWCByCodeFolderId(Long groupId,String nameStructure,String code,Long folderId) throws PortalException{
 	        List<JournalArticle> journalArray = new ArrayList<>();
 	        List<DDMStructure> structureKey = getStruct("%>"+nameStructure+"<%", groupId);
@@ -781,8 +793,8 @@ public class QueriesLiferayApi {
 
 	        return journalArray;
 	    }
-
-
+	    
+	    
 	    protected List<JournalArticle> getFoldersWCByCode(Long groupId,String nameStructure,String code,Long filderId) throws PortalException{
 	        List<JournalArticle> journalArray = new ArrayList<>();
 	        List<DDMStructure> structureKey = getStruct("%>"+nameStructure+"<%", groupId);
@@ -814,7 +826,7 @@ public class QueriesLiferayApi {
 	        }
 	        return new ArrayList<>();
 	    }
-
+	    
 	    protected List<JournalArticle> getJournalFoldersAndWCByTypeTitleS(Long groupId, Long folderId, String title,Long structureId, List<JournalArticle> journalArray) throws PortalException {
 			List<JournalFolder> listFolders = getSubFolderByJournalFolderParent(groupId, new Long(folderId));
 	        if(listFolders != null && listFolders.size() > 0){
@@ -871,7 +883,7 @@ public class QueriesLiferayApi {
 	        }
 	        return journalArray;
 	    }
-
+	    
 	    protected List<JournalArticle> getJournalFoldersAndWCByType(Long groupId,Long parent,String type,List<JournalArticle> journalArray) throws PortalException{
 	        List<JournalFolder> listFolders =getSubFolderByJournalFolderParent(groupId, new Long(parent));
 	        if(listFolders != null && listFolders.size() > 0){
@@ -890,7 +902,7 @@ public class QueriesLiferayApi {
 	        }
 	        return journalArray;
 	    }
-
+	    
 	    protected List<JournalArticle> getJournalFoldersAndWC(Long groupId,Long parent,List<JournalArticle> journalArray) throws PortalException{
 	        List<JournalFolder> listFolders = getSubFolderByJournalFolderParent(groupId, new Long(parent));
 	        if(listFolders != null && listFolders.size() > 0){
@@ -900,17 +912,17 @@ public class QueriesLiferayApi {
 	                        if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion())){
 	                            journalArray.add(ja);
 	                        }
-
+	                    
 				 }
 			 }
-			if(getJournalFoldersAndWC(groupId,journalFolder.getFolderId(),journalArray)!= null && !getJournalFoldersAndWC(groupId,journalFolder.getFolderId(),journalArray).isEmpty()){
-              getJournalFoldersAndWC(groupId,journalFolder.getFolderId(),journalArray);
-           }
+			if(journalFolder.getFolderId()>0){
+            getJournalFoldersAndWC(groupId,journalFolder.getFolderId(),journalArray);
+         }
 	        }
-	        }
+	        }   
 	        return journalArray;
 	    }
-
+	   
 	    protected JSONArray getJournalFoldersJson(Long groupId,Long parent,JSONArray filesArray) throws PortalException{
 	        List<JournalFolder> listFolders =JournalFolderLocalServiceUtil.getFolders(groupId, new Long(parent));
 	        if(listFolders != null && listFolders.size() > 0){
@@ -941,7 +953,5 @@ public class QueriesLiferayApi {
 	        }
 	        return filesArray;
 	    }
-
-
 
 }
