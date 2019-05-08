@@ -14,11 +14,11 @@ import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import generatorviewclient.constants.Contants;
 
 @Component(
-		configurationPid = "generatorviewclient.config.ConfigPersonalizacion",
-		immediate = true,
-		configurationPolicy = ConfigurationPolicy.OPTIONAL,
-		service = ConfigurationAction.class
-	)
+        configurationPid = "generatorviewclient.config.ConfigPersonalizacion",
+        immediate = true,
+        configurationPolicy = ConfigurationPolicy.OPTIONAL,
+        service = ConfigurationAction.class
+)
 public class ConfigurationAction extends DefaultConfigurationAction{
 
     @Activate
@@ -57,6 +57,5 @@ public class ConfigurationAction extends DefaultConfigurationAction{
     }
 
     private volatile ConfigPersonalizacion _configuration;
-
 
 }

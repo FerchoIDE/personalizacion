@@ -1,14 +1,15 @@
 package generatorviewclient.api.impl;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.liferay.journal.model.impl.JournalArticleImpl;
 import generatorviewclient.api.IJournalApi;
 import generatorviewclient.constants.Contants;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.impl.JournalFolderImpl;
@@ -25,13 +26,13 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	  private static final Log _log = LogFactoryUtil.getLog(JournalApi.class);
-
+	  
 		@Override
 		public JSONArray getListJournalFoldersByBrand(Long groupId, Long brand)
 				throws PortalException {
 			JSONArray filesArray=JSONFactoryUtil.createJSONArray();
 	        return  getJournalFoldersJsonOneLevel(groupId, brand, filesArray);
-
+	        
 		}
 
 
@@ -79,7 +80,7 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	            filesArray= getJournalFoldersJson(groupId, brandFolder, filesArray);
 	            if(JournalFolderLocalServiceUtil.getFolder(brandFolder)!=null){
 	            JSONObject filesObject= JSONFactoryUtil.createJSONObject();
-	 	        JournalFolder object = JournalFolderLocalServiceUtil.getFolder(brandFolder);
+	 	        JournalFolder object = JournalFolderLocalServiceUtil.getFolder(brandFolder); 
 	 	        filesObject.put("folderId", object.getFolderId());
 	 	        filesObject.put("nameFolder", object.getName());
 	 	        filesArray.put(filesObject);
@@ -90,7 +91,7 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	        	   filesArray= getJournalFoldersJson(groupId, idBase, filesArray);
 		            if(JournalFolderLocalServiceUtil.getFolder(idBase)!=null){
 		            JSONObject filesObject= JSONFactoryUtil.createJSONObject();
-		 	        JournalFolder object = JournalFolderLocalServiceUtil.getFolder(idBase);
+		 	        JournalFolder object = JournalFolderLocalServiceUtil.getFolder(idBase); 
 		 	        filesObject.put("folderId", object.getFolderId());
 		 	        filesObject.put("nameFolder", object.getName());
 		 	        filesArray.put(filesObject);
@@ -403,7 +404,7 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	            return new ArrayList<>();
 	        }
 		}
-
+	    
 
 	    /***M�todos privados****/
 
@@ -566,15 +567,15 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		            }
 	              return journalArray;				}
 			return journalArray;
-
+			
 		}
 
-
+		
 		@Override
 		public List<JournalArticle> getWebcontentRecursiveByTitle(Long groupId, Long folderId, String title,Long structureId) throws PortalException {
 			List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
 			return  getJournalFoldersAndWCByTypeTitleS(groupId, folderId,title,structureId, journalArray);
-
+			
 		}
 
 		@Override
@@ -615,20 +616,20 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		                    }
 		                }
 		            }
-	              return journalArray;
+	              return journalArray;		
 	         }
 			return journalArray;
-
+			
 		}
+		
+		
 
 
-
-
-
+		
 
 		@Override
 		public List<JournalArticle> getWCByFolderId(Long groupId,Long folderId) throws PortalException{
-	        List<JournalArticle> journalArray= new ArrayList<>();
+	        List<JournalArticle> journalArray= new ArrayList<>();   
 	            if( getWCByJournalFolder(groupId, folderId)!=null){
 	                for (JournalArticle journal :  getWCByJournalFolder(groupId, folderId)) {
 	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
@@ -651,5 +652,19 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		        filesArray.put(filesObject);
 		        return filesArray;
 		    }
+
+/*
+ * 
+ * */
+		@Override
+		public Map<JournalArticle, DDMStructure> getWCandStructureById(Long articleId) throws PortalException {
+			Map<JournalArticle, DDMStructure> map = new HashMap<JournalArticle, DDMStructure>();
+			JournalArticle curentArticle = JournalArticleLocalServiceUtil.getJournalArticle(articleId);
+			if(curentArticle!=null){
+				DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getDDMStructure(curentArticle.getDDMStructure().getStructureId());
+				map.put(curentArticle, ddmStructure);
+			}
+			return map;
+		}
 }
 
