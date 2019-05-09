@@ -51,6 +51,8 @@ if(journalArticleService==null){
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		long portletGroupId = themeDisplay.getLayout().getGroupId();
 		System.out.println("--------portletGroupId===" + portletGroupId);
+		
+		
 		List<String> keysLst = Arrays.asList(
 			"200950", "201291", "39858", "48306", "200191", "48316", "200204");
 		OrderByComparator comparator = new ArticleModifiedDateComparator(false); // OrderByComparatorFactoryUtil.create("DLFileEntry", "createDate/modifiedDate", true/false);
