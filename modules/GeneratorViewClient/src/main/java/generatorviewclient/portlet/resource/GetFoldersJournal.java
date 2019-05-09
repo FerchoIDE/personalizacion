@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import generatorviewclient.api.impl.FileEntryApi;
 import generatorviewclient.api.impl.JournalApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
+import generatorviewclient.util.ConstantUtil;
 import generatorviewclient.util.FileUtil;
 import org.json.JSONObject;
 import org.osgi.service.component.annotations.Component;
@@ -35,12 +36,16 @@ public class GetFoldersJournal implements MVCResourceCommand {
             JSONObject jsonObject =  new JSONObject(body);
             String brand = jsonObject.getString("brand");
             String codeHotel = jsonObject.getString("codeHotel");
+            String nameField = jsonObject.getString("nameField");
 
+            com.liferay.portal.kernel.json.JSONArray array;
+            if(ConstantUtil.isDestination(nameField)){
+                array = new JournalApi().getListJournalFoldersByBrand(portletGroupId, ConstantUtil.FOLDER_DESTINATION_ID);
+            }else {
 
-            com.liferay.portal.kernel.json.JSONArray array =
-
-                    //new JournalArticleServices().getFilesAndFolder(portletGroupId,"AQUA","AQC");
-                    new JournalApi().getListJournalFolders(portletGroupId, brand,  codeHotel);
+                //new JournalArticleServices().getFilesAndFolder(portletGroupId,"AQUA","AQC");
+                array = new JournalApi().getListJournalFolders(portletGroupId, brand, codeHotel);
+            }
 
             // System.out.println("after  service ");
             //  System.out.println(array.toJSONString());

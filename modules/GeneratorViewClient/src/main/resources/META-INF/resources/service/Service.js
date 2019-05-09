@@ -52,33 +52,33 @@ export default class Service{
     }
 
     // ********************* Journals ********* //
-    getJournals(brand,codeHotel,callBack){
+    getJournals(brand,codeHotel,nameField,callBack){
         wretch("http://localhost:8080/web/guest/home/-/generator/resource/getJournals")
-            .post({ "brand": brand,"codeHotel":codeHotel })
+            .post({ "brand": brand,"codeHotel":codeHotel,"nameField":nameField })
             .json(json =>{
                 console.log(json)
                 callBack(json)
             } )
     }
-    getFoldersForJournal(brand,codeHotel,callBack){
+    getFoldersForJournal(brand,codeHotel,nameField,callBack){
         wretch("http://localhost:8080/web/guest/home/-/generator/resource/getFoldersJournal")
-            .post({ "brand": brand,"codeHotel":codeHotel })
+            .post({ "brand": brand,"codeHotel":codeHotel,"nameField":nameField })
             .json(json =>{
                 console.log(json)
                 callBack(json)
             } )
     }
-    getJournalsForName(brand,codeHotel,nameFolder,callBack){
+    getJournalsForName(brand,codeHotel,nameFolder,nameField,callBack){
         wretch("http://localhost:8080/web/guest/home/-/generator/resource/getJournals")
-            .post({ "brand": brand,"codeHotel":codeHotel,"nameFolder":nameFolder })
+            .post({ "brand": brand,"codeHotel":codeHotel,"nameFolder":nameFolder,"nameField":nameField })
             .json(json =>{
                 console.log(json)
                 callBack(json)
             } )
     }
-    getJournalsForFolder(brand,codeHotel,folderId,callBack){
+    getJournalsForFolder(brand,codeHotel,folderId,nameField,callBack){
         wretch("http://localhost:8080/web/guest/home/-/generator/resource/getJournals")
-            .post({ "brand": brand,"codeHotel":codeHotel,"folderId":folderId })
+            .post({ "brand": brand,"codeHotel":codeHotel,"folderId":folderId,"nameField":nameField })
             .json(json =>{
                 console.log(json)
                 callBack(json)

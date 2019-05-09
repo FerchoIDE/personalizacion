@@ -59,7 +59,7 @@ else if (structureId.equalsIgnoreCase("201291"))
             String jsonString = DDMUtil.getDDMFormJSONString(
                     ddmStructure.getFullHierarchyDDMForm());
 
-            //System.out.println(jsonString);
+           // System.out.println(jsonString);
             System.out.println(ddmStructure.getNameMap());
             System.out.println(ddmStructure.getModelClassName());
 
@@ -73,6 +73,7 @@ else if (structureId.equalsIgnoreCase("201291"))
                             ddmStructure.getNameMap(),
                             ddmStructure.getModelClassName());
 
+            System.out.println(map);
             template.put("data", map);
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -78,6 +78,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var itemsJournalAsociated = opt_data.itemsJournalAsociated;
   /** @type {!goog.soy.data.SanitizedContent|string} */
   var contextPath = soy.asserts.assertType(goog.isString(opt_data.contextPath) || opt_data.contextPath instanceof goog.soy.data.SanitizedContent, 'contextPath', opt_data.contextPath, '!goog.soy.data.SanitizedContent|string');
+  var _itemsJournalAsociated__soy5087 = (itemsJournalAsociated != null) ? itemsJournalAsociated[id] : itemsJournalAsociated;
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'container');
@@ -101,15 +102,15 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.attr('class', 'table table-autofit table-list');
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
-                  if (itemsJournalAsociated != null) {
-                    var field5231List = (soy.$$getMapKeys(itemsJournalAsociated));
-                    var field5231ListLen = field5231List.length;
-                    for (var field5231Index = 0; field5231Index < field5231ListLen; field5231Index++) {
-                        var field5231Data = field5231List[field5231Index];
-                        if (field5231Index == 0) {
+                  if (_itemsJournalAsociated__soy5087 != null) {
+                    var field5125List = (soy.$$getMapKeys(_itemsJournalAsociated__soy5087));
+                    var field5125ListLen = field5125List.length;
+                    for (var field5125Index = 0; field5125Index < field5125ListLen; field5125Index++) {
+                        var field5125Data = field5125List[field5125Index];
+                        if (field5125Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field5231Index + 4) % 4 == 0 && !(field5231Index == 0)) {
+                          if ((field5125Index + 4) % 4 == 0 && !(field5125Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -128,7 +129,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('span');
                                       incrementalDom.attr('class', 'badge-item badge-item-expand');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(itemsJournalAsociated[field5231Data].structureName);
+                                    soyIdom.print(_itemsJournalAsociated__soy5087[field5125Data].structureName);
                                   incrementalDom.elementClose('span');
                                 incrementalDom.elementClose('span');
                               incrementalDom.elementClose('div');
@@ -141,25 +142,25 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(itemsJournalAsociated[field5231Data].title);
+                                    soyIdom.print(_itemsJournalAsociated__soy5087[field5125Data].title);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(itemsJournalAsociated[field5231Data].path);
+                                  soyIdom.print(_itemsJournalAsociated__soy5087[field5125Data].path);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(itemsJournalAsociated[field5231Data].user);
+                                  soyIdom.print(_itemsJournalAsociated__soy5087[field5125Data].user);
                                   incrementalDom.text('\u00A0 hace  ');
-                                  soyIdom.print(itemsJournalAsociated[field5231Data].date);
+                                  soyIdom.print(_itemsJournalAsociated__soy5087[field5125Data].date);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(itemsJournalAsociated[field5231Data].status);
+                                  soyIdom.print(_itemsJournalAsociated__soy5087[field5125Data].status);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                               incrementalDom.elementOpenStart('div');
@@ -168,7 +169,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                 incrementalDom.elementOpenStart('a');
                                     incrementalDom.attr('onclick', deleteJournal);
                                     incrementalDom.attr('href', '#1');
-                                    incrementalDom.attr('id', field5231Data);
+                                    incrementalDom.attr('id', field5125Data);
                                     incrementalDom.attr('style', 'font-size: 18px');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpenStart('svg');
@@ -185,7 +186,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field5231Index == field5231ListLen - 1) {
+                        if (field5125Index == field5125ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -224,8 +225,9 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementClose('svg');
             incrementalDom.elementClose('button');
             incrementalDom.text('\u00A0');
-            incrementalDom.elementOpenStart('button');
+            incrementalDom.elementOpenStart('a');
                 incrementalDom.attr('class', 'btn btn-monospaced btn-sm btn-primary');
+                incrementalDom.attr('href', 'http://localhost:8080/web/guest/home?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_structureId=35826');
                 incrementalDom.attr('type', 'button');
             incrementalDom.elementOpenEnd();
               incrementalDom.elementOpenStart('svg');
@@ -238,22 +240,21 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementOpenEnd();
                 incrementalDom.elementClose('use');
               incrementalDom.elementClose('svg');
-            incrementalDom.elementClose('button');
+            incrementalDom.elementClose('a');
           incrementalDom.elementClose('li');
         incrementalDom.elementClose('ul');
       incrementalDom.elementClose('div');
     incrementalDom.elementClose('div');
     incrementalDom.elementOpenStart('div');
         incrementalDom.attr('aria-labelledby', 'clayLargeModalLabel');
-        incrementalDom.attr('class', 'fade modal ' + (isOpenJournalSelect ? 'show' : ''));
+        incrementalDom.attr('class', ' modal ' + (isOpenJournalSelect ? 'show in' : ''));
         incrementalDom.attr('style', isOpenJournalSelect ? '' : 'display: none');
         incrementalDom.attr('id', id + '_Modal');
         incrementalDom.attr('role', 'dialog');
         incrementalDom.attr('tabindex', '-1');
     incrementalDom.elementOpenEnd();
       incrementalDom.elementOpenStart('div');
-          incrementalDom.attr('class', 'modal-info modal-dialog modal-full-screen-sm-down');
-          incrementalDom.attr('style', 'min-width: 850px; max-width: 850px;');
+          incrementalDom.attr('class', 'modal-info modal-dialog modal-full-screen');
       incrementalDom.elementOpenEnd();
         incrementalDom.elementOpenStart('div');
             incrementalDom.attr('class', 'modal-content');
@@ -266,25 +267,6 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.elementOpenEnd();
               soyIdom.print(label);
             incrementalDom.elementClose('div');
-            incrementalDom.elementOpenStart('button');
-                incrementalDom.attr('aria-labelledby', 'Close');
-                incrementalDom.attr('onclick', closeSelectJournal);
-                incrementalDom.attr('class', 'close');
-                incrementalDom.attr('data-dismiss', 'modal');
-                incrementalDom.attr('role', 'button');
-                incrementalDom.attr('type', 'button');
-            incrementalDom.elementOpenEnd();
-              incrementalDom.elementOpenStart('svg');
-                  incrementalDom.attr('class', 'lexicon-icon lexicon-icon-times');
-                  incrementalDom.attr('focusable', 'false');
-                  incrementalDom.attr('role', 'presentation');
-              incrementalDom.elementOpenEnd();
-                incrementalDom.elementOpenStart('use');
-                    incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#times');
-                incrementalDom.elementOpenEnd();
-                incrementalDom.elementClose('use');
-              incrementalDom.elementClose('svg');
-            incrementalDom.elementClose('button');
           incrementalDom.elementClose('div');
           incrementalDom.elementOpenStart('div');
               incrementalDom.attr('class', 'modal-body inline-scroller');
@@ -313,14 +295,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.text('Selecciona una opci\u00F3n o');
                       incrementalDom.elementClose('option');
                       if (foldersJournals) {
-                        var field5265List = foldersJournals;
-                        var field5265ListLen = field5265List.length;
-                        for (var field5265Index = 0; field5265Index < field5265ListLen; field5265Index++) {
-                            var field5265Data = field5265List[field5265Index];
+                        var field5155List = foldersJournals;
+                        var field5155ListLen = field5155List.length;
+                        for (var field5155Index = 0; field5155Index < field5155ListLen; field5155Index++) {
+                            var field5155Data = field5155List[field5155Index];
                             incrementalDom.elementOpenStart('option');
-                                incrementalDom.attr('value', field5265Data.folderId);
+                                incrementalDom.attr('value', field5155Data.folderId);
                             incrementalDom.elementOpenEnd();
-                              soyIdom.print(field5265Data.nameFolder);
+                              soyIdom.print(field5155Data.nameFolder);
                             incrementalDom.elementClose('option');
                           }
                       }
@@ -370,14 +352,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
                   if (itemsResult) {
-                    var field5319List = itemsResult;
-                    var field5319ListLen = field5319List.length;
-                    for (var field5319Index = 0; field5319Index < field5319ListLen; field5319Index++) {
-                        var field5319Data = field5319List[field5319Index];
-                        if (field5319Index == 0) {
+                    var field5213List = itemsResult;
+                    var field5213ListLen = field5213List.length;
+                    for (var field5213Index = 0; field5213Index < field5213ListLen; field5213Index++) {
+                        var field5213Data = field5213List[field5213Index];
+                        if (field5213Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field5319Index + 3) % 3 == 0 && !(field5319Index == 0)) {
+                          if ((field5213Index + 3) % 3 == 0 && !(field5213Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -394,25 +376,27 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                     incrementalDom.attr('class', 'custom-control custom-checkbox');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpen('label');
-                                    if (itemsResultSelected[field5319Data.id]) {
-                                      incrementalDom.elementOpenStart('input');
-                                          incrementalDom.attr('checked', '');
-                                          incrementalDom.attr('onclick', setSelectedResult);
-                                          incrementalDom.attr('value', field5319Data.all);
-                                          incrementalDom.attr('id', field5319Data.id);
-                                          incrementalDom.attr('class', 'custom-control-input');
-                                          incrementalDom.attr('type', 'checkbox');
-                                      incrementalDom.elementOpenEnd();
-                                      incrementalDom.elementClose('input');
-                                    } else {
-                                      incrementalDom.elementOpenStart('input');
-                                          incrementalDom.attr('onclick', setSelectedResult);
-                                          incrementalDom.attr('value', field5319Data.all);
-                                          incrementalDom.attr('id', field5319Data.id);
-                                          incrementalDom.attr('class', 'custom-control-input');
-                                          incrementalDom.attr('type', 'checkbox');
-                                      incrementalDom.elementOpenEnd();
-                                      incrementalDom.elementClose('input');
+                                    if ((itemsResultSelected != null)) {
+                                      if (itemsResultSelected[field5213Data.id]) {
+                                        incrementalDom.elementOpenStart('input');
+                                            incrementalDom.attr('checked', '');
+                                            incrementalDom.attr('onclick', setSelectedResult);
+                                            incrementalDom.attr('value', field5213Data.all);
+                                            incrementalDom.attr('id', field5213Data.id);
+                                            incrementalDom.attr('class', 'custom-control-input');
+                                            incrementalDom.attr('type', 'checkbox');
+                                        incrementalDom.elementOpenEnd();
+                                        incrementalDom.elementClose('input');
+                                      } else {
+                                        incrementalDom.elementOpenStart('input');
+                                            incrementalDom.attr('onclick', setSelectedResult);
+                                            incrementalDom.attr('value', field5213Data.all);
+                                            incrementalDom.attr('id', field5213Data.id);
+                                            incrementalDom.attr('class', 'custom-control-input');
+                                            incrementalDom.attr('type', 'checkbox');
+                                        incrementalDom.elementOpenEnd();
+                                        incrementalDom.elementClose('input');
+                                      }
                                     }
                                     incrementalDom.elementOpenStart('span');
                                         incrementalDom.attr('class', 'custom-control-label');
@@ -430,7 +414,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('span');
                                       incrementalDom.attr('class', 'badge-item badge-item-expand');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(field5319Data.structureName);
+                                    soyIdom.print(field5213Data.structureName);
                                   incrementalDom.elementClose('span');
                                 incrementalDom.elementClose('span');
                               incrementalDom.elementClose('div');
@@ -443,30 +427,30 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(field5319Data.title);
+                                    soyIdom.print(field5213Data.title);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field5319Data.path);
+                                  soyIdom.print(field5213Data.path);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field5319Data.user);
+                                  soyIdom.print(field5213Data.user);
                                   incrementalDom.text('\u00A0 hace  ');
-                                  soyIdom.print(field5319Data.date);
+                                  soyIdom.print(field5213Data.date);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field5319Data.status);
+                                  soyIdom.print(field5213Data.status);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field5319Index == field5319ListLen - 1) {
+                        if (field5213Index == field5213ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -514,10 +498,11 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('div');
       incrementalDom.elementClose('div');
     incrementalDom.elementClose('div');
-  }
-  exports.render = $render;
-  /**
-   * @typedef {{
+  incrementalDom.elementClose('div');
+}
+exports.render = $render;
+/**
+ * @typedef {{
  *  id: *,
  *  label: (?),
  *  isOpenJournalSelect: (boolean|null|undefined),
@@ -534,11 +519,11 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
  *  itemsJournalAsociated: (?),
  *  contextPath: (!goog.soy.data.SanitizedContent|string)
  * }}
-   */
-  $render.Params;
-  if (goog.DEBUG) {
-    $render.soyTemplateName = 'JournalUI.render';
-  }
+ */
+$render.Params;
+if (goog.DEBUG) {
+  $render.soyTemplateName = 'JournalUI.render';
+}
 
 exports.render.params = ["id","label","isOpenJournalSelect","openSelectJournal","closeSelectJournal","saveSelectJournal","deleteJournal","changeFolder","searchJournalByName","setSelectedResult","itemsResult","foldersJournals","itemsResultSelected","itemsJournalAsociated","contextPath"];
 exports.render.types = {"id":"any","label":"?","isOpenJournalSelect":"bool","openSelectJournal":"?","closeSelectJournal":"?","saveSelectJournal":"?","deleteJournal":"?","changeFolder":"?","searchJournalByName":"?","setSelectedResult":"?","itemsResult":"list<?>","foldersJournals":"list<?>","itemsResultSelected":"?","itemsJournalAsociated":"?","contextPath":"string"};

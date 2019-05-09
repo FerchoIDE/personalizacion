@@ -165,32 +165,32 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenStart('div');
                   incrementalDom.attr('class', 'input-group');
               incrementalDom.elementOpenEnd();
-                var field3521List = data;
-                var field3521ListLen = field3521List.length;
-                for (var field3521Index = 0; field3521Index < field3521ListLen; field3521Index++) {
-                    var field3521Data = field3521List[field3521Index];
-                    if (field3521Data['type'] == 'ddm-separator') {
+                var field3520List = data;
+                var field3520ListLen = field3520List.length;
+                for (var field3520Index = 0; field3520Index < field3520ListLen; field3520Index++) {
+                    var field3520Data = field3520List[field3520Index];
+                    if (field3520Data['type'] == 'ddm-separator') {
                       incrementalDom.text('anidado');
                       incrementalDom.elementOpen('br');
                       incrementalDom.elementClose('br');
-                    } else if (field3521Data['type'] == 'text') {
-                      $templateAlias1({id: field3521Data['name'], path: path + '/' + field3521Data['name'], type: field3521Data['type'], labels: field3521Data['label'], placeholder: field3521Data['tip'], localizable: field3521Data['localizable'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
-                    } else if (field3521Data['type'] == 'checkbox') {
-                      $templateAlias2({id: field3521Data['name'], nameParent: name, label: field3521Data['label'][defaultLanguage], checkedOption: checkedOption, path: path + '/' + field3521Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-                    } else if (field3521Data['type'] == 'ddm-date') {
-                      $templateAlias3({id: field3521Data['name'], label: field3521Data['label'][defaultLanguage], placeholder: field3521Data['tip'][defaultLanguage], defaultLanguageId: defaultLanguage, path: path + '/' + field3521Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-                    } else if (field3521Data['type'] == 'ddm-text-html') {
-                      $templateAlias4({id: field3521Data['name'], label: field3521Data['label'][defaultLanguage], placeholder: field3521Data['tip'][defaultLanguage], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, path: field3521Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-                    } else if (field3521Data['type'] == 'ddm-journal-article') {
-                      $templateAlias5({id: field3521Data['name'], label: field3521Data['label'][defaultLanguage], contextPath: contextPath, itemsResultSelected: {aa: 'bb'}, brandSelected: brandSelected, hotelSelected: hotelSelected}, null, opt_ijData);
-                    } else if (field3521Data['type'] == 'ddm-documentlibrary') {
-                      $templateAlias6({id: field3521Data['name'], label: field3521Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected}, null, opt_ijData);
-                    } else if (field3521Data['type'] == 'radio') {
-                      $templateAlias7({id: field3521Data['name'], label: field3521Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field3521Data['options'], path: path + '/' + field3521Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-                    } else if (field3521Data['type'] == 'select') {
-                      $templateAlias8({id: field3521Data['name'], label: field3521Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field3521Data['options'], path: field3521Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                    } else if (field3520Data['type'] == 'text') {
+                      $templateAlias1({id: field3520Data['name'], path: path + '/' + field3520Data['name'], type: field3520Data['type'], labels: field3520Data['label'], placeholder: field3520Data['tip'], localizable: field3520Data['localizable'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
+                    } else if (field3520Data['type'] == 'checkbox') {
+                      $templateAlias2({id: field3520Data['name'], nameParent: name, label: field3520Data['label'][defaultLanguage], checkedOption: checkedOption, path: path + '/' + field3520Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                    } else if (field3520Data['type'] == 'ddm-date') {
+                      $templateAlias3({id: field3520Data['name'], label: field3520Data['label'][defaultLanguage], placeholder: field3520Data['tip'][defaultLanguage], defaultLanguageId: defaultLanguage, path: path + '/' + field3520Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                    } else if (field3520Data['type'] == 'ddm-text-html') {
+                      $templateAlias4({id: field3520Data['name'], label: field3520Data['label'][defaultLanguage], placeholder: field3520Data['tip'][defaultLanguage], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, path: field3520Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                    } else if (field3520Data['type'] == 'ddm-journal-article') {
+                      $templateAlias5({id: field3520Data['name'], label: field3520Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected}, null, opt_ijData);
+                    } else if (field3520Data['type'] == 'ddm-documentlibrary') {
+                      $templateAlias6({id: field3520Data['name'], label: field3520Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected}, null, opt_ijData);
+                    } else if (field3520Data['type'] == 'radio') {
+                      $templateAlias7({id: field3520Data['name'], label: field3520Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field3520Data['options'], path: path + '/' + field3520Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                    } else if (field3520Data['type'] == 'select') {
+                      $templateAlias8({id: field3520Data['name'], label: field3520Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field3520Data['options'], path: field3520Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
                     } else {
-                      soyIdom.print(field3521Data['type']);
+                      soyIdom.print(field3520Data['type']);
                       incrementalDom.text(' -- Ninguno');
                       incrementalDom.elementOpen('br');
                       incrementalDom.elementClose('br');

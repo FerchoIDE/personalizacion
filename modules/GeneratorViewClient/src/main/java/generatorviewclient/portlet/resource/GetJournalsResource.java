@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import generatorviewclient.api.impl.JournalApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
+import generatorviewclient.util.ConstantUtil;
 import generatorviewclient.util.FileUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,8 +22,10 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Component(
         immediate = true,
@@ -47,14 +50,30 @@ public class GetJournalsResource implements MVCResourceCommand {
 
             String brand = jsonObject.getString("brand");
             String codeHotel = jsonObject.getString("codeHotel");
+            String nameField = jsonObject.getString("nameField");
+            if(ConstantUtil.isDestination(nameField) && !jsonObject.has("folderId"))
+                jsonObject.put("folderId",ConstantUtil.FOLDER_DESTINATION_ID);
+
             List<JournalArticle> array = new LinkedList<>();
             if (jsonObject.has("folderId")) {
-                 array = new JournalApi().getWebcontentRecursiveByType(portletGroupId,jsonObject.getLong("folderId"),35826L);
+                if(ConstantUtil.isFacility(nameField)){
+                    array = new JournalApi().getWebcontentRecursiveByTypeFacilities(portletGroupId, jsonObject.getLong("folderId"), ConstantUtil.getStructureIdFacility());
+                }else {
+                    array = new JournalApi().getWebcontentRecursiveByType(portletGroupId, jsonObject.getLong("folderId"), ConstantUtil.getStructureId().get(nameField));
+                }
             } else if (jsonObject.has("nameFolder")) {
-                array = new JournalApi().getWCAndJournalFolderByName(portletGroupId,brand,codeHotel,jsonObject.getString("nameFolder"),35826L);
+                if(ConstantUtil.isFacility(nameField)){
+                    array = new JournalApi().getWCAndJournalFolderByNameFacilities(portletGroupId, brand, codeHotel, jsonObject.getString("nameFolder"), ConstantUtil.getStructureIdFacility());
+                }else {
+                    array = new JournalApi().getWCAndJournalFolderByName(portletGroupId, brand, codeHotel, jsonObject.getString("nameFolder"), ConstantUtil.getStructureId().get(nameField));
+                }
                 //getWCByName
             } else {
-                array = new JournalApi().getWebcontentRecursiveByType(portletGroupId, brand, codeHotel,35826L);
+                if(ConstantUtil.isFacility(nameField)){
+                    array = new JournalApi().getWebcontentRecursiveByTypesFacilities(portletGroupId, brand, codeHotel, ConstantUtil.getStructureIdFacility());
+                }else {
+                    array = new JournalApi().getWebcontentRecursiveByType(portletGroupId, brand, codeHotel, ConstantUtil.getStructureId().get(nameField));
+                }
                 //getListJournalFolders
             }
             JSONArray lsResult = new JSONArray();
@@ -78,7 +97,7 @@ public class GetJournalsResource implements MVCResourceCommand {
 
 
                 try {
-                    mpObject.put("path", fullPath(journalArticle.getFolder()));
+                    mpObject.put("path", ConstantUtil.fullPath(journalArticle.getFolder()));
                 } catch (Exception ex) {
 
                 }
@@ -86,8 +105,6 @@ public class GetJournalsResource implements MVCResourceCommand {
                 lsResult.put(mpObject);
 
             });
-
-//            System.out.println(new JSONArray(lsResult).toString());
             resourceResponse.getPortletOutputStream().write(lsResult.toString().getBytes());
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,19 +118,5 @@ public class GetJournalsResource implements MVCResourceCommand {
         return false;
     }
 
-    protected String fullPath(JournalFolder folder) {
-        String folderName = folder.getName();
-        JournalFolder parent = null;
-        try {
-            parent = folder.getParentFolder();
-        } catch (PortalException e) {
-            e.printStackTrace();
-        }
 
-        if (parent == null) {
-            return "/" + folderName;
-        } else {
-            return fullPath(parent) + "/" + folderName;
-        }
-    }
 }

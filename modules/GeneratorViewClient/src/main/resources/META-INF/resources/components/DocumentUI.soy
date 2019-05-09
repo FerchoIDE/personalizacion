@@ -35,7 +35,7 @@
 
     <div id="{$id}" class="container">
         <div class="row">
-            <div class="col-10">
+            <div class="col-11">
                 <div class="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
                     <div class="container">
                         <div class="table-responsive">
@@ -46,7 +46,7 @@
                                     {if isFirst($field)}
                                      <tr>
                                     {/if}
-                                    {if (index($field)+3)%3==0 and not isFirst($field)}
+                                    {if (index($field)+2)%2==0 and not isFirst($field)}
                                         </tr>
                                         <tr>
                                     {/if}
@@ -117,23 +117,17 @@
                 </ul>
             </div>
         </div>
-        <div aria-labelledby="clayLargeModalLabel" class="fade modal {$isOpenSelect ? 'show' : ''}"
+        <div aria-labelledby="clayLargeModalLabel2" class=" modal {$isOpenSelect ? 'show in' : ''}"
              style="{$isOpenSelect ? '' : 'display: none'}" id="{$id}_Modal" role="dialog" tabindex="-1">
-            <div class="modal-info modal-dialog modal-full-screen-sm-down"  style="min-width: 850px; max-width: 850px;">
+            <div class="modal-info modal-dialog modal-full-screen">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <div class="modal-title">{$label}</div>
+                        <div class="modal-title" id="clayLargeModalLabel2">{$label}</div>
 
-                        <button aria-labelledby="Close" onclick="{$closeSelectDocument}" class="close"
-                                data-dismiss="modal" role="button" type="button">
-                            <svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
-                                <use href="{$contextPath}/images/icons/icons.svg#times"/>
-                            </svg>
-                        </button>
                     </div>
 
-                    <div class="modal-body inline-scroller" style="min-height: 700px;max-height: 700px">
-                        <div class="container-fluid container-fluid-max-xl">
+                    <div class="modal-body" style="min-height: 700px;max-height: 700px">
+                        <div class="container-fluid">
                             <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-item input-group-prepend">
@@ -258,12 +252,6 @@
                     <div class="modal-header">
                         <div class="modal-title" id="claySmallModalLabelNew">Nuevo {$label}</div>
 
-                        <button aria-labelledby="Close" onclick="{$closeNewDocument}" class="close"
-                                data-dismiss="modal" role="button" type="button">
-                            <svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
-                                <use href="{$contextPath}/images/icons/icons.svg#times"/>
-                            </svg>
-                        </button>
                     </div>
 
                     <div class="modal-body">

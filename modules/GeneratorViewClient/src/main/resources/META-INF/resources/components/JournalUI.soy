@@ -19,11 +19,12 @@
 
     {@param? itemsResult: list<?>}
     {@param? foldersJournals: list<?>}
-    {@param itemsResultSelected: ?}
+    {@param? itemsResultSelected: ?}
 
     {@param? itemsJournalAsociated: ?}
 
     {@param contextPath: string}
+    {let $_itemsJournalAsociated: isNonnull($itemsJournalAsociated)?$itemsJournalAsociated[$id]:$itemsJournalAsociated /}
 
     <div id="{$id}" class="container">
         <div class="row">
@@ -33,8 +34,8 @@
                         <div class="table-responsive">
                             <table class="table table-autofit table-list">
                                 <tbody>
-                                    {if $itemsJournalAsociated != null}
-                                        {foreach $field in keys($itemsJournalAsociated)}
+                                    {if $_itemsJournalAsociated != null}
+                                        {foreach $field in keys($_itemsJournalAsociated)}
                                             {if isFirst($field)}
                                                 <tr>
                                             {/if}
@@ -46,17 +47,17 @@
                                                     <div class="list-group-item list-group-item-flex">
                                                         <div class="autofit-col">
                                                             <span class="badge badge-primary">
-                                                                <span class="badge-item badge-item-expand">{$itemsJournalAsociated[$field].structureName}</span>
+                                                                <span class="badge-item badge-item-expand">{$_itemsJournalAsociated[$field].structureName}</span>
                                                             </span>
                                                         </div>
                                                         <div class="autofit-col">
                                                             <h4 class="list-group-title text-truncate">
-                                                                <a href="#1">{$itemsJournalAsociated[$field].title}</a>
+                                                                <a href="#1">{$_itemsJournalAsociated[$field].title}</a>
                                                             </h4>
-                                                            <p class="text-truncate-inline">{$itemsJournalAsociated[$field].path}</p>
-                                                            <p class="text-truncate-inline">{$itemsJournalAsociated[$field].user}&nbsp;
-                                                                hace  {$itemsJournalAsociated[$field].date}</p>
-                                                            <p class="text-truncate-inline">{$itemsJournalAsociated[$field].status}</p>
+                                                            <p class="text-truncate-inline">{$_itemsJournalAsociated[$field].path}</p>
+                                                            <p class="text-truncate-inline">{$_itemsJournalAsociated[$field].user}&nbsp;
+                                                                hace  {$_itemsJournalAsociated[$field].date}</p>
+                                                            <p class="text-truncate-inline">{$_itemsJournalAsociated[$field].status}</p>
                                                         </div>
                                                         <div class="autofit-col">
                                                             <a onclick="{$deleteJournal}" href="#1" id="{$field}"
@@ -90,7 +91,7 @@
                             </svg>
                         </button>
                         &nbsp;
-                        <button class="btn btn-monospaced btn-sm btn-primary" type="button">
+                        <button class="btn btn-monospaced btn-sm btn-primary"  type="button">
                             <svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
                                 <use href="{$contextPath}/images/icons/icons.svg#plus"></use>
                             </svg>
@@ -99,18 +100,13 @@
                 </ul>
             </div>
         </div>
-        <div aria-labelledby="clayLargeModalLabel" class="fade modal {$isOpenJournalSelect ? 'show' : ''}"
+        <div aria-labelledby="clayLargeModalLabel" class=" modal {$isOpenJournalSelect ? 'show in' : ''}"
              style="{$isOpenJournalSelect ? '' : 'display: none'}" id="{$id}_Modal" role="dialog" tabindex="-1">
-            <div class="modal-info modal-dialog modal-full-screen-sm-down" style="min-width: 850px; max-width: 850px;">
+            <div class="modal-info modal-dialog modal-full-screen">
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="modal-title">{$label}</div>
-                        <button aria-labelledby="Close" onclick="{$closeSelectJournal}" class="close"
-                                data-dismiss="modal" role="button" type="button">
-                            <svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
-                                <use href="{$contextPath}/images/icons/icons.svg#times"/>
-                            </svg>
-                        </button>
+
                     </div>
 
                     <div class="modal-body inline-scroller" style="min-height: 600px;max-height: 600px">
@@ -163,14 +159,16 @@
                                                         <div class="autofit-col">
                                                             <div class="custom-control custom-checkbox">
                                                                 <label>
-                                                                    {if $itemsResultSelected[$field.id]}
-                                                                        <input checked onclick="{$setSelectedResult}" value="{$field.all}"
-                                                                               id="{$field.id}" class="custom-control-input"
-                                                                               type="checkbox"/>
-                                                                    {else}
-                                                                        <input onclick="{$setSelectedResult}" value="{$field.all}"
-                                                                               id="{$field.id}" class="custom-control-input"
-                                                                               type="checkbox"/>
+                                                                    {if isNonnull($itemsResultSelected)}
+                                                                        {if $itemsResultSelected[$field.id]}
+                                                                            <input checked onclick="{$setSelectedResult}" value="{$field.all}"
+                                                                                   id="{$field.id}" class="custom-control-input"
+                                                                                   type="checkbox"/>
+                                                                        {else}
+                                                                            <input onclick="{$setSelectedResult}" value="{$field.all}"
+                                                                                   id="{$field.id}" class="custom-control-input"
+                                                                                   type="checkbox"/>
+                                                                        {/if}
                                                                     {/if}
                                                                     <span class="custom-control-label"></span>
                                                                 </label>
@@ -221,5 +219,5 @@
             </div>
 
         </div>
-
+    </div>
 {/template}

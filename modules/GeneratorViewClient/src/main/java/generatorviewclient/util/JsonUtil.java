@@ -3,6 +3,7 @@ package generatorviewclient.util;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
+import com.jayway.jsonpath.PathNotFoundException;
 import com.jayway.jsonpath.spi.json.JsonOrgJsonProvider;
 import com.jayway.jsonpath.spi.json.JsonProvider;
 import com.jayway.jsonpath.spi.mapper.JsonOrgMappingProvider;
@@ -194,9 +195,23 @@ public class JsonUtil {
 			//getMapLocale(map); //getMap("$.fields.[0].label");
 		//String nameEstructure = name; //get("$.fields.[0].name");
 		String nameEstructure = get("$.fields.[0].name");
+		List<Object> fields;
+		int _index=1;
+		try {
+			fields = getList("$.fields.[0].nestedFields");
+		}catch(PathNotFoundException pne){
+			fields = new LinkedList<>();
+			_index=0;
 
-		List<Object> fields = getList("$.fields.[0].nestedFields");
-		//List<Object> fields = getList("$.fields");
+		}
+
+		List<Object> fieldsAll = getList("$.fields");
+		//if(fieldsAll.size()>1){
+			for(int i=_index;i<fieldsAll.size();i++){
+				fields.add(fieldsAll.get(i));
+			}
+		//}
+
 
 		List<Object> fieldsResult = fields.stream()
 				.map(object -> {
@@ -249,7 +264,12 @@ public class JsonUtil {
 					 "ddm-separator".equalsIgnoreCase((String)((Map)object).get("type")))
 
 						return processElementNested((Map)object);
-					else return (Map)object;
+					else if (((Map)object).containsKey("type") &&
+							"ddm-documentlibrary".equalsIgnoreCase((String)((Map)object).get("type"))){
+
+						((Map) object).put("nestedFields",processElementNested((Map)object).get("nestedFields"));
+					}
+					 return (Map)object;
 				}).collect(Collectors.toList());
 		mapResult.put("nestedFields", fieldsResult);
 

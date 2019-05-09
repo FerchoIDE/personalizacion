@@ -7,11 +7,13 @@ import Service from "../service/Service"
  */
 class JournalUI extends Component {
     created() {
+        console.log('-----receive event created----'+this.id)
         this.setResultJournal = this.setResultJournal.bind(this);
         this.setFoldersJournal = this.setFoldersJournal.bind(this);
        // this.resultSaveJournal = this.resultSaveJournal.bind(this);
-
-        this.setState({itemsJournalAsociated: {} })
+        var _itemsJournalAsociated ={}
+        _itemsJournalAsociated[this.id]={}
+        this.setState({itemsJournalAsociated:_itemsJournalAsociated  })
         this.setState({searchJournalText: undefined })
     }
 
@@ -21,8 +23,8 @@ class JournalUI extends Component {
         console.log('-----receive event openSelectJournal----'+this.id)
         event.preventDefault();
 
-        new Service().getJournals(this.brandSelected,this.hotelSelected,this.setResultJournal)
-        new Service().getFoldersForJournal(this.brandSelected,this.hotelSelected,this.setFoldersJournal)
+        new Service().getJournals(this.brandSelected,this.hotelSelected,this.id,this.setResultJournal)
+        new Service().getFoldersForJournal(this.brandSelected,this.hotelSelected,this.id,this.setFoldersJournal)
     }
     changeJournalSearchText(event){
         let _searchText=event.target.value;
@@ -33,7 +35,7 @@ class JournalUI extends Component {
         console.log('-----searchByName----')
         event.preventDefault();
         if(this.searchJournalText!==undefined && this.searchJournalText!==''){
-            new Service().getJournalsForName(this.brandSelected,this.hotelSelected,this.searchJournalText,this.setResultJournal)
+            new Service().getJournalsForName(this.brandSelected,this.hotelSelected,this.searchJournalText,this.id,this.setResultJournal)
         }
     }
     changeFolder(event){
@@ -42,7 +44,7 @@ class JournalUI extends Component {
         event.preventDefault();
         let _folderSelected = event.currentTarget.value
 
-        new Service().getJournalsForFolder(this.brandSelected,this.hotelSelected,_folderSelected,this.setResultJournal)
+        new Service().getJournalsForFolder(this.brandSelected,this.hotelSelected,_folderSelected,this.id,this.setResultJournal)
     }
     setResultJournal(resultJournal){
         var _itemsResult= []
@@ -90,7 +92,7 @@ class JournalUI extends Component {
         console.log('-----receive event deleteDocument----')
         event.preventDefault();
         var _itemsAsociated = this.itemsJournalAsociated
-        delete  _itemsAsociated[event.currentTarget.id]
+        delete  _itemsAsociated[this.id][event.currentTarget.id]
         this.setState({itemsJournalAsociated: _itemsAsociated })
     }
 
@@ -103,8 +105,10 @@ class JournalUI extends Component {
 
 
         var _itemsAsociated = this.itemsJournalAsociated
+        if(_itemsAsociated[this.id]===undefined)
+            _itemsAsociated[this.id]={}
         for(var result in this.itemsResultSelected){
-            _itemsAsociated[result]=JSON.parse(this.itemsResultSelected[result])
+            _itemsAsociated[this.id][result]=JSON.parse(this.itemsResultSelected[result])
         }
         this.setState({itemsJournalAsociated: _itemsAsociated })
         this.setState({isOpenJournalSelect: false })
@@ -117,7 +121,7 @@ JournalUI.STATE = {
     isOpenJournalSelect:{value:false},
     selectedFolder:{value:undefined},
     searchJournalText:{value:undefined},
-    itemsJournalAsociated:{value:[]},
+    itemsJournalAsociated:{value:{}},
     itemsResult:{value:[]},
     foldersJournals:{value:[]},
     itemsResultSelected:{value:{}},
