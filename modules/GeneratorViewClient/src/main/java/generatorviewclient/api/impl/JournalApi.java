@@ -289,8 +289,7 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	    public List<JournalArticle> getWCAndJournalFolderByName(Long groupId,String brand,String codeHotel,String name) throws PortalException{
 	        List<JournalArticle> journalArray= new ArrayList<>();
 	        long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
-	        
-	        if(codeHotel!=null && brand!=null){
+	         if(codeHotel!=null && brand!=null){
 	            Long brandFolder= getFolderWC(groupId, brand, idBase);
 	            Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
 	            journalArray =   getFoldersWCByName(groupId, hotelCode,name, journalArray);
@@ -585,6 +584,130 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 				}
 				return map;
 			}
+
+
+		@Override
+		public List<JournalArticle> getWebcontentRecursiveByTypeFacilities(Long groupId, Long folderId,
+				Long[] structuresId) throws PortalException {
+			List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
+			if(structuresId.length>0) {
+			for(Long structureId : structuresId)
+			{
+			journalArray =  getJournalFoldersAndWCByTypeId(groupId, folderId, structureId, journalArray);
+			if(getWCByJournalFolderAndTypeStructureId(groupId, folderId, structureId)!=null){
+	                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, folderId, structureId)) {
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	                        journalArray.add(journal);
+	                    }
+	                }
+	            }
+			}
+			}
+			return journalArray;
+		}
+
+
+		@Override
+		public List<JournalArticle> getWCAndJournalFolderByNameFacilities(Long groupId, String brand, String codeHotel,
+				String name, Long[] structuresId) throws PortalException {
+			List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
+			Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
+			if(structuresId.length>0) {
+				for(Long structureId : structuresId)
+				{
+					if(codeHotel!=null && brand!=null){
+			              Long brandFolder= getFolderWC(groupId, brand, idBase);
+			              Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
+			              journalArray =  getFoldersWCByNameSI(groupId, hotelCode,name,structureId, journalArray);
+			                if(getWCByJournalFolderAndNameSI(groupId, hotelCode,name,structureId)!=null){
+				                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, hotelCode,name,structureId)) {
+				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+				                        journalArray.add(journal);
+				                    }
+				                }
+				            }
+			          }
+			          else if(brand!=null && codeHotel==null){
+			              Long brandFolder= getFolderWC(groupId, brand, idBase);
+			              journalArray =  getFoldersWCByNameSI(groupId, brandFolder,name,structureId, journalArray);
+			                if( getWCByJournalFolderAndNameSI(groupId, brandFolder,name,structureId)!=null){
+				                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, brandFolder,name,structureId)) {
+				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+				                        journalArray.add(journal);
+				                    }
+				                }
+				            }
+			          }
+			          else if(codeHotel!=null && brand==null){
+			        	  journalArray =  getFoldersWCByNameSI(groupId, idBase,name,structureId, journalArray);
+			                if( getWCByJournalFolderAndNameSI(groupId, idBase,name,structureId)!=null){
+				                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, idBase,name,structureId)) {
+				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+				                        journalArray.add(journal);
+				                    }
+				                }
+				            }
+			          }else{
+			        	  journalArray =  getFoldersWCByNameSI(groupId, idBase,name,structureId, journalArray);
+			                if( getWCByJournalFolderAndNameSI(groupId, idBase,name,structureId)!=null){
+				                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, idBase,name,structureId)) {
+				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+				                        journalArray.add(journal);
+				                    }
+				                }
+				            }		          
+				}
+				}
+				}
+			return journalArray;
+		}
+
+
+		@Override
+		public List<JournalArticle> getWebcontentRecursiveByTypesFacilities(Long groupId,String brand,String codeHotel,Long[] structuresId) throws PortalException {
+			List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
+			Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
+
+			if(structuresId.length>0) {
+				for(Long structureId : structuresId)
+				{
+					if(codeHotel!=null && brand!=null){
+					Long brandFolder= getFolderWC(groupId, brand, idBase);
+					Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
+					journalArray =  getJournalFoldersAndWCByTypeId(groupId, hotelCode, structureId, journalArray);
+					if(getWCByJournalFolderAndTypeStructureId(groupId, hotelCode, structureId)!=null){
+			                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, hotelCode, structureId)) {
+			                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+			                        journalArray.add(journal);
+			                    }
+			                }
+			            }
+					}
+					else if(codeHotel==null && brand!=null){
+						Long brandFolder= getFolderWC(groupId, brand, idBase);
+						journalArray =  getJournalFoldersAndWCByTypeId(groupId, brandFolder, structureId, journalArray);
+						if( getWCByJournalFolderAndTypeStructureId(groupId, brandFolder, structureId)!=null){
+				                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, brandFolder, structureId)) {
+				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+				                        journalArray.add(journal);
+				                    }
+				                }
+				            }
+			       }
+					else if(brand==null){
+						journalArray =  getJournalFoldersAndWCByTypeId(groupId, idBase, structureId, journalArray);
+						if( getWCByJournalFolderAndTypeStructureId(groupId, idBase, structureId)!=null){
+				                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, idBase, structureId)) {
+				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+				                        journalArray.add(journal);
+				                    }
+				                }
+				            }
+			           }
+				}
+				}
+			return journalArray;
+		}
 		 
 		 
 			/*Deprecate @Override

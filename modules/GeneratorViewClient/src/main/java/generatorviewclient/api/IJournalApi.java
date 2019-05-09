@@ -193,4 +193,15 @@ public interface IJournalApi {
 
      */
     public Map<JournalArticle, DDMStructure> getWCandStructureById(Long articleId) throws PortalException;
+    
+    
+    
+    /*Facilities**/
+    public List<JournalArticle> getWebcontentRecursiveByTypeFacilities(Long groupId,Long folderId,Long[] structureId) throws PortalException;
+    /*Facilities*/
+    public List<JournalArticle> getWCAndJournalFolderByNameFacilities(Long groupId,String brand,String code_hotel,String name,Long[] structureId) throws PortalException;
+    /*Facilities**/
+    public List<JournalArticle> getWebcontentRecursiveByTypesFacilities(Long groupId,String marca,String codeHotel,Long[] structureId) throws PortalException;
+
+    
 }
