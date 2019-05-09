@@ -86,7 +86,7 @@ public class QueriesLiferayApi {
 	        if(listFolders != null && listFolders.size() > 0){
 	            for (JournalFolder object : listFolders) {
 	                if(getWCByJournalFolderAndNameSI(groupId, object.getFolderId(),namefile,structureId)!= null && !getWCByJournalFolderAndNameSI(groupId, object.getFolderId(),namefile,structureId).isEmpty()){
-	                    for (JournalArticle ja : getWCByJournalFolderAndName(groupId, object.getFolderId(),namefile)) {
+	                    for (JournalArticle ja : getWCByJournalFolderAndNameSI(groupId, object.getFolderId(),namefile,structureId)) {
 	                        if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion())){
 	                            journalArray.add(ja);
 	                        }

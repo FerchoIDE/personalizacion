@@ -339,7 +339,7 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	              Long brandFolder= getFolderWC(groupId, brand, idBase);
 	              Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
 	              journalArray =  getFoldersWCByNameSI(groupId, hotelCode,name,structureId, journalArray);
-	                if( getWCByJournalFolderAndNameSI(groupId, hotelCode,name,structureId)!=null){
+	                if(getWCByJournalFolderAndNameSI(groupId, hotelCode,name,structureId)!=null){
 		                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, hotelCode,name,structureId)) {
 		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
 		                        journalArray.add(journal);
@@ -435,8 +435,16 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		@Override
 		public List<JournalArticle> getWebcontentRecursiveByType(Long groupId, Long folderId, Long structureId) throws PortalException {
 			List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
-			return  getJournalFoldersAndWCByTypeId(groupId, folderId, structureId, journalArray);	
-		}
+			journalArray =  getJournalFoldersAndWCByTypeId(groupId, folderId, structureId, journalArray);
+			if(getWCByJournalFolderAndTypeStructureId(groupId, folderId, structureId)!=null){
+	                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, folderId, structureId)) {
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	                        journalArray.add(journal);
+	                    }
+	                }
+	            }
+			return journalArray;
+			}
 		
 		
 		@Override
@@ -480,7 +488,8 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		                    }
 		                }
 		            }
-	              return journalArray;			}
+	              return journalArray;			
+	           }
 			return journalArray;
 		}
 
