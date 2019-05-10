@@ -8,12 +8,17 @@ import java.util.Map;
 import generatorviewclient.api.IJournalApi;
 import generatorviewclient.constants.Contants;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.impl.JournalFolderImpl;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -708,8 +713,96 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 				}
 			return journalArray;
 		}
-		 
-		 
+		@Override
+		public List<JournalArticle> getWebContentsByNameAndCategoryAndType(Long groupId,String categoryName,Long structureId,String nameWebcontent) throws PortalException {
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+			long[] anyCategoryIds=getWebcontentByCategories(groupId, categoryName);
+			List<JournalArticle> journal = new ArrayList<>();
+			assetEntryQuery.setAnyCategoryIds(anyCategoryIds);
+			assetEntryQuery.setClassName("com.liferay.journal.model.JournalArticle");
+			List<AssetEntry> assetEntryList = AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+			for (AssetEntry assetEntry : assetEntryList) {
+			    JournalArticleResource journalArticleResource = JournalArticleResourceLocalServiceUtil.getJournalArticleResource(assetEntry.getClassPK());
+			    journal.addAll(getWCBycategoryAndName(groupId, journalArticleResource.getResourcePrimKey(), nameWebcontent, structureId));
+			}
+			return journal;
+		}
+		
+		@Override
+		public List<JournalArticle> getWebContentsByNameCategoryIdAndType(Long groupId,long categoryId,Long structureId,String nameWebcontent) throws PortalException {
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+			List<JournalArticle> journal = new ArrayList<>();
+			assetEntryQuery.setAnyCategoryIds(new long[] { categoryId });
+			assetEntryQuery.setClassName("com.liferay.journal.model.JournalArticle");
+			List<AssetEntry> assetEntryList = AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+			for (AssetEntry assetEntry : assetEntryList) {
+			    JournalArticleResource journalArticleResource = JournalArticleResourceLocalServiceUtil.getJournalArticleResource(assetEntry.getClassPK());
+			    journal.addAll(getWCBycategoryAndName(groupId, journalArticleResource.getResourcePrimKey(), nameWebcontent, structureId));
+			}
+			return journal;
+		}
+		@Override
+		public List<JournalArticle> getWebContentsByNameCategoryIdAndTypefacility(Long groupId,long categoryId,Long[] structuresId,String nameWebcontent) throws PortalException {
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+			List<JournalArticle> journal = new ArrayList<>();
+			assetEntryQuery.setAnyCategoryIds(new long[] { categoryId });
+			assetEntryQuery.setClassName("com.liferay.journal.model.JournalArticle");
+			List<AssetEntry> assetEntryList = AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+			for (AssetEntry assetEntry : assetEntryList) {
+				for (Long structureId : structuresId) {
+					 JournalArticleResource journalArticleResource = JournalArticleResourceLocalServiceUtil.getJournalArticleResource(assetEntry.getClassPK());
+					 journal.addAll(getWCByJournalCategoryIdAndType(groupId, journalArticleResource.getResourcePrimKey(), structureId));
+
+				}
+				}
+			return journal;
+		}
+		
+		@Override
+		public List<JournalArticle> getWebContentsByCategoryIdAndType(Long groupId,long categoryId,Long structureId) throws PortalException {
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+			List<JournalArticle> journal = new ArrayList<>();
+			assetEntryQuery.setAnyCategoryIds(new long[] { categoryId });
+			assetEntryQuery.setClassName("com.liferay.journal.model.JournalArticle");
+			List<AssetEntry> assetEntryList = AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+			for (AssetEntry assetEntry : assetEntryList) {
+			    JournalArticleResource journalArticleResource = JournalArticleResourceLocalServiceUtil.getJournalArticleResource(assetEntry.getClassPK());
+			    journal.addAll(getWCByJournalCategoryIdAndType(groupId, journalArticleResource.getResourcePrimKey(), structureId));
+			}
+			return journal;
+		}
+		
+		@Override
+		public List<JournalArticle> getWebContentsCategoryAndType(Long groupId,String categoryName,Long structureId) throws PortalException {
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+			long[] anyCategoryIds=getWebcontentByCategories(groupId, categoryName);
+			List<JournalArticle> journal = new ArrayList<>();
+			assetEntryQuery.setAnyCategoryIds(anyCategoryIds);
+			assetEntryQuery.setClassName("com.liferay.journal.model.JournalArticle");
+			List<AssetEntry> assetEntryList = AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+			for (AssetEntry assetEntry : assetEntryList) {
+			    JournalArticleResource journalArticleResource = JournalArticleResourceLocalServiceUtil.getJournalArticleResource(assetEntry.getClassPK());
+			    journal.addAll(getWCByJournalCategoryIdAndType(groupId, journalArticleResource.getResourcePrimKey(), structureId));
+			}
+			return journal;
+		}
+		@Override
+		public List<JournalArticle> getWebContentsCategoryAndTypeFacility(Long groupId,String categoryName,Long[] structuresId) throws PortalException {
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+			long[] anyCategoryIds=getWebcontentByCategories(groupId, categoryName);
+			List<JournalArticle> journal = new ArrayList<>();
+			assetEntryQuery.setAnyCategoryIds(anyCategoryIds);
+			assetEntryQuery.setClassName("com.liferay.journal.model.JournalArticle");
+			List<AssetEntry> assetEntryList = AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+			for (AssetEntry assetEntry : assetEntryList) {
+				for (Long structureId : structuresId) {
+					 JournalArticleResource journalArticleResource = JournalArticleResourceLocalServiceUtil.getJournalArticleResource(assetEntry.getClassPK());
+					 journal.addAll(getWCByJournalCategoryIdAndType(groupId, journalArticleResource.getResourcePrimKey(), structureId));
+
+				}
+			}
+			return journal;
+		}
 			/*Deprecate @Override
 			public List<JournalArticle> getWebcontentRecursiveByType(Long groupId, String brand, String codeHotel, String TypeContent) throws PortalException {
 				List<JournalArticle> journalArray= new ArrayList<JournalArticle>();

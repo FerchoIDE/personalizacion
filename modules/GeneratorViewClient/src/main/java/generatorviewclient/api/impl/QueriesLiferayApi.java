@@ -8,6 +8,8 @@ import java.util.Map;
 
 import generatorviewclient.constants.Contants;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -953,5 +955,75 @@ public class QueriesLiferayApi {
 	        }
 	        return filesArray;
 	    }
+	    
+	    
+
+		protected List<Long> getCategoriesByName(Long groupId,String name) throws PortalException{		
+		   List<Long> cat=new ArrayList<Long>();
+			List<AssetCategory> listCategories = getCategoryByName(groupId, name);
+			listCategories.stream().forEach((category)-> {
+				System.out.println(category.getName());
+				System.out.println(category.getPrimaryKey());
+				cat.add(category.getPrimaryKey());
+
+				});
+		return cat;
+		}
+		
+		protected long[] getWebcontentByCategories(Long groupId,String categoryName) throws PortalException{		
+			    long[] cate=new long[getCategoryByName(groupId, categoryName).size()];
+				List<AssetCategory> listCategories = getCategoryByName(groupId, categoryName);
+				for (int i = 0; i < listCategories.size(); i++) {
+					cate[i]=new Long(listCategories.get(i).getPrimaryKey());
+				}
+				return cate;
+		}
+		
+		
+		
+			protected List<JournalArticle> getWCBycategoryAndName(Long groupId,Long resourcePrimKey,String nameWebcontent,Long structureId) throws PortalException{
+		        DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(structureId);
+				List<JournalArticle> journal = new ArrayList<>();
+		        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
+		        queryJournal.add( RestrictionsFactoryUtil.eq("resourcePrimKey", new Long(resourcePrimKey)));
+		        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
+		        queryJournal.add( RestrictionsFactoryUtil.eq("DDMStructureKey",ddmStructure.getStructureKey()));
+		        queryJournal.add(RestrictionsFactoryUtil.ilike("urlTitle", new StringBuilder("%").append(nameWebcontent).append("%").toString()));
+
+		        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
+		        if(journalResults.size()>0){
+		        	for (JournalArticle ja : journalResults) {
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion()) && !ja.isInTrash()){
+	                    	journal.add(ja);
+	                    }
+	                }
+		        }
+		        return journal;
+		    }
+			
+			protected List<JournalArticle> getWCByJournalCategoryIdAndType(Long groupId,Long resourcePrimKey,Long structureId) throws PortalException{
+		        DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(structureId);
+				List<JournalArticle> journal = new ArrayList<>();
+		        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
+		        queryJournal.add( RestrictionsFactoryUtil.eq("resourcePrimKey", new Long(resourcePrimKey)));
+		        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
+		        queryJournal.add( RestrictionsFactoryUtil.eq("DDMStructureKey",ddmStructure.getStructureKey()));
+		        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
+		        if(journalResults.size()>0){
+		        	for (JournalArticle ja : journalResults) {
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion()) && !ja.isInTrash()){
+	                    	journal.add(ja);
+	                    }
+	                }
+		        }
+		        return journal;
+		    }
+			protected List<AssetCategory> getCategoryByName(Long groupId,String name) {
+				DynamicQuery categories = DynamicQueryFactoryUtil.forClass(AssetCategory.class, "category",PortalClassLoaderUtil.getClassLoader());
+				categories.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
+				categories.add( RestrictionsFactoryUtil.eq("name",name));
+				List<AssetCategory> vlidAsset =AssetCategoryLocalServiceUtil.dynamicQuery(categories);
+				return vlidAsset;
+			}
 
 }

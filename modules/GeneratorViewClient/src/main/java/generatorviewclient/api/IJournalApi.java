@@ -204,4 +204,31 @@ public interface IJournalApi {
     public List<JournalArticle> getWebcontentRecursiveByTypesFacilities(Long groupId,String marca,String codeHotel,Long[] structureId) throws PortalException;
 
     
+    
+    
+    /*busqueda por nombre categoria y nombre  del web content a buscar ya no es necesario el path marca->codigo de hotel 
+     * se reemplaza por el nombre de la categoria**/
+	public List<JournalArticle> getWebContentsByNameAndCategoryAndType(Long groupId,String categoryName,Long structureId,String nameWebcontent) throws PortalException;
+
+    /*busqueda por id de categoria y nombre del webcontent a buscar ya no es necesario el path marca->codigo de hotel 
+     * se reemplaza por el id de la categoria**/
+	public List<JournalArticle> getWebContentsByNameCategoryIdAndType(Long groupId,long categoryId,Long structureId,String nameWebcontent) throws PortalException;
+	
+	/*busqueda por typo de estructura y id de categoria ya no es necesario el path marca->codigo de hotel 
+     * se reemplaza por el id de la categoria**/
+	public List<JournalArticle> getWebContentsByCategoryIdAndType(Long groupId,long categoryId,Long structureId) throws PortalException;
+	
+	/*busqueda por typo de estructura y nombre de categoria ya no es necesario el path marca->codigo de hotel 
+     * se reemplaza por el id de la categoria**/
+	public List<JournalArticle> getWebContentsCategoryAndType(Long groupId,String categoryName,Long structureId) throws PortalException;
+	
+	/*busqueda por arreglo de estructura y nombre de categoria ya no es necesario el path marca->codigo de hotel 
+     * se reemplaza por el id de la categoria**/
+	public List<JournalArticle> getWebContentsCategoryAndTypeFacility(Long groupId,String categoryName,Long[] structuresId) throws PortalException;
+	
+	/*busqueda por arreglo de estructura,nombre del webcontent y id de categoria ya no es necesario el path marca->codigo de hotel 
+     * se reemplaza por el id de la categoria**/
+	public List<JournalArticle> getWebContentsByNameCategoryIdAndTypefacility(Long groupId,long categoryId,Long[] structuresId,String nameWebcontent) throws PortalException;
+
+	
 }
