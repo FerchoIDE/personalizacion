@@ -40,10 +40,10 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
      *  </ul>
      */
     
-    public JSONArray getCategoriesByGroupAndVacabularyIdAllLevels(Long groupId,Long vocabularyId) throws PortalException{
+    public JSONArray getCategoriesByGroupAndVacabularyIdAllLevels(Long groupId,Long vocabularyId,Long parentCategoryId) throws PortalException{
         JSONObject categoryObject=null;
         JSONArray categoryArray = JSONFactoryUtil.createJSONArray();
-        List<AssetCategory> listCategories = getCategoriesByGroupIdandVocabularyId(groupId, vocabularyId);
+        List<AssetCategory> listCategories = getCategoriesByGroupIdandVocabularyId(groupId, vocabularyId,parentCategoryId);
         if(listCategories != null && listCategories.size() > 0){
             for (int i = 0; i < listCategories.size(); i++) {
                 categoryObject=JSONFactoryUtil.createJSONObject();
@@ -65,10 +65,10 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
      *  <li>JSONArray, Obtiene el primer nivel de objetos dentro del vocabulario</li>
      *  </ul>
      */
-    public JSONArray getCategoriesByGroupAndVacabularyFirstLevel(Long groupId,Long vocabularyId) throws PortalException{
+    public JSONArray getCategoriesByGroupAndVacabularyFirstLevel(Long groupId,Long vocabularyId,Long parentCategoryId) throws PortalException{
         JSONObject categoryObject=null;
         JSONArray categoryArray = JSONFactoryUtil.createJSONArray();
-        List<AssetCategory> listCategories = getCategoriesByGroupIdandVocabularyId(groupId, vocabularyId);
+        List<AssetCategory> listCategories = getCategoriesByGroupIdandVocabularyId(groupId, vocabularyId,parentCategoryId);
         if(listCategories != null && listCategories.size() > 0){
             for (int i = 0; i < listCategories.size(); i++) {
                 categoryObject=JSONFactoryUtil.createJSONObject();
@@ -199,10 +199,11 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
         return vlidAsset;
     }
 
-    private List<AssetCategory> getCategoriesByGroupIdandVocabularyId(Long groupId,Long vocabularyId){
+    private List<AssetCategory> getCategoriesByGroupIdandVocabularyId(Long groupId,Long vocabularyId,Long parentCategoryId){
         DynamicQuery categories = DynamicQueryFactoryUtil.forClass(AssetCategory.class, "category",PortalClassLoaderUtil.getClassLoader());
         categories.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
         categories.add( RestrictionsFactoryUtil.eq("vocabularyId",new Long(vocabularyId)));
+		categories.add( RestrictionsFactoryUtil.eq("parentCategoryId",new Long(parentCategoryId)));
         List<AssetCategory> vlidAsset =_category.dynamicQuery(categories);
         return vlidAsset;
     }
