@@ -31,7 +31,21 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	 private static final Log _log = LogFactoryUtil.getLog(JournalApi.class);
-
+	
+	 
+	 /*Crear  folder para web content*/
+	 @Override
+	    public JSONArray createFolderNestedFolderId(Long userId,Long groupId,Long parentFolderId,String name) throws PortalException{
+	        ServiceContext serviceContext = new ServiceContext();
+	        serviceContext.setScopeGroupId(groupId);
+	        JSONArray filesArray=JSONFactoryUtil.createJSONArray();
+	        JSONObject filesObject =JSONFactoryUtil.createJSONObject();
+	        JournalFolder object = JournalFolderLocalServiceUtil.addFolder(userId, groupId, parentFolderId, name, name, serviceContext);
+	        filesObject.put("folderId", object.getFolderId());
+	        filesObject.put("nameFolder", object.getName());
+	        filesArray.put(filesObject);
+	        return filesArray;
+	    }	
 	  
 		@Override
 		public JSONArray getListJournalFoldersByBrand(Long groupId, Long brand)
@@ -566,18 +580,7 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	            return journalArray;
 
 	    }
-		 @Override
-		    public JSONArray createFolderNestedFolderId(Long userId,Long groupId,Long parentFolderId,String name) throws PortalException{
-		        ServiceContext serviceContext = new ServiceContext();
-		        serviceContext.setScopeGroupId(groupId);
-		        JSONArray filesArray=JSONFactoryUtil.createJSONArray();
-		        JSONObject filesObject =JSONFactoryUtil.createJSONObject();
-		        JournalFolder object = JournalFolderLocalServiceUtil.addFolder(userId, groupId, parentFolderId, name, name, serviceContext);
-		        filesObject.put("folderId", object.getFolderId());
-		        filesObject.put("nameFolder", object.getName());
-		        filesArray.put(filesObject);
-		        return filesArray;
-		    }	
+		
 		 
 		 @Override
 			public Map<JournalArticle, DDMStructure> getWCandStructureById(Long articleId) throws PortalException {

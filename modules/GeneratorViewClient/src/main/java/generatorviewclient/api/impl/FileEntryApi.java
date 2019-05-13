@@ -9,6 +9,7 @@ import generatorviewclient.constants.Contants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -18,8 +19,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
     private static final Log _log = LogFactoryUtil.getLog(FileEntryApi.class);
@@ -34,6 +37,18 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
         return id_base;
     }
 
+    /*Funcion para crear folder*/
+    public Folder createFolder(Long parentFolderId,
+    						 Long groupId,
+    						 String name,
+    						 String description) throws PortalException{
+    	 ServiceContext serviceContext = new ServiceContext();
+	     serviceContext.setScopeGroupId(groupId);
+	     serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		return DLAppServiceUtil.addFolder(groupId, parentFolderId, name, description, serviceContext);
+    }
+    
     @Override
     public JSONObject saveFile(Long groupId,Long userId,Long folderId,String image,String name,String description,String mimeType) throws FileNotFoundException {
 

@@ -440,7 +440,7 @@ public class QueriesLiferayApi {
 	        String ddmStructure= jsonObj.get("ddmStructure").toString();
 	        String ddmTemplate= jsonObj.get("ddmTemplate").toString();
 	        String description= jsonObj.get("description").toString();
-
+	        String aviableLocales=jsonObj.get("aviableLocales").toString();
 	        ServiceContext serviceContext = new ServiceContext();
 	        serviceContext.setScopeGroupId(Long.parseLong(groupId));
 	        serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
@@ -488,7 +488,7 @@ public class QueriesLiferayApi {
 	            }
 
 	        }
-	        String rootElement="<?xml version=\"1.0\"?><root available-locales=\"es_ES,en_US\" default-locale=\""+localeDefault+"\">"+xmlFinal+"</root>";
+	        String rootElement="<?xml version=\"1.0\"?><root available-locales=\""+aviableLocales+"\" default-locale=\""+localeDefault+"\">"+xmlFinal+"</root>";
 
 	        JournalArticle objectSave = JournalArticleLocalServiceUtil.addArticle(Long.parseLong(userId),
 	                Long.parseLong(groupId), Long.parseLong(folderId), titleMap, null, rootElement,
