@@ -441,7 +441,7 @@ public class QueriesLiferayApi {
 	        String ddmStructure= jsonObj.get("ddmStructure").toString();
 	        String ddmTemplate= jsonObj.get("ddmTemplate").toString();
 	        String description= jsonObj.get("description").toString();
-	        String aviableLocales=jsonObj.get("aviableLocales").toString();
+
 	        ServiceContext serviceContext = new ServiceContext();
 	        serviceContext.setScopeGroupId(Long.parseLong(groupId));
 	        serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
@@ -463,7 +463,26 @@ public class QueriesLiferayApi {
 	                            "",
 	                            campos.getJSONObject(i).get("indexType").toString(),
 	                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));
-	                }else{
+	                }
+	                else if(campos.getJSONObject(i).get("type").equals("select")){
+	                	if(campos.getJSONObject(i).get("multiple").toString().equals("true")){
+	                		  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+			                            validateType(campos.getJSONObject(i).get("type").toString()),
+			                            evaluateContent("select_multiple"
+			                                    , campos.getJSONObject(i).getJSONArray("values")),
+			                            campos.getJSONObject(i).get("indexType").toString(),
+			                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+	                		  }else{
+	                			  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+				                            validateType(campos.getJSONObject(i).get("type").toString()),
+				                            evaluateContent("select"
+				                                    , campos.getJSONObject(i).getJSONArray("values")),
+				                            campos.getJSONObject(i).get("indexType").toString(),
+				                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+		                	  
+	                		  }
+	                }
+	                else{
 	                    xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
 	                            validateType(campos.getJSONObject(i).get("type").toString()),
 	                            evaluateContent(campos.getJSONObject(i).get("type").toString()
@@ -478,6 +497,24 @@ public class QueriesLiferayApi {
 	                            "",
 	                            campos.getJSONObject(i).get("indexType").toString(),
 	                            "");
+	                }
+	                else if(campos.getJSONObject(i).get("type").equals("select")){
+	                	if(campos.getJSONObject(i).get("multiple").toString().equals("true")){
+	                		  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+			                            validateType(campos.getJSONObject(i).get("type").toString()),
+			                            evaluateContent("select_multiple"
+			                                    , campos.getJSONObject(i).getJSONArray("values")),
+			                            campos.getJSONObject(i).get("indexType").toString(),
+			                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+	                		  }else{
+	                			  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+				                            validateType(campos.getJSONObject(i).get("type").toString()),
+				                            evaluateContent("select"
+				                                    , campos.getJSONObject(i).getJSONArray("values")),
+				                            campos.getJSONObject(i).get("indexType").toString(),
+				                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+		                	  
+	                		  }
 	                }
 	                else{
 	                    xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
@@ -583,6 +620,23 @@ public class QueriesLiferayApi {
 	                            campos.getJSONObject(i).get("indexType").toString(),
 	                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));
 
+	                }else if(campos.getJSONObject(i).get("type").equals("select")){
+	                	if(campos.getJSONObject(i).get("multiple").toString().equals("true")){
+	                		  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+			                            validateType(campos.getJSONObject(i).get("type").toString()),
+			                            evaluateContent("select_multiple"
+			                                    , campos.getJSONObject(i).getJSONArray("values")),
+			                            campos.getJSONObject(i).get("indexType").toString(),
+			                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+	                		  }else{
+	                			  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+				                            validateType(campos.getJSONObject(i).get("type").toString()),
+				                            evaluateContent("select"
+				                                    , campos.getJSONObject(i).getJSONArray("values")),
+				                            campos.getJSONObject(i).get("indexType").toString(),
+				                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+		                	  
+	                		  }
 	                }
 	                else{
 
@@ -600,6 +654,24 @@ public class QueriesLiferayApi {
 	                            "",
 	                            campos.getJSONObject(i).get("indexType").toString(),
 	                            "");
+	                }
+	                else if(campos.getJSONObject(i).get("type").equals("select")){
+	                	if(campos.getJSONObject(i).get("multiple").toString().equals("true")){
+	                		  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+			                            validateType(campos.getJSONObject(i).get("type").toString()),
+			                            evaluateContent("select_multiple"
+			                                    , campos.getJSONObject(i).getJSONArray("values")),
+			                            campos.getJSONObject(i).get("indexType").toString(),
+			                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+	                		  }else{
+	                			  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+				                            validateType(campos.getJSONObject(i).get("type").toString()),
+				                            evaluateContent("select"
+				                                    , campos.getJSONObject(i).getJSONArray("values")),
+				                            campos.getJSONObject(i).get("indexType").toString(),
+				                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+		                	  
+	                		  }
 	                }
 	                else{
 	                    xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
@@ -714,35 +786,52 @@ public class QueriesLiferayApi {
 	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
 	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
 	                return xml;
+	                
 	            case "checkbox":
 	                if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
 	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
 	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
 	                return xml;
 	            case "ddm-journal-article":
-
-	                if(values.getJSONObject(0)!=null &&values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
-	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
-	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
+	                if(values.getJSONObject(0).length()>0)
+	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content><dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
+	                else
+	                	xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("{\"classPK\":\""+values.getJSONObject(0).get("es_ES").toString()+"\",\"className\":\"com.liferay.journal.model.JournalArticle\"}")+"</dynamic-content><dynamic-content language-id=\"en_US\">"+setCDATA("{\"classPK\":\""+values.getJSONObject(0).get("en_US").toString()+"\",\"className\":\"com.liferay.journal.model.JournalArticle\"}")+"</dynamic-content>";
 	                return xml;
-	            case "select":
-	                String options_en="";
+	            case "select_multiple":
+	            	String options_en="";
 	                String options_es="";
 	                for (int i = 0; i < values.length(); i++) {
-	                    if(values.getJSONObject(i).get("en_US")!=null)
+	                    if(values.getJSONObject(i).get("en_US")!=null && values.getJSONObject(i).get("es_ES")!=null)
 	                        options_en+= "<option>"+setCDATA(values.getJSONObject(i).get("en_US").toString())+"</option>";
-	                    if(values.getJSONObject(i).get("es_ES")!=null)
 	                    	options_es+= "<option>"+setCDATA(values.getJSONObject(i).get("es_ES").toString())+"</option>";
 
 	                }
 	                xml="<dynamic-content language-id=\"en_US\">"+options_en+"</dynamic-content>"+
 	                        "<dynamic-content language-id=\"es_ES\">"+options_es+"</dynamic-content>";
 	                return xml;
-	            default:
-	                if(values.getJSONObject(0)!=null && values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
+	            case "select":
+	            	if(values.getJSONObject(0).length()>0)
 	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
 	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
+	            	else
+	            		 xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("")+"</dynamic-content>" +
+		                            "<dynamic-content language-id=\"en_US\">"+setCDATA("")+"</dynamic-content>";
+		       
 	                return xml;
+	            case "text":
+	            	if(values.getJSONObject(0).length()>0)
+	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
+	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
+	            	else
+	            		 xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("")+"</dynamic-content>" +
+		                            "<dynamic-content language-id=\"en_US\">"+setCDATA("")+"</dynamic-content>";
+		       
+	                return xml;
+	            default:
+	            	xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("")+"</dynamic-content>" +
+                            "<dynamic-content language-id=\"en_US\">"+setCDATA("")+"</dynamic-content>";
+	            return xml;
 	        }
 
 	    }
