@@ -152,12 +152,6 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35968');
-        incrementalDom.elementOpenEnd();
-          incrementalDom.text('Geo');
-        incrementalDom.elementClose('a');
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
             incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35820');
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Instalaciones');

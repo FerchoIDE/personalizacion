@@ -48,13 +48,16 @@ public class GetJournalsResource implements MVCResourceCommand {
             resourceResponse.setCharacterEncoding("UTF-8");
             resourceResponse.setContentType("application/json");
 
-            String brand = jsonObject.getString("brand");
-            String codeHotel = jsonObject.getString("codeHotel");
+           // String brand = jsonObject.getString("brand");
+            Long brand = jsonObject.getLong("brand");
+            //String codeHotel = jsonObject.getString("codeHotel");
+            Long codeHotel = jsonObject.getLong("codeHotel");
             String nameField = jsonObject.getString("nameField");
             if(ConstantUtil.isDestination(nameField) && !jsonObject.has("folderId"))
                 jsonObject.put("folderId",ConstantUtil.FOLDER_DESTINATION_ID);
 
             List<JournalArticle> array = new LinkedList<>();
+            /*
             if (jsonObject.has("folderId")) {
                 if(ConstantUtil.isFacility(nameField)){
                     array = new JournalApi().getWebcontentRecursiveByTypeFacilities(portletGroupId, jsonObject.getLong("folderId"), ConstantUtil.getStructureIdFacility());
@@ -72,10 +75,14 @@ public class GetJournalsResource implements MVCResourceCommand {
                 if(ConstantUtil.isFacility(nameField)){
                     array = new JournalApi().getWebcontentRecursiveByTypesFacilities(portletGroupId, brand, codeHotel, ConstantUtil.getStructureIdFacility());
                 }else {
-                    array = new JournalApi().getWebcontentRecursiveByType(portletGroupId, brand, codeHotel, ConstantUtil.getStructureId().get(nameField));
+                   // array = new JournalApi().getWebcontentRecursiveByType(portletGroupId, brand, codeHotel, ConstantUtil.getStructureId().get(nameField));
+                    array = new JournalApi().getWebContentsByCategoryIdAndType(portletGroupId, brand, codeHotel, ConstantUtil.getStructureId().get(nameField));
                 }
                 //getListJournalFolders
-            }
+            }*/
+
+            array = new JournalApi().getWebContentsByCategoryIdAndType(portletGroupId,  codeHotel, ConstantUtil.getStructureId().get(nameField));
+
             JSONArray lsResult = new JSONArray();
 
             array.forEach(journalArticle -> {

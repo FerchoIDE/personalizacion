@@ -1,5 +1,13 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
+import TextLocalizableUI from '../TextLocalizableUI.es';
+import CheckBoxUI from '../CheckBoxUI.es';
+import TextAreaUI from '../TextAreaUI.es';
+import DateUI from '../DateUI.es';
+import RadioUI from '../RadioUI.es';
+import SelectUI from '../SelectUI.es';
+
 import templates from './DocumentUI.soy';
 import Service from "../service/Service"
 /**
@@ -23,8 +31,20 @@ class DocumentUI extends Component {
         console.log('-----receive event openSelectDocument----')
         event.preventDefault();
 
-        new Service().getDocuments(this.brandSelected,this.hotelSelected,this.setResultDocument)
-        new Service().getFoldersForDocument(this.brandSelected,this.hotelSelected,this.setFoldersDocument)
+        //new Service().getDocuments(this.brandSelected,this.hotelSelected,this.setResultDocument)
+        new Service().getDocuments('FA','GAL',this.setResultDocument)
+        //new Service().getFoldersForDocument(this.brandSelected,this.hotelSelected,this.setFoldersDocument)
+        new Service().getFoldersForDocument('FA','GAL',this.setFoldersDocument)
+    }
+    closeOpenTab(event){
+        console.log('---closeOpenTab-----')
+        let _expanded=event.currentTarget.attributes['aria-expanded'].value;
+        let _id=event.currentTarget.id.split('__')[1];
+        let _isOpen = this.isOpen
+        if(_isOpen===undefined)
+            _isOpen = {}
+        _isOpen[_id]=_expanded!=='true'
+        this.setState({isOpen: _isOpen })
     }
     openNewDocument(event) {
         if(event === undefined)
@@ -155,14 +175,31 @@ class DocumentUI extends Component {
 
 
         var _itemsAsociated = this.itemsAsociated
-        for(var result in this.itemsResultSelected){
+        for(let result in this.itemsResultSelected){
             _itemsAsociated[result]=JSON.parse(this.itemsResultSelected[result])
         }
+
+        let _modelDocument = this.modelDocument
+        if(_modelDocument===undefined)
+            _modelDocument={}
+        for(let result in this.itemsResultSelected){
+            if(_modelDocument[result]===undefined){
+                _modelDocument[result]={}
+                _modelDocument[result]['id']=result
+                _modelDocument[result]['fullPath']=_itemsAsociated[result]['fullPath']
+            }
+            this.handleChangeValue( {
+                value: _modelDocument[result],
+                path: this.path
+            });
+        }
+        this.setState({modelDocument: _modelDocument })
         this.setState({itemsAsociated: _itemsAsociated })
         this.setState({isOpenSelect: false })
 
         this.setState({itemsResult: [] })
         this.setState({itemsResultSelected: {} })
+
     }
     saveNewDocument(event){
         if(event === undefined)
@@ -191,6 +228,27 @@ class DocumentUI extends Component {
         },1000)
 
     }
+    handleChangeValueDocument(data){
+        let _modelDocument = this.modelDocument
+        console.log('start------------handleChangeValueDocument----------------'+JSON.stringify(_modelDocument))
+        if(_modelDocument===undefined)
+            _modelDocument={}
+        const names = data.path.split('/');
+        if(_modelDocument[names[0]]===undefined){
+            _modelDocument[names[0]]={}
+            _modelDocument[names[0]]['id']=names[0]
+        }
+
+        _modelDocument[names[0]][names[1]]=data.value
+
+        console.log('end------------handleChangeValueDocument----------------'+JSON.stringify(_modelDocument))
+        this.setState({modelDocument: _modelDocument })
+        this.handleChangeValue( {
+            value: _modelDocument[names[0]],
+            path: this.path
+        });
+
+    }
 }
 DocumentUI.STATE = {
     fileInfo:{value:undefined},
@@ -203,7 +261,10 @@ DocumentUI.STATE = {
     foldersDocuments:{value:[]},
     itemsResultSelected:{value:{}},
     brandSelected:{},
-    hotelSelected:{}
+    hotelSelected:{},
+    handleChangeValue: {},
+    path:{},
+    modelDocument:{value:{}}
 }
 // Register component
 Soy.register(DocumentUI, templates);

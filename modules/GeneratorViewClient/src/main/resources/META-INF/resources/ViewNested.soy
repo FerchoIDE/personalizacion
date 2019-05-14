@@ -96,7 +96,7 @@
 												{param placeholder: $field['tip'][$defaultLanguage] /}
 												{param availableLanguageIds: $availableLanguageIds /}
 												{param defaultLanguageId: $defaultLanguage /}
-												{param path: $field['name'] /}
+												{param path:$path+'/'+ $field['name'] /}
 												{param handleChangeValue:  $handleChangeValue /}
 											{/call}
 										{elseif $field['type'] == 'ddm-journal-article'}
@@ -106,7 +106,7 @@
 												{param contextPath: $contextPath /}
 												{param brandSelected: $brandSelected/}
 												{param hotelSelected: $hotelSelected/}
-
+												{param path:$path+'/'+ $field['name'] /}
 											{/call}
 										{elseif $field['type'] == 'ddm-documentlibrary'}
 											{call DocumentUI.render}
@@ -115,7 +115,12 @@
 												{param contextPath: $contextPath /}
 												{param brandSelected: $brandSelected/}
 												{param hotelSelected: $hotelSelected/}
+												{param nestedFields: $field['nestedFields'] /}
 
+												{param availableLanguageIds: $availableLanguageIds /}
+												{param defaultLanguageId: $defaultLanguage /}
+												{param handleChangeValue:  $handleChangeValue /}
+												{param path:$path+'/'+ $field['name'] /}
 											{/call}
 										{elseif $field['type'] == 'radio'}
 											{call RadioUI.render}
@@ -132,7 +137,7 @@
 												{param label: $field['label'][$defaultLanguage] /}
 												{param defaultLanguageId: $defaultLanguage /}
 												{param options: $field['options'] /}
-												{param path: $field['name'] /}
+												{param path:$path+'/'+ $field['name'] /}
 												{param handleChangeValue:  $handleChangeValue /}
 											{/call}
 										{else}

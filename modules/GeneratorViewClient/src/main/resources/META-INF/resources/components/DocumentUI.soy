@@ -26,12 +26,24 @@
 
     {@param? itemsResult: list<?>}
     {@param? foldersDocuments: list<?>}
+    {@param? nestedFields: list<?>}
+
 
     {@param? itemsResultSelected: ?}
     {@param? itemsAsociated: ?}
 
 
     {@param contextPath: string}
+    {@param? isOpen: map<string,bool>}
+    {@param? closeOpenTab: ?}
+
+    {@param availableLanguageIds: list<string>}
+    {@param defaultLanguageId: string}
+    {@param? handleChangeValueDocument: ?}
+
+
+    {let $_isOpen: isNonnull($isOpen)?$isOpen: quoteKeysIfJs(['a': false]) /}
+    {let $m: quoteKeysIfJs(['a': false]) /}
 
     <div id="{$id}" class="container">
         <div class="row">
@@ -43,6 +55,8 @@
                                 <tbody>
                             {if $itemsAsociated != null}
                                 {foreach $field in keys($itemsAsociated)}
+                                    {let $_isOpenField: $_isOpen[$field]?'true':'false' /}
+
                                     {if isFirst($field)}
                                      <tr>
                                     {/if}
@@ -51,34 +65,136 @@
                                         <tr>
                                     {/if}
                                     <td class="table-cell-expand">
-                                                    <div class="list-group-item list-group-item-flex">
-
-                                        <div class="autofit-col">
+                                        <div class="list-group-item list-group-item-flex">
+                                            <div class="autofit-col">
                                                 <span class="inline-item">
-                                                     <img width="128" style="max-height: 256px;max-width: 100%"
+                                                    <img width="128" style="max-height: 256px;max-width: 100%"
                                                           alt="Not Image"
                                                           src="http://localhost:8080{$itemsAsociated[$field].imageThumbnail}"/>
-
                                                 </span>
+                                            </div>
+                                            <div class="autofit-col">
+                                                <h4 class="table-list-title">
+                                                    <a href="#1">{$itemsAsociated[$field].filename}</a>
+                                                </h4>
+                                                <p class="text-truncate-inline">{$itemsAsociated[$field].path}</p>
+                                            </div>
+                                            <div class="autofit-col">
+                                                <a onclick="{$deleteDocument}" href="#1" id="{$field}"
+                                                   style="font-size: 18px">
+                                                    <svg class="lexicon-icon lexicon-icon-trash" focusable="false"
+                                                         role="presentation">
+                                                        <use href="{$contextPath}/images/icons/icons.svg#trash"></use>
+                                                    </svg>
+                                                </a>
+                                            </div>
                                         </div>
+                                        <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
+                                            <div class="panel">
+                                                <a aria-controls="accordion03CollapseTwo{$field}" aria-expanded="{$_isOpenField}" class="collapse-icon sheet-subtitle collapsed"
+                                                   data-toggle="collapse"
+                                                   onclick="{$closeOpenTab}"
+                                                   href="#accordion03CollapseTwo{$field}" id="accordion03HeadingTwo__{$field}" role="tab">
+                                                    <span>Informacion Adicional</span>
+                                                    <span class="collapse-icon-closed">
+                                                        <svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
+                                                            <use href="{$contextPath}/images/icons/icons.svg#angle-right" />
+                                                        </svg>
+                                                    </span>
+                                                    <span class="collapse-icon-open">
+                                                        <svg class="lexicon-icon lexicon-icon-angle-down" focusable="false" role="presentation">
+                                                            <use href="{$contextPath}/images/icons/icons.svg#angle-down" />
+                                                        </svg>
+                                                    </span>
+                                                </a>
+                                                <div aria-labelledby="accordion03HeadingTwo__{$field}" class="panel-collapse collapse {$_isOpenField=='true'?'show':''}" id="accordion03CollapseTwo{$field}" role="tabpanel">
+                                                    <div class="panel-body">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                {if isNonnull($nestedFields)}
+                                                                    {foreach $nestedField in $nestedFields}
 
-                                        <div class="autofit-col">
-                                            <h4 class="table-list-title">
-                                                <a href="#1">{$itemsAsociated[$field].filename}</a>
-                                            </h4>
-                                            <p class="text-truncate-inline">{$itemsAsociated[$field].path}</p>
-                                        </div>
-                                        <div class="autofit-col">
-                                            <a onclick="{$deleteDocument}" href="#1" id="{$field}"
-                                               style="font-size: 18px">
-                                                <svg class="lexicon-icon lexicon-icon-trash" focusable="false"
-                                                     role="presentation">
-                                                    <use href="{$contextPath}/images/icons/icons.svg#trash"></use>
-                                                </svg>
-                                            </a>
-                                        </div>
+                                                                        {if $nestedField['type'] == 'text'}
+                                                                            {call TextLocalizableUI.render}
+                                                                                {param id: $nestedField['name']+'_'+$field /}
+                                                                                {param type: $nestedField['type'] /}
+                                                                                {param path: $field+'/'+$nestedField['name'] /}
+                                                                                {param localizable: $nestedField['localizable'] /}
+                                                                                {param labels: $nestedField['label'] /}
+                                                                                {param placeholder: $nestedField['tip'] /}
+                                                                                {param availableLanguageIds: $availableLanguageIds /}
+                                                                                {param defaultLanguageId: $defaultLanguageId /}
+                                                                                {param handleChangeValue:  $handleChangeValueDocument /}
+                                                                            {/call}
+                                                                        {elseif $nestedField['type'] == 'checkbox'}
+                                                                            {call CheckBoxUI.render}
+                                                                                {param id: $nestedField['name']+'_'+$field  /}
+                                                                                {param label: $nestedField['label'][$defaultLanguageId] /}
+                                                                                {param path:  $field+'/'+$nestedField['name'] /}
+                                                                                {param handleChangeValue:  $handleChangeValueDocument /}
+                                                                            {/call}
+                                                                        {elseif $nestedField['type'] == 'ddm-date'}
+                                                                            {call DateUI.render}
+                                                                                {param id: $nestedField['name']+'_'+$field  /}
+                                                                                {param label: $nestedField['label'][$defaultLanguageId] /}
+                                                                                {param placeholder: $nestedField['tip'][$defaultLanguageId] /}
+                                                                                {param defaultLanguageId: $defaultLanguageId /}
+                                                                                {param path:  $field+'/'+$nestedField['name'] /}
+                                                                                {param handleChangeValue:  $handleChangeValueDocument /}
+                                                                            {/call}
+                                                                        {elseif $nestedField['type'] == 'ddm-text-html'}
+                                                                            {call TextAreaUI.render}
+                                                                                {param id: $nestedField['name']+'_'+$field  /}
+                                                                                {param label: $field['label'][$defaultLanguageId] /}
+                                                                                {param placeholder: $nestedField['tip'][$defaultLanguageId] /}
+                                                                                {param availableLanguageIds: $availableLanguageIds /}
+                                                                                {param defaultLanguageId: $defaultLanguageId /}
+                                                                                {param path:  $field+'/'+$nestedField['name'] /}
+                                                                                {param handleChangeValue:  $handleChangeValueDocument /}
+                                                                            {/call}
+                                                                        {elseif $nestedField['type'] == 'radio'}
+                                                                            {call RadioUI.render}
+                                                                                {param id: $nestedField['name']+'_'+$field  /}
+                                                                                {param label: $nestedField['label'][$defaultLanguageId] /}
+                                                                                {param defaultLanguageId: $defaultLanguageId /}
+                                                                                {param options: $nestedField['options'] /}
+                                                                                {param path:  $field+'/'+$nestedField['name'] /}
+                                                                                {param handleChangeValue:  $handleChangeValueDocument /}
+                                                                            {/call}
+                                                                        {elseif $nestedField['type'] == 'select'}
+                                                                            {call SelectUI.render}
+                                                                                {param id: $nestedField['name']+'_'+$field  /}
+                                                                                {param label: $nestedField['label'][$defaultLanguageId] /}
+                                                                                {param defaultLanguageId: $defaultLanguageId /}
+                                                                                {param options: $nestedField['options'] /}
+                                                                                {param path:  $field+'/'+$nestedField['name'] /}
+                                                                                {param handleChangeValue:  $handleChangeValueDocument /}
+                                                                            {/call}
+                                                                        {elseif $nestedField['type'] == 'ddm-integer'}
+                                                                            {call TextLocalizableUI.render}
+                                                                                {param id: $nestedField['name']+'_'+$field /}
+                                                                                {param type: 'number' /}
+                                                                                {param path:  $field+'/'+$nestedField['name'] /}
+                                                                                {param localizable: $nestedField['localizable'] /}
+                                                                                {param labels: $nestedField['label'] /}
+                                                                                {param placeholder: $nestedField['tip'] /}
+                                                                                {param availableLanguageIds: $availableLanguageIds /}
+                                                                                {param defaultLanguageId: $defaultLanguageId /}
+                                                                                {param handleChangeValue:  $handleChangeValueDocument /}
+                                                                            {/call}
+                                                                        {else}
+                                                                            {$nestedField['type']}--{$nestedField['name']}--Ninguno<br/>
+                                                                        {/if}
 
+                                                                        <div>&nbsp;&nbsp;</div>
+                                                                    {/foreach}
+                                                                {/if}
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                     {if isLast($field)}
                                         </tr>

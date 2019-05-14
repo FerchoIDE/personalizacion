@@ -59,7 +59,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var availableLanguageIds = soy.asserts.assertType(goog.isArray(opt_data.availableLanguageIds), 'availableLanguageIds', opt_data.availableLanguageIds, '!Array<!goog.soy.data.SanitizedContent|string>');
   /** @type {!goog.soy.data.SanitizedContent|string} */
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
-  var finalValue__soy1509 = (value != null) ? value : '';
+  var finalValue__soy1633 = (value != null) ? value : '';
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'form-group-item');
@@ -70,16 +70,16 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       soyIdom.print(label);
     incrementalDom.elementClose('label');
     if (localizable == true) {
-      var language1551List = availableLanguageIds;
-      var language1551ListLen = language1551List.length;
-      for (var language1551Index = 0; language1551Index < language1551ListLen; language1551Index++) {
-          var language1551Data = language1551List[language1551Index];
-          if (language1551Data == defaultLanguageId) {
+      var language1675List = availableLanguageIds;
+      var language1675ListLen = language1675List.length;
+      for (var language1675Index = 0; language1675Index < language1675ListLen; language1675Index++) {
+          var language1675Data = language1675List[language1675Index];
+          if (language1675Data == defaultLanguageId) {
             incrementalDom.elementOpenStart('input');
                 incrementalDom.attr('class', 'form-control');
                 incrementalDom.attr('data-onkeyup', 'handleChange');
-                incrementalDom.attr('id', 'input_' + id + '_' + language1551Data);
-                incrementalDom.attr('data-language', language1551Data);
+                incrementalDom.attr('id', 'input_' + id + '_' + language1675Data);
+                incrementalDom.attr('data-language', language1675Data);
                 incrementalDom.attr('data-path', path);
                 incrementalDom.attr('placeholder', placeholder);
                 incrementalDom.attr('type', type);
@@ -89,9 +89,9 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           } else {
             incrementalDom.elementOpenStart('input');
                 incrementalDom.attr('class', 'form-control');
-                incrementalDom.attr('id', 'input_' + id + '_' + language1551Data);
+                incrementalDom.attr('id', 'input_' + id + '_' + language1675Data);
                 incrementalDom.attr('placeholder', placeholder);
-                incrementalDom.attr('data-language', language1551Data);
+                incrementalDom.attr('data-language', language1675Data);
                 incrementalDom.attr('data-path', path);
                 incrementalDom.attr('style', 'display: none');
                 incrementalDom.attr('type', type);
