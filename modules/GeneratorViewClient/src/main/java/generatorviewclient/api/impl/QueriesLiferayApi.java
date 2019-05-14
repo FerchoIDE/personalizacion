@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
 import generatorviewclient.constants.Contants;
 
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -447,7 +448,8 @@ public class QueriesLiferayApi {
 
 	        Locale locale= new Locale(localeDefault);
 	        Map<Locale, String> titleMap = new HashMap<Locale, String>();
-	        titleMap.put(locale, title);
+	      	titleMap.put(LocaleUtil.fromLanguageId("es_ES"), title);
+			titleMap.put(LocaleUtil.fromLanguageId("en_US"), title);
 	        Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 	        descriptionMap.put(locale, description);
 
@@ -718,7 +720,8 @@ public class QueriesLiferayApi {
 	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
 	                return xml;
 	            case "ddm-journal-article":
-	                if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
+
+	                if(values.getJSONObject(0)!=null &&values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
 	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
 	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
 	                return xml;
@@ -726,16 +729,17 @@ public class QueriesLiferayApi {
 	                String options_en="";
 	                String options_es="";
 	                for (int i = 0; i < values.length(); i++) {
-	                    if(values.getJSONObject(i).get("en_US")!=null && values.getJSONObject(i).get("es_ES")!=null)
+	                    if(values.getJSONObject(i).get("en_US")!=null)
 	                        options_en+= "<option>"+setCDATA(values.getJSONObject(i).get("en_US").toString())+"</option>";
-	                    options_es+= "<option>"+setCDATA(values.getJSONObject(i).get("es_ES").toString())+"</option>";
+	                    if(values.getJSONObject(i).get("es_ES")!=null)
+	                    	options_es+= "<option>"+setCDATA(values.getJSONObject(i).get("es_ES").toString())+"</option>";
 
 	                }
 	                xml="<dynamic-content language-id=\"en_US\">"+options_en+"</dynamic-content>"+
 	                        "<dynamic-content language-id=\"es_ES\">"+options_es+"</dynamic-content>";
 	                return xml;
 	            default:
-	                if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
+	                if(values.getJSONObject(0)!=null && values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
 	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
 	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
 	                return xml;

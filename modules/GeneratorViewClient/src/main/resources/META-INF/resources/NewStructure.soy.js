@@ -115,37 +115,51 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
-    if (structureId != '35912') {
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('aria-labelledby', 'claySmallModalDlg');
+        incrementalDom.attr('id', 'claySmallModal1');
+        incrementalDom.attr('class', 'fade modal ' + (isOnLoad ? 'show in' : ''));
+        incrementalDom.attr('style', isOnLoad ? '' : 'display: none');
+        incrementalDom.attr('role', 'dialog');
+        incrementalDom.attr('tabindex', '-1');
+    incrementalDom.elementOpenEnd();
       incrementalDom.elementOpenStart('div');
-          incrementalDom.attr('aria-labelledby', 'claySmallModalDlg');
-          incrementalDom.attr('id', 'claySmallModal1');
-          incrementalDom.attr('class', 'fade modal ' + (isOnLoad ? 'show in' : ''));
-          incrementalDom.attr('style', isOnLoad ? '' : 'display: none');
-          incrementalDom.attr('role', 'dialog');
-          incrementalDom.attr('tabindex', '-1');
+          incrementalDom.attr('class', 'modal-info modal-dialog modal-sm');
       incrementalDom.elementOpenEnd();
         incrementalDom.elementOpenStart('div');
-            incrementalDom.attr('class', 'modal-info modal-dialog modal-sm');
+            incrementalDom.attr('class', 'modal-content');
         incrementalDom.elementOpenEnd();
           incrementalDom.elementOpenStart('div');
-              incrementalDom.attr('class', 'modal-content');
+              incrementalDom.attr('class', 'modal-header');
           incrementalDom.elementOpenEnd();
             incrementalDom.elementOpenStart('div');
-                incrementalDom.attr('class', 'modal-header');
+                incrementalDom.attr('class', 'modal-title');
+                incrementalDom.attr('id', 'claySmallModalDlg');
             incrementalDom.elementOpenEnd();
-              incrementalDom.elementOpenStart('div');
-                  incrementalDom.attr('class', 'modal-title');
-                  incrementalDom.attr('id', 'claySmallModalDlg');
-              incrementalDom.elementOpenEnd();
-                incrementalDom.text('Seleccione');
-              incrementalDom.elementClose('div');
+              incrementalDom.text('Seleccione');
             incrementalDom.elementClose('div');
+          incrementalDom.elementClose('div');
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'modal-body');
+          incrementalDom.elementOpenEnd();
             incrementalDom.elementOpenStart('div');
-                incrementalDom.attr('class', 'modal-body');
+                incrementalDom.attr('class', 'container-fluid');
             incrementalDom.elementOpenEnd();
-              incrementalDom.elementOpenStart('div');
-                  incrementalDom.attr('class', 'container-fluid');
-              incrementalDom.elementOpenEnd();
+              if (structureId == '35912') {
+                incrementalDom.elementOpenStart('div');
+                    incrementalDom.attr('class', 'form-group');
+                incrementalDom.elementOpenEnd();
+                  incrementalDom.elementOpenStart('input');
+                      incrementalDom.attr('id', 'txtCodeBrand');
+                      incrementalDom.attr('class', 'form-control');
+                      incrementalDom.attr('data-onkeyup', 'handleChangeBrand');
+                      incrementalDom.attr('style', 'text-transform: uppercase');
+                      incrementalDom.attr('placeholder', 'Ingrese el codigo de la marca');
+                      incrementalDom.attr('type', 'text');
+                  incrementalDom.elementOpenEnd();
+                  incrementalDom.elementClose('input');
+                incrementalDom.elementClose('div');
+              } else {
                 incrementalDom.elementOpenStart('div');
                     incrementalDom.attr('class', 'form-group');
                 incrementalDom.elementOpenEnd();
@@ -160,14 +174,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                     incrementalDom.elementOpenEnd();
                       incrementalDom.text('Selecciona una Marca');
                     incrementalDom.elementClose('option');
-                    var field414List = categoryBrands;
-                    var field414ListLen = field414List.length;
-                    for (var field414Index = 0; field414Index < field414ListLen; field414Index++) {
-                        var field414Data = field414List[field414Index];
+                    var field416List = categoryBrands;
+                    var field416ListLen = field416List.length;
+                    for (var field416Index = 0; field416Index < field416ListLen; field416Index++) {
+                        var field416Data = field416List[field416Index];
                         incrementalDom.elementOpenStart('option');
-                            incrementalDom.attr('value', field414Data.key);
+                            incrementalDom.attr('value', field416Data.key);
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(field414Data.category);
+                          soyIdom.print(field416Data.category);
                         incrementalDom.elementClose('option');
                       }
                   incrementalDom.elementClose('select');
@@ -181,12 +195,13 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('disabled', '');
                         incrementalDom.attr('class', 'form-control');
                         incrementalDom.attr('data-onkeyup', 'handleChangeCode');
+                        incrementalDom.attr('style', 'text-transform: uppercase');
                         incrementalDom.attr('placeholder', 'Ingrese el codigo de hotel');
                         incrementalDom.attr('type', 'text');
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                   } else if (structureId == '35796') {
-                    incrementalDom.text('\u00A0');
+                    incrementalDom.text('\u00A0\u00A0');
                   } else {
                     incrementalDom.elementOpenStart('select');
                         incrementalDom.attr('onchange', changeHotels);
@@ -199,78 +214,78 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                       incrementalDom.elementOpenEnd();
                         incrementalDom.text('Selecciona un Hotel');
                       incrementalDom.elementClose('option');
-                      var field431List = hotelsXBrands;
-                      var field431ListLen = field431List.length;
-                      for (var field431Index = 0; field431Index < field431ListLen; field431Index++) {
-                          var field431Data = field431List[field431Index];
+                      var field433List = hotelsXBrands;
+                      var field433ListLen = field433List.length;
+                      for (var field433Index = 0; field433Index < field433ListLen; field433Index++) {
+                          var field433Data = field433List[field433Index];
                           incrementalDom.elementOpenStart('option');
-                              incrementalDom.attr('value', field431Data.key);
+                              incrementalDom.attr('value', field433Data.key);
                           incrementalDom.elementOpenEnd();
-                            soyIdom.print(field431Data.category);
+                            soyIdom.print(field433Data.category);
                           incrementalDom.elementClose('option');
                         }
                     incrementalDom.elementClose('select');
                   }
                 incrementalDom.elementClose('div');
-                if ((msgErrorPath != null)) {
-                  incrementalDom.elementOpenStart('div');
-                      incrementalDom.attr('class', 'alert alert-danger');
-                      incrementalDom.attr('role', 'alert');
+              }
+              if ((msgErrorPath != null)) {
+                incrementalDom.elementOpenStart('div');
+                    incrementalDom.attr('class', 'alert alert-danger');
+                    incrementalDom.attr('role', 'alert');
+                incrementalDom.elementOpenEnd();
+                  incrementalDom.elementOpenStart('span');
+                      incrementalDom.attr('class', 'alert-indicator');
                   incrementalDom.elementOpenEnd();
-                    incrementalDom.elementOpenStart('span');
-                        incrementalDom.attr('class', 'alert-indicator');
+                    incrementalDom.elementOpenStart('svg');
+                        incrementalDom.attr('class', 'lexicon-icon lexicon-icon-exclamation-full');
+                        incrementalDom.attr('focusable', 'false');
+                        incrementalDom.attr('role', 'presentation');
                     incrementalDom.elementOpenEnd();
-                      incrementalDom.elementOpenStart('svg');
-                          incrementalDom.attr('class', 'lexicon-icon lexicon-icon-exclamation-full');
-                          incrementalDom.attr('focusable', 'false');
-                          incrementalDom.attr('role', 'presentation');
+                      incrementalDom.elementOpenStart('use');
+                          incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#exclamation-full');
                       incrementalDom.elementOpenEnd();
-                        incrementalDom.elementOpenStart('use');
-                            incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#exclamation-full');
-                        incrementalDom.elementOpenEnd();
-                        incrementalDom.elementClose('use');
-                      incrementalDom.elementClose('svg');
-                    incrementalDom.elementClose('span');
-                    incrementalDom.elementOpenStart('strong');
-                        incrementalDom.attr('class', 'lead');
-                    incrementalDom.elementOpenEnd();
-                      incrementalDom.text('Error:');
-                    incrementalDom.elementClose('strong');
-                    soyIdom.print(msgErrorPath);
-                  incrementalDom.elementClose('div');
-                }
-              incrementalDom.elementClose('div');
+                      incrementalDom.elementClose('use');
+                    incrementalDom.elementClose('svg');
+                  incrementalDom.elementClose('span');
+                  incrementalDom.elementOpenStart('strong');
+                      incrementalDom.attr('class', 'lead');
+                  incrementalDom.elementOpenEnd();
+                    incrementalDom.text('Error:');
+                  incrementalDom.elementClose('strong');
+                  soyIdom.print(msgErrorPath);
+                incrementalDom.elementClose('div');
+              }
             incrementalDom.elementClose('div');
+          incrementalDom.elementClose('div');
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'modal-footer');
+          incrementalDom.elementOpenEnd();
             incrementalDom.elementOpenStart('div');
-                incrementalDom.attr('class', 'modal-footer');
+                incrementalDom.attr('class', 'modal-item-last');
             incrementalDom.elementOpenEnd();
               incrementalDom.elementOpenStart('div');
-                  incrementalDom.attr('class', 'modal-item-last');
+                  incrementalDom.attr('class', 'btn-group');
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpenStart('div');
-                    incrementalDom.attr('class', 'btn-group');
+                    incrementalDom.attr('class', 'btn-group-item');
+                    incrementalDom.attr('data-dismiss', 'modal');
                 incrementalDom.elementOpenEnd();
-                  incrementalDom.elementOpenStart('div');
-                      incrementalDom.attr('class', 'btn-group-item');
-                      incrementalDom.attr('data-dismiss', 'modal');
+                  incrementalDom.elementOpenStart('button');
+                      incrementalDom.attr('id', 'btnSelectPath');
+                      incrementalDom.attr('class', 'btn btn-primary');
+                      incrementalDom.attr('disabled', '');
+                      incrementalDom.attr('onclick', saveSelectPath);
+                      incrementalDom.attr('type', 'button');
                   incrementalDom.elementOpenEnd();
-                    incrementalDom.elementOpenStart('button');
-                        incrementalDom.attr('id', 'btnSelectPath');
-                        incrementalDom.attr('class', 'btn btn-primary');
-                        incrementalDom.attr('disabled', '');
-                        incrementalDom.attr('onclick', saveSelectPath);
-                        incrementalDom.attr('type', 'button');
-                    incrementalDom.elementOpenEnd();
-                      incrementalDom.text('Seleccionar');
-                    incrementalDom.elementClose('button');
-                  incrementalDom.elementClose('div');
+                    incrementalDom.text('Seleccionar');
+                  incrementalDom.elementClose('button');
                 incrementalDom.elementClose('div');
               incrementalDom.elementClose('div');
             incrementalDom.elementClose('div');
           incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');
       incrementalDom.elementClose('div');
-    }
+    incrementalDom.elementClose('div');
     incrementalDom.elementOpenStart('div');
         incrementalDom.attr('aria-orientation', 'vertical');
         incrementalDom.attr('class', 'panel-group panel-group-flush');
@@ -430,12 +445,12 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementOpenStart('div');
                     incrementalDom.attr('class', 'input-group');
                 incrementalDom.elementOpenEnd();
-                  var field581List = data['nestedFields'];
-                  var field581ListLen = field581List.length;
-    for (var field581Index = 0; field581Index < field581ListLen; field581Index++) {
-        var field581Data = field581List[field581Index];
-        if (field581Data['type'] == 'ddm-separator') {
-          if (field581Index > 0 && data['nestedFields'][field581Index - 1]['type'] != 'ddm-separator') {
+                  var field583List = data['nestedFields'];
+                  var field583ListLen = field583List.length;
+    for (var field583Index = 0; field583Index < field583ListLen; field583Index++) {
+        var field583Data = field583List[field583Index];
+        if (field583Data['type'] == 'ddm-separator') {
+          if (field583Index > 0 && data['nestedFields'][field583Index - 1]['type'] != 'ddm-separator') {
             incrementalDom.elementClose('div');
                       incrementalDom.elementClose('div');
                     incrementalDom.elementClose('div');
@@ -444,23 +459,23 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementClose('div');
             incrementalDom.elementClose('div');
           }
-          $templateAlias2({id: 'id_' + field581Index, structureId: structureId, name: field581Data['name'], path: field581Data['name'], data: field581Data['nestedFields'], title: field581Data['label'], availableLanguageIds: availableLanguageIds__soy394, defaultLanguage: selectedLanguage__soy390, closeOpenTab: closeOpenTab, contextPath: contextPath, collapseInfo: collapseInfo, brandSelected: brandSelected, hotelSelected: hotelSelected, handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field581Data['type'] == 'text') {
-          $templateAlias3({id: field581Data['name'], type: field581Data['type'], path: field581Data['name'], localizable: field581Data['localizable'], labels: field581Data['label'], placeholder: field581Data['tip'], availableLanguageIds: availableLanguageIds__soy394, defaultLanguageId: selectedLanguage__soy390, handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field581Data['type'] == 'checkbox') {
-          $templateAlias4({id: field581Data['name'], label: field581Data['label'][selectedLanguage__soy390], path: field581Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field581Data['type'] == 'ddm-date') {
-          $templateAlias5({id: field581Data['name'], label: field581Data['label'][defaultLanguage__soy392], placeholder: field581Data['tip'][defaultLanguage__soy392], defaultLanguageId: selectedLanguage__soy390, path: field581Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field581Data['type'] == 'ddm-text-html') {
-          $templateAlias6({id: field581Data['name'], label: field581Data['label'][selectedLanguage__soy390], placeholder: field581Data['tip'][selectedLanguage__soy390], availableLanguageIds: availableLanguageIds__soy394, defaultLanguageId: selectedLanguage__soy390, path: field581Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field581Data['type'] == 'radio') {
-          $templateAlias7({id: field581Data['name'], label: field581Data['label'][selectedLanguage__soy390], defaultLanguageId: selectedLanguage__soy390, options: field581Data['options'], path: field581Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field581Data['type'] == 'select') {
-          $templateAlias8({id: field581Data['name'], label: field581Data['label'][selectedLanguage__soy390], defaultLanguageId: selectedLanguage__soy390, options: field581Data['options'], path: field581Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+          $templateAlias2({id: 'id_' + field583Index, structureId: structureId, name: field583Data['name'], path: field583Data['name'], data: field583Data['nestedFields'], title: field583Data['label'], availableLanguageIds: availableLanguageIds__soy394, defaultLanguage: selectedLanguage__soy390, closeOpenTab: closeOpenTab, contextPath: contextPath, collapseInfo: collapseInfo, brandSelected: brandSelected, hotelSelected: hotelSelected, handleChangeValue: handleChangeValue}, null, opt_ijData);
+        } else if (field583Data['type'] == 'text') {
+          $templateAlias3({id: field583Data['name'], type: field583Data['type'], path: field583Data['name'], localizable: field583Data['localizable'], labels: field583Data['label'], placeholder: field583Data['tip'], availableLanguageIds: availableLanguageIds__soy394, defaultLanguageId: selectedLanguage__soy390, handleChangeValue: handleChangeValue}, null, opt_ijData);
+        } else if (field583Data['type'] == 'checkbox') {
+          $templateAlias4({id: field583Data['name'], label: field583Data['label'][selectedLanguage__soy390], path: field583Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+        } else if (field583Data['type'] == 'ddm-date') {
+          $templateAlias5({id: field583Data['name'], label: field583Data['label'][defaultLanguage__soy392], placeholder: field583Data['tip'][defaultLanguage__soy392], defaultLanguageId: selectedLanguage__soy390, path: field583Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+        } else if (field583Data['type'] == 'ddm-text-html') {
+          $templateAlias6({id: field583Data['name'], label: field583Data['label'][selectedLanguage__soy390], placeholder: field583Data['tip'][selectedLanguage__soy390], availableLanguageIds: availableLanguageIds__soy394, defaultLanguageId: selectedLanguage__soy390, path: field583Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+        } else if (field583Data['type'] == 'radio') {
+          $templateAlias7({id: field583Data['name'], label: field583Data['label'][selectedLanguage__soy390], defaultLanguageId: selectedLanguage__soy390, options: field583Data['options'], path: field583Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+        } else if (field583Data['type'] == 'select') {
+          $templateAlias8({id: field583Data['name'], label: field583Data['label'][selectedLanguage__soy390], defaultLanguageId: selectedLanguage__soy390, options: field583Data['options'], path: field583Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
         } else {
-          soyIdom.print(field581Data['type']);
+          soyIdom.print(field583Data['type']);
           incrementalDom.text('--');
-          soyIdom.print(field581Data['name']);
+          soyIdom.print(field583Data['name']);
           incrementalDom.text('--Ninguno');
           incrementalDom.elementOpen('br');
           incrementalDom.elementClose('br');

@@ -38,7 +38,6 @@
 	{let $availableLanguageIds: $data['availableLanguageId'] /}
 	{let $availableLanguageIdsStyle: $data['availableLanguageId-style'] /}
 	 <div id="{$id}">
-		 {if $structureId!='35912'}
 			  <div aria-labelledby="claySmallModalDlg" id="claySmallModal1" class="fade modal {$isOnLoad ? 'show in' : ''}"
 				  style="{$isOnLoad ? '' : 'display: none'}"  role="dialog" tabindex="-1">
 				 <div class="modal-info modal-dialog modal-sm">
@@ -46,31 +45,36 @@
 						 <div class="modal-header">
 							 <div class="modal-title" id="claySmallModalDlg">Seleccione</div>
 						 </div>
-
 						 <div class="modal-body" >
 							 <div class="container-fluid">
-								 <div class="form-group">
-									 <select onchange="{$changeBrand}"  class="form-control" id="brandSelect">
-										 <option disabled selected>Selecciona una Marca</option>
-										 {foreach $field in $categoryBrands}
-											 <option value="{$field.key}">{$field.category}</option>
-										 {/foreach}
-									 </select>
-								 </div>
-							 	 <div class="form-group">
-									{if $structureId=='35835'}
-										<input id="txtCodeHotel" disabled class="form-control" data-onkeyup="handleChangeCode" placeholder="Ingrese el codigo de hotel" type="text" />
-									{elseif $structureId=='35796' }
-										&nbsp;
-									{else}
-										 <select onchange="{$changeHotels}"  class="form-control" id="hotelSelect">
-											 <option disabled selected>Selecciona un Hotel</option>
-											 {foreach $field in $hotelsXBrands}
+								 {if $structureId=='35912'}
+									 <div class="form-group">
+										 <input id="txtCodeBrand"  class="form-control" data-onkeyup="handleChangeBrand" style="text-transform: uppercase" placeholder="Ingrese el codigo de la marca" type="text" />
+									 </div>
+								 {else}
+									 <div class="form-group">
+										 <select onchange="{$changeBrand}"  class="form-control" id="brandSelect">
+											 <option disabled selected>Selecciona una Marca</option>
+											 {foreach $field in $categoryBrands}
 												 <option value="{$field.key}">{$field.category}</option>
 											 {/foreach}
 										 </select>
-									 {/if}
-								 </div>
+									 </div>
+									 <div class="form-group">
+										 {if $structureId=='35835'}
+											 <input id="txtCodeHotel" disabled class="form-control" data-onkeyup="handleChangeCode" style="text-transform: uppercase" placeholder="Ingrese el codigo de hotel" type="text" />
+										 {elseif $structureId=='35796' }
+											 &nbsp;&nbsp;
+										 {else}
+											 <select onchange="{$changeHotels}"  class="form-control" id="hotelSelect">
+												 <option disabled selected>Selecciona un Hotel</option>
+												 {foreach $field in $hotelsXBrands}
+													 <option value="{$field.key}">{$field.category}</option>
+												 {/foreach}
+											 </select>
+										 {/if}
+									 </div>
+								 {/if}
 								 {if isNonnull($msgErrorPath)}
 								 <div class="alert alert-danger" role="alert">
 									<span class="alert-indicator">
@@ -99,7 +103,6 @@
 					 </div>
 				 </div>
 			 </div>
-		 {/if}
 			 <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
 				 <div class="panel">
 					 <a onclick="{$closeOpenTab}" aria-controls="accordionPrincipalCollapse" aria-expanded="true" class="collapse-icon sheet-subtitle"
@@ -275,7 +278,7 @@
 				{/foreach}
 		 <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
 			 <div class="panel">
-				 <a onclick="{$closeOpenTab}" aria-controls="accordionAditionalCollapse" aria-expanded="false" class="collapse-icon sheet-subtitle"
+				 <a onclick="{$closeOpenTab}" aria-controls="accordionAditionalCollapse" aria-expanded="true" class="collapse-icon sheet-subtitle"
 					data-toggle="collapse" href="#accordionAditionalCollapse" id="accordionAditionalHeading" role="tab">
 						 <span >
 							 <div class="sheet-header"><h3 class="sheet-title">Información adicional</h3></div>

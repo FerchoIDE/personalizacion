@@ -123,8 +123,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
   /** @type {?} */
   var handleChangeValueDocument = opt_data.handleChangeValueDocument;
-  var _isOpen__soy4139 = (isOpen != null) ? isOpen : {'a': false};
-  var m__soy4141 = {'a': false};
+  var _isOpen__soy4179 = (isOpen != null) ? isOpen : {'a': false};
+  var m__soy4181 = {'a': false};
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'container');
@@ -149,15 +149,15 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
                   if (itemsAsociated != null) {
-                    var field4286List = (soy.$$getMapKeys(itemsAsociated));
-                    var field4286ListLen = field4286List.length;
-                    for (var field4286Index = 0; field4286Index < field4286ListLen; field4286Index++) {
-                        var field4286Data = field4286List[field4286Index];
-                        var _isOpenField__soy4149 = _isOpen__soy4139[field4286Data] ? 'true' : 'false';
-                          if (field4286Index == 0) {
+                    var field4326List = (soy.$$getMapKeys(itemsAsociated));
+                    var field4326ListLen = field4326List.length;
+                    for (var field4326Index = 0; field4326Index < field4326ListLen; field4326Index++) {
+                        var field4326Data = field4326List[field4326Index];
+                        var _isOpenField__soy4189 = _isOpen__soy4179[field4326Data] ? 'true' : 'false';
+                          if (field4326Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field4286Index + 2) % 2 == 0 && !(field4286Index == 0)) {
+                          if ((field4326Index + 2) % 2 == 0 && !(field4326Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -177,7 +177,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                       incrementalDom.attr('width', '128');
                                       incrementalDom.attr('style', 'max-height: 256px;max-width: 100%');
                                       incrementalDom.attr('alt', 'Not Image');
-                                      incrementalDom.attr('src', 'http://localhost:8080' + itemsAsociated[field4286Data].imageThumbnail);
+                                      incrementalDom.attr('src', 'http://localhost:8080' + itemsAsociated[field4326Data].imageThumbnail);
                                   incrementalDom.elementOpenEnd();
                                   incrementalDom.elementClose('img');
                                 incrementalDom.elementClose('span');
@@ -191,13 +191,13 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(itemsAsociated[field4286Data].filename);
+                                    soyIdom.print(itemsAsociated[field4326Data].filename);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(itemsAsociated[field4286Data].path);
+                                  soyIdom.print(itemsAsociated[field4326Data].path);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                               incrementalDom.elementOpenStart('div');
@@ -206,7 +206,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                 incrementalDom.elementOpenStart('a');
                                     incrementalDom.attr('onclick', deleteDocument);
                                     incrementalDom.attr('href', '#1');
-                                    incrementalDom.attr('id', field4286Data);
+                                    incrementalDom.attr('id', field4326Data);
                                     incrementalDom.attr('style', 'font-size: 18px');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpenStart('svg');
@@ -231,13 +231,13 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.attr('class', 'panel');
                               incrementalDom.elementOpenEnd();
                                 incrementalDom.elementOpenStart('a');
-                                    incrementalDom.attr('aria-controls', 'accordion03CollapseTwo' + field4286Data);
-                                    incrementalDom.attr('aria-expanded', _isOpenField__soy4149);
+                                    incrementalDom.attr('aria-controls', 'accordion03CollapseTwo' + field4326Data);
+                                    incrementalDom.attr('aria-expanded', _isOpenField__soy4189);
                                     incrementalDom.attr('class', 'collapse-icon sheet-subtitle collapsed');
                                     incrementalDom.attr('data-toggle', 'collapse');
                                     incrementalDom.attr('onclick', closeOpenTab);
-                                    incrementalDom.attr('href', '#accordion03CollapseTwo' + field4286Data);
-                                    incrementalDom.attr('id', 'accordion03HeadingTwo__' + field4286Data);
+                                    incrementalDom.attr('href', '#accordion03CollapseTwo' + field4326Data);
+                                    incrementalDom.attr('id', 'accordion03HeadingTwo__' + field4326Data);
                                     incrementalDom.attr('role', 'tab');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpen('span');
@@ -273,9 +273,9 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementClose('span');
                                 incrementalDom.elementClose('a');
                                 incrementalDom.elementOpenStart('div');
-                                    incrementalDom.attr('aria-labelledby', 'accordion03HeadingTwo__' + field4286Data);
-                                    incrementalDom.attr('class', 'panel-collapse collapse ' + (_isOpenField__soy4149 == 'true' ? 'show' : ''));
-                                    incrementalDom.attr('id', 'accordion03CollapseTwo' + field4286Data);
+                                    incrementalDom.attr('aria-labelledby', 'accordion03HeadingTwo__' + field4326Data);
+                                    incrementalDom.attr('class', 'panel-collapse collapse ' + (_isOpenField__soy4189 == 'true' ? 'show' : ''));
+                                    incrementalDom.attr('id', 'accordion03CollapseTwo' + field4326Data);
                                     incrementalDom.attr('role', 'tabpanel');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpenStart('div');
@@ -288,28 +288,28 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                           incrementalDom.attr('class', 'input-group');
                                       incrementalDom.elementOpenEnd();
                                         if ((nestedFields != null)) {
-                                          var nestedField4278List = nestedFields;
-                                          var nestedField4278ListLen = nestedField4278List.length;
-                                          for (var nestedField4278Index = 0; nestedField4278Index < nestedField4278ListLen; nestedField4278Index++) {
-                                              var nestedField4278Data = nestedField4278List[nestedField4278Index];
-                                              if (nestedField4278Data['type'] == 'text') {
-                                                $templateAlias1({id: nestedField4278Data['name'] + '_' + field4286Data, type: nestedField4278Data['type'], path: field4286Data + '/' + nestedField4278Data['name'], localizable: nestedField4278Data['localizable'], labels: nestedField4278Data['label'], placeholder: nestedField4278Data['tip'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
-                                              } else if (nestedField4278Data['type'] == 'checkbox') {
-                                                $templateAlias2({id: nestedField4278Data['name'] + '_' + field4286Data, label: nestedField4278Data['label'][defaultLanguageId], path: field4286Data + '/' + nestedField4278Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
-                                              } else if (nestedField4278Data['type'] == 'ddm-date') {
-                                                $templateAlias3({id: nestedField4278Data['name'] + '_' + field4286Data, label: nestedField4278Data['label'][defaultLanguageId], placeholder: nestedField4278Data['tip'][defaultLanguageId], defaultLanguageId: defaultLanguageId, path: field4286Data + '/' + nestedField4278Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
-                                              } else if (nestedField4278Data['type'] == 'ddm-text-html') {
-                                                $templateAlias4({id: nestedField4278Data['name'] + '_' + field4286Data, label: field4286Data['label'][defaultLanguageId], placeholder: nestedField4278Data['tip'][defaultLanguageId], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, path: field4286Data + '/' + nestedField4278Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
-                                              } else if (nestedField4278Data['type'] == 'radio') {
-                                                $templateAlias5({id: nestedField4278Data['name'] + '_' + field4286Data, label: nestedField4278Data['label'][defaultLanguageId], defaultLanguageId: defaultLanguageId, options: nestedField4278Data['options'], path: field4286Data + '/' + nestedField4278Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
-                                              } else if (nestedField4278Data['type'] == 'select') {
-                                                $templateAlias6({id: nestedField4278Data['name'] + '_' + field4286Data, label: nestedField4278Data['label'][defaultLanguageId], defaultLanguageId: defaultLanguageId, options: nestedField4278Data['options'], path: field4286Data + '/' + nestedField4278Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
-                                              } else if (nestedField4278Data['type'] == 'ddm-integer') {
-                                                $templateAlias1({id: nestedField4278Data['name'] + '_' + field4286Data, type: 'number', path: field4286Data + '/' + nestedField4278Data['name'], localizable: nestedField4278Data['localizable'], labels: nestedField4278Data['label'], placeholder: nestedField4278Data['tip'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
+                                          var nestedField4318List = nestedFields;
+                                          var nestedField4318ListLen = nestedField4318List.length;
+                                          for (var nestedField4318Index = 0; nestedField4318Index < nestedField4318ListLen; nestedField4318Index++) {
+                                              var nestedField4318Data = nestedField4318List[nestedField4318Index];
+                                              if (nestedField4318Data['type'] == 'text') {
+                                                $templateAlias1({id: nestedField4318Data['name'] + '_' + field4326Data, type: nestedField4318Data['type'], path: field4326Data + '/' + nestedField4318Data['name'], localizable: nestedField4318Data['localizable'], labels: nestedField4318Data['label'], placeholder: nestedField4318Data['tip'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
+                                              } else if (nestedField4318Data['type'] == 'checkbox') {
+                                                $templateAlias2({id: nestedField4318Data['name'] + '_' + field4326Data, label: nestedField4318Data['label'][defaultLanguageId], path: field4326Data + '/' + nestedField4318Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
+                                              } else if (nestedField4318Data['type'] == 'ddm-date') {
+                                                $templateAlias3({id: nestedField4318Data['name'] + '_' + field4326Data, label: nestedField4318Data['label'][defaultLanguageId], placeholder: nestedField4318Data['tip'][defaultLanguageId], defaultLanguageId: defaultLanguageId, path: field4326Data + '/' + nestedField4318Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
+                                              } else if (nestedField4318Data['type'] == 'ddm-text-html') {
+                                                $templateAlias4({id: nestedField4318Data['name'] + '_' + field4326Data, label: field4326Data['label'][defaultLanguageId], placeholder: nestedField4318Data['tip'][defaultLanguageId], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, path: field4326Data + '/' + nestedField4318Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
+                                              } else if (nestedField4318Data['type'] == 'radio') {
+                                                $templateAlias5({id: nestedField4318Data['name'] + '_' + field4326Data, label: nestedField4318Data['label'][defaultLanguageId], defaultLanguageId: defaultLanguageId, options: nestedField4318Data['options'], path: field4326Data + '/' + nestedField4318Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
+                                              } else if (nestedField4318Data['type'] == 'select') {
+                                                $templateAlias6({id: nestedField4318Data['name'] + '_' + field4326Data, label: nestedField4318Data['label'][defaultLanguageId], defaultLanguageId: defaultLanguageId, options: nestedField4318Data['options'], path: field4326Data + '/' + nestedField4318Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
+                                              } else if (nestedField4318Data['type'] == 'ddm-integer') {
+                                                $templateAlias1({id: nestedField4318Data['name'] + '_' + field4326Data, type: 'number', path: field4326Data + '/' + nestedField4318Data['name'], localizable: nestedField4318Data['localizable'], labels: nestedField4318Data['label'], placeholder: nestedField4318Data['tip'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
                                               } else {
-                                                soyIdom.print(nestedField4278Data['type']);
+                                                soyIdom.print(nestedField4318Data['type']);
                                                 incrementalDom.text('--');
-                                                soyIdom.print(nestedField4278Data['name']);
+                                                soyIdom.print(nestedField4318Data['name']);
                                                 incrementalDom.text('--Ninguno');
                                                 incrementalDom.elementOpen('br');
                                                 incrementalDom.elementClose('br');
@@ -326,7 +326,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field4286Index == field4286ListLen - 1) {
+                        if (field4326Index == field4326ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -445,14 +445,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.text('Selecciona una opci\u00F3n o');
                       incrementalDom.elementClose('option');
                       if (foldersDocuments) {
-                        var field4318List = foldersDocuments;
-                        var field4318ListLen = field4318List.length;
-                        for (var field4318Index = 0; field4318Index < field4318ListLen; field4318Index++) {
-                            var field4318Data = field4318List[field4318Index];
+                        var field4358List = foldersDocuments;
+                        var field4358ListLen = field4358List.length;
+                        for (var field4358Index = 0; field4358Index < field4358ListLen; field4358Index++) {
+                            var field4358Data = field4358List[field4358Index];
                             incrementalDom.elementOpenStart('option');
-                                incrementalDom.attr('value', field4318Data.folderId);
+                                incrementalDom.attr('value', field4358Data.folderId);
                             incrementalDom.elementOpenEnd();
-                              soyIdom.print(field4318Data.nameFolder);
+                              soyIdom.print(field4358Data.nameFolder);
                             incrementalDom.elementClose('option');
                           }
                       }
@@ -502,14 +502,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
                   if (itemsResult) {
-                    var field4370List = itemsResult;
-                    var field4370ListLen = field4370List.length;
-                    for (var field4370Index = 0; field4370Index < field4370ListLen; field4370Index++) {
-                        var field4370Data = field4370List[field4370Index];
-                        if (field4370Index == 0) {
+                    var field4410List = itemsResult;
+                    var field4410ListLen = field4410List.length;
+                    for (var field4410Index = 0; field4410Index < field4410ListLen; field4410Index++) {
+                        var field4410Data = field4410List[field4410Index];
+                        if (field4410Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field4370Index + 2) % 2 == 0 && !(field4370Index == 0)) {
+                          if ((field4410Index + 2) % 2 == 0 && !(field4410Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -527,12 +527,12 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpen('label');
                                     if ((itemsResultSelected != null)) {
-                                      if (itemsResultSelected[field4370Data.idFile]) {
+                                      if (itemsResultSelected[field4410Data.idFile]) {
                                         incrementalDom.elementOpenStart('input');
                                             incrementalDom.attr('checked', '');
                                             incrementalDom.attr('onclick', setSelectedResult);
-                                            incrementalDom.attr('value', field4370Data.all);
-                                            incrementalDom.attr('id', field4370Data.idFile);
+                                            incrementalDom.attr('value', field4410Data.all);
+                                            incrementalDom.attr('id', field4410Data.idFile);
                                             incrementalDom.attr('class', 'custom-control-input');
                                             incrementalDom.attr('type', 'checkbox');
                                         incrementalDom.elementOpenEnd();
@@ -540,8 +540,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                       } else {
                                         incrementalDom.elementOpenStart('input');
                                             incrementalDom.attr('onclick', setSelectedResult);
-                                            incrementalDom.attr('value', field4370Data.all);
-                                            incrementalDom.attr('id', field4370Data.idFile);
+                                            incrementalDom.attr('value', field4410Data.all);
+                                            incrementalDom.attr('id', field4410Data.idFile);
                                             incrementalDom.attr('class', 'custom-control-input');
                                             incrementalDom.attr('type', 'checkbox');
                                         incrementalDom.elementOpenEnd();
@@ -565,7 +565,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                       incrementalDom.attr('width', '128');
                                       incrementalDom.attr('style', 'max-height: 256px;max-width: 100%');
                                       incrementalDom.attr('alt', 'Not Image');
-                                      incrementalDom.attr('src', 'http://localhost:8080' + field4370Data.imageThumbnail);
+                                      incrementalDom.attr('src', 'http://localhost:8080' + field4410Data.imageThumbnail);
                                   incrementalDom.elementOpenEnd();
                                   incrementalDom.elementClose('img');
                                 incrementalDom.elementClose('span');
@@ -579,18 +579,18 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(field4370Data.filename);
+                                    soyIdom.print(field4410Data.filename);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field4370Data.path);
+                                  soyIdom.print(field4410Data.path);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field4370Index == field4370ListLen - 1) {
+                        if (field4410Index == field4410ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -713,14 +713,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                     incrementalDom.text('Selecciona la carpeta donde se almacenara el nuevo recurso');
                   incrementalDom.elementClose('option');
                   if (foldersDocuments) {
-                    var field4402List = foldersDocuments;
-                    var field4402ListLen = field4402List.length;
-                    for (var field4402Index = 0; field4402Index < field4402ListLen; field4402Index++) {
-                        var field4402Data = field4402List[field4402Index];
+                    var field4442List = foldersDocuments;
+                    var field4442ListLen = field4442List.length;
+                    for (var field4442Index = 0; field4442Index < field4442ListLen; field4442Index++) {
+                        var field4442Data = field4442List[field4442Index];
                         incrementalDom.elementOpenStart('option');
-                            incrementalDom.attr('value', field4402Data.folderId);
+                            incrementalDom.attr('value', field4442Data.folderId);
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(field4402Data.nameFolder);
+                          soyIdom.print(field4442Data.nameFolder);
                         incrementalDom.elementClose('option');
                       }
                   }

@@ -93,6 +93,26 @@ export default class Service{
                 callBack(json)
             } )
     }
+    validateCodeBrand(brand,callBack){
+        wretch("http://localhost:8080/web/guest/home/-/generator/resource/validateCodeBrand")
+            .post({ "brand": brand})
+            .json(json =>{
+                console.log(json)
+                callBack(json)
+            } )
+    }
+    savejournal(data,callBack){
+        wretch("http://localhost:8080/web/guest/home/-/generator/resource/saveJournal")
+            .post(data)
+            .json(json =>{
+                console.log(json)
+                callBack('OK',json)
+            } )
+            .catch(error =>{
+                console.log(error)
+                callBack('BAD',error)
+            })
+    }
 
 
 }

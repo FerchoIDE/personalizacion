@@ -78,7 +78,7 @@ public class GeneratorViewClientNewMVCRenderCommand
             List lstTemplates = new LinkedList<>();
             for(DDMTemplate _template:templates){
                 Map _object = new HashMap();
-                _object.put("value", _template.getTemplateId());
+                _object.put("value", _template.getTemplateKey());
                 Map<String,String> _name = new HashMap<>();
                 _name.put("es_ES",_template.getName("es_ES"));
                 _name.put("en_US",_template.getName("en_US"));
