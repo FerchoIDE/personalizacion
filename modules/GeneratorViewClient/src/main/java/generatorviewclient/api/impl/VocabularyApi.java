@@ -15,7 +15,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import generatorviewclient.api.IVocabularyApi;
 
@@ -29,7 +31,14 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
 
     }
 
+    //Funcion para crear categoria dentro del vocabulario
+    public  AssetCategory createSubcategory(Long userId,Long groupId,Long vocabularyId,String name) throws PortalException{
+   	 ServiceContext serviceContext = new ServiceContext();
+	     serviceContext.setScopeGroupId(groupId);
+	     serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
+   	return _category.addCategory(userId, groupId, name, vocabularyId, serviceContext);
+   }
 
     /**
      * M�todo getCategoriesByGroupAndVacabularyIdAllLevels
@@ -189,6 +198,8 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
         return vlidAsset;
     }
 
+    
+    
 
     @SuppressWarnings("unused")
     private List<AssetCategory> getCategoriesByGroupIdandKey(Long groupId,Long categoryId){
