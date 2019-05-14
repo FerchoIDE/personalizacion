@@ -8,6 +8,7 @@ import DateUI from './DateUI.es';
 import RadioUI from './RadioUI.es';
 import SelectUI from './SelectUI.es';
 
+import Service from "./service/Service"
 
 
 import Soy from 'metal-soy';
@@ -54,7 +55,10 @@ class NewStructure extends Component {
     changeBrand(event){
         console.log('-----changeBrand----')
        // event.preventDefault();
-        let _brandSelect = event.currentTarget.value
+        let _brandIdSelect = event.currentTarget.value
+        let _brandSelect =event.currentTarget.selectedOptions["0"].label
+        this.setState({msgErrorPath: null })
+        this.setState({brandIdSelected: _brandIdSelect })
         this.setState({brandSelected: _brandSelect })
         this.model.setBrand(_brandSelect)
         $("#btnSelectPath").attr('disabled','disabled');
@@ -90,16 +94,24 @@ class NewStructure extends Component {
     changeHotels(event){
         console.log('-----changeHotels----')
       //  event.preventDefault();
-        let _hotelSelected = event.currentTarget.value
+        let _hotelIdSelected = event.currentTarget.value
+        let _hotelSelected =event.currentTarget.selectedOptions["0"].label
         if(_hotelSelected!==undefined && this.brandSelected !==undefined)
             $("#btnSelectPath").removeAttr('disabled');
+        this.setState({msgErrorPath: null })
         this.setState({hotelSelected: _hotelSelected })
+        this.setState({hotelIdSelected: _hotelIdSelected })
         this.model.setHotel(_hotelSelected)
     }
 
+    handleChangeValueTempl(event){
+        let _templIdSelected = event.currentTarget.value
+        console.log('-----handleChangeValueTempl----'+_templIdSelected)
+    }
     handleChangeCode(event){
-        let _hotelSelected = event.currentTarget.value
+        let _hotelSelected = event.target.value;
         $("#btnSelectPath").removeAttr('disabled');
+        this.setState({msgErrorPath: null })
         this.setState({hotelSelected: _hotelSelected })
         this.model.setHotel(_hotelSelected)
     }
@@ -107,6 +119,24 @@ class NewStructure extends Component {
     saveSelectPath(event){
         console.log('-----saveSelectPath----')
         event.preventDefault();
+        if(this.structureId==='35835'){
+            var _parent =this
+            new Service().validateCodeHotel(this.brandSelected,this.hotelSelected,this.brandIdSelected,result =>{
+                console.log("-------------"+JSON.stringify(result))
+                if(result['status']==='OK'){
+                    _parent.setState({hotelIdSelected: result["categoryId"] })
+                    _parent.setState({isOnLoad: false })
+                }else{
+                    $("#btnSelectPath").attr('disabled','disabled');
+                    this.setState({msgErrorPath: "Codigo asignado a: "+result["message"] })
+                }
+
+            })
+            return;
+        }
+
+
+
         this.setState({isOnLoad: false })
     }
 
@@ -127,7 +157,9 @@ class NewStructure extends Component {
 
 NewStructure.STATE = {
     brandSelected:{value:undefined},
+    brandIdSelected:{value:undefined},
     hotelSelected:{value:undefined},
+    hotelIdSelected:{value:undefined},
     model:{value : new NewStructureState()}
 }
 Soy.register(NewStructure, templates);

@@ -33,6 +33,8 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
             Long brandFolder =  getFolder(groupId, brand, id_base);
             Long hc =  getFolder(groupId, code_hotel, brandFolder);
             return hc;
+        }else if(brand!=null && code_hotel==null){
+            return getFolder(groupId, brand, id_base);
         }
         return id_base;
     }

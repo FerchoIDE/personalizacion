@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class ConstantUtil {
+    public static Long VOCABULARY_ID=35660L;
     public static Long FOLDER_DESTINATION_ID=35815L;
     public static String fullPath(JournalFolder folder) {
         String folderName = folder.getName();

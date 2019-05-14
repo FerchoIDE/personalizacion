@@ -85,5 +85,14 @@ export default class Service{
             } )
     }
 
+    validateCodeHotel(brand,codeHotel,brandId,callBack){
+        wretch("http://localhost:8080/web/guest/home/-/generator/resource/validateCodeHotel")
+            .post({ "brand": brand,"codeHotel":codeHotel,"brandId":brandId })
+            .json(json =>{
+                console.log(json)
+                callBack(json)
+            } )
+    }
+
 
 }

@@ -1,13 +1,17 @@
 package generatorviewclient.portlet.action;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import generatorviewclient.api.impl.VocabularyApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
@@ -18,7 +22,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component(
         immediate = true,
@@ -65,12 +68,32 @@ public class GeneratorViewClientNewMVCRenderCommand
             System.out.println(map);
             template.put("data", map);
 
-            List templates = ddmStructure.getTemplates().stream().map(ddmTemplate ->
-                    new AbstractMap.SimpleEntry<>(ddmTemplate.getTemplateId(), ddmTemplate.getName())
-            ).collect(Collectors.toList());
-            template.put("templates", templates);
+            List<DDMTemplate> templates = ddmStructure.getTemplates();/*.stream().map(ddmTemplate -> {
+                        HashMap<String, Object> _map = new HashMap<>();
+                        _map.put("value", ddmTemplate.getTemplateId());
+                        _map.put("label", ddmTemplate.getNameMap());
+                        return _map;
+                    }
+            ).collect(Collectors.toList());*/
+            List lstTemplates = new LinkedList<>();
+            for(DDMTemplate _template:templates){
+                Map _object = new HashMap();
+                _object.put("value", _template.getTemplateId());
+                Map<String,String> _name = new HashMap<>();
+                _name.put("es_ES",_template.getName("es_ES"));
+                _name.put("en_US",_template.getName("en_US"));
+
+                _object.put("label", _name);
+                lstTemplates.add(_object);
+            }
+
+System.out.println("antes de asignar -------------");
+            template.put("selectTempl", lstTemplates);
         } catch (Exception ex) {
+            System.out.println("++++------------"+ex.getMessage());
+            ex.printStackTrace(System.out);
             ex.printStackTrace();
+            new PortletException(ex);
         }
 
         template.put("contextPath", renderRequest.getContextPath());
@@ -83,7 +106,7 @@ public class GeneratorViewClientNewMVCRenderCommand
         try {
             //getCategoriesByGroupAndVacabularyFirstLevel
 
-            template.put("categoryBrands", vocabularyApi.getCategoriesByGroupAndVacabularyIdAllLevels(portletGroupId,35660L,0L));
+            template.put("categoryBrands", vocabularyApi.getCategoriesByGroupAndVacabularyIdAllLevels(portletGroupId, 35660L, 0L));
         } catch (PortalException e) {
             e.printStackTrace();
             new PortletException(e);
@@ -106,31 +129,32 @@ public class GeneratorViewClientNewMVCRenderCommand
         return result;
 
     }
-    public Map<String,List<AbstractMap.SimpleEntry>> getHotels(){
-        Map<String,List<AbstractMap.SimpleEntry>> result = new HashMap<>();
+
+    public Map<String, List<AbstractMap.SimpleEntry>> getHotels() {
+        Map<String, List<AbstractMap.SimpleEntry>> result = new HashMap<>();
         List<AbstractMap.SimpleEntry> lst1 = new LinkedList<>();
-        lst1.add(new AbstractMap.SimpleEntry("AGP","AGP"));
-        result.put("FI",lst1);
+        lst1.add(new AbstractMap.SimpleEntry("AGP", "AGP"));
+        result.put("FI", lst1);
 
         List<AbstractMap.SimpleEntry> lst2 = new LinkedList<>();
-        lst2.add(new AbstractMap.SimpleEntry("GAL","GAL"));
-        lst2.add(new AbstractMap.SimpleEntry("HSA","HSA"));
-        lst2.add(new AbstractMap.SimpleEntry("FAA","FAA"));
-        lst2.add(new AbstractMap.SimpleEntry("FAV","FAV"));
-        lst2.add(new AbstractMap.SimpleEntry("FAC","FAC"));
-        lst2.add(new AbstractMap.SimpleEntry("FAM","FAM"));
-        lst2.add(new AbstractMap.SimpleEntry("FXS","FXS"));
-        lst2.add(new AbstractMap.SimpleEntry("FCC","FCC"));
-        result.put("FA",lst2);
+        lst2.add(new AbstractMap.SimpleEntry("GAL", "GAL"));
+        lst2.add(new AbstractMap.SimpleEntry("HSA", "HSA"));
+        lst2.add(new AbstractMap.SimpleEntry("FAA", "FAA"));
+        lst2.add(new AbstractMap.SimpleEntry("FAV", "FAV"));
+        lst2.add(new AbstractMap.SimpleEntry("FAC", "FAC"));
+        lst2.add(new AbstractMap.SimpleEntry("FAM", "FAM"));
+        lst2.add(new AbstractMap.SimpleEntry("FXS", "FXS"));
+        lst2.add(new AbstractMap.SimpleEntry("FCC", "FCC"));
+        result.put("FA", lst2);
 
 
         List<AbstractMap.SimpleEntry> lst3 = new LinkedList<>();
-        lst3.add(new AbstractMap.SimpleEntry("GPV","GPV"));
-        lst3.add(new AbstractMap.SimpleEntry("FCB","FCB"));
-        lst3.add(new AbstractMap.SimpleEntry("FLC","FLC"));
-        lst3.add(new AbstractMap.SimpleEntry("FBC","FBC"));
-        lst3.add(new AbstractMap.SimpleEntry("FGG","FGG"));
-        result.put("FAG",lst3);
+        lst3.add(new AbstractMap.SimpleEntry("GPV", "GPV"));
+        lst3.add(new AbstractMap.SimpleEntry("FCB", "FCB"));
+        lst3.add(new AbstractMap.SimpleEntry("FLC", "FLC"));
+        lst3.add(new AbstractMap.SimpleEntry("FBC", "FBC"));
+        lst3.add(new AbstractMap.SimpleEntry("FGG", "FGG"));
+        result.put("FAG", lst3);
 
         return result;
 
