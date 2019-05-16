@@ -20,8 +20,49 @@ export default class FieldState extends State {
     setRequired(val) {
         return val;
     }
+    setMultiple(val) {
+        return val;
+    }
     setPath(val) {
         return val;
+    }
+    setIndexType(val) {
+        return val;
+    }
+    toJson(){
+        var _arrayNested =[]
+        if(this.nested!==undefined){
+            for(var _nested of this.nested){
+                _arrayNested.push(_nested.toJson())
+            }
+        }
+        let _arrayValues =[]
+        if(this.multiple){
+            for(let _language in this.values ){
+                let _index =0
+                for (let _val in this.values[_language] ){
+
+                    let _valField =_arrayValues[_index]
+                    if(_valField===undefined)
+                        _valField={}
+                    _valField[_language]=this.values[_language][_val]
+                    _arrayValues[_index]=_valField
+                    _index++
+                }
+            }
+        }else{
+            _arrayValues.push(this.values)
+        }
+        return {
+            name:this.name,
+            type:this.type,
+            values:_arrayValues,
+           // required:this.required,
+           // multiple:this.multiple,
+            indexType:this.indexType,
+            nestedFields:_arrayNested
+        }
+
     }
 
 }
@@ -59,5 +100,17 @@ FieldState.STATE = {
         validator: val => core.isString(val),
         value: "",
         writeOnce: false
+    },
+    indexType:{
+        setter: 'setIndexType',
+        validator: val => core.isString(val),
+        value: "",
+        writeOnce: false
+    },
+    multiple:{
+        setter: 'setMultiple',
+        validator: val => core.isBoolean(val),
+        value: false,
+        writeOnce: true
     }
 }

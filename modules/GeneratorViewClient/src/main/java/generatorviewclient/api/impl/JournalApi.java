@@ -32,6 +32,31 @@ import com.liferay.portal.kernel.service.ServiceContext;
 public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	 private static final Log _log = LogFactoryUtil.getLog(JournalApi.class);
 
+	public Long getBaseFolder(Long groupId,String brand,String code_hotel) throws PortalException {
+		long id_base=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
+		if(code_hotel!=null && brand!=null) {
+			Long brandFolder= getFolderWC(groupId, brand, id_base);
+			Long hotelCode= getFolderWC(groupId, code_hotel, brandFolder);
+			return hotelCode;
+		}else if(brand!=null && code_hotel==null){
+			return getFolderWC(groupId, brand, id_base);
+		}
+		return id_base;
+	}
+
+	 /*Crear  folder para web content*/
+	 @Override
+	    public JSONArray createFolderNestedFolderId(Long userId,Long groupId,Long parentFolderId,String name) throws PortalException{
+	        ServiceContext serviceContext = new ServiceContext();
+	        serviceContext.setScopeGroupId(groupId);
+	        JSONArray filesArray=JSONFactoryUtil.createJSONArray();
+	        JSONObject filesObject =JSONFactoryUtil.createJSONObject();
+	        JournalFolder object = JournalFolderLocalServiceUtil.addFolder(userId, groupId, parentFolderId, name, name, serviceContext);
+	        filesObject.put("folderId", object.getFolderId());
+	        filesObject.put("nameFolder", object.getName());
+	        filesArray.put(filesObject);
+	        return filesArray;
+	    }	
 	  
 		@Override
 		public JSONArray getListJournalFoldersByBrand(Long groupId, Long brand)
@@ -566,18 +591,7 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	            return journalArray;
 
 	    }
-		 @Override
-		    public JSONArray createFolderNestedFolderId(Long userId,Long groupId,Long parentFolderId,String name) throws PortalException{
-		        ServiceContext serviceContext = new ServiceContext();
-		        serviceContext.setScopeGroupId(groupId);
-		        JSONArray filesArray=JSONFactoryUtil.createJSONArray();
-		        JSONObject filesObject =JSONFactoryUtil.createJSONObject();
-		        JournalFolder object = JournalFolderLocalServiceUtil.addFolder(userId, groupId, parentFolderId, name, name, serviceContext);
-		        filesObject.put("folderId", object.getFolderId());
-		        filesObject.put("nameFolder", object.getName());
-		        filesArray.put(filesObject);
-		        return filesArray;
-		    }	
+		
 		 
 		 @Override
 			public Map<JournalArticle, DDMStructure> getWCandStructureById(Long articleId) throws PortalException {

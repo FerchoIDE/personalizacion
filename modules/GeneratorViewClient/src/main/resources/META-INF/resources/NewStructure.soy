@@ -9,9 +9,12 @@
 	{@param isOnLoad: bool}
 
 	{@param data: map<string, ?>}
-	{@param brands: list<?>}
+	{@param categoryBrands: list<?>}
 	{@param hotelsXBrands: list<?>}
 	{@param contextPath: string}
+	{@param selectTempl: list<?>}
+
+
 	{@param? closeOpenTab: ?}
 	{@param? changeLanguage: ?}
 	{@param? changeBrand: ?}
@@ -20,6 +23,12 @@
 	{@param? brandSelected: string}
 	{@param? hotelSelected: string}
 	{@param? handleChangeValue: ?}
+	{@param? saveStructure: ?}
+	{@param? handleChangeValueTempl: ?}
+
+
+	{@param? msgErrorPath: ?}
+
 
 
 	{@param collapseInfo: map<string,bool>}
@@ -29,51 +38,71 @@
 	{let $availableLanguageIds: $data['availableLanguageId'] /}
 	{let $availableLanguageIdsStyle: $data['availableLanguageId-style'] /}
 	 <div id="{$id}">
-		  <div aria-labelledby="claySmallModalDlg" id="claySmallModal1" class="fade modal {$isOnLoad ? 'show in' : ''}"
-			  style="{$isOnLoad ? '' : 'display: none'}"  role="dialog" tabindex="-1">
-			 <div class="modal-info modal-dialog modal-sm">
-				 <div class="modal-content">
-					 <div class="modal-header">
-						 <div class="modal-title" id="claySmallModalDlg">Seleccione</div>
-					 </div>
-
-					 <div class="modal-body" >
-						 <div class="container-fluid">
-							 <div class="form-group">
-								 <select onchange="{$changeBrand}"  class="form-control" id="brandSelect">
-									 <option disabled selected>Selecciona una Marca</option>
-									 {foreach $field in $brands}
-										 <option value="{$field.key}">{$field.value}</option>
-									 {/foreach}
-								 </select>
-							 </div>
-							 <div class="form-group">
-								 <select onchange="{$changeHotels}"  class="form-control" id="hotelSelect">
-									 <option disabled selected>Selecciona un Hotel</option>
-									 {foreach $field in $hotelsXBrands}
-										 <option value="{$field.key}">{$field.value}</option>
-									 {/foreach}
-								 </select>
+			  <div aria-labelledby="claySmallModalDlg" id="claySmallModal1" class="fade modal {$isOnLoad ? 'show in' : ''}"
+				  style="{$isOnLoad ? '' : 'display: none'}"  role="dialog" tabindex="-1">
+				 <div class="modal-info modal-dialog modal-sm">
+					 <div class="modal-content">
+						 <div class="modal-header">
+							 <div class="modal-title" id="claySmallModalDlg">Seleccione</div>
+						 </div>
+						 <div class="modal-body" >
+							 <div class="container-fluid">
+								 {if $structureId=='35912'}
+									 <div class="form-group">
+										 <input id="txtCodeBrand"  class="form-control" data-onkeyup="handleChangeBrand" style="text-transform: uppercase" placeholder="Ingrese el codigo de la marca" type="text" />
+									 </div>
+								 {else}
+									 <div class="form-group">
+										 <select onchange="{$changeBrand}"  class="form-control" id="brandSelect">
+											 <option disabled selected>Selecciona una Marca</option>
+											 {foreach $field in $categoryBrands}
+												 <option value="{$field.key}">{$field.category}</option>
+											 {/foreach}
+										 </select>
+									 </div>
+									 <div class="form-group">
+										 {if $structureId=='35835'}
+											 <input id="txtCodeHotel" disabled class="form-control" data-onkeyup="handleChangeCode" style="text-transform: uppercase" placeholder="Ingrese el codigo de hotel" type="text" />
+										 {elseif $structureId=='35796' }
+											 &nbsp;&nbsp;
+										 {else}
+											 <select onchange="{$changeHotels}"  class="form-control" id="hotelSelect">
+												 <option disabled selected>Selecciona un Hotel</option>
+												 {foreach $field in $hotelsXBrands}
+													 <option value="{$field.key}">{$field.category}</option>
+												 {/foreach}
+											 </select>
+										 {/if}
+									 </div>
+								 {/if}
+								 {if isNonnull($msgErrorPath)}
+								 <div class="alert alert-danger" role="alert">
+									<span class="alert-indicator">
+										<svg class="lexicon-icon lexicon-icon-exclamation-full" focusable="false" role="presentation">
+											<use href="{$contextPath}/images/icons/icons.svg#exclamation-full"></use>
+										</svg>
+									</span>
+									 <strong class="lead">Error:</strong>{$msgErrorPath}
+								 </div>
+								 {/if}
 							 </div>
 						 </div>
-					 </div>
 
-					 <div class="modal-footer">
-						 <div class="modal-item-last">
-							 <div class="btn-group">
+						 <div class="modal-footer">
+							 <div class="modal-item-last">
+								 <div class="btn-group">
 
-								 <div class="btn-group-item" data-dismiss="modal" >
-									 <button id="btnSelectPath" class="btn btn-primary" disabled  onclick="{$saveSelectPath}" type="button">
-										 Seleccionar
-									 </button>
+									 <div class="btn-group-item" data-dismiss="modal" >
+										 <button id="btnSelectPath" class="btn btn-primary" disabled  onclick="{$saveSelectPath}" type="button">
+											 Seleccionar
+										 </button>
+									 </div>
 								 </div>
 							 </div>
 						 </div>
 					 </div>
 				 </div>
 			 </div>
-
-		 </div>
 			 <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
 				 <div class="panel">
 					 <a onclick="{$closeOpenTab}" aria-controls="accordionPrincipalCollapse" aria-expanded="true" class="collapse-icon sheet-subtitle"
@@ -123,6 +152,12 @@
 			 </div>
 
 		 <div>
+			 <div class="autofit-row">
+				 <div class="autofit-col autofit-col-expand">&nbsp;</div>
+				 <div class="autofit-col">
+					 <button onclick="{$saveStructure}" class="btn btn-primary" type="button">Guardar</button>
+				 </div>
+			 </div>
 			 <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
 				 <div class="panel">
 					 <a onclick="{$closeOpenTab}" aria-controls="accordionGeneralCollapse" aria-expanded="false" class="collapse-icon sheet-subtitle collapsed"
@@ -241,8 +276,45 @@
 
 					<div>&nbsp;&nbsp;</div>
 				{/foreach}
+		 <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
+			 <div class="panel">
+				 <a onclick="{$closeOpenTab}" aria-controls="accordionAditionalCollapse" aria-expanded="true" class="collapse-icon sheet-subtitle"
+					data-toggle="collapse" href="#accordionAditionalCollapse" id="accordionAditionalHeading" role="tab">
+						 <span >
+							 <div class="sheet-header"><h3 class="sheet-title">Información adicional</h3></div>
+						 </span>
+					 <span class="collapse-icon-closed">
+							<svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
+								<use href="{$contextPath}/images/icons/icons.svg#angle-right" />
+							</svg>
+						</span>
+					 <span class="collapse-icon-open">
+							<svg class="lexicon-icon lexicon-icon-angle-down" focusable="false" role="presentation">
+								<use href="{$contextPath}/images/icons/icons.svg#angle-down" />
+							</svg>
+						</span>
+				 </a>
+				 <div aria-labelledby="accordionAditionalHeading" class="panel-collapse collapse  {$collapseInfo?['accordionAditionalHeading']?'':'show'}"
+					  id="accordionAditionalCollapse" role="tabpanel">
+					 <div class="panel-body">
+						 {call SelectUI.render}
+							 {param id: 'selectTemplate' /}
+							 {param label: 'Selecciona un template' /}
+							 {param defaultLanguageId: $selectedLanguage /}
+							 {param options: $selectTempl /}
+							 {param path: 'selectTemplate' /}
+							 {param handleChangeValue:  $handleChangeValueTempl /}
+						 {/call}
+					 </div>
+				 </div>
+			 </div>
+		 </div>
 
-
-
+		 <div class="autofit-row">
+			 <div class="autofit-col autofit-col-expand">&nbsp;</div>
+			 <div class="autofit-col">
+				 <button onclick="{$saveStructure}"  class="btn btn-primary" type="button">Guardar</button>
+			 </div>
+		 </div>
 	</div>
 {/template}

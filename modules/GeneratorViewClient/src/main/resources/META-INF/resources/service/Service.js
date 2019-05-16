@@ -85,5 +85,34 @@ export default class Service{
             } )
     }
 
+    validateCodeHotel(brand,codeHotel,brandId,callBack){
+        wretch("http://localhost:8080/web/guest/home/-/generator/resource/validateCodeHotel")
+            .post({ "brand": brand,"codeHotel":codeHotel,"brandId":brandId })
+            .json(json =>{
+                console.log(json)
+                callBack(json)
+            } )
+    }
+    validateCodeBrand(brand,callBack){
+        wretch("http://localhost:8080/web/guest/home/-/generator/resource/validateCodeBrand")
+            .post({ "brand": brand})
+            .json(json =>{
+                console.log(json)
+                callBack(json)
+            } )
+    }
+    savejournal(data,callBack){
+        wretch("http://localhost:8080/web/guest/home/-/generator/resource/saveJournal")
+            .post(data)
+            .json(json =>{
+                console.log(json)
+                callBack('OK',json)
+            } )
+            .catch(error =>{
+                console.log(error)
+                callBack('BAD',error)
+            })
+    }
+
 
 }

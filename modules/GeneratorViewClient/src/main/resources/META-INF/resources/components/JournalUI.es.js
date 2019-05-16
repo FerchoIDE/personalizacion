@@ -11,12 +11,31 @@ class JournalUI extends Component {
         this.setResultJournal = this.setResultJournal.bind(this);
         this.setFoldersJournal = this.setFoldersJournal.bind(this);
        // this.resultSaveJournal = this.resultSaveJournal.bind(this);
-        var _itemsJournalAsociated ={}
-        _itemsJournalAsociated[this.id]={}
-        this.setState({itemsJournalAsociated:_itemsJournalAsociated  })
-        this.setState({searchJournalText: undefined })
-    }
+       // var _itemsJournalAsociated ={}
+       // _itemsJournalAsociated[this.id]={}
+       // this.itemsJournalAsociated={}
+        //this.setState({itemsJournalAsociated:undefined  })
 
+        this.setState({searchJournalText: undefined })
+        /*
+        this.on('itemsJournalAsociatedChanged',function(event){
+            console.log('--------change itemsJournalAsociated --- ')
+        })
+        try{
+            this.getDataManager().getStateInstance(this).stateConfigs_.itemsJournalAsociated={}
+        }catch (e) {
+            console.error(e)
+        }*/
+       try {
+            this.getDataManager().getStateInstance(this).stateConfigs_.itemsJournalAsociated = {}
+        }catch (e) {
+            console.error(e)
+        }
+
+    }
+    rendered(firstRender) {
+        console.log('----JournalUI ----rendered----'+JSON.stringify(this.itemsJournalAsociated))
+    }
     openSelectJournal(event) {
         if(event === undefined)
             return
@@ -104,18 +123,36 @@ class JournalUI extends Component {
 
 
 
-        var _itemsAsociated = this.itemsJournalAsociated
+        let _itemsAsociated = this.itemsJournalAsociated
+        if(_itemsAsociated===undefined)
+            _itemsAsociated={}
         if(_itemsAsociated[this.id]===undefined)
             _itemsAsociated[this.id]={}
         for(var result in this.itemsResultSelected){
             _itemsAsociated[this.id][result]=JSON.parse(this.itemsResultSelected[result])
         }
+
+        let _modelJournal = this.modelJournal
+        if(_modelJournal===undefined)
+            _modelJournal={}
+        for(let result in this.itemsResultSelected){
+            if(_modelJournal[result]===undefined){
+                _modelJournal[result]={}
+                _modelJournal[result]['id']=result
+            }
+            this.handleChangeValue( {
+                value: _modelJournal[result],
+                path: this.path
+            });
+        }
+        this.setState({modelJournal: _modelJournal })
         this.setState({itemsJournalAsociated: _itemsAsociated })
         this.setState({isOpenJournalSelect: false })
 
         this.setState({itemsResult: [] })
         this.setState({itemsResultSelected: {} })
     }
+
 }
 JournalUI.STATE = {
     isOpenJournalSelect:{value:false},
@@ -126,7 +163,10 @@ JournalUI.STATE = {
     foldersJournals:{value:[]},
     itemsResultSelected:{value:{}},
     brandSelected:{},
-    hotelSelected:{}
+    hotelSelected:{},
+    handleChangeValue: {},
+    path:{},
+    modelJournal:{value:{}}
 }
 // Register component
 Soy.register(JournalUI, templates);

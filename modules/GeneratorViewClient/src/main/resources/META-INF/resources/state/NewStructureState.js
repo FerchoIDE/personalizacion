@@ -14,10 +14,44 @@ export default class NewStructureState extends State {
     setValue(pathField, value, language) {
         if (language === undefined)
             language = this.localeDefault;
-        return this.setNestedValue(pathField, value, language,this.fields)
+        return this.setNestedValue(pathField, value, language, this.fields)
     }
 
-    setNestedValue(pathField, value, language,_fields) {
+    setNestedValue(pathField, value, language, _fields) {
+        const names = pathField.split('/');
+        const deep = names.length
+        const name = names.shift()
+
+        for (let _field of _fields) {
+            if (name == _field.name) {
+                if (_field.nested !== undefined && deep > 1) {
+                    return this.setNestedValue(names.join('/'), value, language, _field.nested)
+                } else {
+                    let _values = Object.assign({}, _field.values);
+                    if (typeof value === 'object') {
+                        if (_values[language] === undefined)
+                            _values[language] = {}
+                        _values[language][value['id']] = value
+                    } else {
+                        _values[language] = value
+                    }
+
+                    _field.values = _values
+                    return true
+                }
+                break;
+            }
+        }
+        return false
+    }
+
+    removeValue(pathField, value, language) {
+        if (language === undefined)
+            language = this.localeDefault;
+        return this.removeNestedValue(pathField, value, language, this.fields)
+    }
+
+    removeNestedValue(pathField, value, language, _fields) {
         const names = pathField.split('/');
         const deep = names.length
         const name = names.shift()
@@ -25,10 +59,16 @@ export default class NewStructureState extends State {
         for (let field of _fields) {
             if (name == field.name) {
                 if (field.nested !== undefined && deep > 1) {
-                    return this.setNestedValue(names.join('/'), value, language,field.nested)
+                    return this.removeNestedValue(names.join('/'), value, language, field.nested)
                 } else {
                     var _values = field.values;
-                    _values[language] = value
+                    if (typeof value === 'object') {
+                        if (_values[language] !== undefined && _values[language][value['id']] !== undefined)
+                            _values[language][value['id']] = undefined
+                    } else {
+                        _values[language] = undefined
+                    }
+
                     field.values = _values
                     return true
                 }
@@ -48,6 +88,8 @@ export default class NewStructureState extends State {
             fieldNew.path = field.name
             fieldNew.type = field.type
             fieldNew.required = field.required
+            fieldNew.multiple = field.repeatable
+            fieldNew.indexType = field.indexType
             if (field.nestedFields !== undefined)
                 fieldNew.nested = this.nestedFields(field.nestedFields, field.name)
             val.push(fieldNew);
@@ -64,6 +106,8 @@ export default class NewStructureState extends State {
             fieldNew.path = path
             fieldNew.type = field.type
             fieldNew.required = field.required
+
+            fieldNew.multiple = field.repeatable
             if (field.nestedFields !== undefined)
                 fieldNew.nested = this.nestedFields(field.nestedFields, field.name)
             val.push(fieldNew);

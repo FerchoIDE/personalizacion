@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
 import generatorviewclient.constants.Contants;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -44,6 +47,17 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 public class QueriesLiferayApi {
 	   private static final Log log = LogFactoryUtil.getLog(QueriesLiferayApi.class);
+	   
+	   
+	   protected List<AssetTag> getTags(Long groupId,String name) throws PortalException{
+		   DynamicQuery queryTag = DynamicQueryFactoryUtil.forClass(AssetTag.class, "assetTag",PortalClassLoaderUtil.getClassLoader());
+		   queryTag.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
+		   queryTag.add( RestrictionsFactoryUtil.ilike("name",new StringBuilder("%").append(name).append("%").toString()));
+	       List<AssetTag> tagsResults = AssetTagLocalServiceUtil.dynamicQuery(queryTag);		
+	       return tagsResults;
+	   }
+	   
+	 
 	   
 	   protected List<JournalArticle> getFoldersWCByNameAndType(Long groupId,Long parent,String namefile,String type,List<JournalArticle> journalArray) throws PortalException{
 	        List<JournalFolder> listFolders = getSubFolderByJournalFolderParent(groupId, new Long(parent));
@@ -430,26 +444,27 @@ public class QueriesLiferayApi {
 	    }
 
 
-	    protected JournalArticle createNewWC(String json) throws PortalException{
+	    public JournalArticle createNewWC(String json) throws PortalException{
 	        JSONObject jsonObj = JSONFactoryUtil.createJSONObject(json);
-	        String folderId = jsonObj.get("folderId").toString();
-	        String userId = jsonObj.get("userId").toString();
-	        String groupId = jsonObj.get("groupId").toString();
+	        Long folderId = jsonObj.getLong("folderId");
+	        Long userId = jsonObj.getLong("userId");
+	        Long groupId = jsonObj.getLong("groupId");
 	        String localeDefault= jsonObj.get("localeDefault").toString();
 	        String title= jsonObj.get("title").toString();
 	        String ddmStructure= jsonObj.get("ddmStructure").toString();
 	        String ddmTemplate= jsonObj.get("ddmTemplate").toString();
 	        String description= jsonObj.get("description").toString();
-
+	        
 	        ServiceContext serviceContext = new ServiceContext();
-	        serviceContext.setScopeGroupId(Long.parseLong(groupId));
+	        serviceContext.setScopeGroupId(groupId);
 	        serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-	        Locale locale= new Locale(localeDefault);
 	        Map<Locale, String> titleMap = new HashMap<Locale, String>();
-	        titleMap.put(locale, title);
+	    	titleMap.put(LocaleUtil.fromLanguageId(localeDefault), title);
+			titleMap.put(LocaleUtil.fromLanguageId("en_US"), title);
 	        Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
-	        descriptionMap.put(locale, description);
+	        descriptionMap.put(LocaleUtil.fromLanguageId(localeDefault), description);
+	        descriptionMap.put(LocaleUtil.fromLanguageId("en_US"), description);
 
 	        JSONArray campos = jsonObj.getJSONArray("fields");
 	        String xmlFinal = "";
@@ -461,7 +476,26 @@ public class QueriesLiferayApi {
 	                            "",
 	                            campos.getJSONObject(i).get("indexType").toString(),
 	                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));
-	                }else{
+	                }
+	                else if(campos.getJSONObject(i).get("type").equals("select")){
+	                	if(campos.getJSONObject(i).get("multiple").toString().equals("true")){
+	                		  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+			                            validateType(campos.getJSONObject(i).get("type").toString()),
+			                            evaluateContent("select_multiple"
+			                                    , campos.getJSONObject(i).getJSONArray("values")),
+			                            campos.getJSONObject(i).get("indexType").toString(),
+			                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+	                		  }else{
+	                			  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+				                            validateType(campos.getJSONObject(i).get("type").toString()),
+				                            evaluateContent("select"
+				                                    , campos.getJSONObject(i).getJSONArray("values")),
+				                            campos.getJSONObject(i).get("indexType").toString(),
+				                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+		                	  
+	                		  }
+	                }
+	                else{
 	                    xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
 	                            validateType(campos.getJSONObject(i).get("type").toString()),
 	                            evaluateContent(campos.getJSONObject(i).get("type").toString()
@@ -477,6 +511,24 @@ public class QueriesLiferayApi {
 	                            campos.getJSONObject(i).get("indexType").toString(),
 	                            "");
 	                }
+	                else if(campos.getJSONObject(i).get("type").equals("select")){
+	                	if(campos.getJSONObject(i).get("multiple").toString().equals("true")){
+	                		  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+			                            validateType(campos.getJSONObject(i).get("type").toString()),
+			                            evaluateContent("select_multiple"
+			                                    , campos.getJSONObject(i).getJSONArray("values")),
+			                            campos.getJSONObject(i).get("indexType").toString(),
+			                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+	                		  }else{
+	                			  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+				                            validateType(campos.getJSONObject(i).get("type").toString()),
+				                            evaluateContent("select"
+				                                    , campos.getJSONObject(i).getJSONArray("values")),
+				                            campos.getJSONObject(i).get("indexType").toString(),
+				                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+		                	  
+	                		  }
+	                }
 	                else{
 	                    xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
 	                            validateType(campos.getJSONObject(i).get("type").toString()),
@@ -489,11 +541,44 @@ public class QueriesLiferayApi {
 
 	        }
 	        String rootElement="<?xml version=\"1.0\"?><root available-locales=\"es_ES,en_US\" default-locale=\""+localeDefault+"\">"+xmlFinal+"</root>";
-
-	        JournalArticle objectSave = JournalArticleLocalServiceUtil.addArticle(Long.parseLong(userId),
-	                Long.parseLong(groupId), Long.parseLong(folderId), titleMap, null, rootElement,
+	       
+	        
+	       JournalArticle article = JournalArticleLocalServiceUtil.addArticle(userId,
+	                groupId, folderId, titleMap, descriptionMap, rootElement,
 	                ddmStructure, ddmTemplate, serviceContext);
-	        return objectSave;
+	        if(article!=null){
+		        if(!jsonObj.getJSONArray("tags").isNull(0) && !jsonObj.getJSONArray("categories").isNull(0)){
+		        	addCategoriesAndTags(userId, article, parseCategories(jsonObj.getJSONArray("categories")), parseTags(jsonObj.getJSONArray("tags")));
+		        }else if(!jsonObj.getJSONArray("tags").isNull(0)){
+		        	addCategoriesAndTags(userId, article, null, parseTags(jsonObj.getJSONArray("tags")));	
+		        }else if(!jsonObj.getJSONArray("categories").isNull(0)){
+		        	addCategoriesAndTags(userId, article,parseCategories(jsonObj.getJSONArray("categories")) , null);	
+		        }else {
+		        	addCategoriesAndTags(userId, article,null, null);	
+		        }
+	        }
+	        
+	        return article;
+	    }
+	    
+	    protected static void addCategoriesAndTags(Long userId,JournalArticle article,long[] assetCategoryIds,String[] assetTagNames) throws PortalException{
+	    	 JournalArticleLocalServiceUtil.updateAsset(article.getUserId(), article, assetCategoryIds, assetTagNames, null,new Double(0));
+	    }
+	    
+	    protected String[] parseTags(JSONArray tags){
+	    	 String[] myArray= new String[tags.length()];  
+		        for (int i = 0; i < tags.length(); i++) {
+		        	myArray[i]=tags.getString(i);
+				}
+		   return myArray;
+	    }
+	    
+	    protected long[] parseCategories(JSONArray categories){
+	    	 long[] myArray= new long[categories.length()];  
+		        for (int i = 0; i < categories.length(); i++) {
+		        	myArray[i]=categories.getLong(i);
+				}
+		   return myArray;
 	    }
 
 
@@ -501,19 +586,21 @@ public class QueriesLiferayApi {
 
 	    protected JournalArticle UpdateWC(String json) throws PortalException{
 	        JSONObject jsonObj = JSONFactoryUtil.createJSONObject(json);
-	        String folderId = jsonObj.get("folderId").toString();
-	        String userId = jsonObj.get("userId").toString();
-	        String groupId = jsonObj.get("groupId").toString();
+	        Long folderId = jsonObj.getLong("folderId");
+	        Long userId = jsonObj.getLong("userId");
+	        Long groupId = jsonObj.getLong("groupId");
 	        String localeDefault= jsonObj.get("localeDefault").toString();
-	        String title= jsonObj.get("title").toString();
-	        String articleId= jsonObj.get("articleId").toString();
+	        String title= jsonObj.get("title").toString();  
+	        String description= jsonObj.get("description").toString();     
+	        Long articleId= jsonObj.getLong("articleId");
 	        ServiceContext serviceContext = new ServiceContext();
-	        serviceContext.setScopeGroupId(Long.parseLong(groupId));
+	        serviceContext.setScopeGroupId(groupId);
 	        serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 	        Locale locale= new Locale(localeDefault);
 	        Map<Locale, String> titleMap = new HashMap<Locale, String>();
-	        titleMap.put(locale, title);
+	        titleMap.put(LocaleUtil.fromLanguageId("es_ES"), title);
+			titleMap.put(LocaleUtil.fromLanguageId("en_US"), title);
 	        Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 	        descriptionMap.put(locale, title);
 
@@ -527,7 +614,26 @@ public class QueriesLiferayApi {
 	                            "",
 	                            campos.getJSONObject(i).get("indexType").toString(),
 	                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));
-	                }else{
+	                }
+	                else if(campos.getJSONObject(i).get("type").equals("select")){
+	                	if(campos.getJSONObject(i).get("multiple").toString().equals("true")){
+	                		  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+			                            validateType(campos.getJSONObject(i).get("type").toString()),
+			                            evaluateContent("select_multiple"
+			                                    , campos.getJSONObject(i).getJSONArray("values")),
+			                            campos.getJSONObject(i).get("indexType").toString(),
+			                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+	                		  }else{
+	                			  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+				                            validateType(campos.getJSONObject(i).get("type").toString()),
+				                            evaluateContent("select"
+				                                    , campos.getJSONObject(i).getJSONArray("values")),
+				                            campos.getJSONObject(i).get("indexType").toString(),
+				                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+		                	  
+	                		  }
+	                }
+	                else{
 	                    xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
 	                            validateType(campos.getJSONObject(i).get("type").toString()),
 	                            evaluateContent(campos.getJSONObject(i).get("type").toString()
@@ -543,6 +649,24 @@ public class QueriesLiferayApi {
 	                            campos.getJSONObject(i).get("indexType").toString(),
 	                            "");
 	                }
+	                else if(campos.getJSONObject(i).get("type").equals("select")){
+	                	if(campos.getJSONObject(i).get("multiple").toString().equals("true")){
+	                		  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+			                            validateType(campos.getJSONObject(i).get("type").toString()),
+			                            evaluateContent("select_multiple"
+			                                    , campos.getJSONObject(i).getJSONArray("values")),
+			                            campos.getJSONObject(i).get("indexType").toString(),
+			                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+	                		  }else{
+	                			  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+				                            validateType(campos.getJSONObject(i).get("type").toString()),
+				                            evaluateContent("select"
+				                                    , campos.getJSONObject(i).getJSONArray("values")),
+				                            campos.getJSONObject(i).get("indexType").toString(),
+				                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+		                	  
+	                		  }
+	                }
 	                else{
 	                    xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
 	                            validateType(campos.getJSONObject(i).get("type").toString()),
@@ -556,18 +680,28 @@ public class QueriesLiferayApi {
 	        }
 	        String rootElement="<?xml version=\"1.0\"?><root available-locales=\"es_ES,en_US\" default-locale=\""+localeDefault+"\">"+xmlFinal+"</root>";
 
-	        JournalArticle JournalToUpdate = JournalArticleLocalServiceUtil.getArticle(Long.parseLong(articleId));
+	        JournalArticle JournalToUpdate = JournalArticleLocalServiceUtil.getArticle(articleId);
 	        JournalArticle JournalToInfo = JournalArticleLocalServiceUtil.getLatestArticle(JournalToUpdate.getResourcePrimKey());
-	        JournalToInfo.setFolderId(Long.parseLong(folderId));
-	        JournalToInfo.setUserId(Long.parseLong(userId));
-	        JournalToInfo.setTitle(folderId);
+	        JournalToInfo.setFolderId(folderId);
+	        JournalToInfo.setUserId(userId);
+	        JournalToInfo.setDescription(description);
+	        JournalToInfo.setTitle(title);
 	        JournalToInfo.setContent(rootElement);
-	        JournalArticle objectSave = JournalArticleLocalServiceUtil.updateArticle(JournalToInfo.getUserId(), JournalToInfo.getGroupId(), JournalToInfo.getFolderId(), JournalToInfo.getArticleId(), JournalToInfo.getVersion()+0.1, JournalToInfo.getContent(), serviceContext);
-	        return objectSave;
+	        JournalArticle article = JournalArticleLocalServiceUtil.updateArticle(JournalToInfo.getUserId(), JournalToInfo.getGroupId(), JournalToInfo.getFolderId(), JournalToInfo.getArticleId(), JournalToInfo.getVersion()+0.1, JournalToInfo.getContent(), serviceContext);
+	        if(article!=null){
+		        if(!jsonObj.getJSONArray("tags").isNull(0) && !jsonObj.getJSONArray("categories").isNull(0)){
+		        	addCategoriesAndTags(userId, article, parseCategories(jsonObj.getJSONArray("categories")), parseTags(jsonObj.getJSONArray("tags")));
+		        }else if(!jsonObj.getJSONArray("tags").isNull(0)){
+		        	addCategoriesAndTags(userId, article, null, parseTags(jsonObj.getJSONArray("tags")));	
+		        }else if(!jsonObj.getJSONArray("categories").isNull(0)){
+		        	addCategoriesAndTags(userId, article,parseCategories(jsonObj.getJSONArray("categories")) , null);	
+		        }else {
+		        	addCategoriesAndTags(userId, article,null, null);	
+		        }
+	        }
+	        
+	        return article;
 	    }
-
-
-
 
 	    protected String readJson(String nested) throws JSONException{
 	        JSONArray campos = JSONFactoryUtil.createJSONArray(nested);
@@ -581,6 +715,23 @@ public class QueriesLiferayApi {
 	                            campos.getJSONObject(i).get("indexType").toString(),
 	                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));
 
+	                }else if(campos.getJSONObject(i).get("type").equals("select")){
+	                	if(campos.getJSONObject(i).get("multiple").toString().equals("true")){
+	                		  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+			                            validateType(campos.getJSONObject(i).get("type").toString()),
+			                            evaluateContent("select_multiple"
+			                                    , campos.getJSONObject(i).getJSONArray("values")),
+			                            campos.getJSONObject(i).get("indexType").toString(),
+			                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+	                		  }else{
+	                			  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+				                            validateType(campos.getJSONObject(i).get("type").toString()),
+				                            evaluateContent("select"
+				                                    , campos.getJSONObject(i).getJSONArray("values")),
+				                            campos.getJSONObject(i).get("indexType").toString(),
+				                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+		                	  
+	                		  }
 	                }
 	                else{
 
@@ -598,6 +749,24 @@ public class QueriesLiferayApi {
 	                            "",
 	                            campos.getJSONObject(i).get("indexType").toString(),
 	                            "");
+	                }
+	                else if(campos.getJSONObject(i).get("type").equals("select")){
+	                	if(campos.getJSONObject(i).get("multiple").toString().equals("true")){
+	                		  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+			                            validateType(campos.getJSONObject(i).get("type").toString()),
+			                            evaluateContent("select_multiple"
+			                                    , campos.getJSONObject(i).getJSONArray("values")),
+			                            campos.getJSONObject(i).get("indexType").toString(),
+			                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+	                		  }else{
+	                			  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
+				                            validateType(campos.getJSONObject(i).get("type").toString()),
+				                            evaluateContent("select"
+				                                    , campos.getJSONObject(i).getJSONArray("values")),
+				                            campos.getJSONObject(i).get("indexType").toString(),
+				                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+		                	  
+	                		  }
 	                }
 	                else{
 	                    xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
@@ -712,33 +881,52 @@ public class QueriesLiferayApi {
 	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
 	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
 	                return xml;
+	                
 	            case "checkbox":
 	                if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
 	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
 	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
 	                return xml;
 	            case "ddm-journal-article":
-	                if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
-	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
-	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
+	                if(values.getJSONObject(0).length()>0)
+	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content><dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
+	                else
+	                	xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("{\"classPK\":\""+values.getJSONObject(0).get("es_ES").toString()+"\",\"className\":\"com.liferay.journal.model.JournalArticle\"}")+"</dynamic-content><dynamic-content language-id=\"en_US\">"+setCDATA("{\"classPK\":\""+values.getJSONObject(0).get("en_US").toString()+"\",\"className\":\"com.liferay.journal.model.JournalArticle\"}")+"</dynamic-content>";
 	                return xml;
-	            case "select":
-	                String options_en="";
+	            case "select_multiple":
+	            	String options_en="";
 	                String options_es="";
 	                for (int i = 0; i < values.length(); i++) {
 	                    if(values.getJSONObject(i).get("en_US")!=null && values.getJSONObject(i).get("es_ES")!=null)
 	                        options_en+= "<option>"+setCDATA(values.getJSONObject(i).get("en_US").toString())+"</option>";
-	                    options_es+= "<option>"+setCDATA(values.getJSONObject(i).get("es_ES").toString())+"</option>";
+	                    	options_es+= "<option>"+setCDATA(values.getJSONObject(i).get("es_ES").toString())+"</option>";
 
 	                }
 	                xml="<dynamic-content language-id=\"en_US\">"+options_en+"</dynamic-content>"+
 	                        "<dynamic-content language-id=\"es_ES\">"+options_es+"</dynamic-content>";
 	                return xml;
-	            default:
-	                if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
+	            case "select":
+	            	if(values.getJSONObject(0).length()>0)
 	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
 	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
+	            	else
+	            		 xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("")+"</dynamic-content>" +
+		                            "<dynamic-content language-id=\"en_US\">"+setCDATA("")+"</dynamic-content>";
+		       
 	                return xml;
+	            case "text":
+	            	if(values.getJSONObject(0).length()>0)
+	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
+	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
+	            	else
+	            		 xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("")+"</dynamic-content>" +
+		                            "<dynamic-content language-id=\"en_US\">"+setCDATA("")+"</dynamic-content>";
+		       
+	                return xml;
+	            default:
+	            	xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("")+"</dynamic-content>" +
+                            "<dynamic-content language-id=\"en_US\">"+setCDATA("")+"</dynamic-content>";
+	            return xml;
 	        }
 
 	    }
