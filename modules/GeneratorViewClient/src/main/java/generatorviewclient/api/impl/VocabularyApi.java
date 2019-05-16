@@ -180,7 +180,7 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
         }
         return vlidAsset;
     }
-
+    
     @SuppressWarnings("unused")
     private List<AssetCategory> getCategoriesByGroupId(Long groupId){
         DynamicQuery categories = DynamicQueryFactoryUtil.forClass(AssetCategory.class, "category",PortalClassLoaderUtil.getClassLoader());
@@ -189,7 +189,7 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
         return vlidAsset;
     }
 
-
+    
     @SuppressWarnings("unused")
     private List<AssetCategory> getCategoriesByGroupIdandKey(Long groupId,Long categoryId){
         DynamicQuery categories = DynamicQueryFactoryUtil.forClass(AssetCategory.class, "category",PortalClassLoaderUtil.getClassLoader());
@@ -199,6 +199,7 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
         return vlidAsset;
     }
 
+   
     private List<AssetCategory> getCategoriesByGroupIdandVocabularyId(Long groupId,Long vocabularyId,Long parentCategoryId){
         DynamicQuery categories = DynamicQueryFactoryUtil.forClass(AssetCategory.class, "category",PortalClassLoaderUtil.getClassLoader());
         categories.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
