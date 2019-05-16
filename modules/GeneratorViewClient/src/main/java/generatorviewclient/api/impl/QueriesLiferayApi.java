@@ -434,10 +434,13 @@ public class QueriesLiferayApi {
 	        switch (key) {
 	            case "ddm-text-html":
 	                return "text_area";
+	            case "ddm-documentlibrary":
+	                return "document_library";
 	            case "checkbox":
 	                return "boolean";
 	            case "select":
 	                return "list";
+	        
 	            default:
 	                return key;
 	        }
@@ -888,7 +891,7 @@ public class QueriesLiferayApi {
 	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
 	                return xml;
 	            case "ddm-journal-article":
-	                if(values.getJSONObject(0).length()>0)
+	                if(values.getJSONObject(0).length()<0)
 	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content><dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
 	                else
 	                	xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("{\"classPK\":\""+values.getJSONObject(0).get("es_ES").toString()+"\",\"className\":\"com.liferay.journal.model.JournalArticle\"}")+"</dynamic-content><dynamic-content language-id=\"en_US\">"+setCDATA("{\"classPK\":\""+values.getJSONObject(0).get("en_US").toString()+"\",\"className\":\"com.liferay.journal.model.JournalArticle\"}")+"</dynamic-content>";
