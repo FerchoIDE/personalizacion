@@ -26,16 +26,37 @@ public class ConfigurationAction extends DefaultConfigurationAction{
     public void activate(Map<Object, Object> properties) {
         System.out.println("Configuración actualizada 1.3  " + new Date().toString());
         _configuration = ConfigurableUtil.createConfigurable(ConfigPersonalizacion.class, properties);
+      
+        /*Invocar estos metodos para la obtencion de folders
+    	List<DLFolder> file = DLFolderLocalServiceUtil.getRepositoryFolders(54349, 0, DLFolderLocalServiceUtil.getDLFoldersCount());
+    	for (DLFolder dlFolder : file) {
+    		if(dlFolder.getName().equals("Marcas") || dlFolder.getName().equals("Media"))
+    		System.out.println(dlFolder.getName()+"id "+dlFolder.getFolderId()+"pa "+dlFolder.getTreePath());
+    	}
+    	List<JournalFolder> file = JournalFolderLocalServiceUtil.getFolders(54349L);
+    			//getRepositoryFolders(54349, 0, DLFolderLocalServiceUtil.getDLFoldersCount());
+    	for (JournalFolder dlFolder : file) {
+    		if(dlFolder.getName().equals("Hotel")|| dlFolder.getName().equals("Posadas"))
+    		System.out.println(dlFolder.getName()+"id "+dlFolder.getFolderId()+"pa "+dlFolder.getParentFolderId());
+    	}*/
         if (_configuration != null) {
             System.out.println(_configuration.name());
             //Contants.DLFILEENTRY_BASE=_configuration.DLFileEntryFolderBase();
-            Contants.DLFILEENTRY_BASE= 123L;//_configuration.DLFileEntryFolderBase();
-            Contants.JOURNAL_HOTEL=123L;//_configuration.JournalFolderHotelBase();
+            Contants.DLFILEENTRY_BASE= _configuration.DLFileEntryFolderBaseId();//_configuration.DLFileEntryFolderBase();
+            Contants.JOURNAL_HOTEL=_configuration.JournalFolderHotelBaseId();//_configuration.JournalFolderHotelBase();
             String[] STRUCTURE_IDS={"35835","35826","35796","35956","35832","35823","35912","35962","35812","35968","35820","35965","35959","35823"};
             Contants.STRUCTURE_IDS=STRUCTURE_IDS;//_configuration.JournalFolderHotelBase();
 
            // Contants.JOURNAL_HOTEL=_configuration.JournalFolderHotelBase();
-/*            for (String iterable_element : Contants.STRUCTURE_IDS) {
+/*         
+ * 			String[] DLFILEENTRY_BASE = { "Marcas","Media" };
+            Contants.DLFILEENTRY_BASE= DLFILEENTRY_BASE;//_configuration.DLFileEntryFolderBase();
+            String[] JOURNAL_HOTEL={"Posadas","Hotel"};
+            Contants.JOURNAL_HOTEL=JOURNAL_HOTEL;//_configuration.JournalFolderHotelBase();
+            Contants.JOURNAL_HOTEL=_configuration.JournalFolderHotelBase();
+/*       
+ *    
+ *    for (String iterable_element : Contants.STRUCTURE_IDS) {
                 System.out.println("Registro actual en la configuración, info="+iterable_element);
 
             }
