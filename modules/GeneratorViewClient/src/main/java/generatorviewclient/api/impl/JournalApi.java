@@ -16,7 +16,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.model.impl.JournalFolderImpl;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
@@ -27,21 +26,22 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Validator;
 
 
 public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	 private static final Log _log = LogFactoryUtil.getLog(JournalApi.class);
 
 	public Long getBaseFolder(Long groupId,String brand,String code_hotel) throws PortalException {
-		long id_base=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
-		if(code_hotel!=null && brand!=null) {
-			Long brandFolder= getFolderWC(groupId, brand, id_base);
+		_log.info("getBaseFolder");
+		if(!Validator.isNull(code_hotel)&& !Validator.isNull(brand)) {
+			Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 			Long hotelCode= getFolderWC(groupId, code_hotel, brandFolder);
 			return hotelCode;
-		}else if(brand!=null && code_hotel==null){
-			return getFolderWC(groupId, brand, id_base);
+		}else if(!Validator.isNull(brand) && Validator.isNull(code_hotel)){
+			return getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 		}
-		return id_base;
+		return Contants.JOURNAL_HOTEL;
 	}
 
 	 /*Crear  folder para web content*/
@@ -70,30 +70,27 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		@Override
 		public JSONArray getListJournalFoldersByBrand(Long groupId, String brand) throws PortalException {
 			JSONArray filesArray=JSONFactoryUtil.createJSONArray();
-			Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
-			if(brand!=null){
-				Long brandFolder= getFolderWC(groupId, brand, idBase);
+			if(!Validator.isNull(brand)){
+				Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 				return  getJournalFoldersJsonOneLevel(groupId, brandFolder, filesArray);
 			}
 			else{
-				 return  getJournalFoldersJsonOneLevel(groupId, idBase, filesArray);
+				 return  getJournalFoldersJsonOneLevel(groupId, Contants.JOURNAL_HOTEL, filesArray);
 
 			}
 			
 		}
 	    @Override
 		public JSONArray getListJournalFoldersBrand(Long groupId) throws PortalException {
-			Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
 			JSONArray filesArray=JSONFactoryUtil.createJSONArray();
-	        return  getJournalFoldersJsonOneLevel(groupId, idBase, filesArray);
+	        return  getJournalFoldersJsonOneLevel(groupId, Contants.JOURNAL_HOTEL, filesArray);
 		}
 	  
 	    @Override
 	    public JSONArray getListJournalFolders(Long groupId,String brand,String codeHotel) throws PortalException{
 	        JSONArray filesArray=JSONFactoryUtil.createJSONArray();
-	        long idBase= getHotelFolderRootByConfigurationFolderWebcontent(groupId);
-	        if(codeHotel!=null && brand!=null){
-	            Long brandFolder= getFolderWC(groupId, brand, idBase);
+	        if(!Validator.isNull(codeHotel)&& !Validator.isNull(brand)) {
+	            Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 	            Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
 	            filesArray= getJournalFoldersJson(groupId, hotelCode, filesArray);
 	            if(JournalFolderLocalServiceUtil.getFolder(hotelCode)!=null){
@@ -106,8 +103,8 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	            return filesArray;
 	        
 	        }
-	        else if(codeHotel==null && brand!=null){
-	            Long brandFolder= getFolderWC(groupId, brand, idBase);
+	        else if(Validator.isNull(codeHotel)&& !Validator.isNull(brand)) {
+	            Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 	            filesArray= getJournalFoldersJson(groupId, brandFolder, filesArray);
 	            if(JournalFolderLocalServiceUtil.getFolder(brandFolder)!=null){
 	            JSONObject filesObject= JSONFactoryUtil.createJSONObject();
@@ -118,18 +115,18 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	            }
 	            return filesArray;
 	        }
-	        else if(brand==null && codeHotel!=null){
-	        	   filesArray= getJournalFoldersJson(groupId, idBase, filesArray);
-		            if(JournalFolderLocalServiceUtil.getFolder(idBase)!=null){
+	        else if(Validator.isNull(codeHotel) && !Validator.isNull(brand)) {
+	        	   filesArray= getJournalFoldersJson(groupId, Contants.JOURNAL_HOTEL, filesArray);
+		            if(JournalFolderLocalServiceUtil.getFolder(Contants.JOURNAL_HOTEL)!=null){
 		            JSONObject filesObject= JSONFactoryUtil.createJSONObject();
-		 	        JournalFolder object = JournalFolderLocalServiceUtil.getFolder(idBase); 
+		 	        JournalFolder object = JournalFolderLocalServiceUtil.getFolder(Contants.JOURNAL_HOTEL); 
 		 	        filesObject.put("folderId", object.getFolderId());
 		 	        filesObject.put("nameFolder", object.getName());
 		 	        filesArray.put(filesObject);
 		            }
 		            return filesArray;
 	        }else{
-	            return  getJournalFoldersJson(groupId, idBase, filesArray);
+	            return  getJournalFoldersJson(groupId, Contants.JOURNAL_HOTEL, filesArray);
 	        }
 
 	    }
@@ -146,9 +143,9 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	    @Override
 	    public List<JournalArticle> getWCByFolder(Long groupId,Long folderId) throws PortalException{
 	        List<JournalArticle> journalArray= new ArrayList<>();
-	        if(folderId!=null && groupId!=null){
+	        if(!Validator.isNull(folderId) && !Validator.isNull(groupId)){
 	            journalArray= getJournalFoldersAndWC(groupId, folderId, journalArray);
-	            if( getWCByJournalFolder(groupId, folderId)!=null){
+	            if(!Validator.isNull(getWCByJournalFolder(groupId, folderId))){
 	                for (JournalArticle journal :  getWCByJournalFolder(groupId, folderId)) {
 	                    journalArray.add(journal);
 	                }
@@ -162,14 +159,13 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	    @Override
 	    public List<JournalArticle> getWCByName(Long groupId,String brand,String codeHotel,String name) throws PortalException{
 	        List<JournalArticle> journalArray= new ArrayList<>();
-	        long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
-	        if(codeHotel!=null && brand!=null){
-	            Long brandFolder= getFolderWC(groupId, brand, idBase);
+	        if(!Validator.isNull(codeHotel) && !Validator.isNull(brand)){
+	            Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 	            Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
-	            journalArray= getFoldersWCByName(groupId, idBase,name, journalArray);
-	            if( getWCByJournalFolder(groupId, hotelCode)!=null){
+	            journalArray= getFoldersWCByName(groupId, Contants.JOURNAL_HOTEL,name, journalArray);
+	            if(!Validator.isNull(getWCByJournalFolder(groupId, hotelCode))){
 	                for (JournalArticle journal :  getWCByJournalFolder(groupId, hotelCode)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
@@ -177,33 +173,33 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	            return journalArray;
 
 	        }
-	        else if(brand!=null && codeHotel==null){
-	            Long brandFolder= getFolderWC(groupId, brand, idBase);
-	            journalArray= getFoldersWCByName(groupId, idBase,name, journalArray);
-	            if( getWCByJournalFolderAndName(groupId, idBase,name)!=null){
+	        else if(!Validator.isNull(brand) && Validator.isNull(codeHotel)){
+	            Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
+	            journalArray= getFoldersWCByName(groupId, Contants.JOURNAL_HOTEL,name, journalArray);
+	            if( getWCByJournalFolderAndName(groupId, Contants.JOURNAL_HOTEL,name)!=null){
 	                for (JournalArticle journal :  getWCByJournalFolderAndName(groupId, brandFolder,name)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
 	            }
 	            return journalArray;
 	        }
-	        else if(codeHotel!=null && brand==null){
-	            journalArray= getFoldersWCByName(groupId, idBase,name, journalArray);
-	            if( getWCByJournalFolderAndName(groupId, idBase,name)!=null){
-	                for (JournalArticle journal :  getWCByJournalFolderAndName(groupId, idBase,name)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	        else if(Validator.isNull(brand) && !Validator.isNull(codeHotel)){
+	            journalArray= getFoldersWCByName(groupId, Contants.JOURNAL_HOTEL,name, journalArray);
+	            if( getWCByJournalFolderAndName(groupId, Contants.JOURNAL_HOTEL,name)!=null){
+	                for (JournalArticle journal :  getWCByJournalFolderAndName(groupId, Contants.JOURNAL_HOTEL,name)) {
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
 	            }
 	            return journalArray;
 	        }else{
-	            journalArray= getFoldersWCByName(groupId, idBase,name, journalArray);
-	            if( getWCByJournalFolderAndName(groupId, idBase,name)!=null){
-	                for (JournalArticle journal :  getWCByJournalFolderAndName(groupId, idBase,name)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	            journalArray= getFoldersWCByName(groupId, Contants.JOURNAL_HOTEL,name, journalArray);
+	            if( getWCByJournalFolderAndName(groupId, Contants.JOURNAL_HOTEL,name)!=null){
+	                for (JournalArticle journal :  getWCByJournalFolderAndName(groupId, Contants.JOURNAL_HOTEL,name)) {
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
@@ -215,15 +211,14 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	    @Override
 	    public List<JournalArticle> getWCAndJournalFolder(Long groupId,String brand,String codeHotel) throws PortalException{
 	        List<JournalArticle> journalArray= new ArrayList<>();
-	        long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
-	        if(codeHotel!=null && brand!=null){
+	        if(!Validator.isNull(brand) && !Validator.isNull(codeHotel)){
 	           System.out.println("case1");
-	        	Long brandFolder= getFolderWC(groupId, brand, idBase);
+	        	Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 	            Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
 	            journalArray= getJournalFoldersAndWC(groupId, hotelCode, journalArray);
 	            if( getWCByJournalFolder(groupId, hotelCode)!=null){
 	                for (JournalArticle journal :  getWCByJournalFolder(groupId, hotelCode)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
@@ -231,33 +226,34 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	            return journalArray;
 
 	        }
-	        else if(brand!=null && codeHotel==null){
-	            Long brandFolder= getFolderWC(groupId, brand, idBase);
+	        
+	        else if(!Validator.isNull(brand) && Validator.isNull(codeHotel)){
+	            Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 	            journalArray= getJournalFoldersAndWC(groupId, brandFolder, journalArray);
 	            if( getWCByJournalFolder(groupId, brandFolder)!=null){
 	                for (JournalArticle journal :  getWCByJournalFolder(groupId, brandFolder)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
 	            }
 	            return journalArray;
 	        }
-	        else if(codeHotel!=null && brand==null){
-	            journalArray= getJournalFoldersAndWC(groupId, idBase, journalArray);
-	            if( getWCByJournalFolder(groupId, idBase)!=null){
-	                for (JournalArticle journal :  getWCByJournalFolder(groupId, idBase)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	        else if(Validator.isNull(brand) && !Validator.isNull(codeHotel)){
+	            journalArray= getJournalFoldersAndWC(groupId, Contants.JOURNAL_HOTEL, journalArray);
+	            if( getWCByJournalFolder(groupId, Contants.JOURNAL_HOTEL)!=null){
+	                for (JournalArticle journal :  getWCByJournalFolder(groupId, Contants.JOURNAL_HOTEL)) {
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
 	            }
 	            return journalArray;
 	        }else{
-	            journalArray= getJournalFoldersAndWC(groupId, idBase, journalArray);
-	            if( getWCByJournalFolder(groupId, idBase)!=null){
-	                for (JournalArticle journal :  getWCByJournalFolder(groupId, idBase)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	            journalArray= getJournalFoldersAndWC(groupId, Contants.JOURNAL_HOTEL, journalArray);
+	            if( getWCByJournalFolder(groupId, Contants.JOURNAL_HOTEL)!=null){
+	                for (JournalArticle journal :  getWCByJournalFolder(groupId, Contants.JOURNAL_HOTEL)) {
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
@@ -273,14 +269,13 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	       
 	            DDMStructure ddm =  DDMStructureLocalServiceUtil.getDDMStructure(structureId);
 	            List<JournalArticle> journalArray= new ArrayList<>();
-	            long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
 	            if(brand!=null && codeHotel!=null){//Bï¿½squeda por Marca y Codigo de Hotlel
-	                Long brandFolder= getFolderWC(groupId, brand, idBase);
+	                Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 	                Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
 	                journalArray =  getJournalFoldersAndWCByType(groupId, hotelCode,ddm.getStructureKey(), journalArray);
 	                if( getWCByJournalFolderAndTypeStructure(groupId, hotelCode,ddm.getStructureKey())!=null){
-		                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructure(groupId, idBase,ddm.getStructureKey())) {
-		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+		                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructure(groupId, Contants.JOURNAL_HOTEL,ddm.getStructureKey())) {
+		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 		                        journalArray.add(journal);
 		                    }
 		                }
@@ -289,12 +284,12 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	                
 	              
 	            }
-	            else if(brand!=null && codeHotel==null){//Bï¿½squeda por marca
-	                Long brandFolder= getFolderWC(groupId, brand, idBase);
+	            else if(!Validator.isNull(brand) && Validator.isNull(codeHotel)){//Bï¿½squeda por marca
+	                Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 	                journalArray =  getJournalFoldersAndWCByType(groupId, brandFolder,ddm.getStructureKey(), journalArray);
 	                if( getWCByJournalFolderAndTypeStructure(groupId, brandFolder,ddm.getStructureKey())!=null){
 		                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructure(groupId, brandFolder,ddm.getStructureKey())) {
-		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 		                        journalArray.add(journal);
 		                    }
 		                }
@@ -303,10 +298,10 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 
 	            }
 	            else{//Si no se cumplen estos casos Bï¿½squeda desde la raiz
-	            	 journalArray =  getJournalFoldersAndWCByType(groupId, idBase,ddm.getStructureKey(), journalArray);
-		                if( getWCByJournalFolderAndTypeStructure(groupId, idBase,ddm.getStructureKey())!=null){
-			                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructure(groupId, idBase,ddm.getStructureKey())) {
-			                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	            	 journalArray =  getJournalFoldersAndWCByType(groupId, Contants.JOURNAL_HOTEL,ddm.getStructureKey(), journalArray);
+		                if( getWCByJournalFolderAndTypeStructure(groupId, Contants.JOURNAL_HOTEL,ddm.getStructureKey())!=null){
+			                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructure(groupId, Contants.JOURNAL_HOTEL,ddm.getStructureKey())) {
+			                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 			                        journalArray.add(journal);
 			                    }
 			                }
@@ -318,14 +313,13 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	    @Override
 	    public List<JournalArticle> getWCAndJournalFolderByName(Long groupId,String brand,String codeHotel,String name) throws PortalException{
 	        List<JournalArticle> journalArray= new ArrayList<>();
-	        long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
-	         if(codeHotel!=null && brand!=null){
-	            Long brandFolder= getFolderWC(groupId, brand, idBase);
+	         if(!Validator.isNull(brand) && !Validator.isNull(codeHotel)){
+	            Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 	            Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
 	            journalArray =   getFoldersWCByName(groupId, hotelCode,name, journalArray);
              if( getWCByJournalFolderAndName(groupId, hotelCode,name)!=null){
 	                for (JournalArticle journal :  getWCByJournalFolderAndName(groupId, brandFolder,name)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
@@ -333,12 +327,12 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
              return journalArray;
 
 	        }
-	        else if(brand!=null && codeHotel==null){
-	            Long brandFolder= getFolderWC(groupId, brand, idBase);
+	        else if(!Validator.isNull(brand) && Validator.isNull(codeHotel)){
+	            Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
              journalArray =   getFoldersWCByName(groupId, brandFolder,name, journalArray);
              if( getWCByJournalFolderAndName(groupId, brandFolder,name)!=null){
 	                for (JournalArticle journal :  getWCByJournalFolderAndName(groupId, brandFolder,name)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
@@ -346,10 +340,10 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
              return journalArray;
 	            
 	        }else{
-	        	 journalArray =   getFoldersWCByName(groupId, idBase,name, journalArray);
-	                if( getWCByJournalFolderAndName(groupId, idBase,name)!=null){
-		                for (JournalArticle journal :  getWCByJournalFolderAndName(groupId, idBase,name)) {
-		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	        	 journalArray =   getFoldersWCByName(groupId, Contants.JOURNAL_HOTEL,name, journalArray);
+	                if( getWCByJournalFolderAndName(groupId, Contants.JOURNAL_HOTEL,name)!=null){
+		                for (JournalArticle journal :  getWCByJournalFolderAndName(groupId, Contants.JOURNAL_HOTEL,name)) {
+		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 		                        journalArray.add(journal);
 		                    }
 		                }
@@ -363,14 +357,13 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		public List<JournalArticle> getWCAndJournalFolderByName(Long groupId, String brand, String codeHotel, String name,
 				Long structureId) throws PortalException {
 	    	  List<JournalArticle> journalArray= new ArrayList<>();
-	          long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
-	          if(codeHotel!=null && brand!=null){
-	              Long brandFolder= getFolderWC(groupId, brand, idBase);
+	          if(!Validator.isNull(brand) && !Validator.isNull(codeHotel)){
+	              Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 	              Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
 	              journalArray =  getFoldersWCByNameSI(groupId, hotelCode,name,structureId, journalArray);
 	                if(getWCByJournalFolderAndNameSI(groupId, hotelCode,name,structureId)!=null){
 		                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, hotelCode,name,structureId)) {
-		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 		                        journalArray.add(journal);
 		                    }
 		                }
@@ -378,33 +371,33 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	                return journalArray;
 	          
 	          }
-	          else if(brand!=null && codeHotel==null){
-	              Long brandFolder= getFolderWC(groupId, brand, idBase);
+	          else if(!Validator.isNull(brand) && Validator.isNull(codeHotel)){
+	              Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 	              journalArray =  getFoldersWCByNameSI(groupId, brandFolder,name,structureId, journalArray);
 	                if( getWCByJournalFolderAndNameSI(groupId, brandFolder,name,structureId)!=null){
 		                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, brandFolder,name,structureId)) {
-		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 		                        journalArray.add(journal);
 		                    }
 		                }
 		            }
 	                return journalArray;
 	          }
-	          else if(codeHotel!=null && brand==null){
-	        	  journalArray =  getFoldersWCByNameSI(groupId, idBase,name,structureId, journalArray);
-	                if( getWCByJournalFolderAndNameSI(groupId, idBase,name,structureId)!=null){
-		                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, idBase,name,structureId)) {
-		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	          else if(Validator.isNull(brand) && !Validator.isNull(codeHotel)){
+	        	  journalArray =  getFoldersWCByNameSI(groupId, Contants.JOURNAL_HOTEL,name,structureId, journalArray);
+	                if( getWCByJournalFolderAndNameSI(groupId, Contants.JOURNAL_HOTEL,name,structureId)!=null){
+		                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, Contants.JOURNAL_HOTEL,name,structureId)) {
+		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 		                        journalArray.add(journal);
 		                    }
 		                }
 		            }
 	                return journalArray;
 	          }else{
-	        	  journalArray =  getFoldersWCByNameSI(groupId, idBase,name,structureId, journalArray);
-	                if( getWCByJournalFolderAndNameSI(groupId, idBase,name,structureId)!=null){
-		                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, idBase,name,structureId)) {
-		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	        	  journalArray =  getFoldersWCByNameSI(groupId, Contants.JOURNAL_HOTEL,name,structureId, journalArray);
+	                if( getWCByJournalFolderAndNameSI(groupId, Contants.JOURNAL_HOTEL,name,structureId)!=null){
+		                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, Contants.JOURNAL_HOTEL,name,structureId)) {
+		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 		                        journalArray.add(journal);
 		                    }
 		                }
@@ -435,19 +428,7 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 
 	    /***Mï¿½todos privados****/
 
-	    private long getHotelFolderRootByConfigurationFolderWebcontent(Long groupId) throws PortalException{
-	        JournalFolderImpl idFolder = null;
-	        for (String baseFileEntry : Contants.JOURNAL_HOTEL) {
-	            if(idFolder!=null){
-	                idFolder=  getJournalFolderByName(groupId, idFolder.getFolderId(), baseFileEntry);
-	            }
-	            else{
-	                idFolder=  getJournalFolderByName(groupId, new Long(0), baseFileEntry);
-	            }
-	            _log.info("Folder webcontent:"+idFolder.getName()+"id:"+idFolder.getFolderId());
-	        }
-	        return idFolder.getFolderId();
-	    }
+	   
 	  
 	 @Override
 	    public JournalArticle saveWC(String json) throws PortalException {
@@ -467,7 +448,7 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 			journalArray =  getJournalFoldersAndWCByTypeId(groupId, folderId, structureId, journalArray);
 			if(getWCByJournalFolderAndTypeStructureId(groupId, folderId, structureId)!=null){
 	                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, folderId, structureId)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
@@ -483,14 +464,13 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 				String codeHotel,
 				Long structureId) throws PortalException {
 			List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
-			Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
-			if(codeHotel!=null && brand!=null){
-			Long brandFolder= getFolderWC(groupId, brand, idBase);
+			if(!Validator.isNull(brand) && !Validator.isNull(codeHotel)){
+			Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 			Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
 			journalArray =  getJournalFoldersAndWCByTypeId(groupId, hotelCode, structureId, journalArray);
 			if(getWCByJournalFolderAndTypeStructureId(groupId, hotelCode, structureId)!=null){
 	                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, hotelCode, structureId)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
@@ -498,21 +478,21 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
            return journalArray;	
 			}
 			else if(codeHotel==null && brand!=null){
-				Long brandFolder= getFolderWC(groupId, brand, idBase);
+				Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 				journalArray =  getJournalFoldersAndWCByTypeId(groupId, brandFolder, structureId, journalArray);
 				if( getWCByJournalFolderAndTypeStructureId(groupId, brandFolder, structureId)!=null){
 		                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, brandFolder, structureId)) {
-		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 		                        journalArray.add(journal);
 		                    }
 		                }
 		            }
 	              return journalArray;	}
 			else if(brand==null){
-				journalArray =  getJournalFoldersAndWCByTypeId(groupId, idBase, structureId, journalArray);
-				if( getWCByJournalFolderAndTypeStructureId(groupId, idBase, structureId)!=null){
-		                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, idBase, structureId)) {
-		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+				journalArray =  getJournalFoldersAndWCByTypeId(groupId, Contants.JOURNAL_HOTEL, structureId, journalArray);
+				if( getWCByJournalFolderAndTypeStructureId(groupId, Contants.JOURNAL_HOTEL, structureId)!=null){
+		                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, Contants.JOURNAL_HOTEL, structureId)) {
+		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 		                        journalArray.add(journal);
 		                    }
 		                }
@@ -533,14 +513,13 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		public List<JournalArticle> getWebcontentRecursiveByTitle(Long groupId, String brand, String codeHotel, String title,
 				Long structureId) throws PortalException {
 			List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
-			Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
-			if(codeHotel!=null && brand!=null){
-			Long brandFolder= getFolderWC(groupId, brand, idBase);
+			if(!Validator.isNull(brand) && !Validator.isNull(codeHotel)){
+			Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 			Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
 			journalArray =  getJournalFoldersAndWCByTypeTitleS(groupId, hotelCode,title,structureId, journalArray);
 			if( getWCByJournalFolderAndTypeStructureTitleStructureId(groupId, hotelCode,structureId,title)!=null){
 	                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureTitleStructureId(groupId, hotelCode,structureId,title)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
@@ -548,21 +527,21 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
            return journalArray;
 			}
 			else if(codeHotel==null && brand!=null){
-				Long brandFolder= getFolderWC(groupId, brand, idBase);
+				Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 				journalArray =  getJournalFoldersAndWCByTypeTitleS(groupId, brandFolder,title,structureId, journalArray);
 				if( getWCByJournalFolderAndTypeStructureTitleStructureId(groupId, brandFolder,structureId,title)!=null){
 		                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureTitleStructureId(groupId, brandFolder,structureId,title)) {
-		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 		                        journalArray.add(journal);
 		                    }
 		                }
 		            }
 	              return journalArray;			}
 			else if(brand==null){
-				journalArray =  getJournalFoldersAndWCByTypeTitleS(groupId, idBase,title,structureId, journalArray);
-				if( getWCByJournalFolderAndTypeStructureTitleStructureId(groupId, idBase,structureId,title)!=null){
-		                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureTitleStructureId(groupId, idBase,structureId,title)) {
-		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+				journalArray =  getJournalFoldersAndWCByTypeTitleS(groupId, Contants.JOURNAL_HOTEL,title,structureId, journalArray);
+				if( getWCByJournalFolderAndTypeStructureTitleStructureId(groupId, Contants.JOURNAL_HOTEL,structureId,title)!=null){
+		                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureTitleStructureId(groupId, Contants.JOURNAL_HOTEL,structureId,title)) {
+		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 		                        journalArray.add(journal);
 		                    }
 		                }
@@ -583,7 +562,7 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	        List<JournalArticle> journalArray= new ArrayList<>();   
 	            if(getWCByJournalFolders(groupId, folderId)!=null){
 	                for (JournalArticle journal :  getWCByJournalFolders(groupId, folderId)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
@@ -615,7 +594,7 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 			journalArray =  getJournalFoldersAndWCByTypeId(groupId, folderId, structureId, journalArray);
 			if(getWCByJournalFolderAndTypeStructureId(groupId, folderId, structureId)!=null){
 	                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, folderId, structureId)) {
-	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+	                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 	                        journalArray.add(journal);
 	                    }
 	                }
@@ -630,47 +609,47 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		public List<JournalArticle> getWCAndJournalFolderByNameFacilities(Long groupId, String brand, String codeHotel,
 				String name, Long[] structuresId) throws PortalException {
 			List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
-			Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
 			if(structuresId.length>0) {
 				for(Long structureId : structuresId)
 				{
-					if(codeHotel!=null && brand!=null){
-			              Long brandFolder= getFolderWC(groupId, brand, idBase);
+					if(!Validator.isNull(brand) && !Validator.isNull(codeHotel)){
+			              Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 			              Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
 			              journalArray =  getFoldersWCByNameSI(groupId, hotelCode,name,structureId, journalArray);
 			                if(getWCByJournalFolderAndNameSI(groupId, hotelCode,name,structureId)!=null){
 				                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, hotelCode,name,structureId)) {
-				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 				                        journalArray.add(journal);
 				                    }
 				                }
 				            }
 			          }
-			          else if(brand!=null && codeHotel==null){
-			              Long brandFolder= getFolderWC(groupId, brand, idBase);
+			          else if(!Validator.isNull(brand) && Validator.isNull(codeHotel)){
+			              Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 			              journalArray =  getFoldersWCByNameSI(groupId, brandFolder,name,structureId, journalArray);
 			                if( getWCByJournalFolderAndNameSI(groupId, brandFolder,name,structureId)!=null){
 				                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, brandFolder,name,structureId)) {
-				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 				                        journalArray.add(journal);
 				                    }
 				                }
 				            }
 			          }
-			          else if(codeHotel!=null && brand==null){
-			        	  journalArray =  getFoldersWCByNameSI(groupId, idBase,name,structureId, journalArray);
-			                if( getWCByJournalFolderAndNameSI(groupId, idBase,name,structureId)!=null){
-				                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, idBase,name,structureId)) {
-				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+			          
+			          else if(Validator.isNull(brand) && !Validator.isNull(codeHotel)){
+			        	  journalArray =  getFoldersWCByNameSI(groupId, Contants.JOURNAL_HOTEL,name,structureId, journalArray);
+			                if( getWCByJournalFolderAndNameSI(groupId, Contants.JOURNAL_HOTEL,name,structureId)!=null){
+				                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, Contants.JOURNAL_HOTEL,name,structureId)) {
+				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 				                        journalArray.add(journal);
 				                    }
 				                }
 				            }
 			          }else{
-			        	  journalArray =  getFoldersWCByNameSI(groupId, idBase,name,structureId, journalArray);
-			                if( getWCByJournalFolderAndNameSI(groupId, idBase,name,structureId)!=null){
-				                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, idBase,name,structureId)) {
-				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+			        	  journalArray =  getFoldersWCByNameSI(groupId, Contants.JOURNAL_HOTEL,name,structureId, journalArray);
+			                if( getWCByJournalFolderAndNameSI(groupId, Contants.JOURNAL_HOTEL,name,structureId)!=null){
+				                for (JournalArticle journal :  getWCByJournalFolderAndNameSI(groupId, Contants.JOURNAL_HOTEL,name,structureId)) {
+				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 				                        journalArray.add(journal);
 				                    }
 				                }
@@ -685,39 +664,37 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		@Override
 		public List<JournalArticle> getWebcontentRecursiveByTypesFacilities(Long groupId,String brand,String codeHotel,Long[] structuresId) throws PortalException {
 			List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
-			Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
-
 			if(structuresId.length>0) {
 				for(Long structureId : structuresId)
 				{
-					if(codeHotel!=null && brand!=null){
-					Long brandFolder= getFolderWC(groupId, brand, idBase);
+					if(!Validator.isNull(brand) && !Validator.isNull(codeHotel)){
+					Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 					Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
 					journalArray =  getJournalFoldersAndWCByTypeId(groupId, hotelCode, structureId, journalArray);
 					if(getWCByJournalFolderAndTypeStructureId(groupId, hotelCode, structureId)!=null){
 			                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, hotelCode, structureId)) {
-			                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+			                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 			                        journalArray.add(journal);
 			                    }
 			                }
 			            }
 					}
 					else if(codeHotel==null && brand!=null){
-						Long brandFolder= getFolderWC(groupId, brand, idBase);
+						Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 						journalArray =  getJournalFoldersAndWCByTypeId(groupId, brandFolder, structureId, journalArray);
 						if( getWCByJournalFolderAndTypeStructureId(groupId, brandFolder, structureId)!=null){
 				                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, brandFolder, structureId)) {
-				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 				                        journalArray.add(journal);
 				                    }
 				                }
 				            }
 			       }
 					else if(brand==null){
-						journalArray =  getJournalFoldersAndWCByTypeId(groupId, idBase, structureId, journalArray);
-						if( getWCByJournalFolderAndTypeStructureId(groupId, idBase, structureId)!=null){
-				                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, idBase, structureId)) {
-				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+						journalArray =  getJournalFoldersAndWCByTypeId(groupId, Contants.JOURNAL_HOTEL, structureId, journalArray);
+						if( getWCByJournalFolderAndTypeStructureId(groupId, Contants.JOURNAL_HOTEL, structureId)!=null){
+				                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureId(groupId, Contants.JOURNAL_HOTEL, structureId)) {
+				                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 				                        journalArray.add(journal);
 				                    }
 				                }
@@ -820,15 +797,15 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 			/*Deprecate @Override
 			public List<JournalArticle> getWebcontentRecursiveByType(Long groupId, String brand, String codeHotel, String TypeContent) throws PortalException {
 				List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
-				Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
+				Long Contants.JOURNAL_HOTEL=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
 				List<DDMStructure> ddmSt =  getStructureByName(TypeContent, groupId);
-				if(codeHotel!=null && brand!=null){
-				Long brandFolder= getFolderWC(groupId, brand, idBase);
+				if(!Validator.isNull(brand) && !Validator.isNull(codeHotel)){
+				Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 				Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
 				journalArray =  getJournalFoldersAndWCByType(groupId, hotelCode, ddmSt.get(0).getStructureKey(), journalArray);
 				if( getWCByJournalFolderAndTypeStructure(groupId, hotelCode, ddmSt.get(0).getStructureKey())!=null){
 		                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructure(groupId, hotelCode, ddmSt.get(0).getStructureKey())) {
-		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 		                        journalArray.add(journal);
 		                    }
 		                }
@@ -836,11 +813,11 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	              return journalArray;	
 				}
 				else if(codeHotel==null && brand!=null){
-					Long brandFolder= getFolderWC(groupId, brand, idBase);
+					Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 					journalArray =  getJournalFoldersAndWCByType(groupId, brandFolder, ddmSt.get(0).getStructureKey(), journalArray);
 					if( getWCByJournalFolderAndTypeStructure(groupId, brandFolder, ddmSt.get(0).getStructureKey())!=null){
 			                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructure(groupId, brandFolder, ddmSt.get(0).getStructureKey())) {
-			                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+			                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 			                        journalArray.add(journal);
 			                    }
 			                }
@@ -848,10 +825,10 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		              return journalArray;	
 		              }
 				else if(brand==null){
-					journalArray =  getJournalFoldersAndWCByType(groupId, idBase, ddmSt.get(0).getStructureKey(), journalArray);
-					if( getWCByJournalFolderAndTypeStructure(groupId, idBase, ddmSt.get(0).getStructureKey())!=null){
-			                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructure(groupId, idBase, ddmSt.get(0).getStructureKey())) {
-			                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+					journalArray =  getJournalFoldersAndWCByType(groupId, Contants.JOURNAL_HOTEL, ddmSt.get(0).getStructureKey(), journalArray);
+					if( getWCByJournalFolderAndTypeStructure(groupId, Contants.JOURNAL_HOTEL, ddmSt.get(0).getStructureKey())!=null){
+			                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructure(groupId, Contants.JOURNAL_HOTEL, ddmSt.get(0).getStructureKey())) {
+			                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 			                        journalArray.add(journal);
 			                    }
 			                }
@@ -865,15 +842,15 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 			/*@Override
 			public List<JournalArticle> getWebcontentRecursiveByTitle(Long groupId, String brand, String codeHotel, String title,String TypeContent) throws PortalException {
 				List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
-				Long idBase=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
+				Long Contants.JOURNAL_HOTEL=getHotelFolderRootByConfigurationFolderWebcontent(groupId);
 				List<DDMStructure> ddmSt =  getStructureByName(TypeContent, groupId);
-				if(codeHotel!=null && brand!=null){
-				Long brandFolder= getFolderWC(groupId, brand, idBase);
+				if(!Validator.isNull(brand) && !Validator.isNull(codeHotel)){
+				Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 				Long hotelCode= getFolderWC(groupId, codeHotel, brandFolder);
 				journalArray =  getJournalFoldersAndWCByTypeTitle(groupId, hotelCode, ddmSt.get(0).getStructureKey(),title, journalArray);
 				if( getWCByJournalFolderAndTypeStructureTitle(groupId, hotelCode, ddmSt.get(0).getStructureKey(),title)!=null){
 		                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureTitle(groupId, hotelCode, ddmSt.get(0).getStructureKey(),title)) {
-		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+		                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 		                        journalArray.add(journal);
 		                    }
 		                }
@@ -881,11 +858,11 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	              return journalArray;
 				}
 				else if(codeHotel==null && brand!=null){
-					Long brandFolder= getFolderWC(groupId, brand, idBase);
+					Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 					journalArray =  getJournalFoldersAndWCByTypeTitle(groupId, brandFolder, ddmSt.get(0).getStructureKey(),title, journalArray);
 					if( getWCByJournalFolderAndTypeStructureTitle(groupId, brandFolder, ddmSt.get(0).getStructureKey(),title)!=null){
 			                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureTitle(groupId, brandFolder, ddmSt.get(0).getStructureKey(),title)) {
-			                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+			                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 			                        journalArray.add(journal);
 			                    }
 			                }
@@ -893,10 +870,10 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		              return journalArray;		
 		              }
 				else if(brand==null){
-					journalArray =  getJournalFoldersAndWCByTypeTitle(groupId, idBase, ddmSt.get(0).getStructureKey(),title, journalArray);
-					if( getWCByJournalFolderAndTypeStructureTitle(groupId, idBase, ddmSt.get(0).getStructureKey(),title)!=null){
-			                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureTitle(groupId, idBase, ddmSt.get(0).getStructureKey(),title)) {
-			                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion())){
+					journalArray =  getJournalFoldersAndWCByTypeTitle(groupId, Contants.JOURNAL_HOTEL, ddmSt.get(0).getStructureKey(),title, journalArray);
+					if( getWCByJournalFolderAndTypeStructureTitle(groupId, Contants.JOURNAL_HOTEL, ddmSt.get(0).getStructureKey(),title)!=null){
+			                for (JournalArticle journal :  getWCByJournalFolderAndTypeStructureTitle(groupId, Contants.JOURNAL_HOTEL, ddmSt.get(0).getStructureKey(),title)) {
+			                    if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, journal.getArticleId(), journal.getVersion()) && !journal.isInTrash()){
 			                        journalArray.add(journal);
 			                    }
 			                }

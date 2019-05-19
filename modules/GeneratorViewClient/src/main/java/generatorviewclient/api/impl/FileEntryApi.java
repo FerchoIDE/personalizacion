@@ -22,21 +22,22 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
     private static final Log _log = LogFactoryUtil.getLog(FileEntryApi.class);
 
     public Long getBaseFolder(Long groupId,String brand,String code_hotel) throws PortalException {
-        long id_base=getRootFolderByConfiguration(groupId);
-        if(code_hotel!=null && brand!=null) {
-            Long brandFolder =  getFolder(groupId, brand, id_base);
+    	_log.info("getBaseFolder");
+    	if(code_hotel!=null && brand!=null) {
+            Long brandFolder =  getFolder(groupId, brand, Contants.DLFILEENTRY_BASE);
             Long hc =  getFolder(groupId, code_hotel, brandFolder);
             return hc;
         }else if(brand!=null && code_hotel==null){
-            return getFolder(groupId, brand, id_base);
+            return getFolder(groupId, brand, Contants.DLFILEENTRY_BASE);
         }
-        return id_base;
+        return Contants.DLFILEENTRY_BASE;
     }
 
     /*Funcion para crear folder*/
@@ -104,9 +105,8 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
 
 
         JSONArray filesArray=JSONFactoryUtil.createJSONArray();
-        long id_base=getRootFolderByConfiguration(groupId);
         if(code_hotel!=null && brand!=null){
-            Long brandFolder= getFolder(groupId, brand, id_base);
+            Long brandFolder= getFolder(groupId, brand, Contants.DLFILEENTRY_BASE);
             Long hc= getFolder(groupId, code_hotel, brandFolder);
             filesArray=getFoldersAndFilesByName(groupId, hc, name, filesArray);
             if( getFilesByName(groupId, hc, name)!=null){
@@ -117,7 +117,7 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
             return filesArray;
         }
         else if(brand!=null && code_hotel==null){
-            Long brandFolder= getFolder(groupId, brand, id_base);
+            Long brandFolder= getFolder(groupId, brand, Contants.DLFILEENTRY_BASE);
             filesArray=getFoldersAndFilesByName(groupId, brandFolder, name, filesArray);
             if( getFilesByName(groupId, brandFolder, name)!=null){
                 for (DLFileEntry file :  getFilesByName(groupId, brandFolder, name)) {
@@ -127,17 +127,17 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
             return filesArray;
         }
         else if(code_hotel!=null && brand==null){
-            filesArray=getFoldersAndFilesByName(groupId, id_base, name, filesArray);
-            if( getFilesByName(groupId, id_base, name)!=null){
-                for (DLFileEntry file :  getFilesByName(groupId, id_base, name)) {
+            filesArray=getFoldersAndFilesByName(groupId, Contants.DLFILEENTRY_BASE, name, filesArray);
+            if( getFilesByName(groupId, Contants.DLFILEENTRY_BASE, name)!=null){
+                for (DLFileEntry file :  getFilesByName(groupId, Contants.DLFILEENTRY_BASE, name)) {
                     filesArray.put(mapping(file));
                 }
             }
             return filesArray;
         }else{
-            filesArray=getFoldersAndFilesByName(groupId, id_base, name, filesArray);
-            if( getFilesByName(groupId, id_base, name)!=null){
-                for (DLFileEntry file :  getFilesByName(groupId, id_base, name)) {
+            filesArray=getFoldersAndFilesByName(groupId, Contants.DLFILEENTRY_BASE, name, filesArray);
+            if(getFilesByName(groupId, Contants.DLFILEENTRY_BASE, name)!=null){
+                for (DLFileEntry file :  getFilesByName(groupId, Contants.DLFILEENTRY_BASE, name)) {
                     filesArray.put(mapping(file));
                 }
             }
@@ -149,21 +149,20 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
     @Override
     public JSONArray getListFolders(Long groupId,String brand,String code_hotel) throws PortalException{
         JSONArray filesArray=JSONFactoryUtil.createJSONArray();
-        long id_base=getRootFolderByConfiguration(groupId);
         if(code_hotel!=null && brand!=null){
-            Long brandFolder= getFolder(groupId, brand, id_base);
+            Long brandFolder= getFolder(groupId, brand, Contants.DLFILEENTRY_BASE);
             Long hc= getFolder(groupId, code_hotel, brandFolder);
             return getFoldersJson(groupId, hc, null, filesArray);
         }
         else if(brand!=null && code_hotel==null){
-            Long brandFolder= getFolder(groupId, brand, id_base);
+            Long brandFolder= getFolder(groupId, brand, Contants.DLFILEENTRY_BASE);
 
             return getFoldersJson(groupId, brandFolder,null,  filesArray);
         }
         else if(code_hotel!=null && brand==null){
-            return getFoldersJson(groupId, id_base,null, filesArray);
+            return getFoldersJson(groupId, Contants.DLFILEENTRY_BASE,null, filesArray);
         }else{
-            return getFoldersJson(groupId, id_base,null,  filesArray);
+            return getFoldersJson(groupId, Contants.DLFILEENTRY_BASE,null,  filesArray);
         }
 
     }
@@ -172,9 +171,8 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
     public JSONArray getFilesAndFolder(Long groupId,String brand,String type,String code_hotel) throws PortalException{
 
         JSONArray filesArray=JSONFactoryUtil.createJSONArray();
-        long id_base=getRootFolderByConfiguration(groupId);
         if(code_hotel!=null && brand!=null){
-            Long brandFolder= getFolder(groupId, brand, id_base);
+            Long brandFolder= getFolder(groupId, brand, Contants.DLFILEENTRY_BASE);
             Long hc= getFolder(groupId, code_hotel, brandFolder);
             filesArray=getFoldersAndFilesByfolderJson(groupId, hc, type, filesArray);
             if(getFilesByFolder(groupId, hc)!=null){
@@ -185,7 +183,7 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
             return filesArray;
         }
         else if(brand!=null && code_hotel==null){
-            Long brandFolder= getFolder(groupId, brand, id_base);
+            Long brandFolder= getFolder(groupId, brand, Contants.DLFILEENTRY_BASE);
             filesArray=getFoldersAndFilesByfolderJson(groupId, brandFolder, type, filesArray);
             if(getFilesByFolder(groupId, brandFolder)!=null){
                 for (DLFileEntry file : getFilesByFolder(groupId, brandFolder)) {
@@ -195,15 +193,15 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
             return filesArray;
         }
         else if(code_hotel!=null && brand==null){
-            if(getFilesByFolder(groupId, id_base)!=null){
-                for (DLFileEntry file : getFilesByFolder(groupId, id_base)) {
+            if(getFilesByFolder(groupId, Contants.DLFILEENTRY_BASE)!=null){
+                for (DLFileEntry file : getFilesByFolder(groupId, Contants.DLFILEENTRY_BASE)) {
                     filesArray.put(mapping(file));
                 }
             }
             return filesArray;
         }else{
-            if(getFilesByFolder(groupId, id_base)!=null){
-                for (DLFileEntry file : getFilesByFolder(groupId, id_base)) {
+            if(getFilesByFolder(groupId, Contants.DLFILEENTRY_BASE)!=null){
+                for (DLFileEntry file : getFilesByFolder(groupId, Contants.DLFILEENTRY_BASE)) {
                     filesArray.put(mapping(file));
                 }
             }
@@ -219,7 +217,7 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
 
     private JSONArray getFoldersAndFilesByName(Long groupId,Long parent,String namefile,JSONArray filesArray) throws PortalException{
         List<DLFolder> listFolders = getSubFolderByFolderParent(groupId, new Long(parent));
-        if(listFolders != null && listFolders.size() > 0){
+        if(Validator.isNull(listFolders) && listFolders.size() > 0){
             JSONObject filesObject=null;
             for (DLFolder object : listFolders) {
                 System.out.println("folder:"+ object.getFolderId());
@@ -235,7 +233,10 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
                         filesArray.put(filesObject);
                     }
                 }
-                if(getFoldersAndFilesByName(groupId,object.getFolderId(),namefile,filesArray)!= null && !getFoldersAndFilesByName(groupId,object.getFolderId(),namefile,filesArray).isNull(0)){
+                if(Validator.isNull(object.getFolderId())){
+                //if(Validator.isNull(object.getFolderId())){
+                //if(getFoldersAndFilesByName(groupId,object.getFolderId(),namefile,filesArray)!= null && !getFoldersAndFilesByName(groupId,object.getFolderId(),namefile,filesArray).isNull(0)){
+
                     getFoldersAndFilesByName(groupId,object.getFolderId(),namefile,filesArray);
                 }
             }
@@ -266,20 +267,7 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
 
     }
 
-    /*Marca codigo_hotel tipo*/
-    private long getRootFolderByConfiguration(Long groupId) throws PortalException{
-        DLFolder idFolder = null;
-        for (String baseFileEntry : Contants.DLFILEENTRY_BASE) {
-            if(idFolder==null){
-                idFolder= DLFolderLocalServiceUtil.getFolder(groupId, 0, baseFileEntry);
-            }
-            else{
-                idFolder= DLFolderLocalServiceUtil.getFolder(groupId, idFolder.getFolderId(), baseFileEntry);
-            }
-            _log.info(idFolder.getName()+"id:"+idFolder.getFolderId());
-        }
-        return idFolder.getFolderId();
-    }
+   
 
     /*Recupera la informacion de los folders*/
     private JSONArray getFoldersJson(Long groupId,Long parent,String nameParent,JSONArray filesArray) throws PortalException{
@@ -405,7 +393,6 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
     }
 
     public DLFolder getFolderByName(Long groupId,String name) throws PortalException{
-        Long base_folder = getRootFolderByConfiguration(groupId);
-        return	DLFolderLocalServiceUtil.getFolder(groupId, base_folder, name);
+        return	DLFolderLocalServiceUtil.getFolder(groupId, Contants.DLFILEENTRY_BASE, name);
     }
 }
