@@ -26,7 +26,7 @@ public class StructuresApi extends QueriesLiferayApi implements IStructuresApi {
         List<DDMStructure> structures = DDMStructureLocalServiceUtil.getStructures(groupId);
         List<DDMStructure> valid_structures = new ArrayList<>();
         for (DDMStructure ddmStructure : structures) {
-            if(validStructure(ddmStructure.getStructureId())==true){
+            if(validStructure(ddmStructure.getStructureId())){
                 valid_structures.add(ddmStructure);
             }
         }

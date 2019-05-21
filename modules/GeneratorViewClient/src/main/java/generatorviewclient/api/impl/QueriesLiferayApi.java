@@ -404,7 +404,8 @@ public class QueriesLiferayApi {
 	        String ddmStructure= jsonObj.get("ddmStructure").toString();
 	        String ddmTemplate= jsonObj.get("ddmTemplate").toString();
 	        String description= jsonObj.get("description").toString();
-	        
+	        String aviableLocales= jsonObj.get("aviableLocales").toString();  
+
 	        ServiceContext serviceContext = new ServiceContext();
 	        serviceContext.setScopeGroupId(groupId);
 	        serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
@@ -490,7 +491,7 @@ public class QueriesLiferayApi {
 	            }
 
 	        }
-	        String rootElement="<?xml version=\"1.0\"?><root available-locales=\"es_ES,en_US\" default-locale=\""+localeDefault+"\">"+xmlFinal+"</root>";
+	        String rootElement="<?xml version=\"1.0\"?><root available-locales=\""+aviableLocales+"\" default-locale=\""+localeDefault+"\">"+xmlFinal+"</root>";
 	       
 	        
 	       JournalArticle article = JournalArticleLocalServiceUtil.addArticle(userId,
@@ -541,8 +542,10 @@ public class QueriesLiferayApi {
 	        Long groupId = jsonObj.getLong("groupId");
 	        String localeDefault= jsonObj.get("localeDefault").toString();
 	        String title= jsonObj.get("title").toString();  
-	        String description= jsonObj.get("description").toString();     
+	        String description= jsonObj.get("description").toString();  
+	        String aviableLocales= jsonObj.get("aviableLocales").toString();  
 	        Long articleId= jsonObj.getLong("articleId");
+	        
 	        ServiceContext serviceContext = new ServiceContext();
 	        serviceContext.setScopeGroupId(groupId);
 	        serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
@@ -627,7 +630,7 @@ public class QueriesLiferayApi {
 	            }
 
 	        }
-	        String rootElement="<?xml version=\"1.0\"?><root available-locales=\"es_ES,en_US\" default-locale=\""+localeDefault+"\">"+xmlFinal+"</root>";
+	        String rootElement="<?xml version=\"1.0\"?><root available-locales=\""+aviableLocales+"\" default-locale=\""+localeDefault+"\">"+xmlFinal+"</root>";
 
 	        JournalArticle JournalToUpdate = JournalArticleLocalServiceUtil.getArticle(articleId);
 	        JournalArticle JournalToInfo = JournalArticleLocalServiceUtil.getLatestArticle(JournalToUpdate.getResourcePrimKey());

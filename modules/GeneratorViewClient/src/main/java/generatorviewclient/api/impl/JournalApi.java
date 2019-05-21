@@ -33,7 +33,6 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	 private static final Log _log = LogFactoryUtil.getLog(JournalApi.class);
 
 	public Long getBaseFolder(Long groupId,String brand,String code_hotel) throws PortalException {
-		_log.info("getBaseFolder");
 		if(!Validator.isNull(code_hotel)&& !Validator.isNull(brand)) {
 			Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);
 			Long hotelCode= getFolderWC(groupId, code_hotel, brandFolder);
@@ -660,7 +659,7 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 			return journalArray;
 		}
 
-
+		
 		@Override
 		public List<JournalArticle> getWebcontentRecursiveByTypesFacilities(Long groupId,String brand,String codeHotel,Long[] structuresId) throws PortalException {
 			List<JournalArticle> journalArray= new ArrayList<JournalArticle>();
@@ -749,6 +748,18 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 				}
 				}
 			return journal;
+		}
+		
+		@Override
+		public JournalArticle moveToTrash(Long userId,Long groupId,String articleId){
+		JournalArticle journalTrash = null,journal;
+		try {
+			 journal= JournalArticleLocalServiceUtil.getArticle(groupId, articleId);
+			 journalTrash = JournalArticleLocalServiceUtil.moveArticleToTrash(userId,groupId, journal.getArticleId());
+		} catch (PortalException e) {
+			_log.error(e.getCause());
+		}
+		return journalTrash;
 		}
 		
 		@Override
