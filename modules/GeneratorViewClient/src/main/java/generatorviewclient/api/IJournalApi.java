@@ -229,6 +229,9 @@ public interface IJournalApi {
 	/*busqueda por arreglo de estructura,nombre del webcontent y id de categoria ya no es necesario el path marca->codigo de hotel 
      * se reemplaza por el id de la categoria**/
 	public List<JournalArticle> getWebContentsByNameCategoryIdAndTypefacility(Long groupId,long categoryId,Long[] structuresId,String nameWebcontent) throws PortalException;
+	
+	/*Mover web content a la papelera de reciclage*/
+	public JournalArticle moveToTrash(Long userId, Long groupId, String articleId);
 
 	
 }

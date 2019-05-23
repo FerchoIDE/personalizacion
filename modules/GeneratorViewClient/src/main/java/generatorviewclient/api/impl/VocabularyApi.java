@@ -1,8 +1,5 @@
 package generatorviewclient.api.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
@@ -15,9 +12,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import generatorviewclient.api.IVocabularyApi;
 
@@ -31,14 +30,7 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
 
     }
 
-    //Funcion para crear categoria dentro del vocabulario
-    public  AssetCategory createSubcategory(Long userId,Long groupId,Long vocabularyId,String name) throws PortalException{
-   	 ServiceContext serviceContext = new ServiceContext();
-	     serviceContext.setScopeGroupId(groupId);
-	     serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-   	return _category.addCategory(userId, groupId, name, vocabularyId, serviceContext);
-   }
 
     /**
      * M�todo getCategoriesByGroupAndVacabularyIdAllLevels
@@ -48,12 +40,12 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
      *  <li>JSONArray, Todos los objetos dentro del vocabulario</li>
      *  </ul>
      */
-    
+    @Override
     public JSONArray getCategoriesByGroupAndVacabularyIdAllLevels(Long groupId,Long vocabularyId,Long parentCategoryId) throws PortalException{
         JSONObject categoryObject=null;
         JSONArray categoryArray = JSONFactoryUtil.createJSONArray();
         List<AssetCategory> listCategories = getCategoriesByGroupIdandVocabularyId(groupId, vocabularyId,parentCategoryId);
-        if(listCategories != null && listCategories.size() > 0){
+        if(!Validator.isNull(listCategories) && listCategories.size() > 0){
             for (int i = 0; i < listCategories.size(); i++) {
                 categoryObject=JSONFactoryUtil.createJSONObject();
                 categoryObject.put("category", listCategories.get(i).getName());
@@ -74,11 +66,12 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
      *  <li>JSONArray, Obtiene el primer nivel de objetos dentro del vocabulario</li>
      *  </ul>
      */
+    @Override
     public JSONArray getCategoriesByGroupAndVacabularyFirstLevel(Long groupId,Long vocabularyId,Long parentCategoryId) throws PortalException{
         JSONObject categoryObject=null;
         JSONArray categoryArray = JSONFactoryUtil.createJSONArray();
         List<AssetCategory> listCategories = getCategoriesByGroupIdandVocabularyId(groupId, vocabularyId,parentCategoryId);
-        if(listCategories != null && listCategories.size() > 0){
+        if(!Validator.isNull(listCategories) && listCategories.size() > 0){
             for (int i = 0; i < listCategories.size(); i++) {
                 categoryObject=JSONFactoryUtil.createJSONObject();
                 categoryObject.put("category", listCategories.get(i).getName());
@@ -95,6 +88,7 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
      *  <li>JSONArray, Obtiene el listado de vocabularios</li>
      *  </ul>
      */
+    @Override
     public JSONArray getVocabulariesByGroup(Long groupId) throws PortalException{
         JSONArray vocabularyArray = JSONFactoryUtil.createJSONArray();
         JSONObject vocabularyObject=null;
@@ -117,6 +111,7 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
      *  <li>JSONArray, Todos los vocabularios del sitio con sus elementos anidados recursivamente</li>
      *  </ul>
      */
+    @Override
     public JSONArray getCategories(Long groupId) throws PortalException{
         JSONArray vocabularyArray = JSONFactoryUtil.createJSONArray();
         JSONObject categoryObject=null;
@@ -135,7 +130,7 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
                     System.out.println(listCategories.get(i));
                     categoryObject.put("category", listCategories.get(i).getName());
                     categoryObject.put("key", listCategories.get(i).getPrimaryKey());
-                    if(getSubCategories(listCategories.get(i).getPrimaryKey()) != null && !getSubCategories(listCategories.get(i).getPrimaryKey()).isNull(0)){
+                    if(!Validator.isNull(getSubCategories(listCategories.get(i).getPrimaryKey())) && !getSubCategories(listCategories.get(i).getPrimaryKey()).isNull(0)){
                         categoryObject.put("nested", getSubCategories(listCategories.get(i).getPrimaryKey()));
                     }
                     categoryArray.put(categoryObject);
@@ -160,7 +155,7 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
         JSONArray subCategoryArray = JSONFactoryUtil.createJSONArray();
         JSONObject subCategoryObject=null;
         List<AssetCategory> listCategories = _category.getChildCategories(parentCategoryId);
-        if(listCategories != null && listCategories.size() > 0){
+        if(!Validator.isNull(listCategories) && listCategories.size() > 0){
             for (int i = 0; i < listCategories.size(); i++) {
                 subCategoryObject=JSONFactoryUtil.createJSONObject();
                 subCategoryObject.put("category", listCategories.get(i).getName());
@@ -189,7 +184,7 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
         }
         return vlidAsset;
     }
-
+    
     @SuppressWarnings("unused")
     private List<AssetCategory> getCategoriesByGroupId(Long groupId){
         DynamicQuery categories = DynamicQueryFactoryUtil.forClass(AssetCategory.class, "category",PortalClassLoaderUtil.getClassLoader());
@@ -199,8 +194,6 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
     }
 
     
-    
-
     @SuppressWarnings("unused")
     private List<AssetCategory> getCategoriesByGroupIdandKey(Long groupId,Long categoryId){
         DynamicQuery categories = DynamicQueryFactoryUtil.forClass(AssetCategory.class, "category",PortalClassLoaderUtil.getClassLoader());
@@ -210,6 +203,7 @@ public class VocabularyApi extends QueriesLiferayApi implements IVocabularyApi{
         return vlidAsset;
     }
 
+   
     private List<AssetCategory> getCategoriesByGroupIdandVocabularyId(Long groupId,Long vocabularyId,Long parentCategoryId){
         DynamicQuery categories = DynamicQueryFactoryUtil.forClass(AssetCategory.class, "category",PortalClassLoaderUtil.getClassLoader());
         categories.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));

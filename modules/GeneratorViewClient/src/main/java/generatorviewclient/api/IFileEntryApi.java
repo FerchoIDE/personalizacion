@@ -62,6 +62,12 @@ public interface IFileEntryApi {
      */
 
     public JSONArray getFilesAndFolder(Long groupId,String brand,String type,String code_hotel) throws PortalException;
+	
+    
+    public JSONObject updateFileEntry(Long groupId, Long userId, Long fileEntryId, Long folderId, String image, String name,
+			String description, String mimeType);
+	
+	public JSONObject removeFileEntry(Long groupId, Long fileEntryId);
 
 
 }
