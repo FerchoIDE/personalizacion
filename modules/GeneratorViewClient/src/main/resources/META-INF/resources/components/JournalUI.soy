@@ -9,6 +9,10 @@
 
     {@param? isOpenJournalSelect: bool}
     {@param? openSelectJournal: ?}
+    {@param? isOpenJournalNew: bool}
+    {@param? openNewJournal: ?}
+
+
     {@param? closeSelectJournal: ?}
     {@param? saveSelectJournal: ?}
     {@param? deleteJournal: ?}
@@ -92,7 +96,8 @@
                             </svg>
                         </button>
                         &nbsp;
-                        <button class="btn btn-monospaced btn-sm btn-primary"  type="button">
+                        <button onclick="{$openNewJournal}" data-target="#{$id}_ModalIframe" data-toggle="modal"
+                                class="btn btn-monospaced btn-sm btn-primary" type="button">
                             <svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
                                 <use href="{$contextPath}/images/icons/icons.svg#plus"></use>
                             </svg>
@@ -219,6 +224,22 @@
                 </div>
             </div>
 
+        </div>
+
+        <div aria-labelledby="clayFullScreenModalIframeLabel" class="modal {$isOpenJournalNew ? 'show in' : ''}"
+             style="{$isOpenJournalNew ? '' : 'display: none'}"  id="{$id}_ModalIframe" role="dialog" tabindex="-1">
+            <div class="modal-info modal-dialog modal-full-screen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title" id="clayFullScreenModalIframeLabel">{$label}</div>
+
+                    </div>
+                    <div class="modal-body modal-body-iframe" style="position: relative;top: 0px;bottom: 0px">
+                        <iframe id="{$id}_Iframe" src="about:blank"></iframe>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 {/template}

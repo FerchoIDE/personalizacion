@@ -41,7 +41,7 @@ public class SaveJournal implements MVCResourceCommand {
             JSONObject jsonObject = new JSONObject(body);
 
             Long folderId;
-            if(jsonObject.getString("ddmStructure").equalsIgnoreCase("42072"))
+            if(jsonObject.getString("ddmStructure").equalsIgnoreCase("200950"))
                 folderId = new JournalApi().getBaseFolder(portletGroupId,jsonObject.getString("brand"),null);
             else
                 folderId = new JournalApi().getBaseFolder(portletGroupId,null,null);

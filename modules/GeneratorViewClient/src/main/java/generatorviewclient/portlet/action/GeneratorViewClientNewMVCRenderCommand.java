@@ -56,6 +56,8 @@ public class GeneratorViewClientNewMVCRenderCommand
             DDMStructure ddmStructure = structureLocalService.getDDMStructure(
                     Long.valueOf(structureId));
 
+            template.put("structureKey", ddmStructure.getStructureKey());
+
             String jsonString = DDMUtil.getDDMFormJSONString(
                     ddmStructure.getFullHierarchyDDMForm());
 
@@ -66,8 +68,15 @@ public class GeneratorViewClientNewMVCRenderCommand
                             ddmStructure.getModelClassName());
 
             System.out.println(map);
+            Boolean hasParent =  ddmStructure.getParentStructureId()!=0 ;
+            template.put("hasParent", hasParent);
             template.put("data", map);
-
+            Map names = new HashMap();
+            ddmStructure.getNameMap().forEach((locale, s) -> {
+                names.put(locale.toString(),s);
+            });
+            template.put("name",names);
+            template.put("rootFields",ddmStructure.getRootFieldNames());
             List<DDMTemplate> templates = ddmStructure.getTemplates();/*.stream().map(ddmTemplate -> {
                         HashMap<String, Object> _map = new HashMap<>();
                         _map.put("value", ddmTemplate.getTemplateId());
@@ -101,6 +110,7 @@ System.out.println("antes de asignar -------------");
         collapseInfo.put("accordionPrincipalHeading", false);
         collapseInfo.put("accordionGeneralHeading", true);
         template.put("collapseInfo", collapseInfo);
+
         template.put("structureId", structureId);
 
         try {

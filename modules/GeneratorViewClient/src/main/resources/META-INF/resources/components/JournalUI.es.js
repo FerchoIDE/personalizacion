@@ -45,6 +45,25 @@ class JournalUI extends Component {
         new Service().getJournals(this.brandSelected,this.hotelSelected,this.id,this.setResultJournal)
         new Service().getFoldersForJournal(this.brandSelected,this.hotelSelected,this.id,this.setFoldersJournal)
     }
+
+    openNewJournal(event) {
+        if(event === undefined)
+            return
+        console.log('-----receive event openNewJournal----'+this.id)
+        event.preventDefault();
+        let _url="http://localhost:8080/web/guest/home?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_structureId=35835";
+        $("#"+this.id+"_Iframe").attr('src',_url);
+        this.setState({isOpenJournalNew: true })
+        var _parent = this;
+        window.document.addEventListener('cancelEvent', handleEvent, false)
+        function handleEvent(e) {
+            console.log(e.detail) // outputs: {foo: 'bar'}
+            _parent.setState({isOpenJournalNew: false })
+        }
+
+        //new Service().getJournals(this.brandSelected,this.hotelSelected,this.id,this.setResultJournal)
+        //new Service().getFoldersForJournal(this.brandSelected,this.hotelSelected,this.id,this.setFoldersJournal)
+    }
     changeJournalSearchText(event){
         let _searchText=event.target.value;
         this.setState({searchJournalText: _searchText })
@@ -156,6 +175,7 @@ class JournalUI extends Component {
 }
 JournalUI.STATE = {
     isOpenJournalSelect:{value:false},
+    isOpenJournalNew:{value:false},
     selectedFolder:{value:undefined},
     searchJournalText:{value:undefined},
     itemsJournalAsociated:{value:{}},

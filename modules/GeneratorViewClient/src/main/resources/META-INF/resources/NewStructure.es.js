@@ -1,14 +1,4 @@
 import Component from 'metal-component';
-import TextLocalizableUI from './TextLocalizableUI.es';
-import CheckBoxUI from './CheckBoxUI.es';
-import TextAreaUI from './TextAreaUI.es';
-import TitleLocalizableUI from './TitleLocalizableUI.es';
-import ViewNested from './ViewNested.es';
-import DateUI from './DateUI.es';
-import RadioUI from './RadioUI.es';
-import SelectUI from './SelectUI.es';
-import JournalUI from './components/JournalUI.es';
-import DocumentUI from './components/DocumentUI.es';
 
 import Service from "./service/Service"
 
@@ -28,9 +18,11 @@ class NewStructure extends Component {
         this.model.idStructure = this.structureId
         this.model.fields = this.data
         this.model.localeDefault = this.data['defaultLanguage']
+        this.rootFields = this.initialConfig_.rootFields
         this.on('modelChanged', function (event) {
             console.log('--------change model --- ')
         })
+        //this.setState({isOnLoad: false})
     }
 
     closeOpenTab(event) {
@@ -81,7 +73,7 @@ class NewStructure extends Component {
 
 
         for (var brand of this.categoryBrands) {
-            if (brand['key'] === _brandSelect) {
+            if (brand['key'] === _brandIdSelect) {
 
                 let _hotelsXBrands = brand['nested']
 
@@ -156,15 +148,15 @@ class NewStructure extends Component {
                     $("#input_codeBrand_es_ES").val(_parent.brandSelected);
                     $("#input_codeBrand_en_US").val(_parent.brandSelected);
 
-                    var eventES={
-                        path:'codeBrand',
-                        value:_parent.brandSelected,
-                        language:'es_ES'
+                    var eventES = {
+                        path: 'codeBrand',
+                        value: _parent.brandSelected,
+                        language: 'es_ES'
                     }
-                    var eventUS={
-                        path:'codeBrand',
-                        value:_parent.brandSelected,
-                        language:'en_US'
+                    var eventUS = {
+                        path: 'codeBrand',
+                        value: _parent.brandSelected,
+                        language: 'en_US'
                     }
                     _parent.handleChangeValue(eventES)
                     _parent.handleChangeValue(eventUS)
@@ -195,28 +187,67 @@ class NewStructure extends Component {
 
     saveStructure(event) {
         console.log("--------saveStructure----------")
-        let _fields =[]
+        let _structureKey = this.initialConfig_.structureKey;
+        let _fields = []
         for (var field of this.model.getState()['fields']) {
             console.log(field.toJson())
             _fields.push(field.toJson())
         }
-        let _data={
-            brand:this.brandSelected,
-            localeDefault:this.data['defaultLanguage'],
-            title:$("#input_title_principal").val(),
-            ddmTemplate:$("#select_selectTemplate").val(),
-            ddmStructure:'42072',//this.structureId,
-            description:$("#input_description_prinipal").val(),
-            aviableLocales:'es_ES,en_US',
-            fields:_fields,
-            categories:[],
-            tags:[]
+        var _fieldsRoot = {}
+        let _fieldParent = {
+            indexType: 'keyword',
+            type: 'ddm-separator',
+            name: '__ROOT__',
+            values: [{"en_US": "","es_ES": ""}],
+            nestedFields: []
+        }
+
+        for (var field of _fields) {
+            var _isRoot = false
+            for (var fieldR of this.rootFields) {
+                if (fieldR === field.name && field.type === 'ddm-separator') {
+                    _fieldsRoot[field.name] = field;
+                    _isRoot = true;
+                    break;
+                }
+            }
+            if (!_isRoot) {
+                _fieldParent.nestedFields.push(field)
+            }
+        }
+        let _nestedFields = []
+        for (var _i = 0; _i < this.rootFields.length; _i++) {
+            if (_fieldsRoot[this.rootFields[_i]] != undefined) {
+                _nestedFields[_i] = _fieldsRoot[this.rootFields[_i]];
+            } else {
+                _nestedFields[_i] = _fieldParent
+                _nestedFields[_i]['name'] = this.rootFields[_i];
+            }
+        }
+
+        let _data = {
+            brand: this.brandSelected,
+            localeDefault: this.data['defaultLanguage'],
+            title: $("#input_title_principal").val(),
+            ddmTemplate: $("#select_selectTemplate").val(),
+            ddmStructure: _structureKey,
+            description: $("#input_description_prinipal").val(),
+            aviableLocales: 'es_ES,en_US',
+            fields: _nestedFields,
+            categories: [],
+            tags: []
         }
         console.log(JSON.stringify(_data))
         new Service().savejournal(_data, result => {
-            console.log("----------"+result)
+            console.log("----------" + result)
         })
         console.log("********saveStructure**********")
+    }
+
+    cancelStructure(event) {
+        var data = {idParent: 'bar'}
+        var event = new CustomEvent('cancelEvent', {detail: data})
+        window.parent.document.dispatchEvent(event)
     }
 
 }

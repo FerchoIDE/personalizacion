@@ -29,6 +29,8 @@ var soyIdom = goog.require('soy.idom');
  *  label: (?),
  *  isOpenJournalSelect: (boolean|null|undefined),
  *  openSelectJournal: (?),
+ *  isOpenJournalNew: (boolean|null|undefined),
+ *  openNewJournal: (?),
  *  closeSelectJournal: (?),
  *  saveSelectJournal: (?),
  *  deleteJournal: (?),
@@ -56,6 +58,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var isOpenJournalSelect = soy.asserts.assertType(opt_data.isOpenJournalSelect == null || (goog.isBoolean(opt_data.isOpenJournalSelect) || opt_data.isOpenJournalSelect === 1 || opt_data.isOpenJournalSelect === 0), 'isOpenJournalSelect', opt_data.isOpenJournalSelect, 'boolean|null|undefined');
   /** @type {?} */
   var openSelectJournal = opt_data.openSelectJournal;
+  /** @type {boolean|null|undefined} */
+  var isOpenJournalNew = soy.asserts.assertType(opt_data.isOpenJournalNew == null || (goog.isBoolean(opt_data.isOpenJournalNew) || opt_data.isOpenJournalNew === 1 || opt_data.isOpenJournalNew === 0), 'isOpenJournalNew', opt_data.isOpenJournalNew, 'boolean|null|undefined');
+  /** @type {?} */
+  var openNewJournal = opt_data.openNewJournal;
   /** @type {?} */
   var closeSelectJournal = opt_data.closeSelectJournal;
   /** @type {?} */
@@ -78,7 +84,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var itemsJournalAsociated = opt_data.itemsJournalAsociated;
   /** @type {!goog.soy.data.SanitizedContent|string} */
   var contextPath = soy.asserts.assertType(goog.isString(opt_data.contextPath) || opt_data.contextPath instanceof goog.soy.data.SanitizedContent, 'contextPath', opt_data.contextPath, '!goog.soy.data.SanitizedContent|string');
-  var _itemsJournalAsociated__soy5788 = (itemsJournalAsociated != null) ? itemsJournalAsociated[id] : itemsJournalAsociated;
+  var _itemsJournalAsociated__soy5828 = (itemsJournalAsociated != null) ? itemsJournalAsociated[id] : itemsJournalAsociated;
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'container');
@@ -102,15 +108,15 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.attr('class', 'table table-autofit table-list');
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
-                  if (_itemsJournalAsociated__soy5788 != null) {
-                    var field5826List = (soy.$$getMapKeys(_itemsJournalAsociated__soy5788));
-                    var field5826ListLen = field5826List.length;
-                    for (var field5826Index = 0; field5826Index < field5826ListLen; field5826Index++) {
-                        var field5826Data = field5826List[field5826Index];
-                        if (field5826Index == 0) {
+                  if (_itemsJournalAsociated__soy5828 != null) {
+                    var field5866List = (soy.$$getMapKeys(_itemsJournalAsociated__soy5828));
+                    var field5866ListLen = field5866List.length;
+                    for (var field5866Index = 0; field5866Index < field5866ListLen; field5866Index++) {
+                        var field5866Data = field5866List[field5866Index];
+                        if (field5866Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field5826Index + 4) % 4 == 0 && !(field5826Index == 0)) {
+                          if ((field5866Index + 4) % 4 == 0 && !(field5866Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -129,7 +135,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('span');
                                       incrementalDom.attr('class', 'badge-item badge-item-expand');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(_itemsJournalAsociated__soy5788[field5826Data].structureName);
+                                    soyIdom.print(_itemsJournalAsociated__soy5828[field5866Data].structureName);
                                   incrementalDom.elementClose('span');
                                 incrementalDom.elementClose('span');
                               incrementalDom.elementClose('div');
@@ -142,25 +148,25 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(_itemsJournalAsociated__soy5788[field5826Data].title);
+                                    soyIdom.print(_itemsJournalAsociated__soy5828[field5866Data].title);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(_itemsJournalAsociated__soy5788[field5826Data].path);
+                                  soyIdom.print(_itemsJournalAsociated__soy5828[field5866Data].path);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(_itemsJournalAsociated__soy5788[field5826Data].user);
+                                  soyIdom.print(_itemsJournalAsociated__soy5828[field5866Data].user);
                                   incrementalDom.text('\u00A0 hace  ');
-                                  soyIdom.print(_itemsJournalAsociated__soy5788[field5826Data].date);
+                                  soyIdom.print(_itemsJournalAsociated__soy5828[field5866Data].date);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(_itemsJournalAsociated__soy5788[field5826Data].status);
+                                  soyIdom.print(_itemsJournalAsociated__soy5828[field5866Data].status);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                               incrementalDom.elementOpenStart('div');
@@ -169,7 +175,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                 incrementalDom.elementOpenStart('a');
                                     incrementalDom.attr('onclick', deleteJournal);
                                     incrementalDom.attr('href', '#1');
-                                    incrementalDom.attr('id', field5826Data);
+                                    incrementalDom.attr('id', field5866Data);
                                     incrementalDom.attr('style', 'font-size: 18px');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpenStart('svg');
@@ -186,7 +192,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field5826Index == field5826ListLen - 1) {
+                        if (field5866Index == field5866ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -226,6 +232,9 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.elementClose('button');
             incrementalDom.text('\u00A0');
             incrementalDom.elementOpenStart('button');
+                incrementalDom.attr('onclick', openNewJournal);
+                incrementalDom.attr('data-target', '#' + id + '_ModalIframe');
+                incrementalDom.attr('data-toggle', 'modal');
                 incrementalDom.attr('class', 'btn btn-monospaced btn-sm btn-primary');
                 incrementalDom.attr('type', 'button');
             incrementalDom.elementOpenEnd();
@@ -294,14 +303,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.text('Selecciona una opci\u00F3n o');
                       incrementalDom.elementClose('option');
                       if (foldersJournals) {
-                        var field5856List = foldersJournals;
-                        var field5856ListLen = field5856List.length;
-                        for (var field5856Index = 0; field5856Index < field5856ListLen; field5856Index++) {
-                            var field5856Data = field5856List[field5856Index];
+                        var field5900List = foldersJournals;
+                        var field5900ListLen = field5900List.length;
+                        for (var field5900Index = 0; field5900Index < field5900ListLen; field5900Index++) {
+                            var field5900Data = field5900List[field5900Index];
                             incrementalDom.elementOpenStart('option');
-                                incrementalDom.attr('value', field5856Data.folderId);
+                                incrementalDom.attr('value', field5900Data.folderId);
                             incrementalDom.elementOpenEnd();
-                              soyIdom.print(field5856Data.nameFolder);
+                              soyIdom.print(field5900Data.nameFolder);
                             incrementalDom.elementClose('option');
                           }
                       }
@@ -351,14 +360,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
                   if (itemsResult) {
-                    var field5914List = itemsResult;
-                    var field5914ListLen = field5914List.length;
-                    for (var field5914Index = 0; field5914Index < field5914ListLen; field5914Index++) {
-                        var field5914Data = field5914List[field5914Index];
-                        if (field5914Index == 0) {
+                    var field5958List = itemsResult;
+                    var field5958ListLen = field5958List.length;
+                    for (var field5958Index = 0; field5958Index < field5958ListLen; field5958Index++) {
+                        var field5958Data = field5958List[field5958Index];
+                        if (field5958Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field5914Index + 3) % 3 == 0 && !(field5914Index == 0)) {
+                          if ((field5958Index + 3) % 3 == 0 && !(field5958Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -376,12 +385,12 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpen('label');
                                     if ((itemsResultSelected != null)) {
-                                      if (itemsResultSelected[field5914Data.id]) {
+                                      if (itemsResultSelected[field5958Data.id]) {
                                         incrementalDom.elementOpenStart('input');
                                             incrementalDom.attr('checked', '');
                                             incrementalDom.attr('onclick', setSelectedResult);
-                                            incrementalDom.attr('value', field5914Data.all);
-                                            incrementalDom.attr('id', field5914Data.id);
+                                            incrementalDom.attr('value', field5958Data.all);
+                                            incrementalDom.attr('id', field5958Data.id);
                                             incrementalDom.attr('class', 'custom-control-input');
                                             incrementalDom.attr('type', 'checkbox');
                                         incrementalDom.elementOpenEnd();
@@ -389,8 +398,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                       } else {
                                         incrementalDom.elementOpenStart('input');
                                             incrementalDom.attr('onclick', setSelectedResult);
-                                            incrementalDom.attr('value', field5914Data.all);
-                                            incrementalDom.attr('id', field5914Data.id);
+                                            incrementalDom.attr('value', field5958Data.all);
+                                            incrementalDom.attr('id', field5958Data.id);
                                             incrementalDom.attr('class', 'custom-control-input');
                                             incrementalDom.attr('type', 'checkbox');
                                         incrementalDom.elementOpenEnd();
@@ -413,7 +422,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('span');
                                       incrementalDom.attr('class', 'badge-item badge-item-expand');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(field5914Data.structureName);
+                                    soyIdom.print(field5958Data.structureName);
                                   incrementalDom.elementClose('span');
                                 incrementalDom.elementClose('span');
                               incrementalDom.elementClose('div');
@@ -426,30 +435,30 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(field5914Data.title);
+                                    soyIdom.print(field5958Data.title);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field5914Data.path);
+                                  soyIdom.print(field5958Data.path);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field5914Data.user);
+                                  soyIdom.print(field5958Data.user);
                                   incrementalDom.text('\u00A0 hace  ');
-                                  soyIdom.print(field5914Data.date);
+                                  soyIdom.print(field5958Data.date);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field5914Data.status);
+                                  soyIdom.print(field5958Data.status);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field5914Index == field5914ListLen - 1) {
+                        if (field5958Index == field5958ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -497,6 +506,43 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('div');
       incrementalDom.elementClose('div');
     incrementalDom.elementClose('div');
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('aria-labelledby', 'clayFullScreenModalIframeLabel');
+        incrementalDom.attr('class', 'modal ' + (isOpenJournalNew ? 'show in' : ''));
+        incrementalDom.attr('style', isOpenJournalNew ? '' : 'display: none');
+        incrementalDom.attr('id', id + '_ModalIframe');
+        incrementalDom.attr('role', 'dialog');
+        incrementalDom.attr('tabindex', '-1');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'modal-info modal-dialog modal-full-screen');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'modal-content');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'modal-header');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('div');
+                incrementalDom.attr('class', 'modal-title');
+                incrementalDom.attr('id', 'clayFullScreenModalIframeLabel');
+            incrementalDom.elementOpenEnd();
+              soyIdom.print(label);
+            incrementalDom.elementClose('div');
+          incrementalDom.elementClose('div');
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'modal-body modal-body-iframe');
+              incrementalDom.attr('style', 'position: relative;top: 0px;bottom: 0px');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('iframe');
+                incrementalDom.attr('id', id + '_Iframe');
+                incrementalDom.attr('src', 'about:blank');
+            incrementalDom.elementOpenEnd();
+            incrementalDom.elementClose('iframe');
+          incrementalDom.elementClose('div');
+        incrementalDom.elementClose('div');
+      incrementalDom.elementClose('div');
+    incrementalDom.elementClose('div');
   incrementalDom.elementClose('div');
 }
 exports.render = $render;
@@ -506,6 +552,8 @@ exports.render = $render;
  *  label: (?),
  *  isOpenJournalSelect: (boolean|null|undefined),
  *  openSelectJournal: (?),
+ *  isOpenJournalNew: (boolean|null|undefined),
+ *  openNewJournal: (?),
  *  closeSelectJournal: (?),
  *  saveSelectJournal: (?),
  *  deleteJournal: (?),
@@ -524,8 +572,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'JournalUI.render';
 }
 
-exports.render.params = ["id","label","isOpenJournalSelect","openSelectJournal","closeSelectJournal","saveSelectJournal","deleteJournal","changeFolder","searchJournalByName","setSelectedResult","itemsResult","foldersJournals","itemsResultSelected","itemsJournalAsociated","contextPath"];
-exports.render.types = {"id":"any","label":"?","isOpenJournalSelect":"bool","openSelectJournal":"?","closeSelectJournal":"?","saveSelectJournal":"?","deleteJournal":"?","changeFolder":"?","searchJournalByName":"?","setSelectedResult":"?","itemsResult":"list<?>","foldersJournals":"list<?>","itemsResultSelected":"?","itemsJournalAsociated":"?","contextPath":"string"};
+exports.render.params = ["id","label","isOpenJournalSelect","openSelectJournal","isOpenJournalNew","openNewJournal","closeSelectJournal","saveSelectJournal","deleteJournal","changeFolder","searchJournalByName","setSelectedResult","itemsResult","foldersJournals","itemsResultSelected","itemsJournalAsociated","contextPath"];
+exports.render.types = {"id":"any","label":"?","isOpenJournalSelect":"bool","openSelectJournal":"?","isOpenJournalNew":"bool","openNewJournal":"?","closeSelectJournal":"?","saveSelectJournal":"?","deleteJournal":"?","changeFolder":"?","searchJournalByName":"?","setSelectedResult":"?","itemsResult":"list<?>","foldersJournals":"list<?>","itemsResultSelected":"?","itemsJournalAsociated":"?","contextPath":"string"};
 templates = exports;
 return exports;
 

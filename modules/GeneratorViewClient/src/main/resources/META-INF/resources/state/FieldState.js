@@ -58,7 +58,7 @@ export default class FieldState extends State {
             type:this.type,
             values:_arrayValues,
            // required:this.required,
-           // multiple:this.multiple,
+            multiple:this.multiple,
             indexType:this.indexType,
             nestedFields:_arrayNested
         }

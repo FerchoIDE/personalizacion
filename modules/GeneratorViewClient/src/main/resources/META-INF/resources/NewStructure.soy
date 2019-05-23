@@ -9,6 +9,7 @@
 	{@param isOnLoad: bool}
 
 	{@param data: map<string, ?>}
+	{@param name: map<string, ?>}
 	{@param categoryBrands: list<?>}
 	{@param hotelsXBrands: list<?>}
 	{@param contextPath: string}
@@ -24,6 +25,8 @@
 	{@param? hotelSelected: string}
 	{@param? handleChangeValue: ?}
 	{@param? saveStructure: ?}
+	{@param? cancelStructure: ?}
+
 	{@param? handleChangeValueTempl: ?}
 
 
@@ -108,7 +111,7 @@
 					 <a onclick="{$closeOpenTab}" aria-controls="accordionPrincipalCollapse" aria-expanded="true" class="collapse-icon sheet-subtitle"
 						data-toggle="collapse" href="#accordionPrincipalCollapse" id="accordionPrincipalHeading" role="tab">
 						 <span >
-							 <div class="sheet-header"><h2 class="sheet-title">{$data['titleEstructure'][$defaultLanguage]}</h2></div>
+							 <div class="sheet-header"><h2 class="sheet-title">{$name[$defaultLanguage]}</h2></div>
 						 </span>
 						 <span class="collapse-icon-closed">
 							<svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
@@ -156,6 +159,7 @@
 				 <div class="autofit-col autofit-col-expand">&nbsp;</div>
 				 <div class="autofit-col">
 					 <button onclick="{$saveStructure}" class="btn btn-primary" type="button">Guardar</button>
+					 <button onclick="{$cancelStructure}"  class="btn btn-secondary" type="button">Cancelar</button>
 				 </div>
 			 </div>
 			 <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
@@ -314,6 +318,7 @@
 			 <div class="autofit-col autofit-col-expand">&nbsp;</div>
 			 <div class="autofit-col">
 				 <button onclick="{$saveStructure}"  class="btn btn-primary" type="button">Guardar</button>
+				 <button onclick="{$cancelStructure}"  class="btn btn-secondary" type="button">Cancelar</button>
 			 </div>
 		 </div>
 	</div>
