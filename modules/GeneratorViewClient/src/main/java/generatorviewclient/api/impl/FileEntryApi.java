@@ -210,9 +210,15 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
 
     }
 
+    @Override
+    public JSONObject updateFileEntry(Long groupId, Long userId, Long fileEntryId, Long folderId, String image, String name, String description, String mimeType) {
+        return null;
+    }
 
-
-
+    @Override
+    public JSONObject removeFileEntry(Long groupId, Long fileEntryId) {
+        return null;
+    }
 
 
     private JSONArray getFoldersAndFilesByName(Long groupId,Long parent,String namefile,JSONArray filesArray) throws PortalException{

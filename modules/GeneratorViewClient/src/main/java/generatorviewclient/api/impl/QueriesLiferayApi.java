@@ -827,19 +827,34 @@ public class QueriesLiferayApi {
 
 	    protected String evaluateContent(String type,JSONArray values){
 	        String xml="";
+			StringBuilder xmlDynamicContent= new StringBuilder();
 	        switch (type) {
 	            case "ddm-text-html":
-	                if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
+	            	/*
+	            	if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
 	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
 	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
 	                return xml;
+	            	 */
+	            	if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
+	            	if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
+	                return xmlDynamicContent.toString();
 	                
 	            case "checkbox":
-	                if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
+	                /*if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
 	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
 	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
-	                return xml;
+	                return xml;*/
+					if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
+					if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append( "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
+					return xmlDynamicContent.toString();
 	            case "ddm-journal-article":
+	            	if(values.length()<1)
+	            		return xml;
 	                if(values.getJSONObject(0).length()<0)
 	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content><dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
 	                else
@@ -867,7 +882,7 @@ public class QueriesLiferayApi {
 		       
 	                return xml;
 	            case "text":
-	            	if(values.getJSONObject(0).length()>0)
+	            	if(values.length()>0 && values.getJSONObject(0).length()>0)
 	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
 	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
 	            	else
@@ -876,6 +891,8 @@ public class QueriesLiferayApi {
 		       
 	                return xml;
 	            default:
+	            	//falta la implementacion de fecha de radio button de integer de documents and media, los campos estan cruzados guarda en ingles lo de español y es necesario q se envien los 2 idiomas para que guarde
+					// le agregue validaciones y separe los caso para algunos tipos de datos como chekbox y textarea
 	            	xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("")+"</dynamic-content>" +
                             "<dynamic-content language-id=\"en_US\">"+setCDATA("")+"</dynamic-content>";
 	            return xml;

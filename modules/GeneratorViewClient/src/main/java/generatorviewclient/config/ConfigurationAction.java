@@ -42,8 +42,8 @@ public class ConfigurationAction extends DefaultConfigurationAction{
         if (_configuration != null) {
             System.out.println(_configuration.name());
             //Contants.DLFILEENTRY_BASE=_configuration.DLFileEntryFolderBase();
-            Contants.DLFILEENTRY_BASE= _configuration.DLFileEntryFolderBaseId();//_configuration.DLFileEntryFolderBase();
-            Contants.JOURNAL_HOTEL=_configuration.JournalFolderHotelBaseId();//_configuration.JournalFolderHotelBase();
+            Contants.DLFILEENTRY_BASE=34905L;// _configuration.DLFileEntryFolderBaseId();//_configuration.DLFileEntryFolderBase();
+            Contants.JOURNAL_HOTEL=35838L;//_configuration.JournalFolderHotelBaseId();//_configuration.JournalFolderHotelBase();
             String[] STRUCTURE_IDS={"35835","35826","35796","35956","35832","35823","35912","35962","35812","35968","35820","35965","35959","35823"};
             Contants.STRUCTURE_IDS=STRUCTURE_IDS;//_configuration.JournalFolderHotelBase();
 
