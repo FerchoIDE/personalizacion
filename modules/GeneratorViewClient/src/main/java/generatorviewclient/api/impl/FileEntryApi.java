@@ -1,6 +1,5 @@
 package generatorviewclient.api.impl;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,9 +52,8 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
     }
     
     @Override
-    public JSONObject saveFile(Long groupId,Long userId,Long folderId,String image,String name,String description,String mimeType) throws FileNotFoundException {
-
-        JSONObject filesObject = null;
+    public JSONObject saveFile(Long groupId,Long userId,Long folderId,String image,String name,String description,String mimeType){
+   JSONObject filesObject = null;
         try {
             ServiceContext serviceContext = new ServiceContext();
             serviceContext.setScopeGroupId(groupId);
@@ -210,17 +208,6 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
 
     }
 
-    @Override
-    public JSONObject updateFileEntry(Long groupId, Long userId, Long fileEntryId, Long folderId, String image, String name, String description, String mimeType) {
-        return null;
-    }
-
-    @Override
-    public JSONObject removeFileEntry(Long groupId, Long fileEntryId) {
-        return null;
-    }
-
-
     private JSONArray getFoldersAndFilesByName(Long groupId,Long parent,String namefile,JSONArray filesArray) throws PortalException{
         List<DLFolder> listFolders = getSubFolderByFolderParent(groupId, new Long(parent));
         if(Validator.isNull(listFolders) && listFolders.size() > 0){
@@ -239,8 +226,7 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
                         filesArray.put(filesObject);
                     }
                 }
-                if(Validator.isNull(object.getFolderId())){
-                //if(Validator.isNull(object.getFolderId())){
+                if(!Validator.isNull(object.getFolderId())){
                 //if(getFoldersAndFilesByName(groupId,object.getFolderId(),namefile,filesArray)!= null && !getFoldersAndFilesByName(groupId,object.getFolderId(),namefile,filesArray).isNull(0)){
 
                     getFoldersAndFilesByName(groupId,object.getFolderId(),namefile,filesArray);
@@ -272,8 +258,78 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
         return filesObject;
 
     }
+   @Override
+   public JSONObject updateFileEntry(Long groupId,Long userId,Long fileEntryId,Long folderId,String image,String name,String description,String mimeType){
+	   JSONObject filesObject = null;
+	   FileEntry fileToUpdate;
+       try {
+           ServiceContext serviceContext = new ServiceContext();
+           serviceContext.setScopeGroupId(groupId);
+           byte[] imageByte = Base64.decode(image);
+           fileToUpdate = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+           if(Validator.isNull(fileToUpdate)){
+               filesObject = JSONFactoryUtil.createJSONObject();
+               filesObject.put("errorMessage","No se a podido actualizar:El archivo no se encontro");
+               filesObject.put("status","BAD");
+               return filesObject;
+           } else {
+			   FileEntry file = DLAppLocalServiceUtil.updateFileEntry(userId, fileEntryId,name, fileToUpdate.getMimeType(), name, description, "", true, imageByte, serviceContext);
+               filesObject = JSONFactoryUtil.createJSONObject();
+               filesObject.put("idFile", file.getFileEntryId());
+               filesObject.put("filename", file.getFileName());
+               String url = "/documents/" + file.getGroupId() + "/" + file.getFolderId() + "/" + file.getFileName() + "/" + file.getUuid() + "?t=" + System.currentTimeMillis();
+               filesObject.put("fullPath", url.replace(" ", "%20"));
+               filesObject.put("imageThumbnail", url.replace(" ", "%20") + "&imageThumbnail=1");
+               filesObject.put("all",filesObject.toJSONString());
+               return filesObject;
 
+           }
+       } catch (PortalException e) {
+           e.printStackTrace();
+           filesObject = JSONFactoryUtil.createJSONObject();
+           filesObject.put("errorMessage", e.getMessage());
+           filesObject.put("status", "BAD");
+           return filesObject;
+       } 
+	   
+   }
    
+   
+   
+   @Override
+   public JSONObject removeFileEntry(Long groupId,Long fileEntryId){
+	   JSONObject filesObject = null;
+	   FileEntry fileToDelete;
+       try {
+           ServiceContext serviceContext = new ServiceContext();
+           serviceContext.setScopeGroupId(groupId);
+           fileToDelete = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+           if(Validator.isNull(fileToDelete)){
+               filesObject = JSONFactoryUtil.createJSONObject();
+               filesObject.put("errorMessage","No se a podido eliminar:El archivo no se encontro");
+               filesObject.put("status","BAD");
+               return filesObject;
+           } else {
+        	   DLFileEntry file = DLFileEntryLocalServiceUtil.deleteDLFileEntry(fileEntryId);
+               filesObject = JSONFactoryUtil.createJSONObject();
+               filesObject.put("idFile", file.getFileEntryId());
+               filesObject.put("filename", file.getFileName());
+               String url = "/documents/" + file.getGroupId() + "/" + file.getFolderId() + "/" + file.getFileName() + "/" + file.getUuid() + "?t=" + System.currentTimeMillis();
+               filesObject.put("fullPath", url.replace(" ", "%20"));
+               filesObject.put("imageThumbnail", url.replace(" ", "%20") + "&imageThumbnail=1");
+               filesObject.put("all",filesObject.toJSONString());
+               return filesObject;
+
+           }
+       } catch (PortalException e) {
+           e.printStackTrace();
+           filesObject = JSONFactoryUtil.createJSONObject();
+           filesObject.put("errorMessage", e.getMessage());
+           filesObject.put("status", "BAD");
+           return filesObject;
+       } 
+	   
+   }
 
     /*Recupera la informacion de los folders*/
     private JSONArray getFoldersJson(Long groupId,Long parent,String nameParent,JSONArray filesArray) throws PortalException{
@@ -331,9 +387,9 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
                     }
                     folderObject.put("files", filesArray);
                 }
-                if(getFolders(groupId,object.getFolderId(),type)!= null && !getFolders(groupId,object.getFolderId(),type).isNull(0)){
+               // if(getFolders(groupId,object.getFolderId(),type)!= null && !getFolders(groupId,object.getFolderId(),type).isNull(0)){
                     folderObject.put("child", getFolders(groupId,object.getFolderId(),type));
-                }
+               // }
                 folderArray.put(folderObject);
             }
         }

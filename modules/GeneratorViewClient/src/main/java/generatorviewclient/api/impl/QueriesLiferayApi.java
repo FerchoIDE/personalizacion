@@ -379,22 +379,31 @@ public class QueriesLiferayApi {
 
 	    protected String validateType(String key){
 	        switch (key) {
-	            case "ddm-text-html":
-	                return "text_area";
+	            case "checkbox":
+	            	return "boolean";
 	            case "ddm-documentlibrary":
 	                return "document_library";
-	            case "checkbox":
-	                return "boolean";
+	            case "ddm-image":
+	                return "image";
+	            case "ddm-link-to-page":
+	                return "link_to_layout";
+	            case "ddm-separator":
+	                return "selection_break";
+	            case "ddm-text-html":
+	                return "text_area";
 	            case "select":
 	                return "list";
-	        
+	            case "text":
+	                return "text";
+	            case "textarea":
+	                return "text_box";
 	            default:
 	                return key;
 	        }
-	    }
+	        }
 
 
-	    public JournalArticle createNewWC(String json) throws PortalException{
+	    protected JournalArticle createNewWC(String json) throws PortalException{
 	        JSONObject jsonObj = JSONFactoryUtil.createJSONObject(json);
 	        Long folderId = jsonObj.getLong("folderId");
 	        Long userId = jsonObj.getLong("userId");
@@ -657,80 +666,75 @@ public class QueriesLiferayApi {
 
 	    protected String readJson(String nested) throws JSONException{
 	        JSONArray campos = JSONFactoryUtil.createJSONArray(nested);
-	        String xmlFinal = "";
+	        StringBuilder xmlFinal= new StringBuilder();
 	        for (int i = 0; i < campos.length(); i++) {
 	            if(campos.getJSONObject(i).get("nestedFields")!=null){
 	                if(campos.getJSONObject(i).get("type").equals("ddm-separator")){
-	                    xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
-	                            "selection_break",
-	                            "",
-	                            campos.getJSONObject(i).get("indexType").toString(),
-	                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));
-
+	                                xmlFinal.append(getBaseXML(campos.getJSONObject(i).get("name").toString(),
+	                                "selection_break",
+	                                "",
+	                                campos.getJSONObject(i).get("indexType").toString(),
+	                                readJson(campos.getJSONObject(i).get("nestedFields").toString())));
 	                }else if(campos.getJSONObject(i).get("type").equals("select")){
 	                	if(campos.getJSONObject(i).get("multiple").toString().equals("true")){
-	                		  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
-			                            validateType(campos.getJSONObject(i).get("type").toString()),
-			                            evaluateContent("select_multiple"
-			                                    , campos.getJSONObject(i).getJSONArray("values")),
-			                            campos.getJSONObject(i).get("indexType").toString(),
-			                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+	                		        xmlFinal.append(getBaseXML(campos.getJSONObject(i).get("name").toString(),
+			                        validateType(campos.getJSONObject(i).get("type").toString()),
+			                        evaluateContent("select_multiple",
+			                        campos.getJSONObject(i).getJSONArray("values")),
+			                        campos.getJSONObject(i).get("indexType").toString(),
+			                        readJson(campos.getJSONObject(i).get("nestedFields").toString())));                	
 	                		  }else{
-	                			  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
-				                            validateType(campos.getJSONObject(i).get("type").toString()),
-				                            evaluateContent("select"
-				                                    , campos.getJSONObject(i).getJSONArray("values")),
-				                            campos.getJSONObject(i).get("indexType").toString(),
-				                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
-		                	  
-	                		  }
-	                }
-	                else{
-
-	                    xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
-	                            validateType(campos.getJSONObject(i).get("type").toString()),
-	                            evaluateContent(campos.getJSONObject(i).get("type").toString()
-	                                    , campos.getJSONObject(i).getJSONArray("values")),
-	                            campos.getJSONObject(i).get("indexType").toString(),
-	                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));
+	                			    xmlFinal.append(getBaseXML(campos.getJSONObject(i).get("name").toString(),
+				                    validateType(campos.getJSONObject(i).get("type").toString()),
+				                    evaluateContent("select", 
+				                    campos.getJSONObject(i).getJSONArray("values")),
+				                    campos.getJSONObject(i).get("indexType").toString(),
+				                    readJson(campos.getJSONObject(i).get("nestedFields").toString())));                	
+		                	  }
+	                	}else
+	                	{
+		                			xmlFinal.append(getBaseXML(campos.getJSONObject(i).get("name").toString(),
+		                            validateType(campos.getJSONObject(i).get("type").toString()),
+		                            evaluateContent(campos.getJSONObject(i).get("type").toString(),
+		                            campos.getJSONObject(i).getJSONArray("values")),
+		                            campos.getJSONObject(i).get("indexType").toString(),
+		                            readJson(campos.getJSONObject(i).get("nestedFields").toString())));
 	                }
 	            }else{
 	                if(campos.getJSONObject(i).get("type").equals("ddm-separator")){
-	                    xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
-	                            "selection_break",
-	                            "",
-	                            campos.getJSONObject(i).get("indexType").toString(),
-	                            "");
-	                }
-	                else if(campos.getJSONObject(i).get("type").equals("select")){
+	                				xmlFinal.append(getBaseXML(campos.getJSONObject(i).get("name").toString(),
+	                			    "selection_break",
+	                                "",
+	                                campos.getJSONObject(i).get("indexType").toString(),
+	                                ""));
+	            }else if(campos.getJSONObject(i).get("type").equals("select")){
 	                	if(campos.getJSONObject(i).get("multiple").toString().equals("true")){
-	                		  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
-			                            validateType(campos.getJSONObject(i).get("type").toString()),
-			                            evaluateContent("select_multiple"
-			                                    , campos.getJSONObject(i).getJSONArray("values")),
-			                            campos.getJSONObject(i).get("indexType").toString(),
-			                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
-	                		  }else{
-	                			  xmlFinal = xmlFinal + getBaseXML(campos.getJSONObject(i).get("name").toString(),
-				                            validateType(campos.getJSONObject(i).get("type").toString()),
-				                            evaluateContent("select"
-				                                    , campos.getJSONObject(i).getJSONArray("values")),
-				                            campos.getJSONObject(i).get("indexType").toString(),
-				                            readJson(campos.getJSONObject(i).get("nestedFields").toString()));                	
+	                		        xmlFinal.append(getBaseXML(campos.getJSONObject(i).get("name").toString(),
+			                        validateType(campos.getJSONObject(i).get("type").toString()),
+			                        evaluateContent("select_multiple",
+			                        campos.getJSONObject(i).getJSONArray("values")),
+			                        campos.getJSONObject(i).get("indexType").toString(),
+			                        readJson(campos.getJSONObject(i).get("nestedFields").toString())));                	
+	            }else{
+	                			    xmlFinal.append(getBaseXML(campos.getJSONObject(i).get("name").toString(),
+				                    validateType(campos.getJSONObject(i).get("type").toString()),
+				                    evaluateContent("select",
+				                    campos.getJSONObject(i).getJSONArray("values")),
+				                    campos.getJSONObject(i).get("indexType").toString(),
+				                    readJson(campos.getJSONObject(i).get("nestedFields").toString())));                	
 		                	  
 	                		  }
-	                }
-	                else{
-	                    xmlFinal = xmlFinal +getBaseXML(campos.getJSONObject(i).get("name").toString(),
-	                            validateType(campos.getJSONObject(i).get("type").toString()),
-	                            evaluateContent(campos.getJSONObject(i).get("type").toString()
-	                                    , campos.getJSONObject(i).getJSONArray("values")),
-	                            campos.getJSONObject(i).get("indexType").toString(),
-	                            "");
+	            }else{
+	            	                 xmlFinal.append(getBaseXML(campos.getJSONObject(i).get("name").toString(),
+	            	                 validateType(campos.getJSONObject(i).get("type").toString()),
+	                                 evaluateContent(campos.getJSONObject(i).get("type").toString(),
+	                                 campos.getJSONObject(i).getJSONArray("values")),
+	                                 campos.getJSONObject(i).get("indexType").toString(),
+	                                 ""));
 	                }
 	            }
 	        }
-	        return xmlFinal;
+	        return xmlFinal.toString();
 	    }
 
 
@@ -824,82 +828,110 @@ public class QueriesLiferayApi {
 	    }
 
 
-
+	    protected String setCDATARadio(String data){
+	        return "<![CDATA[[\""+data+"\"]]]>";
+	    }
+	   
+	    //falta la implementacion de fecha de radio button de integer de documents and media, los campos estan cruzados guarda en ingles lo de español y es necesario q se envien los 2 idiomas para que guarde
+	    // le agregue validaciones y separe los caso para algunos tipos de datos como chekbox y textarea
 	    protected String evaluateContent(String type,JSONArray values){
-	        String xml="";
-			StringBuilder xmlDynamicContent= new StringBuilder();
+	    	StringBuilder xmlDynamicContent= new StringBuilder();
 	        switch (type) {
-	            case "ddm-text-html":
-	            	/*
-	            	if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
-	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
-	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
-	                return xml;
-	            	 */
+	        	case "ddm-decimal":
+	        		if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
+	            	if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
+	                return xmlDynamicContent.toString();
+	            case "ddm-geolocation":
 	            	if(values.getJSONObject(0).get("en_US")!=null)
 						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
 	            	if(values.getJSONObject(0).get("es_ES")!=null)
 						xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
 	                return xmlDynamicContent.toString();
-	                
-	            case "checkbox":
-	                /*if(values.getJSONObject(0).get("en_US")!=null && values.getJSONObject(0).get("es_ES")!=null)
-	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
-	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
-	                return xml;*/
-					if(values.getJSONObject(0).get("en_US")!=null)
-						xmlDynamicContent.append("<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
-					if(values.getJSONObject(0).get("es_ES")!=null)
-						xmlDynamicContent.append( "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
-					return xmlDynamicContent.toString();
+	            case "radio":
+	            	if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATARadio(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
+	            	if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATARadio(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
+	                return xmlDynamicContent.toString();
+	        	case "checkbox":
+	            	if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
+	            	if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
+	                return xmlDynamicContent.toString();
+	        	case "ddm-documentlibrary":
+		            	if(values.getJSONObject(0).get("en_US")!=null)
+							xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
+		            	if(values.getJSONObject(0).get("es_ES")!=null)
+							xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
+		                return xmlDynamicContent.toString();
+	        	case "ddm-image":
+	            	if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
+	            	if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
+	                return xmlDynamicContent.toString();
+	        	case "ddm-link-to-page":
+	            	if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
+	            	if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
+	                return xmlDynamicContent.toString();
+	            case "ddm-text-html":
+	            	if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
+	            	if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
+	                return xmlDynamicContent.toString();
 	            case "ddm-journal-article":
-	            	if(values.length()<1)
-	            		return xml;
-	                if(values.getJSONObject(0).length()<0)
-	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content><dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
-	                else
-	                	xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("{\"classPK\":\""+values.getJSONObject(0).get("es_ES").toString()+"\",\"className\":\"com.liferay.journal.model.JournalArticle\"}")+"</dynamic-content><dynamic-content language-id=\"en_US\">"+setCDATA("{\"classPK\":\""+values.getJSONObject(0).get("en_US").toString()+"\",\"className\":\"com.liferay.journal.model.JournalArticle\"}")+"</dynamic-content>";
-	                return xml;
+	            	if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATA(setCDATA("{\"classPK\":\""+values.getJSONObject(0).get("en_US").toString()+"\",\"className\":\"com.liferay.journal.model.JournalArticle\"}"))+"</dynamic-content>");
+	            	if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATA("{\"classPK\":\""+values.getJSONObject(0).get("es_ES").toString()+"\",\"className\":\"com.liferay.journal.model.JournalArticle\"}")+"</dynamic-content>");
+	                return xmlDynamicContent.toString();
 	            case "select_multiple":
-	            	String options_en="";
-	                String options_es="";
-	                for (int i = 0; i < values.length(); i++) {
-	                    if(values.getJSONObject(i).get("en_US")!=null && values.getJSONObject(i).get("es_ES")!=null)
-	                        options_en+= "<option>"+setCDATA(values.getJSONObject(i).get("en_US").toString())+"</option>";
-	                    	options_es+= "<option>"+setCDATA(values.getJSONObject(i).get("es_ES").toString())+"</option>";
-
-	                }
-	                xml="<dynamic-content language-id=\"en_US\">"+options_en+"</dynamic-content>"+
-	                        "<dynamic-content language-id=\"es_ES\">"+options_es+"</dynamic-content>";
-	                return xml;
+	            	StringBuilder options_en= new StringBuilder();
+	            	StringBuilder options_es= new StringBuilder();
+	               for (int i = 0; i < values.length(); i++) {
+	            	   if(values.getJSONObject(0).get("es_ES")!=null)
+	            		   options_es.append("<option>"+setCDATA(values.getJSONObject(i).get("es_ES").toString())+"</option>");
+	            	   if(values.getJSONObject(0).get("en_US")!=null)
+	            		   options_en.append("<option>"+setCDATA(values.getJSONObject(i).get("en_US").toString())+"</option>");	   
+	            	  }
+	               if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+options_es+"</dynamic-content>");
+	               if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"en_US\">"+options_es+"</dynamic-content>");
+	               return xmlDynamicContent.toString();
 	            case "select":
-	            	if(values.getJSONObject(0).length()>0)
-	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
-	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
-	            	else
-	            		 xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("")+"</dynamic-content>" +
-		                            "<dynamic-content language-id=\"en_US\">"+setCDATA("")+"</dynamic-content>";
-		       
-	                return xml;
+	            	if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
+	            	if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
+	                return xmlDynamicContent.toString();
 	            case "text":
-	            	if(values.length()>0 && values.getJSONObject(0).length()>0)
-	                    xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>" +
-	                            "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>";
-	            	else
-	            		 xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("")+"</dynamic-content>" +
-		                            "<dynamic-content language-id=\"en_US\">"+setCDATA("")+"</dynamic-content>";
-		       
-	                return xml;
+	            	if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
+	            	if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
+	                return xmlDynamicContent.toString();
+	            case "ddm-date":
+	            	if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
+	            	if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
+	                return xmlDynamicContent.toString();
 	            default:
-	            	//falta la implementacion de fecha de radio button de integer de documents and media, los campos estan cruzados guarda en ingles lo de español y es necesario q se envien los 2 idiomas para que guarde
-					// le agregue validaciones y separe los caso para algunos tipos de datos como chekbox y textarea
-	            	xml+= "<dynamic-content language-id=\"es_ES\">"+setCDATA("")+"</dynamic-content>" +
-                            "<dynamic-content language-id=\"en_US\">"+setCDATA("")+"</dynamic-content>";
-	            return xml;
+	            	if(values.getJSONObject(0).get("en_US")!=null)
+						xmlDynamicContent.append("<dynamic-content language-id=\"es_ES\">"+setCDATA(values.getJSONObject(0).get("en_US").toString())+"</dynamic-content>");
+	            	if(values.getJSONObject(0).get("es_ES")!=null)
+						xmlDynamicContent.append( "<dynamic-content language-id=\"en_US\">"+setCDATA(values.getJSONObject(0).get("es_ES").toString())+"</dynamic-content>");
+	                return xmlDynamicContent.toString();
 	        }
 
 	    }
-
 	    protected List<JournalArticleImpl> getWCByCode(Long groupId,String structureId,String code) throws PortalException{
 	        DynamicQuery queryJournal = DynamicQueryFactoryUtil.forClass(com.liferay.journal.model.impl.JournalArticleImpl.class, "journalArticle",PortalClassLoaderUtil.getClassLoader());
 	        queryJournal.add(RestrictionsFactoryUtil.ilike("content", new StringBuilder("%><![CDATA[").append(code).append("]]></dynamic-content>%").toString()));
@@ -1168,6 +1200,7 @@ public class QueriesLiferayApi {
 		        queryJournal.add( RestrictionsFactoryUtil.eq("resourcePrimKey", new Long(resourcePrimKey)));
 		        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
 		        queryJournal.add( RestrictionsFactoryUtil.eq("DDMStructureKey",ddmStructure.getStructureKey()));
+		        //queryJournal.setLimit(start, end);
 		        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
 		        if(journalResults.size()>0){
 		        	for (JournalArticle ja : journalResults) {
