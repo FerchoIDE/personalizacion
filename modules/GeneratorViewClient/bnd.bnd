@@ -14,6 +14,8 @@ Require-Capability:\
                   META-INF/resources/flatpickr/dist/l10n/es.js = node_modules/flatpickr/dist/l10n/es.js,\
                   META-INF/resources/wretch.js =node_modules/wretch/dist/bundle/wretch.js,\
                   @json-path-2.4.0.jar,\
+                  @pebble-3.0.10.jar,\
+                  @unbescape-1.1.6.RELEASE.jar,\
                   @json-20180813.jar,@json-smart-2.3.jar,@accessors-smart-1.2.jar,\
                   @asm-5.0.4.jar,@slf4j-api-1.7.25.jar
 

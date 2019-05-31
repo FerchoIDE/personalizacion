@@ -1,7 +1,16 @@
 import Component from 'metal-component';
 
 import Service from "./service/Service"
-
+import TextLocalizableUI from './TextLocalizableUI.es';
+import CheckBoxUI from './CheckBoxUI.es';
+import TextAreaUI from './TextAreaUI.es';
+import TitleLocalizableUI from './TitleLocalizableUI.es';
+import ViewNested from './ViewNested.es';
+import DateUI from './DateUI.es';
+import RadioUI from './RadioUI.es';
+import SelectUI from './SelectUI.es';
+import JournalUI from './components/JournalUI.es';
+import DocumentUI from './components/DocumentUI.es';
 
 import Soy from 'metal-soy';
 import templates from './NewStructure.soy';

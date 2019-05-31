@@ -1,0 +1,10 @@
+{% import "templates/nested.peb" %}
+<?xml version="1.0"?>
+
+<root available-locales="{{ aviableLocales }}" default-locale="{{ localeDefault }}">
+{% for field in fields %}
+<dynamic-element name="{{field.name}}" type="selection_break" index-type="{{field.indexType}}">
+    {{ nested(field.nestedFields) }}
+</dynamic-element>
+{% endfor %}
+</root>

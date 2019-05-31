@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import generatorviewclient.util.XMLUtil;
 
 public class QueriesLiferayApi {
 	   private static final Log log = LogFactoryUtil.getLog(QueriesLiferayApi.class);
@@ -403,6 +404,51 @@ public class QueriesLiferayApi {
 	        }
 
 
+	protected JournalArticle createNewWC(org.json.JSONObject jsonObject) throws PortalException{
+
+		Long folderId = jsonObject.getLong("folderId");
+		Long userId = jsonObject.getLong("userId");
+		Long groupId = jsonObject.getLong("groupId");
+		String localeDefault= jsonObject.getString("localeDefault");
+		String title= jsonObject.getString("title");
+		String ddmStructure= jsonObject.getString("ddmStructure");
+		String ddmTemplate= jsonObject.getString("ddmTemplate");
+		String description= jsonObject.getString("description");
+		String aviableLocales= jsonObject.getString("aviableLocales");
+
+		ServiceContext serviceContext = new ServiceContext();
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+		for(String localItem:aviableLocales.split(",")){
+			titleMap.put(LocaleUtil.fromLanguageId(localItem), title);
+			descriptionMap.put(LocaleUtil.fromLanguageId(localItem), description);
+		}
+
+		String rootElement = XMLUtil.transformJson(jsonObject);
+
+		System.out.println(rootElement);
+
+		JournalArticle article = JournalArticleLocalServiceUtil.addArticle(userId,
+				groupId, folderId, titleMap, descriptionMap, rootElement,
+				ddmStructure, ddmTemplate, serviceContext);
+		/*if(!Validator.isNull(article)){
+			if(!jsonObj.getJSONArray("tags").isNull(0) && !jsonObj.getJSONArray("categories").isNull(0)){
+				addCategoriesAndTags(userId, article, parseCategories(jsonObj.getJSONArray("categories")), parseTags(jsonObj.getJSONArray("tags")));
+			}else if(!Validator.isNull(jsonObj.getJSONArray("tags")) && Validator.isNull(jsonObj.getJSONArray("categories"))){
+				addCategoriesAndTags(userId, article, null, parseTags(jsonObj.getJSONArray("tags")));
+			}else if(Validator.isNull(jsonObj.getJSONArray("tags")) && !Validator.isNull(jsonObj.getJSONArray("categories"))){
+				addCategoriesAndTags(userId, article,parseCategories(jsonObj.getJSONArray("categories")) , null);
+			}else {
+				addCategoriesAndTags(userId, article,null, null);
+			}
+		}*/
+
+		return article;
+	}
 	    protected JournalArticle createNewWC(String json) throws PortalException{
 	        JSONObject jsonObj = JSONFactoryUtil.createJSONObject(json);
 	        Long folderId = jsonObj.getLong("folderId");

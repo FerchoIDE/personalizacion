@@ -51,7 +51,7 @@ class JournalUI extends Component {
             return
         console.log('-----receive event openNewJournal----'+this.id)
         event.preventDefault();
-        let _url="http://localhost:8080/web/guest/home?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_structureId=35835";
+        let _url="http://localhost:8080/web/guest/home?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_structureId=35826&_generatorviewclient_mode=nested";
         $("#"+this.id+"_Iframe").attr('src',_url);
         this.setState({isOpenJournalNew: true })
         var _parent = this;
@@ -59,6 +59,8 @@ class JournalUI extends Component {
         function handleEvent(e) {
             console.log(e.detail) // outputs: {foo: 'bar'}
             _parent.setState({isOpenJournalNew: false })
+            $("#"+_parent.id+"_Iframe").attr('src','about:blank');
+            //$(".modal-backdrop").attr('src','about:blank');
         }
 
         //new Service().getJournals(this.brandSelected,this.hotelSelected,this.id,this.setResultJournal)

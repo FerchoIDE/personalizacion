@@ -1,0 +1,64 @@
+
+{% macro nested(nestedFields) %}
+	{% for field in nestedFields %}
+		{% if field.type =="checkbox" %}
+			{{ basic(field,'boolean') }}
+		{% elseif field.type =="text" %}
+			{{ basic(field,'text') }}
+		{% elseif field.type =="ddm-date" %}
+			{{ basic(field,'ddm-date') }}
+		{% elseif field.type =="ddm-text-html" %}
+			{{ basic(field,'text_area') }}
+		{% elseif field.type =="ddm-separator" %}
+			{{ separator(field) }}
+		{% elseif field.type =="select" %}
+			{{ basic(field,'list') }}
+		{% elseif field.type =="ddm-documentlibrary" %}
+			{{ documentlibrary(field) }}
+		{% else %}
+			<nada>{{ field.type }}</nada>
+		{% endif %}
+	{% endfor %}
+{% endmacro %}
+
+{% macro basic(info, type) %}
+	{% for value in info.values %}
+		<dynamic-element name="{{ info.name }}"  type="{{ type }}" index-type="{{ info.indexType }}">
+			{% for item in value %}
+				<dynamic-content language-id="{{ item.key }}"><![CDATA[{{ item.value }}]]></dynamic-content>
+			{% endfor %}
+		</dynamic-element>
+	{% endfor %}
+{% endmacro %}
+
+
+{% macro journalArticle(info) %}
+	<dynamic-element name="{{info.name}}" type="ddm-journal-article" index-type="{{info.indexType}}">
+    	{% for item in value %}
+				<dynamic-content language-id="{{ item.key }}"><![CDATA[{"classPK":"{{ item.value }}","className":"com.liferay.journal.model.JournalArticle"}]]></dynamic-content>
+		{% endfor %}
+	</dynamic-element>
+{% endmacro %}
+
+{% macro separator(info) %}
+	<dynamic-element name="{{info.name}}" type="selection_break" index-type="{{info.indexType}}">
+    	{{ nested(info.nestedFields) }}
+	</dynamic-element>
+{% endmacro %}
+
+{% macro documentlibrary(info) %}
+{% for value in info.values %}
+	<dynamic-element name="{{info.name}}" type="document_library" index-type="{{info.indexType}}">
+		{% for nestedField in info.nestedFields %}
+				<dynamic-element name="{{ nestedField.name }}"  type="{{ nestedField.type }}" index-type="{{ nestedField.indexType }}">
+					{% for item in value %}
+							<dynamic-content language-id="{{ item.key }}"><![CDATA[{{ item.value[nestedField.name]}}]]></dynamic-content>
+					{% endfor %}
+				</dynamic-element>
+		{% endfor %}
+		{% for item in value %}
+				<dynamic-content language-id="{{ item.key }}"><![CDATA[{{ item.value.fullPath }}]]></dynamic-content>
+		{% endfor %}
+	</dynamic-element>
+{% endfor %}
+{% endmacro %}

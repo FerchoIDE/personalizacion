@@ -433,6 +433,10 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	        return  createNewWC(json);
 	    }
 
+		public JournalArticle saveWC(org.json.JSONObject jsonObject) throws PortalException {
+			return  createNewWC(jsonObject);
+		}
+
 	    @Override
 	    public JournalArticle updateWC(String json) throws PortalException {
 	        return  UpdateWC(json);

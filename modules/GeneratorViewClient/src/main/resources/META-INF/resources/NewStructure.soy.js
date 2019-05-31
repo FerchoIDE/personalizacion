@@ -387,6 +387,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenStart('button');
               incrementalDom.attr('onclick', cancelStructure);
               incrementalDom.attr('class', 'btn btn-secondary');
+              incrementalDom.attr('data-dismiss', 'modal');
               incrementalDom.attr('type', 'button');
           incrementalDom.elementOpenEnd();
             incrementalDom.text('Cancelar');
@@ -590,6 +591,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementOpenStart('button');
             incrementalDom.attr('onclick', cancelStructure);
             incrementalDom.attr('class', 'btn btn-secondary');
+            incrementalDom.attr('data-dismiss', 'modal');
             incrementalDom.attr('type', 'button');
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Cancelar');

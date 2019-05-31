@@ -52,6 +52,7 @@ public class GeneratorViewClientNewMVCRenderCommand
                 WebKeys.TEMPLATE);
 
         String structureId = renderRequest.getParameter("structureId");
+        String mode = renderRequest.getParameter("mode");
         try {
             DDMStructure ddmStructure = structureLocalService.getDDMStructure(
                     Long.valueOf(structureId));
@@ -121,7 +122,10 @@ System.out.println("antes de asignar -------------");
             e.printStackTrace();
             new PortletException(e);
         }
-        template.put("isOnLoad", true);
+        if(mode!=null && mode.equalsIgnoreCase("nested"))
+            template.put("isOnLoad", false);
+        else
+            template.put("isOnLoad", true);
         template.put("hotelsXBrands", new LinkedList<>());
 
 

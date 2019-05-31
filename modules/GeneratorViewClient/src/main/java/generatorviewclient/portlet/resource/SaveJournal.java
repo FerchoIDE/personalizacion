@@ -51,7 +51,7 @@ public class SaveJournal implements MVCResourceCommand {
             jsonObject.put("groupId",portletGroupId);
             jsonObject.put("folderId",folderId);
             System.out.println(jsonObject.toString());
-            JournalArticle journalArticle = new JournalApi().saveWC(jsonObject.toString());
+            JournalArticle journalArticle = new JournalApi().saveWC(jsonObject);
             return false;
         } catch (Exception e) {
             System.out.println("------------------" + e.getMessage());
