@@ -39,18 +39,29 @@ export default class FieldState extends State {
         let _arrayValues =[]
         if(this.multiple){
             for(let _language in this.values ){
-                let _index =0
-                for (let _val in this.values[_language] ){
 
-                    let _valField =_arrayValues[_index]
+                if(typeof this.values[_language]==='object'){
+                    let _index =0
+                    for (let _val in this.values[_language] ){
+
+                        let _valField =_arrayValues[_index]
+                        if(_valField===undefined)
+                            _valField={}
+                        _valField[_language]=this.values[_language][_val]
+                        _arrayValues[_index]=_valField
+                        _index++
+                    }
+                }else{
+                    let _valField =_arrayValues[0]
                     if(_valField===undefined)
                         _valField={}
-                    _valField[_language]=this.values[_language][_val]
-                    _arrayValues[_index]=_valField
-                    _index++
+                    _valField[_language]=this.values[_language]
+                    _arrayValues[0]=_valField
                 }
+
+
             }
-        }else{
+        }else if(Object.keys(this.values).length>0){
             _arrayValues.push(this.values)
         }
         return {

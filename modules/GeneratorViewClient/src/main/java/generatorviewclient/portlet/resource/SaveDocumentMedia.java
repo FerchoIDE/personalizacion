@@ -45,9 +45,19 @@ public class SaveDocumentMedia implements MVCResourceCommand {
             String brand = jsonObject.getString("brand");
             String codeHotel = jsonObject.getString("codeHotel");
             String description = jsonObject.getString("description");
+            String newFolder = jsonObject.getString("newFolder");
+
             Long folderId = jsonObject.getLong("folderId");
             if (folderId == null) {
                 folderId = new FileEntryApi().getBaseFolder(portletGroupId, brand, codeHotel);
+            }
+
+            if(newFolder!=null && !newFolder.isEmpty()){
+                for(String folderName :newFolder.split("/")){
+                   Folder folder = new FileEntryApi().createFolder(folderId,portletGroupId,folderName,folderName) ;
+                   folderId = folder.getFolderId();
+                }
+
             }
             JSONObject jsonFile = jsonObject.getJSONObject("file");
             System.out.println(jsonFile.getString("fileData"));

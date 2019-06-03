@@ -9,7 +9,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 public abstract class XMLUtil {
-    static PebbleTemplate compiledTemplate = new PebbleEngine.Builder().build().getTemplate("templates/test.peb");
+    static PebbleTemplate compiledTemplate = new PebbleEngine.Builder().extension(new CustomExtension()).build().getTemplate("templates/test.peb");
 
     public static String  transformJson(JSONObject jsonObject){
         Writer writer = new StringWriter();

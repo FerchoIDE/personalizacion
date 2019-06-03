@@ -23,17 +23,20 @@
 
 {% macro basic(info, type) %}
 	{% for value in info.values %}
-		<dynamic-element name="{{ info.name }}"  type="{{ type }}" index-type="{{ info.indexType }}">
+		<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{ info.name }}"  type="{{ type }}" index-type="{{ info.indexType }}">
 			{% for item in value %}
 				<dynamic-content language-id="{{ item.key }}"><![CDATA[{{ item.value }}]]></dynamic-content>
 			{% endfor %}
+		</dynamic-element>
+		{% else %}
+		<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{ info.name }}"  type="{{ type }}" index-type="{{ info.indexType }}">
 		</dynamic-element>
 	{% endfor %}
 {% endmacro %}
 
 
 {% macro journalArticle(info) %}
-	<dynamic-element name="{{info.name}}" type="ddm-journal-article" index-type="{{info.indexType}}">
+	<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{info.name}}" type="ddm-journal-article" index-type="{{info.indexType}}">
     	{% for item in value %}
 				<dynamic-content language-id="{{ item.key }}"><![CDATA[{"classPK":"{{ item.value }}","className":"com.liferay.journal.model.JournalArticle"}]]></dynamic-content>
 		{% endfor %}
@@ -41,19 +44,22 @@
 {% endmacro %}
 
 {% macro separator(info) %}
-	<dynamic-element name="{{info.name}}" type="selection_break" index-type="{{info.indexType}}">
+	<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{info.name}}" type="selection_break" index-type="{{info.indexType}}">
     	{{ nested(info.nestedFields) }}
 	</dynamic-element>
 {% endmacro %}
 
 {% macro documentlibrary(info) %}
 {% for value in info.values %}
-	<dynamic-element name="{{info.name}}" type="document_library" index-type="{{info.indexType}}">
+	<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{info.name}}" type="document_library" index-type="{{info.indexType}}">
 		{% for nestedField in info.nestedFields %}
-				<dynamic-element name="{{ nestedField.name }}"  type="{{ nestedField.type }}" index-type="{{ nestedField.indexType }}">
+				<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{ nestedField.name }}"  type="{{ nestedField.type }}" index-type="{{ nestedField.indexType }}">
 					{% for item in value %}
 							<dynamic-content language-id="{{ item.key }}"><![CDATA[{{ item.value[nestedField.name]}}]]></dynamic-content>
 					{% endfor %}
+				</dynamic-element>
+			{% else %}
+				<dynamic-element instance-id="{{ instanceIdFunction() }}"  name="{{ info.name }}"  type="{{ type }}" index-type="{{ info.indexType }}">
 				</dynamic-element>
 		{% endfor %}
 		{% for item in value %}

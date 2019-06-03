@@ -42,8 +42,8 @@ class JournalUI extends Component {
         console.log('-----receive event openSelectJournal----'+this.id)
         event.preventDefault();
 
-        new Service().getJournals(this.brandSelected,this.hotelSelected,this.id,this.setResultJournal)
-        new Service().getFoldersForJournal(this.brandSelected,this.hotelSelected,this.id,this.setFoldersJournal)
+        new Service().getJournals(this.brandIdSelected,this.hotelIdSelected,this.id,this.setResultJournal)
+       // new Service().getFoldersForJournal(this.brandSelected,this.hotelSelected,this.id,this.setFoldersJournal)
     }
 
     openNewJournal(event) {
@@ -186,6 +186,8 @@ JournalUI.STATE = {
     itemsResultSelected:{value:{}},
     brandSelected:{},
     hotelSelected:{},
+    brandIdSelected:{},
+    hotelIdSelected:{},
     handleChangeValue: {},
     path:{},
     modelJournal:{value:{}}

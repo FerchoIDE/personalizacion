@@ -401,11 +401,15 @@
                             <div class="form-group">
                                 <input id="{$id}_DescriptionNew" class="form-control"
                                        class="form-control input-group-inset input-group-inset-after"
-                                       name="mySearchInputName" placeholder="Ingrese la descripción del nuevo recurso"
+                                       placeholder="Ingrese la descripción del nuevo recurso"
+                                       type="text"/>
+                                <input id="{$id}_FolderNestedNew" class="form-control"
+                                       class="form-control input-group-inset input-group-inset-after"
+                                       placeholder="Nombre de nueva carpeta separado por / para mas de una carpeta"
                                        type="text"/>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" onchange="{$fileNew}" type="file" name="myfile"/>
+                                <input id="{$id}_FileNew" class="form-control" onchange="{$fileNew}" type="file" />
                             </div>
 
                         </div>

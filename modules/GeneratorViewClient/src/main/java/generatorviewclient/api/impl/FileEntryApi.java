@@ -173,8 +173,9 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
             Long brandFolder= getFolder(groupId, brand, Contants.DLFILEENTRY_BASE);
             Long hc= getFolder(groupId, code_hotel, brandFolder);
             filesArray=getFoldersAndFilesByfolderJson(groupId, hc, type, filesArray);
-            if(getFilesByFolder(groupId, hc)!=null){
-                for (DLFileEntry file : getFilesByFolder(groupId, hc)) {
+            List<DLFileEntry> result = getFilesByFolder(groupId, hc);
+            if(result!=null){
+                for (DLFileEntry file : result) {
                     filesArray.put(mapping(file));
                 }
             }
@@ -403,8 +404,9 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
             JSONObject filesObject=null;
             for (DLFolder object : listFolders) {
                 System.out.println(object.getName());
-                if(getFilesByFolder(groupId, object.getFolderId())!= null && !getFilesByFolder(groupId, object.getFolderId()).isEmpty()){
-                    for (DLFileEntry file : getFilesByFolder(groupId, object.getFolderId())) {
+                List<DLFileEntry> result = getFilesByFolder(groupId, object.getFolderId());
+                if(result!= null && !result.isEmpty()){
+                    for (DLFileEntry file : result) {
                         filesObject=JSONFactoryUtil.createJSONObject();
 
                         filesObject.put("idFile", file.getFileEntryId());
@@ -418,9 +420,9 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
                     }
 
                 }
-                if(getFoldersAndFilesByfolderJson(groupId,object.getFolderId(),type,filesArray)!= null && !getFoldersAndFilesByfolderJson(groupId,object.getFolderId(),type,filesArray).isNull(0)){
+               // if(getFoldersAndFilesByfolderJson(groupId,object.getFolderId(),type,filesArray)!= null && !getFoldersAndFilesByfolderJson(groupId,object.getFolderId(),type,filesArray).isNull(0)){
                     getFoldersAndFilesByfolderJson(groupId,object.getFolderId(),type,filesArray);
-                }
+                //}
             }
         }
         return filesArray;

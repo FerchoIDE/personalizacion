@@ -983,7 +983,9 @@ public class QueriesLiferayApi {
 	        queryJournal.add(RestrictionsFactoryUtil.ilike("content", new StringBuilder("%><![CDATA[").append(code).append("]]></dynamic-content>%").toString()));
 	        queryJournal.add( RestrictionsFactoryUtil.eq("groupId",new Long(groupId)));
 	        queryJournal.add(PropertyFactoryUtil.forName("DDMStructureKey").eq(new String(structureId)));
+	        log.info("antes de dynamicQuery");
 	        List<com.liferay.journal.model.impl.JournalArticleImpl> journalResults =JournalArticleLocalServiceUtil.dynamicQuery(queryJournal);
+            log.info("despues de dynamicQuery");
 	        if(journalResults.size()>0){
 	            return journalResults;
 	        }
@@ -1005,9 +1007,13 @@ public class QueriesLiferayApi {
 
 	    protected List<JournalArticle> getFoldersWCByCode(Long groupId,String nameStructure,String code) throws PortalException{
 	        List<JournalArticle> journalArray = new ArrayList<>();
+	        log.info("antes de getStruct");
 	        List<DDMStructure> structureKey = getStruct("%>"+nameStructure+"<%", groupId);
-	        if(!Validator.isNull(getWCByCode(groupId,structureKey.get(0).getStructureKey(),code)) && !getWCByCode(groupId,structureKey.get(0).getStructureKey(),code).isEmpty()){
-	            for (JournalArticle ja : getWCByCode(groupId,structureKey.get(0).getStructureKey(),code)) {
+            log.info("despues de getStruct");
+            List<JournalArticleImpl> result =  getWCByCode(groupId,structureKey.get(0).getStructureKey(),code);
+            log.info("despues de getWCByCode");
+	        if(!Validator.isNull(result) && !result.isEmpty()){
+	            for (JournalArticle ja : result) {
 	                if(JournalArticleLocalServiceUtil.isLatestVersion(groupId, ja.getArticleId(), ja.getVersion()) && !ja.isInTrash()){
 	                    journalArray.add(ja);
 	                }

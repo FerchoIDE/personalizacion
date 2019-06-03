@@ -21,7 +21,7 @@
 				{foreach $option in $options}
 					<div class="custom-control custom-radio custom-control-inline">
 						<label>
-							<input value="{$option.value}"  class="custom-control-input"
+							<input value="{$option.value}"  class="custom-control-input" data-language="{$defaultLanguageId}"
 								   data-path="{$path}" data-onclick="handleChange"
 								   id="radio_{$id}_1" name="radio_{$id}" type="radio">
 							<span class="custom-control-label">

@@ -31,10 +31,12 @@ class DocumentUI extends Component {
         console.log('-----receive event openSelectDocument----')
         event.preventDefault();
 
-        //new Service().getDocuments(this.brandSelected,this.hotelSelected,this.setResultDocument)
-        new Service().getDocuments('FA','GAL',this.setResultDocument)
-        //new Service().getFoldersForDocument(this.brandSelected,this.hotelSelected,this.setFoldersDocument)
-        new Service().getFoldersForDocument('FA','GAL',this.setFoldersDocument)
+        console.log("brandSelected=="+this.brandSelected)
+        console.log("hotelSelected=="+this.hotelSelected)
+        new Service().getDocuments(this.brandSelected,this.hotelSelected,this.setResultDocument)
+       // new Service().getDocuments('FA','GAL',this.setResultDocument)
+        new Service().getFoldersForDocument(this.brandSelected,this.hotelSelected,this.setFoldersDocument)
+        //new Service().getFoldersForDocument('FA','GAL',this.setFoldersDocument)
     }
     closeOpenTab(event){
         console.log('---closeOpenTab-----')
@@ -52,6 +54,14 @@ class DocumentUI extends Component {
         console.log('-----receive event openSelectDocument----')
         event.preventDefault();
 
+        $("input#"+this.id+"_FileNew.form-control").val('');
+        $("input#"+this.id+"_DescriptionNew.form-control").val('');
+        $("input#"+this.id+"_FolderNestedNew.form-control").val('');
+        var myselect = $("select#"+this.id+"_FolderNew.form-control");
+        myselect[0].selectedIndex = 0;
+
+
+        this.setState({fileInfo: undefined })
         this.setState({isOpenNew: true })
         new Service().getFoldersForDocument(this.brandSelected,this.hotelSelected,this.setFoldersDocument)
     }
@@ -208,8 +218,9 @@ class DocumentUI extends Component {
         event.preventDefault();
         let folderId = $("select#"+this.id+"_FolderNew.form-control").val();
         let description = $("input#"+this.id+"_DescriptionNew.form-control").val();
-        this.brandSelected,this.hotelSelected
-        new Service().saveDocument(this.brandSelected,this.hotelSelected,folderId,description,
+        let newFolder = $("input#"+this.id+"_FolderNestedNew.form-control").val();
+        //this.brandSelected,this.hotelSelected
+        new Service().saveDocument(this.brandSelected,this.hotelSelected,folderId,description,newFolder,
             this.fileInfo,this.resultSaveDocument)
 
     }
@@ -217,10 +228,27 @@ class DocumentUI extends Component {
         var _this =this
         window.setTimeout(handler =>{
             if(status==='OK'){
-                _this.setState({isOpenNew: false })
                 var _itemsAsociated = _this.itemsAsociated
                 _itemsAsociated[response['idFile']]=response
+
+                let _modelDocument = _this.modelDocument
+                if(_modelDocument===undefined)
+                    _modelDocument={}
+                if(_modelDocument[response['idFile']]===undefined) {
+                    _modelDocument[response['idFile']] = {}
+                }
+                _modelDocument[response['idFile']]['id']=response['idFile']
+                _modelDocument[response['idFile']]['fullPath']=_itemsAsociated[response['idFile']]['fullPath']
+
+                _this.handleChangeValue( {
+                    value: _modelDocument[response['idFile']],
+                    path: _this.path
+                });
+
+                _this.setState({modelDocument: _modelDocument })
                 _this.setState({itemsAsociated: _itemsAsociated })
+                _this.setState({isOpenNew: false })
+
             }else{
                 $("div#"+this.id+"_AlertErrorNew").css('display','block');
                 $("div#"+this.id+"_MsgErrorNew").text(response)
@@ -231,6 +259,8 @@ class DocumentUI extends Component {
     handleChangeValueDocument(data){
         let _modelDocument = this.modelDocument
         console.log('start------------handleChangeValueDocument----------------'+JSON.stringify(_modelDocument))
+        if(data.language===undefined)
+            data.language='es_ES'
         if(_modelDocument===undefined)
             _modelDocument={}
         const names = data.path.split('/');
@@ -238,13 +268,19 @@ class DocumentUI extends Component {
             _modelDocument[names[0]]={}
             _modelDocument[names[0]]['id']=names[0]
         }
+        if(_modelDocument[names[0]][data.language]===undefined){
+            _modelDocument[names[0]][data.language]={}
+            _modelDocument[names[0]][data.language]['id']=_modelDocument[names[0]]['id']
+            _modelDocument[names[0]][data.language]['fullPath']=_modelDocument[names[0]]['fullPath']
+        }
 
-        _modelDocument[names[0]][names[1]]=data.value
+        _modelDocument[names[0]][data.language][names[1]]=data.value
 
         console.log('end------------handleChangeValueDocument----------------'+JSON.stringify(_modelDocument))
         this.setState({modelDocument: _modelDocument })
         this.handleChangeValue( {
-            value: _modelDocument[names[0]],
+            value: _modelDocument[names[0]][data.language],
+            language: data.language,
             path: this.path
         });
 

@@ -7,6 +7,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import generatorviewclient.api.impl.FileEntryApi;
 import generatorviewclient.api.impl.JournalApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import generatorviewclient.util.ConstantUtil;
@@ -48,13 +49,33 @@ public class GetJournalsResource implements MVCResourceCommand {
             resourceResponse.setCharacterEncoding("UTF-8");
             resourceResponse.setContentType("application/json");
 
-           // String brand = jsonObject.getString("brand");
+           //String brand = jsonObject.getString("brand");
             Long brand = jsonObject.getLong("brand");
-            //String codeHotel = jsonObject.getString("codeHotel");
+           // String codeHotel = jsonObject.getString("codeHotel");
             Long codeHotel = jsonObject.getLong("codeHotel");
             String nameField = jsonObject.getString("nameField");
-            if(ConstantUtil.isDestination(nameField) && !jsonObject.has("folderId"))
-                jsonObject.put("folderId",ConstantUtil.FOLDER_DESTINATION_ID);
+
+            Long categoryId=0L;
+            if(codeHotel!=null)
+                categoryId = codeHotel;
+            else if(brand!=null)
+                categoryId = brand;
+
+            /*Long folderId = null;
+            if(jsonObject.has("folderId"))
+                 folderId = jsonObject.getLong("folderId");
+
+          /* if(ConstantUtil.isDestination(nameField) && folderId == null)
+               folderId =ConstantUtil.FOLDER_DESTINATION_ID;
+
+            if (folderId == null) {
+                folderId = new JournalApi().getBaseFolder(portletGroupId, brand, codeHotel);
+            }
+
+           */
+
+
+            //    jsonObject.put("folderId",ConstantUtil.FOLDER_DESTINATION_ID);
 
             List<JournalArticle> array = new LinkedList<>();
             /*
@@ -81,7 +102,8 @@ public class GetJournalsResource implements MVCResourceCommand {
                 //getListJournalFolders
             }*/
 
-            array = new JournalApi().getWebContentsByCategoryIdAndType(portletGroupId,  codeHotel, ConstantUtil.getStructureId().get(nameField));
+            System.out.println("categoryId==="+categoryId);
+            array = new JournalApi().getWebContentsByCategoryIdAndType(portletGroupId,  categoryId, ConstantUtil.getStructureId().get(nameField));
 
             JSONArray lsResult = new JSONArray();
 

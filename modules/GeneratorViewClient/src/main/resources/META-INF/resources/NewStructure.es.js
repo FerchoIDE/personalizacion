@@ -59,7 +59,7 @@ class NewStructure extends Component {
     changeBrand(event) {
         console.log('-----changeBrand----')
         // event.preventDefault();
-        let _brandIdSelect = event.currentTarget.value
+        let _brandIdSelect =Number( event.currentTarget.value)
         let _brandSelect = event.currentTarget.selectedOptions["0"].label
         this.setState({msgErrorPath: null})
         this.setState({brandIdSelected: _brandIdSelect})
@@ -131,12 +131,33 @@ class NewStructure extends Component {
 
     saveSelectPath(event) {
         console.log('-----saveSelectPath----')
+        $("#loadingSelectPath").toggleClass("loading-animation");
         event.preventDefault();
         if (this.structureId === '35835') {
             var _parent = this
             new Service().validateCodeHotel(this.brandSelected, this.hotelSelected, this.brandIdSelected, result => {
                 console.log("-------------" + JSON.stringify(result))
+                $("#loadingSelectPath").toggleClass("loading-animation");
                 if (result['status'] === 'OK') {
+                    //input_codeHotel_es_ES
+                    $("#input_codeHotel_es_ES").val(_parent.hotelSelected);
+                    $("#input_codeHotel_en_US").val(_parent.hotelSelected);
+
+                    var eventES = {
+                        path: 'codeHotel',
+                        value: _parent.hotelSelected,
+                        language: 'es_ES'
+                    }
+                    var eventUS = {
+                        path: 'codeHotel',
+                        value: _parent.hotelSelected,
+                        language: 'en_US'
+                    }
+                    _parent.handleChangeValue(eventES)
+                    _parent.handleChangeValue(eventUS)
+                    $("#input_codeHotel_es_ES").attr('disabled', 'disabled');
+                    $("#input_codeHotel_en_US").attr('disabled', 'disabled');
+
                     _parent.setState({hotelIdSelected: result["categoryId"]})
                     _parent.setState({isOnLoad: false})
                 } else {
@@ -152,6 +173,7 @@ class NewStructure extends Component {
             var _parent = this
             new Service().validateCodeBrand(this.brandSelected, result => {
                 console.log("-------------" + JSON.stringify(result))
+                $("#loadingSelectPath").toggleClass("loading-animation");
                 if (result['status'] === 'OK') {
 
                     $("#input_codeBrand_es_ES").val(_parent.brandSelected);
@@ -184,7 +206,7 @@ class NewStructure extends Component {
             return;
         }
 
-
+        $("#loadingSelectPath").toggleClass("loading-animation");
         this.setState({isOnLoad: false})
     }
 

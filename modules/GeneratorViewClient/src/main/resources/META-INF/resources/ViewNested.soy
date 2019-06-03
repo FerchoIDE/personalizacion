@@ -20,6 +20,8 @@
 
 	{@param? brandSelected: string}
 	{@param? hotelSelected: string}
+	{@param? brandIdSelected: number}
+	{@param? hotelIdSelected: number}
 	{@param? handleChangeValue: ?}
 
 	{let $show: isNonnull($collapseInfo?['accordion' + $id + 'Heading'])?($collapseInfo?['accordion' + $id + 'Heading'] ? '' : 'show'):'' /}
@@ -106,6 +108,8 @@
 												{param contextPath: $contextPath /}
 												{param brandSelected: $brandSelected/}
 												{param hotelSelected: $hotelSelected/}
+												{param brandIdSelected: $brandIdSelected/}
+												{param hotelIdSelected: $hotelIdSelected/}
 												{param path:$path+'/'+ $field['name'] /}
 											{/call}
 										{elseif $field['type'] == 'ddm-documentlibrary'}

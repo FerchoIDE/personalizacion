@@ -50,7 +50,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var path = soy.asserts.assertType(opt_data.path == null || (goog.isString(opt_data.path) || opt_data.path instanceof goog.soy.data.SanitizedContent), 'path', opt_data.path, '!goog.soy.data.SanitizedContent|null|string|undefined');
-  var finalValue__soy1717 = (value != null) ? value : '';
+  var finalValue__soy1741 = (value != null) ? value : '';
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
@@ -65,6 +65,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenStart('select');
           incrementalDom.attr('class', 'form-control');
           incrementalDom.attr('data-path', path);
+          incrementalDom.attr('data-language', defaultLanguageId);
           incrementalDom.attr('data-onchange', 'handleChange');
           incrementalDom.attr('id', 'select_' + id);
       incrementalDom.elementOpenEnd();
@@ -75,14 +76,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.text('Selecciona ');
           soyIdom.print(label);
         incrementalDom.elementClose('option');
-        var option1736List = options;
-        var option1736ListLen = option1736List.length;
-        for (var option1736Index = 0; option1736Index < option1736ListLen; option1736Index++) {
-            var option1736Data = option1736List[option1736Index];
+        var option1762List = options;
+        var option1762ListLen = option1762List.length;
+        for (var option1762Index = 0; option1762Index < option1762ListLen; option1762Index++) {
+            var option1762Data = option1762List[option1762Index];
             incrementalDom.elementOpenStart('option');
-                incrementalDom.attr('value', option1736Data.value);
+                incrementalDom.attr('value', option1762Data.value);
             incrementalDom.elementOpenEnd();
-              soyIdom.print(option1736Data.label[defaultLanguageId]);
+              soyIdom.print(option1762Data.label[defaultLanguageId]);
             incrementalDom.elementClose('option');
           }
       incrementalDom.elementClose('select');

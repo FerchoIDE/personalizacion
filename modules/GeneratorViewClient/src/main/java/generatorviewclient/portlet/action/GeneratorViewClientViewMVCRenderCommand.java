@@ -95,6 +95,10 @@ if(journalArticleService==null){
 									journalArticle.getFolder().getParentFolder().getName());
 
 						} catch (Exception ex) {
+							mapElement.put(
+									"marca",
+									"unknown");
+
 						}
 
 						mapElement.put("id", journalArticle.getArticleId());

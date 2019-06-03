@@ -407,8 +407,9 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	    
 	    @Override
 	    public List<JournalArticle> searchWebContentByCodeHotelFirstLevel(Long groupId,String structureName,String code) throws PortalException{
-	        if( getFoldersWCByCode(groupId, structureName, code)!=null){
-	            return  getFoldersWCByCode(groupId, structureName, code);
+			List<JournalArticle> result = getFoldersWCByCode(groupId, structureName, code);
+	 	if( result!=null){
+	            return  result;
 	        }else{
 	            return new ArrayList<>();
 	        }

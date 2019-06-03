@@ -3,7 +3,7 @@
 
 <root available-locales="{{ aviableLocales }}" default-locale="{{ localeDefault }}">
 {% for field in fields %}
-<dynamic-element name="{{field.name}}" type="selection_break" index-type="{{field.indexType}}">
+<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{field.name}}" type="selection_break" index-type="{{field.indexType}}">
     {{ nested(field.nestedFields) }}
 </dynamic-element>
 {% endfor %}
