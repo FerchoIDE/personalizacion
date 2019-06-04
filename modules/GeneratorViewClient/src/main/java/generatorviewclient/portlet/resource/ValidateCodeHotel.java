@@ -76,7 +76,7 @@ public class ValidateCodeHotel implements MVCResourceCommand {
 
                 LOG.info("step 7  Created Folder Journal");
 
-                Long categoryId = FolderUtil.createCategory(ConstantUtil.VOCABULARY_ID,portletGroupId,codeHotel,"Category from "+codeHotel,userId,brandId);
+                Long categoryId = FolderUtil.createCategory(ConstantUtil.VOCABULARY_BRAND_ID,portletGroupId,codeHotel,"Category from "+codeHotel,userId,brandId);
                 LOG.info("step 8 "+ categoryId);
 
                 jsonObjecResponse.put("status", "OK");

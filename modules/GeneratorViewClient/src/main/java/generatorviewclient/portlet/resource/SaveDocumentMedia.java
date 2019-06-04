@@ -35,7 +35,7 @@ public class SaveDocumentMedia implements MVCResourceCommand {
             long portletGroupId = themeDisplay.getLayout().getGroupId();
             Long userId = themeDisplay.getUserId();
 
-            if (userId == null) {
+            if (userId == null || userId==0) {
                 generateError(resourceResponse.getPortletOutputStream(), "Es requerido iniciar Sesion");
                 return true;
             }

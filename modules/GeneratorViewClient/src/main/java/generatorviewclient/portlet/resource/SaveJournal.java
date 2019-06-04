@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import generatorviewclient.api.impl.JournalApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
+import generatorviewclient.util.ConstantUtil;
 import generatorviewclient.util.FileUtil;
 import org.json.JSONObject;
 import org.osgi.service.component.annotations.Component;
@@ -33,7 +34,7 @@ public class SaveJournal implements MVCResourceCommand {
             long portletGroupId = themeDisplay.getLayout().getGroupId();
             Long userId = themeDisplay.getUserId();
 
-            if (userId == null) {
+            if (userId == null|| userId==0) {
                 generateError(resourceResponse.getPortletOutputStream(), "Es requerido iniciar Sesion");
                 return true;
             }
@@ -41,7 +42,7 @@ public class SaveJournal implements MVCResourceCommand {
             JSONObject jsonObject = new JSONObject(body);
 
             Long folderId;
-            if(jsonObject.getString("ddmStructure").equalsIgnoreCase("200950"))
+            if(jsonObject.getString("ddmStructure").equalsIgnoreCase(String.valueOf(ConstantUtil.HOTEL_STRUCTURE_KEY)))
                 folderId = new JournalApi().getBaseFolder(portletGroupId,jsonObject.getString("brand"),null);
             else
                 folderId = new JournalApi().getBaseFolder(portletGroupId,null,null);

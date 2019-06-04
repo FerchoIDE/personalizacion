@@ -30,8 +30,7 @@ var $templateAlias1 = Soy.getTemplate('Header.incrementaldom', 'render');
 /**
  * @param {{
  *  id: (!goog.soy.data.SanitizedContent|string),
- *  navigationURL: (!goog.soy.data.SanitizedContent|string),
- *  releaseInfo: (!goog.soy.data.SanitizedContent|null|string|undefined)
+ *  navigationURL: (!goog.soy.data.SanitizedContent|string)
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
  * @param {Object<string, *>=} opt_ijData_deprecated
@@ -67,8 +66,7 @@ exports.render = $render;
 /**
  * @typedef {{
  *  id: (!goog.soy.data.SanitizedContent|string),
- *  navigationURL: (!goog.soy.data.SanitizedContent|string),
- *  releaseInfo: (!goog.soy.data.SanitizedContent|null|string|undefined)
+ *  navigationURL: (!goog.soy.data.SanitizedContent|string)
  * }}
  */
 $render.Params;

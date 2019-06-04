@@ -16,6 +16,10 @@ import Soy from 'metal-soy';
 import templates from './NewStructure.soy';
 import NewStructureState from "./state/NewStructureState"
 
+const structureIdHotel= '35835'
+const structureIdBrand= '35912'
+const structureIdRate= '35796'
+
 /**
  * View Component
  */
@@ -67,12 +71,12 @@ class NewStructure extends Component {
         this.model.setBrand(_brandSelect)
         $("#btnSelectPath").attr('disabled', 'disabled');
 
-        if (this.structureId === '35835') {
+        if (this.structureId === structureIdHotel) {
             $("#txtCodeHotel").removeAttr('disabled');
             return;
         }
 
-        if (this.structureId === '35796') {
+        if (this.structureId === structureIdRate) {
             $("#btnSelectPath").removeAttr('disabled');
             return;
         }
@@ -133,7 +137,7 @@ class NewStructure extends Component {
         console.log('-----saveSelectPath----')
         $("#loadingSelectPath").toggleClass("loading-animation");
         event.preventDefault();
-        if (this.structureId === '35835') {
+        if (this.structureId === structureIdHotel) {
             var _parent = this
             new Service().validateCodeHotel(this.brandSelected, this.hotelSelected, this.brandIdSelected, result => {
                 console.log("-------------" + JSON.stringify(result))
@@ -169,7 +173,7 @@ class NewStructure extends Component {
             return;
         }
 
-        if (this.structureId === '35912') {
+        if (this.structureId === structureIdBrand) {
             var _parent = this
             new Service().validateCodeBrand(this.brandSelected, result => {
                 console.log("-------------" + JSON.stringify(result))

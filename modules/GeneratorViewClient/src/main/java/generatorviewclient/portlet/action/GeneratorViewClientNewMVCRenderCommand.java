@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import generatorviewclient.api.impl.VocabularyApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
+import generatorviewclient.util.ConstantUtil;
 import generatorviewclient.util.JsonUtil;
 import org.osgi.service.component.annotations.Component;
 
@@ -117,7 +118,7 @@ System.out.println("antes de asignar -------------");
         try {
             //getCategoriesByGroupAndVacabularyFirstLevel
 
-            template.put("categoryBrands", vocabularyApi.getCategoriesByGroupAndVacabularyIdAllLevels(portletGroupId, 35660L, 0L));
+            template.put("categoryBrands", vocabularyApi.getCategoriesByGroupAndVacabularyIdAllLevels(portletGroupId, ConstantUtil.VOCABULARY_BRAND_ID, 0L));
         } catch (PortalException e) {
             e.printStackTrace();
             new PortletException(e);

@@ -3,6 +3,7 @@ package generatorviewclient.config;
 import java.util.Date;
 import java.util.Map;
 
+import generatorviewclient.util.ConstantUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -42,25 +43,18 @@ public class ConfigurationAction extends DefaultConfigurationAction{
         if (_configuration != null) {
             System.out.println(_configuration.name());
             //Contants.DLFILEENTRY_BASE=_configuration.DLFileEntryFolderBase();
-            Contants.DLFILEENTRY_BASE=34905L;// _configuration.DLFileEntryFolderBaseId();//_configuration.DLFileEntryFolderBase();
-            Contants.JOURNAL_HOTEL=35838L;//_configuration.JournalFolderHotelBaseId();//_configuration.JournalFolderHotelBase();
-            String[] STRUCTURE_IDS={"35835","35826","35796","35956","35832","35823","35912","35962","35812","35968","35820","35965","35959","35823"};
+            Contants.DLFILEENTRY_BASE=ConstantUtil.DOCUMENT_MEDIA_BASE_FOLDER_ID;// _configuration.DLFileEntryFolderBaseId();//_configuration.DLFileEntryFolderBase();
+            Contants.JOURNAL_HOTEL=ConstantUtil.JOURNAL_BASE_FOLDER_ID;//_configuration.JournalFolderHotelBaseId();//_configuration.JournalFolderHotelBase();
+            String[] STRUCTURE_IDS={String.valueOf(ConstantUtil.HOTEL_STRUCTURE_ID),String.valueOf(ConstantUtil.ROOM_STRUCTURE_ID),
+                    String.valueOf(ConstantUtil.RATE_STRUCTURE_ID),String.valueOf(ConstantUtil.BAR_STRUCTURE_ID),
+                    String.valueOf(ConstantUtil.RESTAURANT_STRUCTURE_ID),String.valueOf(ConstantUtil.BRAND_STRUCTURE_ID),
+                    String.valueOf(ConstantUtil.SPA_STRUCTURE_ID),String.valueOf(ConstantUtil.GYM_STRUCTURE_ID),
+                    String.valueOf(ConstantUtil.DESTINATION_STRUCTURE_ID),String.valueOf(ConstantUtil.FACILITY_STRUCTURE_ID),
+                    String.valueOf(ConstantUtil.GENERIC_STRUCTURE_ID),String.valueOf(ConstantUtil.KIDSCLUB_STRUCTURE_ID),
+                    String.valueOf(ConstantUtil.MEETING_STRUCTURE_ID)};
+
             Contants.STRUCTURE_IDS=STRUCTURE_IDS;//_configuration.JournalFolderHotelBase();
 
-           // Contants.JOURNAL_HOTEL=_configuration.JournalFolderHotelBase();
-/*         
- * 			String[] DLFILEENTRY_BASE = { "Marcas","Media" };
-            Contants.DLFILEENTRY_BASE= DLFILEENTRY_BASE;//_configuration.DLFileEntryFolderBase();
-            String[] JOURNAL_HOTEL={"Posadas","Hotel"};
-            Contants.JOURNAL_HOTEL=JOURNAL_HOTEL;//_configuration.JournalFolderHotelBase();
-            Contants.JOURNAL_HOTEL=_configuration.JournalFolderHotelBase();
-/*       
- *    
- *    for (String iterable_element : Contants.STRUCTURE_IDS) {
-                System.out.println("Registro actual en la configuración, info="+iterable_element);
-
-            }
-            */
 
         } else {
             System.out.println("No hay datos en la configuración inicial");

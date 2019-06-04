@@ -7,8 +7,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class ConstantUtil {
-    public static Long VOCABULARY_ID=35660L;
+    public static Long VOCABULARY_BRAND_ID=35660L;
     public static Long FOLDER_DESTINATION_ID=35815L;
+
+    public static Long HOTEL_STRUCTURE_ID=35835L;
+    public static Long ROOM_STRUCTURE_ID=35826L;
+    public static Long RATE_STRUCTURE_ID=35796L;
+    public static Long BAR_STRUCTURE_ID=35956L;
+    public static Long RESTAURANT_STRUCTURE_ID=35832L;
+    public static Long BRAND_STRUCTURE_ID=35912L;
+    public static Long SPA_STRUCTURE_ID=35829L;
+    public static Long GYM_STRUCTURE_ID=35962L;
+    public static Long DESTINATION_STRUCTURE_ID=35812L;
+    public static Long FACILITY_STRUCTURE_ID=35820L;
+    public static Long GENERIC_STRUCTURE_ID=35965L;
+    public static Long KIDSCLUB_STRUCTURE_ID=35959L;
+    public static Long MEETING_STRUCTURE_ID=35823L;
+
+    public static Long HOTEL_STRUCTURE_KEY=200950L;
+    public static Long ROOM_STRUCTURE_KEY=201291L;
+    public static Long RATE_STRUCTURE_KEY=39858L;
+    public static Long BAR_STRUCTURE_KEY=48306L;
+    public static Long RESTAURANT_STRUCTURE_KEY=200191L;
+    public static Long BRAND_STRUCTURE_KEY=42072L;
+    public static Long SPA_STRUCTURE_KEY=200204L;
+    public static Long GYM_STRUCTURE_KEY=48320L;
+    public static Long DESTINATION_STRUCTURE_KEY=115809L;
+    public static Long FACILITY_STRUCTURE_KEY=116421L;
+    public static Long GENERIC_STRUCTURE_KEY=48345L;
+    public static Long KIDSCLUB_STRUCTURE_KEY=48316L;
+    public static Long MEETING_STRUCTURE_KEY=200208L;
+
+
+    public static Long DOCUMENT_MEDIA_BASE_FOLDER_ID=34905L;
+    public static Long JOURNAL_BASE_FOLDER_ID=35838L;
+
+
+
+
+
     public static String fullPath(JournalFolder folder) {
         String folderName = folder.getName();
         JournalFolder parent = null;
@@ -42,39 +79,10 @@ public abstract class ConstantUtil {
         //facilityLinkHotel
         //destinationLinkHotel
         Map<String,Long> _mp = new HashMap<>();
-        _mp.put("roomLinkHotel",35826L);
-        _mp.put("destinationLinkHotel",35812L);
+        _mp.put("roomLinkHotel",ROOM_STRUCTURE_ID);
+        _mp.put("destinationLinkHotel",DESTINATION_STRUCTURE_ID);
         return _mp;
-       /* _mp.put("",35835L);
-        _mp.put("",35826L);
-        _mp.put("",35796L);
-        _mp.put("",35956L);
-        _mp.put("",35832L);
-        _mp.put("",35823L);
-        _mp.put("",35912L);
-        _mp.put("",35962L);
-        _mp.put("",35812L);
-        _mp.put("",35968L);
-        _mp.put("",35820L);
-        _mp.put("",35965L);
-        _mp.put("",35959L);
-        _mp.put("",35823L);*/
 
     }
-    /*
-    35835">Hot
-            35826">Hab
-            35796">Pro
-            35956">Bar
-            35832">Res
-            35823">Marcas
-            35912">Spa
-            35962">Gim
-            35812">Destinos
-            35968">Geolocation
-            35820">Instalaciones
-            35965">Gen
-            35959">Club
-            35823">Sala
-            */
+
 }

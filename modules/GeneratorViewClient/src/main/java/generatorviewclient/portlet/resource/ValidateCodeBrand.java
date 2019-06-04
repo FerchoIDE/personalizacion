@@ -64,7 +64,7 @@ public class ValidateCodeBrand implements MVCResourceCommand {
 
                 System.out.println("step 7  Created Folder Journal");
 
-                Long categoryId = FolderUtil.createCategory(ConstantUtil.VOCABULARY_ID, portletGroupId, brand, "Category from " + brand, userId, 0L);
+                Long categoryId = FolderUtil.createCategory(ConstantUtil.VOCABULARY_BRAND_ID, portletGroupId, brand, "Category from " + brand, userId, 0L);
                 System.out.println("step 8 " + categoryId);
 
                 jsonObjecResponse.put("status", "OK");

@@ -24,6 +24,8 @@
 	{@param? hotelIdSelected: number}
 	{@param? handleChangeValue: ?}
 
+
+	{let $structureIdRate: '35796' /}
 	{let $show: isNonnull($collapseInfo?['accordion' + $id + 'Heading'])?($collapseInfo?['accordion' + $id + 'Heading'] ? '' : 'show'):'' /}
 	<div id="{$id}">
 			<div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
@@ -150,7 +152,7 @@
 										<div>&nbsp;&nbsp;</div>
 									{/foreach}
 									{if isNonnull($checkedConcat)}
-										{if $structureId == '35796' and isNonnull($checkedConcat[$name]) and  ($name == 'Restrictions' or $name == 'Benefits1' or $name == 'occupationRate')}
+										{if $structureId ==$structureIdRate and isNonnull($checkedConcat[$name]) and  ($name == 'Restrictions' or $name == 'Benefits1' or $name == 'occupationRate')}
 											</div>
 
 											<div class="input-group">

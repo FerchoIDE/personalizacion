@@ -33,7 +33,9 @@ var $templateAlias1 = Soy.getTemplate('TableUI.incrementaldom', 'render');
  *  navigationNewURL: (!goog.soy.data.SanitizedContent|string),
  *  data: !Object<!goog.soy.data.SanitizedContent|string,!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>>,
  *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
- *  keys: !Array<!goog.soy.data.SanitizedContent|string>
+ *  keys: !Array<!goog.soy.data.SanitizedContent|string>,
+ *  STRUCTURE_ID: !Object<!goog.soy.data.SanitizedContent|string,?>,
+ *  STRUCTURE_KEY: !Object<!goog.soy.data.SanitizedContent|string,?>
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
  * @param {Object<string, *>=} opt_ijData_deprecated
@@ -58,6 +60,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var header = soy.asserts.assertType(goog.isObject(opt_data.header), 'header', opt_data.header, '!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>');
   /** @type {!Array<!goog.soy.data.SanitizedContent|string>} */
   var keys = soy.asserts.assertType(goog.isArray(opt_data.keys), 'keys', opt_data.keys, '!Array<!goog.soy.data.SanitizedContent|string>');
+  /** @type {!Object<!goog.soy.data.SanitizedContent|string,?>} */
+  var STRUCTURE_ID = soy.asserts.assertType(goog.isObject(opt_data.STRUCTURE_ID), 'STRUCTURE_ID', opt_data.STRUCTURE_ID, '!Object<!goog.soy.data.SanitizedContent|string,?>');
+  /** @type {!Object<!goog.soy.data.SanitizedContent|string,?>} */
+  var STRUCTURE_KEY = soy.asserts.assertType(goog.isObject(opt_data.STRUCTURE_KEY), 'STRUCTURE_KEY', opt_data.STRUCTURE_KEY, '!Object<!goog.soy.data.SanitizedContent|string,?>');
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
@@ -94,43 +100,43 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenEnd();
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35835');
+            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['HOTEL']);
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Hoteles');
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35826');
+            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['ROOM']);
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Habitaciones');
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35796');
+            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['RATE']);
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Promociones');
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35956');
+            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['PUB']);
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Bar');
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35832');
+            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['RESTAURANT']);
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Restaurante');
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35912');
+            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['BRAND']);
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Marcas');
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35829');
+            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['SPA']);
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Spa');
         incrementalDom.elementClose('a');
@@ -140,37 +146,37 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('div');
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35962');
+            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['GYM']);
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Gimnasio');
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35812');
+            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['DESTINATION']);
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Destinos');
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35820');
+            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['FACILITY']);
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Instalaciones');
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35965');
+            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['GENERIC']);
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Gen\u00E9rico');
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35959');
+            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['KIDSCLUB']);
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Club de Fiestas Infantiles');
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=35823');
+            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['MEETING']);
         incrementalDom.elementOpenEnd();
           incrementalDom.text('Sala de Reuniones');
         incrementalDom.elementClose('a');
@@ -526,7 +532,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: '200950', header: header, contextPath: contextPath, keys: keys, data: data['200950']}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['HOTEL'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['HOTEL']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineRoomsTab');
@@ -538,7 +544,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: '201291', header: header, contextPath: contextPath, keys: keys, data: data['201291']}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['ROOM'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['ROOM']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineRatesTab');
@@ -550,7 +556,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: '39858', header: header, contextPath: contextPath, keys: keys, data: data['39858']}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['RATE'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['RATE']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlinePubsTab');
@@ -562,7 +568,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: '48306', header: header, contextPath: contextPath, keys: keys, data: data['48306']}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['PUB'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['PUB']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineRestaurantsTab');
@@ -574,7 +580,103 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: '200191', header: header, contextPath: contextPath, keys: keys, data: data['200191']}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['RESTAURANT'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['RESTAURANT']]}, null, opt_ijData);
+      incrementalDom.elementClose('div');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('aria-labelledby', 'navUnderlineSpaTab');
+          incrementalDom.attr('class', (selectedTab == 'navUnderlineSpaTab' ? 'active show' : '') + '  tab-pane');
+          incrementalDom.attr('id', 'navUnderlineSpa');
+          incrementalDom.attr('role', 'tabpanel');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        $templateAlias1({id: STRUCTURE_KEY['SPA'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['SPA']]}, null, opt_ijData);
+      incrementalDom.elementClose('div');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('aria-labelledby', 'navUnderlineBrandsTab');
+          incrementalDom.attr('class', (selectedTab == 'navUnderlineBrandsTab' ? 'active show' : '') + '  tab-pane');
+          incrementalDom.attr('id', 'navUnderlineBrands');
+          incrementalDom.attr('role', 'tabpanel');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        $templateAlias1({id: STRUCTURE_KEY['BRAND'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['BRAND']]}, null, opt_ijData);
+      incrementalDom.elementClose('div');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('aria-labelledby', 'navUnderlineGymsTab');
+          incrementalDom.attr('class', (selectedTab == 'navUnderlineGymsTab' ? 'active show' : '') + '  tab-pane');
+          incrementalDom.attr('id', 'navUnderlineGyms');
+          incrementalDom.attr('role', 'tabpanel');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        $templateAlias1({id: STRUCTURE_KEY['GYM'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['GYM']]}, null, opt_ijData);
+      incrementalDom.elementClose('div');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('aria-labelledby', 'navUnderlineDestinationsTab');
+          incrementalDom.attr('class', (selectedTab == 'navUnderlineDestinationsTab' ? 'active show' : '') + '  tab-pane');
+          incrementalDom.attr('id', 'navUnderlineDestinations');
+          incrementalDom.attr('role', 'tabpanel');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        $templateAlias1({id: STRUCTURE_KEY['DESTINATION'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['DESTINATION']]}, null, opt_ijData);
+      incrementalDom.elementClose('div');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('aria-labelledby', 'navUnderlineFacilitiesTab');
+          incrementalDom.attr('class', (selectedTab == 'navUnderlineFacilitiesTab' ? 'active show' : '') + '  tab-pane');
+          incrementalDom.attr('id', 'navUnderlineFacilities');
+          incrementalDom.attr('role', 'tabpanel');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        $templateAlias1({id: STRUCTURE_KEY['FACILITY'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['FACILITY']]}, null, opt_ijData);
+      incrementalDom.elementClose('div');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('aria-labelledby', 'navUnderlineGenericsTab');
+          incrementalDom.attr('class', (selectedTab == 'navUnderlineGenericsTab' ? 'active show' : '') + '  tab-pane');
+          incrementalDom.attr('id', 'navUnderlineGenerics');
+          incrementalDom.attr('role', 'tabpanel');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        $templateAlias1({id: STRUCTURE_KEY['GENERIC'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['GENERIC']]}, null, opt_ijData);
+      incrementalDom.elementClose('div');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('aria-labelledby', 'navUnderlineChildrensClubTab');
+          incrementalDom.attr('class', (selectedTab == 'navUnderlineChildrensClubTab' ? 'active show' : '') + '  tab-pane');
+          incrementalDom.attr('id', 'navUnderlineChildrensClub');
+          incrementalDom.attr('role', 'tabpanel');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        $templateAlias1({id: STRUCTURE_KEY['KIDSCLUB'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['KIDSCLUB']]}, null, opt_ijData);
+      incrementalDom.elementClose('div');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('aria-labelledby', 'navUnderlineMeetingRoomsTab');
+          incrementalDom.attr('class', (selectedTab == 'navUnderlineMeetingRoomsTab' ? 'active show' : '') + '  tab-pane');
+          incrementalDom.attr('id', 'navUnderlineMeetingRooms');
+          incrementalDom.attr('role', 'tabpanel');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        incrementalDom.elementOpen('br');
+        incrementalDom.elementClose('br');
+        $templateAlias1({id: STRUCTURE_KEY['MEETING'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['MEETING']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
     incrementalDom.elementClose('div');
   incrementalDom.elementClose('div');
@@ -589,7 +691,9 @@ exports.render = $render;
  *  navigationNewURL: (!goog.soy.data.SanitizedContent|string),
  *  data: !Object<!goog.soy.data.SanitizedContent|string,!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>>,
  *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
- *  keys: !Array<!goog.soy.data.SanitizedContent|string>
+ *  keys: !Array<!goog.soy.data.SanitizedContent|string>,
+ *  STRUCTURE_ID: !Object<!goog.soy.data.SanitizedContent|string,?>,
+ *  STRUCTURE_KEY: !Object<!goog.soy.data.SanitizedContent|string,?>
  * }}
  */
 $render.Params;
@@ -597,8 +701,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'View.render';
 }
 
-exports.render.params = ["id","changeTab","selectedTab","contextPath","navigationNewURL","data","header","keys"];
-exports.render.types = {"id":"string","changeTab":"?","selectedTab":"string","contextPath":"string","navigationNewURL":"string","data":"map<string,list<map<string,string>>>","header":"map<string,string>","keys":"list<string>"};
+exports.render.params = ["id","changeTab","selectedTab","contextPath","navigationNewURL","data","header","keys","STRUCTURE_ID","STRUCTURE_KEY"];
+exports.render.types = {"id":"string","changeTab":"?","selectedTab":"string","contextPath":"string","navigationNewURL":"string","data":"map<string,list<map<string,string>>>","header":"map<string,string>","keys":"list<string>","STRUCTURE_ID":"map<string,?>","STRUCTURE_KEY":"map<string,?>"};
 templates = exports;
 return exports;
 

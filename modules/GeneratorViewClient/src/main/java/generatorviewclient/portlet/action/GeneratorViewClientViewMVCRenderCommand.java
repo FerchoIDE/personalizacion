@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
@@ -23,6 +24,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 
+import generatorviewclient.util.ConstantUtil;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -51,10 +53,21 @@ if(journalArticleService==null){
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		long portletGroupId = themeDisplay.getLayout().getGroupId();
 		System.out.println("--------portletGroupId===" + portletGroupId);
+		Long userId = PortalUtil.getUserId(renderRequest);
+
+		if (userId == null || userId==0) {
+			System.out.println("-------------no loginnnnn==");
+	return "Header";
+		}
 		
 		
-		List<String> keysLst = Arrays.asList(
-			"200950", "201291", "39858", "48306", "200191", "48316", "200204");
+		List<String> keysLst = Arrays.asList(String.valueOf(ConstantUtil.HOTEL_STRUCTURE_KEY),String.valueOf(ConstantUtil.ROOM_STRUCTURE_KEY),
+				String.valueOf(ConstantUtil.RATE_STRUCTURE_KEY),String.valueOf(ConstantUtil.BAR_STRUCTURE_KEY),
+				String.valueOf(ConstantUtil.RESTAURANT_STRUCTURE_KEY),String.valueOf(ConstantUtil.BRAND_STRUCTURE_KEY),
+				String.valueOf(ConstantUtil.SPA_STRUCTURE_KEY),String.valueOf(ConstantUtil.GYM_STRUCTURE_KEY),
+				String.valueOf(ConstantUtil.DESTINATION_STRUCTURE_KEY),String.valueOf(ConstantUtil.FACILITY_STRUCTURE_KEY),
+				String.valueOf(ConstantUtil.GENERIC_STRUCTURE_KEY),String.valueOf(ConstantUtil.KIDSCLUB_STRUCTURE_KEY),
+				String.valueOf(ConstantUtil.MEETING_STRUCTURE_KEY));
 		OrderByComparator comparator = new ArticleModifiedDateComparator(false); // OrderByComparatorFactoryUtil.create("DLFileEntry", "createDate/modifiedDate", true/false);
 
 		Map<String, List<Map<String, String>>> mpResult = keysLst.stream().map(s -> {
@@ -62,7 +75,7 @@ if(journalArticleService==null){
 			//keys[0] = s;
 			List<Map<String, String>> lstElement = new LinkedList<>();
 			List<JournalArticle> lst =
-					journalArticleService.getStructureArticles(portletGroupId,s,0,10,comparator);
+					journalArticleService.getStructureArticles(portletGroupId,s,0,20,comparator);
 				//journalArticleService.getStructureArticles(keys);
 
 			if (lst!= null) {
@@ -85,7 +98,7 @@ if(journalArticleService==null){
 						   // System.out.println(
 						//	journalArticle.getDDMStructure());
 
-							if (s.equalsIgnoreCase("200950"))
+							if (s.equalsIgnoreCase(String.valueOf(ConstantUtil.HOTEL_STRUCTURE_ID)))
 								mapElement.put(
 									"marca",
 									journalArticle.getFolder().getName());
@@ -145,12 +158,51 @@ if(journalArticleService==null){
 		navigationURL.setParameter("mvcRenderCommandName", "NewStructure");
 
 		template.put("navigationNewURL", navigationURL.toString());
+		template.put("STRUCTURE_ID",getStructureID());
+		template.put("STRUCTURE_KEY",getStructureKEY());
 
 		ResourceURL resourceURL = renderResponse.createResourceURL();
 		resourceURL.setResourceID("getJournals");
 		System.out.println("-.-.-..-.-.-.--..-.-"+resourceURL.toString());
 
 		return "View";
+	}
+
+	private static Map<String,Long> getStructureID(){
+		Map<String,Long> result = new HashMap<>();
+		result.put("HOTEL",ConstantUtil.HOTEL_STRUCTURE_ID);
+		result.put("ROOM",ConstantUtil.ROOM_STRUCTURE_ID);
+		result.put("RATE",ConstantUtil.RATE_STRUCTURE_ID);
+		result.put("PUB",ConstantUtil.BAR_STRUCTURE_ID);
+		result.put("RESTAURANT",ConstantUtil.RESTAURANT_STRUCTURE_ID);
+		result.put("BRAND",ConstantUtil.BRAND_STRUCTURE_ID);
+		result.put("SPA",ConstantUtil.SPA_STRUCTURE_ID);
+		result.put("GYM",ConstantUtil.GYM_STRUCTURE_ID);
+		result.put("DESTINATION",ConstantUtil.DESTINATION_STRUCTURE_ID);
+		result.put("FACILITY",ConstantUtil.FACILITY_STRUCTURE_ID);
+		result.put("GENERIC",ConstantUtil.GENERIC_STRUCTURE_ID);
+		result.put("KIDSCLUB",ConstantUtil.KIDSCLUB_STRUCTURE_ID);
+		result.put("MEETING",ConstantUtil.MEETING_STRUCTURE_ID);
+
+		return result;
+	}
+
+	private static Map<String,String> getStructureKEY(){
+		Map<String,String> result = new HashMap<>();
+		result.put("HOTEL",String.valueOf(ConstantUtil.HOTEL_STRUCTURE_KEY));
+		result.put("ROOM",String.valueOf(ConstantUtil.ROOM_STRUCTURE_KEY));
+		result.put("RATE",String.valueOf(ConstantUtil.RATE_STRUCTURE_KEY));
+		result.put("PUB",String.valueOf(ConstantUtil.BAR_STRUCTURE_KEY));
+		result.put("RESTAURANT",String.valueOf(ConstantUtil.RESTAURANT_STRUCTURE_KEY));
+		result.put("BRAND",String.valueOf(ConstantUtil.BRAND_STRUCTURE_KEY));
+		result.put("SPA",String.valueOf(ConstantUtil.SPA_STRUCTURE_KEY));
+		result.put("GYM",String.valueOf(ConstantUtil.GYM_STRUCTURE_KEY));
+		result.put("DESTINATION",String.valueOf(ConstantUtil.DESTINATION_STRUCTURE_KEY));
+		result.put("FACILITY",String.valueOf(ConstantUtil.FACILITY_STRUCTURE_KEY));
+		result.put("GENERIC",String.valueOf(ConstantUtil.GENERIC_STRUCTURE_KEY));
+		result.put("KIDSCLUB",String.valueOf(ConstantUtil.KIDSCLUB_STRUCTURE_KEY));
+		result.put("MEETING",String.valueOf(ConstantUtil.MEETING_STRUCTURE_KEY));
+		return result;
 	}
 
 	private JournalArticleLocalService journalArticleService =

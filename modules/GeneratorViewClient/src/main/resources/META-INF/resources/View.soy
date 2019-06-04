@@ -14,6 +14,9 @@
 	{@param header: map<string,string>}
 	{@param keys: list<string>}
 
+	{@param STRUCTURE_ID: map<string,?>}
+	{@param STRUCTURE_KEY: map<string,?>}
+
 	<div id="{$id}">
 
 		<div class="btn-group dropdown" role="group">
@@ -25,20 +28,20 @@
 			</button>
 
 			<div class="dropdown-menu dropdown-menu-right">
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=35835">Hoteles</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=35826">Habitaciones</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=35796">Promociones</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=35956">Bar</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=35832">Restaurante</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=35912">Marcas</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=35829">Spa</a>
+				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['HOTEL']}">Hoteles</a>
+				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['ROOM']}">Habitaciones</a>
+				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['RATE']}">Promociones</a>
+				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['PUB']}">Bar</a>
+				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['RESTAURANT']}">Restaurante</a>
+				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['BRAND']}">Marcas</a>
+				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['SPA']}">Spa</a>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=35962">Gimnasio</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=35812">Destinos</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=35820">Instalaciones</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=35965">Genérico</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=35959">Club de Fiestas Infantiles</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId=35823">Sala de Reuniones</a>
+				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['GYM']}">Gimnasio</a>
+				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['DESTINATION']}">Destinos</a>
+				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['FACILITY']}">Instalaciones</a>
+				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['GENERIC']}">Genérico</a>
+				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['KIDSCLUB']}">Club de Fiestas Infantiles</a>
+				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['MEETING']}">Sala de Reuniones</a>
 			</div>
 		</div>
 		<br/>
@@ -160,66 +163,158 @@
 				<br/>
 				<br/>
 				{call TableUI.render}
-					{param id: '200950' /}
+					{param id: $STRUCTURE_KEY['HOTEL'] /}
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
-					{param data: $data['200950'] /}
+					{param data: $data[$STRUCTURE_KEY['HOTEL']] /}
 				{/call}
 			</div>
-
 			<div aria-labelledby="navUnderlineRoomsTab" class="{$selectedTab=='navUnderlineRoomsTab'?'active show':''}  tab-pane" id="navUnderlineRoomsTab"
 				 role="tabpanel">
 
 				<br/>
 				<br/>
 				{call TableUI.render}
-					{param id: '201291' /}
+					{param id: $STRUCTURE_KEY['ROOM'] /}
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
-					{param data: $data['201291'] /}
+					{param data: $data[$STRUCTURE_KEY['ROOM']] /}
 				{/call}
 			</div>
-
 			<div aria-labelledby="navUnderlineRatesTab" class="{$selectedTab=='navUnderlineRatesTab'?'active show':''}  tab-pane" id="navUnderlineRates"
 				 role="tabpanel">
 
 				<br/>
 				<br/>
 				{call TableUI.render}
-					{param id: '39858' /}
+					{param id: $STRUCTURE_KEY['RATE'] /}
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
-					{param data: $data['39858'] /}
+					{param data: $data[$STRUCTURE_KEY['RATE']] /}
 				{/call}
 			</div>
-
 			<div aria-labelledby="navUnderlinePubsTab" class="{$selectedTab=='navUnderlinePubsTab'?'active show':''}  tab-pane" id="navUnderlinePubs" role="tabpanel">
 
 				<br/>
 				<br/>
 				{call TableUI.render}
-					{param id: '48306' /}
+					{param id: $STRUCTURE_KEY['PUB'] /}
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
-					{param data: $data['48306'] /}
+					{param data: $data[$STRUCTURE_KEY['PUB']] /}
 				{/call}
 			</div>
-
 			<div aria-labelledby="navUnderlineRestaurantsTab" class="{$selectedTab=='navUnderlineRestaurantsTab'?'active show':''}  tab-pane"
 				 id="navUnderlineRestaurants" role="tabpanel">
 
 				<br/>
 				<br/>
 				{call TableUI.render}
-					{param id: '200191' /}
+					{param id: $STRUCTURE_KEY['RESTAURANT'] /}
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
-					{param data: $data['200191'] /}
+					{param data: $data[$STRUCTURE_KEY['RESTAURANT']] /}
+				{/call}
+			</div>
+			<div aria-labelledby="navUnderlineSpaTab" class="{$selectedTab=='navUnderlineSpaTab'?'active show':''}  tab-pane"
+				 id="navUnderlineSpa" role="tabpanel">
+				<br/>
+				<br/>
+				{call TableUI.render}
+					{param id: $STRUCTURE_KEY['SPA'] /}
+					{param header: $header /}
+					{param contextPath: $contextPath /}
+					{param keys: $keys /}
+					{param data: $data[$STRUCTURE_KEY['SPA']] /}
+				{/call}
+			</div>
+			<div aria-labelledby="navUnderlineBrandsTab" class="{$selectedTab=='navUnderlineBrandsTab'?'active show':''}  tab-pane"
+				 id="navUnderlineBrands" role="tabpanel">
+				<br/>
+				<br/>
+				{call TableUI.render}
+					{param id: $STRUCTURE_KEY['BRAND'] /}
+					{param header: $header /}
+					{param contextPath: $contextPath /}
+					{param keys: $keys /}
+					{param data: $data[$STRUCTURE_KEY['BRAND']] /}
+				{/call}
+			</div>
+			<div aria-labelledby="navUnderlineGymsTab" class="{$selectedTab=='navUnderlineGymsTab'?'active show':''}  tab-pane"
+				 id="navUnderlineGyms" role="tabpanel">
+				<br/>
+				<br/>
+				{call TableUI.render}
+					{param id:$STRUCTURE_KEY['GYM'] /}
+					{param header: $header /}
+					{param contextPath: $contextPath /}
+					{param keys: $keys /}
+					{param data: $data[$STRUCTURE_KEY['GYM']] /}
+				{/call}
+			</div>
+			<div aria-labelledby="navUnderlineDestinationsTab" class="{$selectedTab=='navUnderlineDestinationsTab'?'active show':''}  tab-pane"
+				 id="navUnderlineDestinations" role="tabpanel">
+				<br/>
+				<br/>
+				{call TableUI.render}
+					{param id: $STRUCTURE_KEY['DESTINATION'] /}
+					{param header: $header /}
+					{param contextPath: $contextPath /}
+					{param keys: $keys /}
+					{param data: $data[$STRUCTURE_KEY['DESTINATION']] /}
+				{/call}
+			</div>
+			<div aria-labelledby="navUnderlineFacilitiesTab" class="{$selectedTab=='navUnderlineFacilitiesTab'?'active show':''}  tab-pane"
+				 id="navUnderlineFacilities" role="tabpanel">
+				<br/>
+				<br/>
+				{call TableUI.render}
+					{param id: $STRUCTURE_KEY['FACILITY'] /}
+					{param header: $header /}
+					{param contextPath: $contextPath /}
+					{param keys: $keys /}
+					{param data: $data[$STRUCTURE_KEY['FACILITY']] /}
+				{/call}
+			</div>
+			<div aria-labelledby="navUnderlineGenericsTab" class="{$selectedTab=='navUnderlineGenericsTab'?'active show':''}  tab-pane"
+				 id="navUnderlineGenerics" role="tabpanel">
+				<br/>
+				<br/>
+				{call TableUI.render}
+					{param id: $STRUCTURE_KEY['GENERIC'] /}
+					{param header: $header /}
+					{param contextPath: $contextPath /}
+					{param keys: $keys /}
+					{param data: $data[$STRUCTURE_KEY['GENERIC']] /}
+				{/call}
+			</div>
+			<div aria-labelledby="navUnderlineChildrensClubTab" class="{$selectedTab=='navUnderlineChildrensClubTab'?'active show':''}  tab-pane"
+				 id="navUnderlineChildrensClub" role="tabpanel">
+				<br/>
+				<br/>
+				{call TableUI.render}
+					{param id: $STRUCTURE_KEY['KIDSCLUB']/}
+					{param header: $header /}
+					{param contextPath: $contextPath /}
+					{param keys: $keys /}
+					{param data: $data[$STRUCTURE_KEY['KIDSCLUB']] /}
+				{/call}
+			</div>
+			<div aria-labelledby="navUnderlineMeetingRoomsTab" class="{$selectedTab=='navUnderlineMeetingRoomsTab'?'active show':''}  tab-pane"
+				 id="navUnderlineMeetingRooms" role="tabpanel">
+				<br/>
+				<br/>
+				{call TableUI.render}
+					{param id: $STRUCTURE_KEY['MEETING'] /}
+					{param header: $header /}
+					{param contextPath: $contextPath /}
+					{param keys: $keys /}
+					{param data: $data[$STRUCTURE_KEY['MEETING']] /}
 				{/call}
 			</div>
 		</div>
