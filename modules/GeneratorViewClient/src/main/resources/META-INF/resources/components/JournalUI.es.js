@@ -5,6 +5,17 @@ import Service from "../service/Service"
 /**
  * TextUI Component
  */
+
+const structureIdRoom= '35826'
+const structureIdDestination= '35812'
+const mapTypeContent={
+    'roomLinkHotel':structureIdRoom,
+    'facilityLinkHotel':'facility',
+    'destinationLinkHotel':structureIdDestination
+}
+
+
+
 class JournalUI extends Component {
     created() {
         console.log('-----receive event created----'+this.id)
@@ -51,7 +62,32 @@ class JournalUI extends Component {
             return
         console.log('-----receive event openNewJournal----'+this.id)
         event.preventDefault();
-        let _url="http://localhost:8080/web/guest/home?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_structureId=35826&_generatorviewclient_mode=nested";
+        if(mapTypeContent[this.id]==='facility'){
+            this.setState({isOpenJournalType: true })
+            return
+        }
+        this.showNewJournal(mapTypeContent[this.id])
+    }
+    closeSelectJournalType(event){
+        if(event === undefined)
+            return
+        console.log('-----receive event closeSelectJournalType----'+this.id)
+        event.preventDefault();
+        this.setState({isOpenJournalType: false })
+    }
+    saveSelectJournalType(event){
+        if(event === undefined)
+            return
+        console.log('-----receive event saveSelectJournalType----'+this.id)
+        event.preventDefault();
+        var typeJournal=$("input[name="+this.id+"_typeJournal]:checked").val();
+        if(typeJournal!== undefined){
+            this.setState({isOpenJournalType: false })
+            this.showNewJournal(typeJournal)
+        }
+    }
+    showNewJournal(typeJournal){
+        let _url="http://localhost:8080/web/guest/home?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_structureId="+typeJournal+"&_generatorviewclient_mode=nested";
         $("#"+this.id+"_Iframe").attr('src',_url);
         this.setState({isOpenJournalNew: true })
         var _parent = this;
@@ -62,9 +98,6 @@ class JournalUI extends Component {
             $("#"+_parent.id+"_Iframe").attr('src','about:blank');
             //$(".modal-backdrop").attr('src','about:blank');
         }
-
-        //new Service().getJournals(this.brandSelected,this.hotelSelected,this.id,this.setResultJournal)
-        //new Service().getFoldersForJournal(this.brandSelected,this.hotelSelected,this.id,this.setFoldersJournal)
     }
     changeJournalSearchText(event){
         let _searchText=event.target.value;

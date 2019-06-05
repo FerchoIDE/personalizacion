@@ -71,7 +71,7 @@ public abstract class ConstantUtil {
     }
     public static  Long[]  getStructureIdFacility() {
 
-        Long[] _lDat2 = {35956L, 35832L, 35912L, 35962L, 35820L, 35959L, 35823L};
+        Long[] _lDat2 = {RESTAURANT_STRUCTURE_ID, MEETING_STRUCTURE_ID, GYM_STRUCTURE_ID, BAR_STRUCTURE_ID, SPA_STRUCTURE_ID, KIDSCLUB_STRUCTURE_ID, FACILITY_STRUCTURE_ID};
         return _lDat2;
     }
     public static Map<String,Long> getStructureId(){

@@ -29,7 +29,17 @@
 
     {@param contextPath: string}
 
+    {@param? isOpenJournalType: bool}
+    {@param? closeSelectJournalType: ?}
+    {@param? saveSelectJournalType: ?}
+
     {let $_itemsJournalAsociated: isNonnull($itemsJournalAsociated)?$itemsJournalAsociated[$id]:$itemsJournalAsociated /}
+    {let $structureId: [
+    'PUB': '35956', 'RESTAURANT': '35832',
+    'SPA': '35829', 'GYM': '35962',
+    'FACILITY': '35820', 'KIDSCLUB': '35959',
+    'MEETING': '35823'
+    ] /}
 
     <div id="{$id}" class="container">
         <div class="row">
@@ -96,7 +106,7 @@
                             </svg>
                         </button>
                         &nbsp;
-                        <button onclick="{$openNewJournal}" data-target="#{$id}_ModalIframe" data-toggle="modal"
+                        <button onclick="{$openNewJournal}"
                                 class="btn btn-monospaced btn-sm btn-primary" type="button">
                             <svg class="lexicon-icon lexicon-icon-plus" focusable="false" role="presentation">
                                 <use href="{$contextPath}/images/icons/icons.svg#plus"></use>
@@ -241,5 +251,96 @@
                 </div>
             </div>
         </div>
+
+        <div aria-labelledby="clayModalTypeJournalLabel" class="modal {$isOpenJournalType ? 'show in' : ''}"
+             style="{$isOpenJournalType ? '' : 'display: none'}"  id="{$id}_ModalTypeJournal" role="dialog" tabindex="-1">
+            <div class="modal-info modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title" id="clayModalTypeJournalLabel">Seleccione el tipo de Facility</div>
+
+                    </div>
+                    <div class="modal-body" >
+                        <div class="sheet">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <label>
+                                        <input class="custom-control-input" id="{$id}_typeJournal_R"  name="{$id}_typeJournal" type="radio" value="{$structureId.RESTAURANT}"/>
+                                        <span class="custom-control-label">
+                                            <span class="custom-control-label-text">Restaurant</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <label>
+                                        <input class="custom-control-input" id="{$id}_typeJournal_SR"  name="{$id}_typeJournal" type="radio" value="{$structureId.MEETING}"/>
+                                        <span class="custom-control-label">
+                                            <span class="custom-control-label-text">Sala de Reuniones</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <label>
+                                        <input class="custom-control-input" id="{$id}_typeJournal_G"  name="{$id}_typeJournal" type="radio" value="{$structureId.GYM}"/>
+                                        <span class="custom-control-label">
+                                            <span class="custom-control-label-text">Gimnasio</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <label>
+                                        <input class="custom-control-input" id="{$id}_typeJournal_B"  name="{$id}_typeJournal" type="radio" value="{$structureId.PUB}"/>
+                                        <span class="custom-control-label">
+                                            <span class="custom-control-label-text">Bar</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <label>
+                                        <input class="custom-control-input" id="{$id}_typeJournal_S"  name="{$id}_typeJournal" type="radio" value="{$structureId.SPA}"/>
+                                        <span class="custom-control-label">
+                                            <span class="custom-control-label-text">Spa</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <label>
+                                        <input class="custom-control-input" id="{$id}_typeJournal_FKC" name="{$id}_typeJournal" type="radio" value="{$structureId.KIDSCLUB}"/>
+                                        <span class="custom-control-label">
+                                            <span class="custom-control-label-text">Fiesta Kids Club</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <label>
+                                        <input class="custom-control-input" id="{$id}_typeJournal_I"  name="{$id}_typeJournal" type="radio" value="{$structureId.FACILITY}"/>
+                                        <span class="custom-control-label">
+                                            <span class="custom-control-label-text">Instalaciones</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="modal-item-last">
+                            <div class="btn-group">
+                                <div class="btn-group-item">
+                                    <button class="btn btn-secondary" onclick="{$closeSelectJournalType}"
+                                            data-dismiss="modal" type="button">Cancelar
+                                    </button>
+                                </div>
+
+                                <div class="btn-group-item">
+                                    <button class="btn btn-primary" data-dismiss="modal"  onclick="{$saveSelectJournalType}" type="button">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 {/template}
