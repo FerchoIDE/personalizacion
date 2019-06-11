@@ -7,6 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class ConstantUtil {
+    public static String FOLDER_ROOM_NAME="Rooms";
+    public static String FOLDER_FACILITY_NAME="Facility";
+    public static String FOLDER_GENERIC_NAME="Generics";
+    public static String FOLDER_RATE_NAME="Rates";
+
+    public static Long FOLDER_RATES_ID=235490L;
     public static Long VOCABULARY_BRAND_ID=35660L;
     public static Long FOLDER_DESTINATION_ID=35815L;
 
@@ -69,6 +75,10 @@ public abstract class ConstantUtil {
     public static boolean isDestination(String nameField){
         return nameField!=null && nameField.equalsIgnoreCase("destinationLinkHotel");
     }
+
+    public static boolean isRate(String nameField){
+        return nameField!=null && nameField.equalsIgnoreCase("ratelinkBrand");
+    }
     public static  Long[]  getStructureIdFacility() {
 
         Long[] _lDat2 = {RESTAURANT_STRUCTURE_ID, MEETING_STRUCTURE_ID, GYM_STRUCTURE_ID, BAR_STRUCTURE_ID, SPA_STRUCTURE_ID, KIDSCLUB_STRUCTURE_ID, FACILITY_STRUCTURE_ID};
@@ -81,6 +91,7 @@ public abstract class ConstantUtil {
         Map<String,Long> _mp = new HashMap<>();
         _mp.put("roomLinkHotel",ROOM_STRUCTURE_ID);
         _mp.put("destinationLinkHotel",DESTINATION_STRUCTURE_ID);
+        _mp.put("ratelinkBrand",RATE_STRUCTURE_ID);
         return _mp;
 
     }

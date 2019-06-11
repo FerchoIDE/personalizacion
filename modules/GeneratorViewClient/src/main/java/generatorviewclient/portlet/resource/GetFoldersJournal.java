@@ -5,6 +5,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import generatorviewclient.api.impl.FileEntryApi;
 import generatorviewclient.api.impl.JournalApi;
+import generatorviewclient.api.impl.VocabularyApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import generatorviewclient.util.ConstantUtil;
 import generatorviewclient.util.FileUtil;
@@ -24,6 +25,9 @@ import javax.portlet.ResourceResponse;
         service = MVCResourceCommand.class
 )
 public class GetFoldersJournal implements MVCResourceCommand {
+
+    VocabularyApi vocabularyApi = new VocabularyApi();
+
     @Override
     public boolean serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException {
         try {
@@ -33,18 +37,25 @@ public class GetFoldersJournal implements MVCResourceCommand {
             System.out.println("--------portletGroupId===" + portletGroupId);
 
             String body = FileUtil.getBuffer(resourceRequest.getReader());
-            JSONObject jsonObject =  new JSONObject(body);
-            String brand = jsonObject.getString("brand");
-            String codeHotel = jsonObject.getString("codeHotel");
+            JSONObject jsonObject = new JSONObject(body);
+            Long brand = jsonObject.optLong("brand", 0L);
+            Long codeHotel = jsonObject.optLong("codeHotel", 0L);
             String nameField = jsonObject.getString("nameField");
 
             com.liferay.portal.kernel.json.JSONArray array;
-            if(ConstantUtil.isDestination(nameField)){
-                array = new JournalApi().getListJournalFoldersByBrand(portletGroupId, ConstantUtil.FOLDER_DESTINATION_ID);
-            }else {
+            Long parentCategory = 0L;
+            /*if(codeHotel!=null && codeHotel!=0L )
+                parentCategory=codeHotel;
+            else */
+            if(brand!=null && brand!=0)
+                parentCategory=brand;
+            if (ConstantUtil.isRate(nameField) || ConstantUtil.isDestination(nameField)) {
+                array = vocabularyApi.getCategoriesByGroupAndVacabularyFirstLevel(portletGroupId, ConstantUtil.VOCABULARY_BRAND_ID, 0L);
+            } else {
 
                 //new JournalArticleServices().getFilesAndFolder(portletGroupId,"AQUA","AQC");
-                array = new JournalApi().getListJournalFolders(portletGroupId, brand, codeHotel);
+                array = vocabularyApi.getCategoriesByGroupAndVacabularyFirstLevel(portletGroupId, ConstantUtil.VOCABULARY_BRAND_ID, parentCategory);
+                //new JournalApi().getListJournalFolders(portletGroupId, brand, codeHotel);
             }
 
             // System.out.println("after  service ");

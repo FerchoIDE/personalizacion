@@ -42,13 +42,13 @@ public class SaveDocumentMedia implements MVCResourceCommand {
 
             String body = FileUtil.getBuffer(resourceRequest.getReader());
             JSONObject jsonObject = new JSONObject(body);
-            String brand = jsonObject.getString("brand");
-            String codeHotel = jsonObject.getString("codeHotel");
+            String brand = jsonObject.optString("brand",null);
+            String codeHotel = jsonObject.optString("codeHotel",null);
             String description = jsonObject.getString("description");
             String newFolder = jsonObject.getString("newFolder");
 
-            Long folderId = jsonObject.getLong("folderId");
-            if (folderId == null) {
+            Long folderId = jsonObject.optLong("folderId",0L);
+            if (folderId == null || folderId==0L) {
                 folderId = new FileEntryApi().getBaseFolder(portletGroupId, brand, codeHotel);
             }
 

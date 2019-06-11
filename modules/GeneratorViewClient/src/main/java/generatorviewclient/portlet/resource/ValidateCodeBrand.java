@@ -49,18 +49,19 @@ public class ValidateCodeBrand implements MVCResourceCommand {
             List<JournalArticle> result = new JournalApi().searchWebContentByCodeHotelFirstLevel(portletGroupId, "Marcas", brand);
             System.out.println("step 1 " + result.size());
             if (result.isEmpty()) {
+
                 Long parentFolder = new FileEntryApi().getBaseFolder(portletGroupId, null, null);
                 System.out.println("step 2 " + parentFolder);
                 Long folderBrand = FolderUtil.createFolder(portletGroupId, userId, brand, "Folder by " + brand, parentFolder);
                 System.out.println("step 3 " + folderBrand);
-                FolderUtil.createFolder(portletGroupId, userId, "Rates", "Folder by Rates " + brand, folderBrand);
+                FolderUtil.createFolder(portletGroupId, userId, ConstantUtil.FOLDER_RATE_NAME, "Folder by Rates " + brand, folderBrand);
                 System.out.println("step 4  Created Folder");
 
                 Long parentFolderJournal = new JournalApi().getBaseFolder(portletGroupId, null, null);
                 System.out.println("step 5 " + parentFolderJournal);
                 Long folderBrandJournal = FolderUtil.createFolderJournal(portletGroupId, userId, brand, "Folder by " + brand, parentFolderJournal);
                 System.out.println("step 6 " + folderBrandJournal);
-                FolderUtil.createFolderJournal(portletGroupId, userId, "Rates", "Folder by Rates " + brand, folderBrandJournal);
+                FolderUtil.createFolderJournal(portletGroupId, userId, brand, "Folder by Rates " + brand, ConstantUtil.FOLDER_RATES_ID);
 
                 System.out.println("step 7  Created Folder Journal");
 

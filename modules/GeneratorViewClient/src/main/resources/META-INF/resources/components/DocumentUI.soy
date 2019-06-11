@@ -41,7 +41,7 @@
     {@param defaultLanguageId: string}
     {@param? handleChangeValueDocument: ?}
 
-
+    {let $_itemsAsociated: isNonnull($itemsAsociated)?$itemsAsociated[$id]:$itemsAsociated /}
     {let $_isOpen: isNonnull($isOpen)?$isOpen: quoteKeysIfJs(['a': false]) /}
     {let $m: quoteKeysIfJs(['a': false]) /}
 
@@ -53,8 +53,8 @@
                         <div class="table-responsive">
                             <table class="table table-autofit table-list">
                                 <tbody>
-                            {if $itemsAsociated != null}
-                                {foreach $field in keys($itemsAsociated)}
+                            {if $_itemsAsociated != null}
+                                {foreach $field in keys($_itemsAsociated)}
                                     {let $_isOpenField: $_isOpen[$field]?'true':'false' /}
 
                                     {if isFirst($field)}
@@ -70,14 +70,14 @@
                                                 <span class="inline-item">
                                                     <img width="128" style="max-height: 256px;max-width: 100%"
                                                           alt="Not Image"
-                                                          src="http://localhost:8080{$itemsAsociated[$field].imageThumbnail}"/>
+                                                          src="http://localhost:8080{$_itemsAsociated[$field].imageThumbnail}"/>
                                                 </span>
                                             </div>
                                             <div class="autofit-col">
                                                 <h4 class="table-list-title">
-                                                    <a href="#1">{$itemsAsociated[$field].filename}</a>
+                                                    <a href="#1">{$_itemsAsociated[$field].filename}</a>
                                                 </h4>
-                                                <p class="text-truncate-inline">{$itemsAsociated[$field].path}</p>
+                                                <p class="text-truncate-inline">{$_itemsAsociated[$field].path}</p>
                                             </div>
                                             <div class="autofit-col">
                                                 <a onclick="{$deleteDocument}" href="#1" id="{$field}"

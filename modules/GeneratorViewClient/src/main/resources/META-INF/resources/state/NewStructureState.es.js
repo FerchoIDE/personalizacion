@@ -1,6 +1,6 @@
 import core from 'metal';
 import State from 'metal-state';
-import FieldState from './FieldState'
+import FieldState from './FieldState.es'
 
 export default class NewStructureState extends State {
     constructor(config, obj, context) {

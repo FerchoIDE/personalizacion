@@ -70,15 +70,15 @@ public class GeneratorViewClientNewMVCRenderCommand
                             ddmStructure.getModelClassName());
 
             System.out.println(map);
-            Boolean hasParent =  ddmStructure.getParentStructureId()!=0 ;
+            Boolean hasParent = ddmStructure.getParentStructureId() != 0;
             template.put("hasParent", hasParent);
             template.put("data", map);
             Map names = new HashMap();
             ddmStructure.getNameMap().forEach((locale, s) -> {
-                names.put(locale.toString(),s);
+                names.put(locale.toString(), s);
             });
-            template.put("name",names);
-            template.put("rootFields",ddmStructure.getRootFieldNames());
+            template.put("name", names);
+            template.put("rootFields", ddmStructure.getRootFieldNames());
             List<DDMTemplate> templates = ddmStructure.getTemplates();/*.stream().map(ddmTemplate -> {
                         HashMap<String, Object> _map = new HashMap<>();
                         _map.put("value", ddmTemplate.getTemplateId());
@@ -87,21 +87,21 @@ public class GeneratorViewClientNewMVCRenderCommand
                     }
             ).collect(Collectors.toList());*/
             List lstTemplates = new LinkedList<>();
-            for(DDMTemplate _template:templates){
+            for (DDMTemplate _template : templates) {
                 Map _object = new HashMap();
                 _object.put("value", _template.getTemplateKey());
-                Map<String,String> _name = new HashMap<>();
-                _name.put("es_ES",_template.getName("es_ES"));
-                _name.put("en_US",_template.getName("en_US"));
+                Map<String, String> _name = new HashMap<>();
+                _name.put("es_ES", _template.getName("es_ES"));
+                _name.put("en_US", _template.getName("en_US"));
 
                 _object.put("label", _name);
                 lstTemplates.add(_object);
             }
 
-System.out.println("antes de asignar -------------");
+            System.out.println("antes de asignar -------------");
             template.put("selectTempl", lstTemplates);
         } catch (Exception ex) {
-            System.out.println("++++------------"+ex.getMessage());
+            System.out.println("++++------------" + ex.getMessage());
             ex.printStackTrace(System.out);
             ex.printStackTrace();
             new PortletException(ex);
@@ -123,10 +123,23 @@ System.out.println("antes de asignar -------------");
             e.printStackTrace();
             new PortletException(e);
         }
-        if(mode!=null && mode.equalsIgnoreCase("nested"))
+        if (mode != null && mode.equalsIgnoreCase("nested")) {
             template.put("isOnLoad", false);
-        else
+            if(renderRequest.getParameter("brandIdSelectedN")!=null)
+                template.put("brandIdSelected",Long.parseLong(renderRequest.getParameter("brandIdSelectedN")));
+            if(renderRequest.getParameter("hotelIdSelectedN")!=null)
+                template.put("hotelIdSelected",Long.parseLong(renderRequest.getParameter("hotelIdSelectedN")));
+            if(renderRequest.getParameter("brandSelectedN")!=null)
+                template.put("brandSelected",renderRequest.getParameter("brandSelectedN"));
+            if(renderRequest.getParameter("hotelSelectedN")!=null)
+                template.put("hotelSelected",renderRequest.getParameter("hotelSelectedN"));
+            template.put("nested", true);
+
+        }
+        else {
             template.put("isOnLoad", true);
+            template.put("nested", false);
+        }
         template.put("hotelsXBrands", new LinkedList<>());
 
 

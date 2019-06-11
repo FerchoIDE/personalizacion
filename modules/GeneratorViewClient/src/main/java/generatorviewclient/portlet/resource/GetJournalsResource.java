@@ -50,20 +50,18 @@ public class GetJournalsResource implements MVCResourceCommand {
             resourceResponse.setContentType("application/json");
 
            //String brand = jsonObject.getString("brand");
-            Long brand = jsonObject.getLong("brand");
+            Long brand = jsonObject.optLong("brand",0L);
            // String codeHotel = jsonObject.getString("codeHotel");
-            Long codeHotel = jsonObject.getLong("codeHotel");
+            Long codeHotel = jsonObject.optLong("codeHotel",0L);
             String nameField = jsonObject.getString("nameField");
 
             Long categoryId=0L;
-            if(codeHotel!=null)
+            if(codeHotel!=null && codeHotel!=0L)
                 categoryId = codeHotel;
-            else if(brand!=null)
+            else if(brand!=null && brand!=0L)
                 categoryId = brand;
 
-            /*Long folderId = null;
-            if(jsonObject.has("folderId"))
-                 folderId = jsonObject.getLong("folderId");
+
 
           /* if(ConstantUtil.isDestination(nameField) && folderId == null)
                folderId =ConstantUtil.FOLDER_DESTINATION_ID;
@@ -102,15 +100,42 @@ public class GetJournalsResource implements MVCResourceCommand {
                 //getListJournalFolders
             }*/
 
+            if(jsonObject.has("folderId")) {
+                categoryId = jsonObject.getLong("folderId");
+            }
+
+
+
+            Long structureId =  ConstantUtil.getStructureId().get(nameField);
+            /*if(structureId== ConstantUtil.DESTINATION_STRUCTURE_ID ||
+            structureId == ConstantUtil.RATE_STRUCTURE_ID)
+                categoryId = 0L;*/
+            if(ConstantUtil.isFacility(nameField)){
+                if (jsonObject.has("nameFolder")) {
+                    categoryId = 0L;
+                    array = new JournalApi().getWebContentsByNameCategoryIdAndTypefacility(portletGroupId, categoryId, ConstantUtil.getStructureIdFacility(), jsonObject.getString("nameFolder"));
+                } else {
+                    array = new JournalApi().getWebContentsCategoryAndTypeFacility(portletGroupId, categoryId, ConstantUtil.getStructureIdFacility());
+                }
+
+            }else {
+
+                if (jsonObject.has("nameFolder")) {
+                    categoryId = 0L;
+                    array = new JournalApi().getWebContentsByNameCategoryIdAndType(portletGroupId, categoryId, structureId, jsonObject.getString("nameFolder"));
+                } else {
+                    array = new JournalApi().getWebContentsByCategoryIdAndType(portletGroupId, categoryId, structureId);
+                }
+            }
             System.out.println("categoryId==="+categoryId);
-            array = new JournalApi().getWebContentsByCategoryIdAndType(portletGroupId,  categoryId, ConstantUtil.getStructureId().get(nameField));
+
 
             JSONArray lsResult = new JSONArray();
 
             array.forEach(journalArticle -> {
                 JSONObject mpObject = new JSONObject();
                 mpObject.put("description", journalArticle.getDescriptionMap());
-                mpObject.put("id", journalArticle.getId());
+                mpObject.put("id", journalArticle.getResourcePrimKey());
                 mpObject.put("image", journalArticle.getArticleImageURL(themeDisplay));
                 mpObject.put("title", journalArticle.getTitleCurrentValue());
                 long _month = Period.between(journalArticle.getStatusDate().toInstant().atZone(ZoneId.systemDefault())

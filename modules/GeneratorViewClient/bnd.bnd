@@ -10,9 +10,6 @@ Require-Capability:\
 		filter:="(type=metal)"
 -metatype: *
 -includeresource: package.json = build/resources/main/META-INF/resources/package.json,\
-                  META-INF/resources/flatpickr.js = node_modules/flatpickr/dist/flatpickr.js,\
-                  META-INF/resources/flatpickr/dist/l10n/es.js = node_modules/flatpickr/dist/l10n/es.js,\
-                  META-INF/resources/wretch.js =node_modules/wretch/dist/bundle/wretch.js,\
                   @json-path-2.4.0.jar,\
                   @pebble-3.0.10.jar,\
                   @unbescape-1.1.6.RELEASE.jar,\

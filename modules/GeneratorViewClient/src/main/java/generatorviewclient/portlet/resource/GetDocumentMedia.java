@@ -33,8 +33,8 @@ public class GetDocumentMedia implements MVCResourceCommand {
 
             String body = FileUtil.getBuffer(resourceRequest.getReader());
             JSONObject jsonObject =  new JSONObject(body);
-            String brand = jsonObject.getString("brand");
-            String codeHotel = jsonObject.getString("codeHotel");
+            String brand = jsonObject.optString("brand",null);
+            String codeHotel = jsonObject.optString("codeHotel",null);
             com.liferay.portal.kernel.json.JSONArray array;
             if(jsonObject.has("folderId")){
 

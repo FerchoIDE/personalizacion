@@ -59,20 +59,20 @@ public class ValidateCodeHotel implements MVCResourceCommand {
                 LOG.info("step 2 "+ parentFolder);
                 Long folderHotel = FolderUtil.createFolder(portletGroupId, userId, codeHotel, "Folder by " + codeHotel, parentFolder);
                 LOG.info("step 3 "+ folderHotel);
-                FolderUtil.createFolder(portletGroupId, userId, "Rooms", "Folder by Rooms " + codeHotel, folderHotel);
-                FolderUtil.createFolder(portletGroupId, userId, "Facility", "Folder by Facility " + codeHotel, folderHotel);
-                FolderUtil.createFolder(portletGroupId, userId, "Destinations", "Folder by Destinations " + codeHotel, folderHotel);
-                FolderUtil.createFolder(portletGroupId, userId, "Generics", "Folder by Generics " + codeHotel, folderHotel);
+                FolderUtil.createFolder(portletGroupId, userId, ConstantUtil.FOLDER_ROOM_NAME, "Folder by Rooms " + codeHotel, folderHotel);
+                FolderUtil.createFolder(portletGroupId, userId, ConstantUtil.FOLDER_FACILITY_NAME, "Folder by Facility " + codeHotel, folderHotel);
+              //  FolderUtil.createFolder(portletGroupId, userId, "Destinations", "Folder by Destinations " + codeHotel, folderHotel);
+                FolderUtil.createFolder(portletGroupId, userId, ConstantUtil.FOLDER_GENERIC_NAME, "Folder by Generics " + codeHotel, folderHotel);
                 LOG.info("step 4  Created Folder");
 
                 Long parentFolderJournal = new JournalApi().getBaseFolder(portletGroupId, brand, null);
                 LOG.info("step 5 "+ parentFolderJournal);
                 Long folderHotelJournal = FolderUtil.createFolderJournal(portletGroupId, userId, codeHotel, "Folder by " + codeHotel, parentFolderJournal);
                 LOG.info("step 6 "+ folderHotelJournal);
-                FolderUtil.createFolderJournal(portletGroupId, userId, "Rooms", "Folder by Rooms " + codeHotel, folderHotelJournal);
-                FolderUtil.createFolderJournal(portletGroupId, userId, "Facility", "Folder by Facility " + codeHotel, folderHotelJournal);
-                FolderUtil.createFolderJournal(portletGroupId, userId, "Destinations", "Folder by Destinations " + codeHotel, folderHotelJournal);
-                FolderUtil.createFolderJournal(portletGroupId, userId, "Generics", "Folder by Generics " + codeHotel, folderHotelJournal);
+                FolderUtil.createFolderJournal(portletGroupId, userId, ConstantUtil.FOLDER_ROOM_NAME, "Folder by Rooms " + codeHotel, folderHotelJournal);
+                FolderUtil.createFolderJournal(portletGroupId, userId, ConstantUtil.FOLDER_FACILITY_NAME, "Folder by Facility " + codeHotel, folderHotelJournal);
+               // FolderUtil.createFolderJournal(portletGroupId, userId, "Destinations", "Folder by Destinations " + codeHotel, folderHotelJournal);
+                FolderUtil.createFolderJournal(portletGroupId, userId, ConstantUtil.FOLDER_GENERIC_NAME, "Folder by Generics " + codeHotel, folderHotelJournal);
 
                 LOG.info("step 7  Created Folder Journal");
 

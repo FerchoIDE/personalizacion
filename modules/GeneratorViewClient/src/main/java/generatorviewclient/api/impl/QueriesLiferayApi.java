@@ -435,17 +435,21 @@ public class QueriesLiferayApi {
 		JournalArticle article = JournalArticleLocalServiceUtil.addArticle(userId,
 				groupId, folderId, titleMap, descriptionMap, rootElement,
 				ddmStructure, ddmTemplate, serviceContext);
-		/*if(!Validator.isNull(article)){
-			if(!jsonObj.getJSONArray("tags").isNull(0) && !jsonObj.getJSONArray("categories").isNull(0)){
-				addCategoriesAndTags(userId, article, parseCategories(jsonObj.getJSONArray("categories")), parseTags(jsonObj.getJSONArray("tags")));
-			}else if(!Validator.isNull(jsonObj.getJSONArray("tags")) && Validator.isNull(jsonObj.getJSONArray("categories"))){
-				addCategoriesAndTags(userId, article, null, parseTags(jsonObj.getJSONArray("tags")));
-			}else if(Validator.isNull(jsonObj.getJSONArray("tags")) && !Validator.isNull(jsonObj.getJSONArray("categories"))){
-				addCategoriesAndTags(userId, article,parseCategories(jsonObj.getJSONArray("categories")) , null);
-			}else {
-				addCategoriesAndTags(userId, article,null, null);
+
+		if(!Validator.isNull(article)){
+			String[] tags = null;
+			if(jsonObject.has("tags")){
+				tags = parseTags(jsonObject.getJSONArray("tags"));
 			}
-		}*/
+
+			long[] cats = null;
+			if(jsonObject.has("categories")){
+				cats = parseCategories(jsonObject.getJSONArray("categories"));
+			}
+
+			addCategoriesAndTags(userId, article, cats, tags);
+
+		}
 
 		return article;
 	}
@@ -586,6 +590,22 @@ public class QueriesLiferayApi {
 				}
 		   return myArray;
 	    }
+
+	protected String[] parseTags(org.json.JSONArray tags){
+		String[] myArray= new String[tags.length()];
+		for (int i = 0; i < tags.length(); i++) {
+			myArray[i]=tags.getString(i);
+		}
+		return myArray;
+	}
+
+	protected long[] parseCategories(org.json.JSONArray categories){
+		long[] myArray= new long[categories.length()];
+		for (int i = 0; i < categories.length(); i++) {
+			myArray[i]=categories.getLong(i);
+		}
+		return myArray;
+	}
 
 
 

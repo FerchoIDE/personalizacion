@@ -3,6 +3,8 @@
 	{% for field in nestedFields %}
 		{% if field.type =="checkbox" %}
 			{{ basic(field,'boolean') }}
+		{% elseif field.type =="radio" %}
+			{{ radio(field) }}
 		{% elseif field.type =="text" %}
 			{{ basic(field,'text') }}
 		{% elseif field.type =="ddm-date" %}
@@ -15,6 +17,8 @@
 			{{ basic(field,'list') }}
 		{% elseif field.type =="ddm-documentlibrary" %}
 			{{ documentlibrary(field) }}
+		{% elseif field.type =="ddm-journal-article" %}
+			{{ journalArticle(field) }}
 		{% else %}
 			<nada>{{ field.type }}</nada>
 		{% endif %}
@@ -34,13 +38,29 @@
 	{% endfor %}
 {% endmacro %}
 
+{% macro radio(info) %}
+	{% for value in info.values %}
+		<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{ info.name }}"  type="radio" index-type="{{ info.indexType }}">
+			{% for item in value %}
+				<dynamic-content language-id="{{ item.key }}"><![CDATA[["{{ item.value }}"]]]></dynamic-content>
+			{% endfor %}
+		</dynamic-element>
+		{% else %}
+		<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{ info.name }}"  type="{{ type }}" index-type="{{ info.indexType }}">
+		</dynamic-element>
+	{% endfor %}
+{% endmacro %}
 
 {% macro journalArticle(info) %}
-	<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{info.name}}" type="ddm-journal-article" index-type="{{info.indexType}}">
-    	{% for item in value %}
-				<dynamic-content language-id="{{ item.key }}"><![CDATA[{"classPK":"{{ item.value }}","className":"com.liferay.journal.model.JournalArticle"}]]></dynamic-content>
-		{% endfor %}
-	</dynamic-element>
+	{% for value in info.values %}
+		{% if value.size() >0 %}
+			<dynamic-element  instance-id="{{ instanceIdFunction() }}" name="{{ info.name }}"  type="ddm-journal-article" index-type="{{ info.indexType }}">
+				{% for item in value %}
+					<dynamic-content language-id="{{ item.key }}"><![CDATA[{"classPK":"{{ item.value.id }}","className":"com.liferay.journal.model.JournalArticle"}]]></dynamic-content>
+				{% endfor %}
+			</dynamic-element>
+		{% endif %}
+	{% endfor %}
 {% endmacro %}
 
 {% macro separator(info) %}

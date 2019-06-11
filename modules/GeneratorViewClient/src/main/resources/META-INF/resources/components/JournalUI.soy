@@ -135,7 +135,7 @@
                                             <option disabled selected>Selecciona una opción o</option>
                                             {if $foldersJournals}
                                                 {foreach $field in $foldersJournals}
-                                                    <option value="{$field.folderId}">{$field.nameFolder}</option>
+                                                    <option value="{$field.key}">{$field.category}</option>
                                                 {/foreach}
                                             {/if}
                                         </select>

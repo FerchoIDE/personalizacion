@@ -1,9 +1,8 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './DateUI.soy';
-import flatpickr from "./flatpickr";
-import { Spanish } from "./flatpickr/dist/l10n/es.js"
-import CheckBoxUI from "./CheckBoxUI.es";
+import flatpickr from "flatpickr";
+import { Spanish } from "flatpickr/dist/l10n/es.js"
 /**
  * TextUI Component
  */
@@ -32,6 +31,8 @@ class DateUI extends Component {
                     });
 
                 }});
+
+
     }
     /*rendered(firstRender) {
         console.log('-----ViewNested-rendered----'+JSON.stringify(firstRender)+'---'+this.initialConfig_.defaultLanguageId);

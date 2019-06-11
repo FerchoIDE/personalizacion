@@ -1,22 +1,28 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './JournalUI.soy';
-import Service from "../service/Service"
+import Service from "../service/Service.es"
 /**
  * TextUI Component
  */
 
 const structureIdRoom= '35826'
 const structureIdDestination= '35812'
+const structureIdRate= '35796'
 const mapTypeContent={
     'roomLinkHotel':structureIdRoom,
     'facilityLinkHotel':'facility',
-    'destinationLinkHotel':structureIdDestination
+    'destinationLinkHotel':structureIdDestination,
+    'ratelinkBrand':structureIdRate
 }
-
+const urlNewJournal = "http://localhost:8080/web/guest/home?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_mode=nested&_generatorviewclient_structureId=";
 
 
 class JournalUI extends Component {
+    disposed() {
+        console.log('-----receive event disposed----'+this.id)
+        delete  this.itemsJournalAsociated[this.id]
+    }
     created() {
         console.log('-----receive event created----'+this.id)
         this.setResultJournal = this.setResultJournal.bind(this);
@@ -24,29 +30,27 @@ class JournalUI extends Component {
        // this.resultSaveJournal = this.resultSaveJournal.bind(this);
        // var _itemsJournalAsociated ={}
        // _itemsJournalAsociated[this.id]={}
-       // this.itemsJournalAsociated={}
-        //this.setState({itemsJournalAsociated:undefined  })
+        this.itemsJournalAsociated={}
+        this.setState({itemsJournalAsociated:{}  })
 
         this.setState({searchJournalText: undefined })
-        /*
+
         this.on('itemsJournalAsociatedChanged',function(event){
             console.log('--------change itemsJournalAsociated --- ')
         })
-        try{
+        /*try{
             this.getDataManager().getStateInstance(this).stateConfigs_.itemsJournalAsociated={}
         }catch (e) {
             console.error(e)
-        }*/
+        }
        try {
             this.getDataManager().getStateInstance(this).stateConfigs_.itemsJournalAsociated = {}
         }catch (e) {
             console.error(e)
-        }
+        }*/
 
     }
-    rendered(firstRender) {
-        console.log('----JournalUI ----rendered----'+JSON.stringify(this.itemsJournalAsociated))
-    }
+
     openSelectJournal(event) {
         if(event === undefined)
             return
@@ -54,7 +58,7 @@ class JournalUI extends Component {
         event.preventDefault();
 
         new Service().getJournals(this.brandIdSelected,this.hotelIdSelected,this.id,this.setResultJournal)
-       // new Service().getFoldersForJournal(this.brandSelected,this.hotelSelected,this.id,this.setFoldersJournal)
+        new Service().getFoldersForJournal(this.brandIdSelected,this.hotelIdSelected,this.id,this.setFoldersJournal)
     }
 
     openNewJournal(event) {
@@ -87,7 +91,15 @@ class JournalUI extends Component {
         }
     }
     showNewJournal(typeJournal){
-        let _url="http://localhost:8080/web/guest/home?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_structureId="+typeJournal+"&_generatorviewclient_mode=nested";
+        let _url=urlNewJournal+typeJournal;
+        if(this.brandIdSelected!==undefined)
+            _url=_url+"&_generatorviewclient_brandIdSelectedN="+this.brandIdSelected;
+        if(this.hotelIdSelected!==undefined)
+            _url=_url+"&_generatorviewclient_hotelIdSelectedN="+this.hotelIdSelected;
+        if(this.brandSelected!==undefined)
+            _url=_url+"&_generatorviewclient_brandSelectedN="+this.brandSelected;
+        if(this.hotelSelected!==undefined)
+            _url=_url+"&_generatorviewclient_hotelSelectedN="+this.hotelSelected;
         $("#"+this.id+"_Iframe").attr('src',_url);
         this.setState({isOpenJournalNew: true })
         var _parent = this;
@@ -98,6 +110,37 @@ class JournalUI extends Component {
             $("#"+_parent.id+"_Iframe").attr('src','about:blank');
             //$(".modal-backdrop").attr('src','about:blank');
         }
+
+        window.document.addEventListener(typeJournal+'_saveEvent', handleEvent, false)
+        function handleEvent(e) {
+            console.log(e.detail) // outputs: {foo: 'bar'}
+            _parent.setState({isOpenJournalNew: false })
+            $("#"+_parent.id+"_Iframe").attr('src','about:blank');
+
+            let _itemsAsociated = _parent.itemsJournalAsociated
+            if(_itemsAsociated===undefined)
+                _itemsAsociated={}
+            if(_itemsAsociated[_parent.id]===undefined)
+                _itemsAsociated[_parent.id]={}
+             _itemsAsociated[_parent.id][e.detail['id']]=e.detail
+
+
+            let _modelJournal = this.modelJournal
+            if(_modelJournal===undefined)
+                _modelJournal={}
+            if(_modelJournal[e.detail['id']]===undefined)
+                _modelJournal[e.detail['id']]={}
+            _modelJournal[e.detail['id']]=e.detail
+
+            _parent.handleChangeValue( {
+                value: _modelJournal[e.detail['id']],
+                path: _parent.path
+            });
+            _parent.setState({modelJournal: _modelJournal })
+            _parent.setState({itemsJournalAsociated: _itemsAsociated })
+
+        }
+
     }
     changeJournalSearchText(event){
         let _searchText=event.target.value;
@@ -108,7 +151,7 @@ class JournalUI extends Component {
         console.log('-----searchByName----')
         event.preventDefault();
         if(this.searchJournalText!==undefined && this.searchJournalText!==''){
-            new Service().getJournalsForName(this.brandSelected,this.hotelSelected,this.searchJournalText,this.id,this.setResultJournal)
+            new Service().getJournalsForName(this.brandIdSelected,this.hotelIdSelected,this.searchJournalText,this.id,this.setResultJournal)
         }
     }
     changeFolder(event){
@@ -117,7 +160,7 @@ class JournalUI extends Component {
         event.preventDefault();
         let _folderSelected = event.currentTarget.value
 
-        new Service().getJournalsForFolder(this.brandSelected,this.hotelSelected,_folderSelected,this.id,this.setResultJournal)
+        new Service().getJournalsForFolder(this.brandIdSelected,this.hotelIdSelected,_folderSelected,this.id,this.setResultJournal)
     }
     setResultJournal(resultJournal){
         var _itemsResult= []
@@ -166,6 +209,15 @@ class JournalUI extends Component {
         event.preventDefault();
         var _itemsAsociated = this.itemsJournalAsociated
         delete  _itemsAsociated[this.id][event.currentTarget.id]
+
+        let _modelJournal = this.modelJournal
+        this.handleRemoveValue( {
+            value: _modelJournal[event.currentTarget.id],
+            path: this.path
+        });
+        delete _modelJournal[event.currentTarget.id]
+
+        this.setState({modelJournal: _modelJournal })
         this.setState({itemsJournalAsociated: _itemsAsociated })
     }
 
@@ -222,6 +274,7 @@ JournalUI.STATE = {
     brandIdSelected:{},
     hotelIdSelected:{},
     handleChangeValue: {},
+    handleRemoveValue: {},
     path:{},
     modelJournal:{value:{}}
 }

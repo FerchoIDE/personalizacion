@@ -20,9 +20,10 @@
 
 	{@param? brandSelected: string}
 	{@param? hotelSelected: string}
-	{@param? brandIdSelected: number}
-	{@param? hotelIdSelected: number}
+	{@param? brandIdSelected: ?}
+	{@param? hotelIdSelected: ?}
 	{@param? handleChangeValue: ?}
+	{@param? handleRemoveValue: ?}
 
 
 	{let $structureIdRate: '35796' /}
@@ -111,6 +112,8 @@
 												{param brandSelected: $brandSelected/}
 												{param hotelSelected: $hotelSelected/}
 												{param brandIdSelected: $brandIdSelected/}
+												{param handleChangeValue:  $handleChangeValue /}
+												{param handleRemoveValue:  $handleRemoveValue /}
 												{param hotelIdSelected: $hotelIdSelected/}
 												{param path:$path+'/'+ $field['name'] /}
 											{/call}
@@ -126,6 +129,7 @@
 												{param availableLanguageIds: $availableLanguageIds /}
 												{param defaultLanguageId: $defaultLanguage /}
 												{param handleChangeValue:  $handleChangeValue /}
+												{param handleRemoveValue:  $handleRemoveValue /}
 												{param path:$path+'/'+ $field['name'] /}
 											{/call}
 										{elseif $field['type'] == 'radio'}

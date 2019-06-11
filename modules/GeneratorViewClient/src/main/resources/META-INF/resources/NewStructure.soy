@@ -23,10 +23,11 @@
 	{@param? saveSelectPath: ?}
 	{@param? brandSelected: string}
 	{@param? hotelSelected: string}
-	{@param? brandIdSelected: number}
-	{@param? hotelIdSelected: number}
+	{@param? brandIdSelected: ?}
+	{@param? hotelIdSelected: ?}
 
 	{@param? handleChangeValue: ?}
+	{@param? handleRemoveValue: ?}
 	{@param? saveStructure: ?}
 	{@param? cancelStructure: ?}
 
@@ -34,6 +35,7 @@
 
 
 	{@param? msgErrorPath: ?}
+	{@param? msgInfo: ?}
 
 
 
@@ -49,6 +51,16 @@
 	{let $structureIdRate: '35796' /}
 
 	 <div id="{$id}">
+		 {if $msgInfo}
+			<div class="alert alert-info" role="alert">
+				<span class="alert-indicator">
+					<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+						<use href="{$contextPath}/images/icons/icons.svg#info-circle"></use>
+					</svg>
+				</span>
+				<strong class="lead">Aviso:</strong>{$msgInfo}
+			</div>
+		 {/if}
 			  <div aria-labelledby="claySmallModalDlg" id="claySmallModal1" class="fade modal {$isOnLoad ? 'show in' : ''}"
 				  style="{$isOnLoad ? '' : 'display: none'}"  role="dialog" tabindex="-1">
 				 <div class="modal-info modal-dialog modal-sm">
@@ -225,6 +237,8 @@
 											{param brandIdSelected: $brandIdSelected/}
 											{param hotelIdSelected: $hotelIdSelected/}
 											{param handleChangeValue:  $handleChangeValue /}
+											{param handleRemoveValue:  $handleRemoveValue /}
+
 										{/call}
 									{elseif $field['type'] == 'text'}
 										{call TextLocalizableUI.render}

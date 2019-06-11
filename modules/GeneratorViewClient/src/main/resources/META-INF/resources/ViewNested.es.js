@@ -12,7 +12,6 @@ import DocumentUI from './components/DocumentUI.es';
 
 import Soy from 'metal-soy';
 import templates from './ViewNested.soy';
-import Service from "./service/Service";
 /**
  * View Component
  */

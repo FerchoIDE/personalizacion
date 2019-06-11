@@ -9,19 +9,28 @@ import RadioUI from '../RadioUI.es';
 import SelectUI from '../SelectUI.es';
 
 import templates from './DocumentUI.soy';
-import Service from "../service/Service"
+import Service from "../service/Service.es"
 /**
  * TextUI Component
  */
 class DocumentUI extends Component {
+    disposed() {
+        console.log('-----receive event disposed----'+this.id)
+        delete  this.itemsAsociated[this.id]
+
+    }
     created() {
         this.setResultDocument = this.setResultDocument.bind(this);
         this.setFoldersDocument = this.setFoldersDocument.bind(this);
         this.setFileInfo = this.setFileInfo.bind(this);
         this.resultSaveDocument = this.resultSaveDocument.bind(this);
 
+        this.itemsAsociated={}
         this.setState({itemsAsociated: {} })
         this.setState({searchText: undefined })
+        this.on('itemsAsociatedChanged',function(event){
+            console.log('--------change itemsAsociated --- ')
+        })
 
     }
 
@@ -172,7 +181,16 @@ class DocumentUI extends Component {
         console.log('-----receive event deleteDocument----')
         event.preventDefault();
         var _itemsAsociated = this.itemsAsociated
-        delete  _itemsAsociated[event.currentTarget.id]
+        delete  _itemsAsociated[this.id][event.currentTarget.id]
+
+        let _modelDocument = this.modelDocument
+        this.handleRemoveValue( {
+            value: _modelDocument[event.currentTarget.id],
+            path: this.path
+        });
+        delete _modelDocument[event.currentTarget.id]
+
+        this.setState({modelDocument: _modelDocument })
         this.setState({itemsAsociated: _itemsAsociated })
     }
 
@@ -185,8 +203,12 @@ class DocumentUI extends Component {
 
 
         var _itemsAsociated = this.itemsAsociated
+        if(_itemsAsociated===undefined)
+            _itemsAsociated={}
+        if(_itemsAsociated[this.id]===undefined)
+            _itemsAsociated[this.id]={}
         for(let result in this.itemsResultSelected){
-            _itemsAsociated[result]=JSON.parse(this.itemsResultSelected[result])
+            _itemsAsociated[this.id][result]=JSON.parse(this.itemsResultSelected[result])
         }
 
         let _modelDocument = this.modelDocument
@@ -196,13 +218,14 @@ class DocumentUI extends Component {
             if(_modelDocument[result]===undefined){
                 _modelDocument[result]={}
                 _modelDocument[result]['id']=result
-                _modelDocument[result]['fullPath']=_itemsAsociated[result]['fullPath']
+                _modelDocument[result]['fullPath']=_itemsAsociated[this.id][result]['fullPath']
             }
             this.handleChangeValue( {
                 value: _modelDocument[result],
                 path: this.path
             });
         }
+
         this.setState({modelDocument: _modelDocument })
         this.setState({itemsAsociated: _itemsAsociated })
         this.setState({isOpenSelect: false })
@@ -229,7 +252,11 @@ class DocumentUI extends Component {
         window.setTimeout(handler =>{
             if(status==='OK'){
                 var _itemsAsociated = _this.itemsAsociated
-                _itemsAsociated[response['idFile']]=response
+                if(_itemsAsociated===undefined)
+                    _itemsAsociated={}
+                if(_itemsAsociated[this.id]===undefined)
+                    _itemsAsociated[this.id]={}
+                _itemsAsociated[this.id][response['idFile']]=response
 
                 let _modelDocument = _this.modelDocument
                 if(_modelDocument===undefined)
@@ -238,7 +265,7 @@ class DocumentUI extends Component {
                     _modelDocument[response['idFile']] = {}
                 }
                 _modelDocument[response['idFile']]['id']=response['idFile']
-                _modelDocument[response['idFile']]['fullPath']=_itemsAsociated[response['idFile']]['fullPath']
+                _modelDocument[response['idFile']]['fullPath']=_itemsAsociated[this.id][response['idFile']]['fullPath']
 
                 _this.handleChangeValue( {
                     value: _modelDocument[response['idFile']],
@@ -299,6 +326,7 @@ DocumentUI.STATE = {
     brandSelected:{},
     hotelSelected:{},
     handleChangeValue: {},
+    handleRemoveValue: {},
     path:{},
     modelDocument:{value:{}}
 }

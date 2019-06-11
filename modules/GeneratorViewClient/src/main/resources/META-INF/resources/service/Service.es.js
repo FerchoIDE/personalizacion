@@ -1,4 +1,4 @@
-import wretch from "../wretch"
+import wretch from "wretch"
 const _HOST_="localhost:8080"
 
 export default class Service{
@@ -107,11 +107,11 @@ export default class Service{
             .post(data)
             .json(json =>{
                 console.log(json)
-                callBack('OK',json)
+                callBack(json)
             } )
             .catch(error =>{
                 console.log(error)
-                callBack('BAD',error)
+                callBack(error)
             })
     }
 

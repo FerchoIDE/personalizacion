@@ -43,6 +43,13 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 		return Contants.JOURNAL_HOTEL;
 	}
 
+	public Long getBaseFolderByName(Long groupId,Long parentFolder,String name) throws PortalException {
+		if(parentFolder==null)
+			return getFolderWC(groupId, name, Contants.JOURNAL_HOTEL);
+		else
+			return getFolderWC(groupId, name, parentFolder);
+	}
+
 	 /*Crear  folder para web content*/
 	 @Override
 	    public JSONArray createFolderNestedFolderId(Long userId,Long groupId,Long parentFolderId,String name) throws PortalException{
@@ -812,6 +819,22 @@ public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 			}
 			return journal;
 		}
+
+	public List<JournalArticle> getWebContentsCategoryAndTypeFacility(Long groupId,long categoryId,Long[] structuresId) throws PortalException {
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+		List<JournalArticle> journal = new ArrayList<>();
+		assetEntryQuery.setAnyCategoryIds(new long[] { categoryId });
+		assetEntryQuery.setClassName("com.liferay.journal.model.JournalArticle");
+		List<AssetEntry> assetEntryList = AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+		for (AssetEntry assetEntry : assetEntryList) {
+			for (Long structureId : structuresId) {
+				JournalArticleResource journalArticleResource = JournalArticleResourceLocalServiceUtil.getJournalArticleResource(assetEntry.getClassPK());
+				journal.addAll(getWCByJournalCategoryIdAndType(groupId, journalArticleResource.getResourcePrimKey(), structureId));
+
+			}
+		}
+		return journal;
+	}
 			/*Deprecate @Override
 			public List<JournalArticle> getWebcontentRecursiveByType(Long groupId, String brand, String codeHotel, String TypeContent) throws PortalException {
 				List<JournalArticle> journalArray= new ArrayList<JournalArticle>();

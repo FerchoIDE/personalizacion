@@ -1,6 +1,6 @@
 import Component from 'metal-component';
 
-import Service from "./service/Service"
+import Service from "./service/Service.es.js"
 import TextLocalizableUI from './TextLocalizableUI.es';
 import CheckBoxUI from './CheckBoxUI.es';
 import TextAreaUI from './TextAreaUI.es';
@@ -14,7 +14,7 @@ import DocumentUI from './components/DocumentUI.es';
 
 import Soy from 'metal-soy';
 import templates from './NewStructure.soy';
-import NewStructureState from "./state/NewStructureState"
+import NewStructureStateEs from "./state/NewStructureState.es.js"
 
 const structureIdHotel= '35835'
 const structureIdBrand= '35912'
@@ -24,10 +24,13 @@ const structureIdRate= '35796'
  * View Component
  */
 class NewStructure extends Component {
-
+    disposed() {
+        console.log('-----receive event disposed----'+this.id)
+        delete  this.model
+    }
     created() {
         console.log('----NewStructure ----created----' + this.id)
-        this.model = new NewStructureState()
+        this.model = new NewStructureStateEs()
         this.model.idStructure = this.structureId
         this.model.fields = this.data
         this.model.localeDefault = this.data['defaultLanguage']
@@ -220,6 +223,12 @@ class NewStructure extends Component {
         console.log('-------NewStructure-handleChangeValue-- resut==' + result)
     }
 
+    handleRemoveValue(event) {
+        console.log('-------NewStructure-handleRemoveValue-- v6********path=' + event.path + "--value=" + event.value)
+        var result = this.model.removeValue(event.path, event.value, event.language)
+        console.log('-------NewStructure-handleRemoveValue-- resut==' + result)
+    }
+
     saveStructure(event) {
         console.log("--------saveStructure----------")
         let _structureKey = this.initialConfig_.structureKey;
@@ -261,7 +270,10 @@ class NewStructure extends Component {
         }
 
         let _data = {
+            brandId: this.brandIdSelected,
+            hotelId: this.hotelIdSelected,
             brand: this.brandSelected,
+            hotel: this.hotelSelected,
             localeDefault: this.data['defaultLanguage'],
             title: $("#input_title_principal").val(),
             ddmTemplate: $("#select_selectTemplate").val(),
@@ -273,16 +285,28 @@ class NewStructure extends Component {
             tags: []
         }
         console.log(JSON.stringify(_data))
+        const _parent =this
         new Service().savejournal(_data, result => {
             console.log("----------" + result)
+        if(_parent.nested){
+            window.setTimeout(handler =>{
+                var data = {idParent: 'bar'}
+                var event = new CustomEvent(_parent.structureId+'_saveEvent', {detail: result})
+                window.parent.document.dispatchEvent(event)
+            },100);
+        }
+
+
         })
         console.log("********saveStructure**********")
     }
 
     cancelStructure(event) {
-        var data = {idParent: 'bar'}
-        var event = new CustomEvent('cancelEvent', {detail: data})
-        window.parent.document.dispatchEvent(event)
+        if(this.nested) {
+            var data = {idParent: 'bar'}
+            var event = new CustomEvent('cancelEvent', {detail: data})
+            window.parent.document.dispatchEvent(event)
+        }
     }
 
 }
@@ -292,7 +316,9 @@ NewStructure.STATE = {
     brandIdSelected: {value: undefined},
     hotelSelected: {value: undefined},
     hotelIdSelected: {value: undefined},
-    model: {value: new NewStructureState()}
+    structureId:{value:{}},
+    nested: {value: undefined},
+    model: {value: new NewStructureStateEs()}
 }
 Soy.register(NewStructure, templates);
 
