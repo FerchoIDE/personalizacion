@@ -189,7 +189,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                       $templateAlias2({id: field4367Data['name'], nameParent: name, label: field4367Data['label'][defaultLanguage], checkedOption: checkedOption, path: path + '/' + field4367Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
                     } else if (field4367Data['type'] == 'ddm-date') {
                       $templateAlias3({id: field4367Data['name'], label: field4367Data['label'][defaultLanguage], placeholder: field4367Data['tip'][defaultLanguage], defaultLanguageId: defaultLanguage, path: path + '/' + field4367Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-                    } else if (field4367Data['type'] == 'ddm-text-html') {
+                    } else if (field4367Data['type'] == 'ddm-text-html' || field4367Data['type'] == 'textarea') {
                       $templateAlias4({id: field4367Data['name'], label: field4367Data['label'][defaultLanguage], placeholder: field4367Data['tip'][defaultLanguage], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, path: path + '/' + field4367Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
                     } else if (field4367Data['type'] == 'ddm-journal-article') {
                       $templateAlias5({id: field4367Data['name'], label: field4367Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected, brandIdSelected: brandIdSelected, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, hotelIdSelected: hotelIdSelected, path: path + '/' + field4367Data['name']}, null, opt_ijData);

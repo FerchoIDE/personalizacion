@@ -528,7 +528,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           $templateAlias4({id: field605Data['name'], label: field605Data['label'][selectedLanguage__soy393], path: field605Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
         } else if (field605Data['type'] == 'ddm-date') {
           $templateAlias5({id: field605Data['name'], label: field605Data['label'][defaultLanguage__soy395], placeholder: field605Data['tip'][defaultLanguage__soy395], defaultLanguageId: selectedLanguage__soy393, path: field605Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field605Data['type'] == 'ddm-text-html') {
+        } else if (field605Data['type'] == 'ddm-text-html' || field605Data['type'] == 'textarea') {
           $templateAlias6({id: field605Data['name'], label: field605Data['label'][selectedLanguage__soy393], placeholder: field605Data['tip'][selectedLanguage__soy393], availableLanguageIds: availableLanguageIds__soy397, defaultLanguageId: selectedLanguage__soy393, path: field605Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
         } else if (field605Data['type'] == 'radio') {
           $templateAlias7({id: field605Data['name'], label: field605Data['label'][selectedLanguage__soy393], defaultLanguageId: selectedLanguage__soy393, options: field605Data['options'], path: field605Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);

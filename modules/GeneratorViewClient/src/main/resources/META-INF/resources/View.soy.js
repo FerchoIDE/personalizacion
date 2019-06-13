@@ -96,7 +96,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('svg');
       incrementalDom.elementClose('button');
       incrementalDom.elementOpenStart('div');
-          incrementalDom.attr('class', 'dropdown-menu dropdown-menu-right');
+          incrementalDom.attr('class', 'dropdown-menu dropdown-menu-left');
       incrementalDom.elementOpenEnd();
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('class', 'dropdown-item');

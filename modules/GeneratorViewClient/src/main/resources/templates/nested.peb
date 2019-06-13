@@ -11,6 +11,8 @@
 			{{ basic(field,'ddm-date') }}
 		{% elseif field.type =="ddm-text-html" %}
 			{{ basic(field,'text_area') }}
+		{% elseif field.type =="textarea" %}
+			{{ basic(field,'text_box') }}
 		{% elseif field.type =="ddm-separator" %}
 			{{ separator(field) }}
 		{% elseif field.type =="select" %}
