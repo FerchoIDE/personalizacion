@@ -44,6 +44,7 @@
     {let $_itemsAsociated: isNonnull($itemsAsociated)?$itemsAsociated[$id]:$itemsAsociated /}
     {let $_isOpen: isNonnull($isOpen)?$isOpen: quoteKeysIfJs(['a': false]) /}
     {let $m: quoteKeysIfJs(['a': false]) /}
+    {let $_host_: 'localhost:8080' /}
 
     <div id="{$id}" class="container">
         <div class="row">
@@ -70,7 +71,7 @@
                                                 <span class="inline-item">
                                                     <img width="128" style="max-height: 256px;max-width: 100%"
                                                           alt="Not Image"
-                                                          src="http://localhost:8080{$_itemsAsociated[$field].imageThumbnail}"/>
+                                                          src="http://{$_host_}{$_itemsAsociated[$field].imageThumbnail}"/>
                                                 </span>
                                             </div>
                                             <div class="autofit-col">
@@ -317,7 +318,7 @@
                                                             <span class="inline-item">
                                                                  <img width="128" style="max-height: 256px;max-width: 100%"
                                                                       alt="Not Image"
-                                                                      src="http://localhost:8080{$field.imageThumbnail}"/>
+                                                                      src="http://{$_host_}{$field.imageThumbnail}"/>
 
                                                             </span>
                                                         </div>

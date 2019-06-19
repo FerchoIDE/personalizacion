@@ -1,11 +1,14 @@
 import wretch from "wretch"
 const _HOST_="localhost:8080"
+//const _HOST_="10.43.162.99"
+const _PATH_="/web/guest/home/"
+//const _PATH_="/web/posadas-completo-nuevo/personalizacion/"
 
 export default class Service{
 
 
     getDocuments(brand,codeHotel,callBack){
-        wretch("http://"+_HOST_+"/web/guest/home/-/generator/resource/getDocuments")
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/getDocuments")
             .post({ "brand": brand,"codeHotel":codeHotel })
             .json(json =>{
                 console.log(json)
@@ -13,7 +16,7 @@ export default class Service{
             } )
     }
     getDocumentsForName(brand,codeHotel,nameFolder,callBack){
-        wretch("http://"+_HOST_+"/web/guest/home/-/generator/resource/getDocuments")
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/getDocuments")
             .post({ "brand": brand,"codeHotel":codeHotel,"nameFolder":nameFolder })
             .json(json =>{
                 console.log(json)
@@ -21,7 +24,7 @@ export default class Service{
             } )
     }
     getDocumentsForFolder(brand,codeHotel,folderId,callBack){
-        wretch("http://"+_HOST_+"/web/guest/home/-/generator/resource/getDocuments")
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/getDocuments")
             .post({ "brand": brand,"codeHotel":codeHotel,"folderId":folderId })
             .json(json =>{
                 console.log(json)
@@ -29,7 +32,7 @@ export default class Service{
             } )
     }
     getFoldersForDocument(brand,codeHotel,callBack){
-        wretch("http://"+_HOST_+"/web/guest/home/-/generator/resource/getFoldersMedia")
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/getFoldersMedia")
             .post({ "brand": brand,"codeHotel":codeHotel })
             .json(json =>{
                 console.log(json)
@@ -38,7 +41,7 @@ export default class Service{
     }
 
     saveDocument(brand,codeHotel,folderId,description,newFolder,fileInfo,callBack){
-        wretch("http://"+_HOST_+"/web/guest/home/-/generator/resource/saveDocument")
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/saveDocument")
             .post({ "brand": brand,"codeHotel":codeHotel,
                 "description":description,"folderId":folderId,"newFolder":newFolder,
                 "file":fileInfo})
@@ -54,7 +57,7 @@ export default class Service{
 
     // ********************* Journals ********* //
     getJournals(brand,codeHotel,nameField,callBack){
-        wretch("http://"+_HOST_+"/web/guest/home/-/generator/resource/getJournals")
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/getJournals")
             .post({ "brand": brand,"codeHotel":codeHotel,"nameField":nameField })
             .json(json =>{
                 console.log(json)
@@ -62,7 +65,7 @@ export default class Service{
             } )
     }
     getFoldersForJournal(brand,codeHotel,nameField,callBack){
-        wretch("http://"+_HOST_+"/web/guest/home/-/generator/resource/getFoldersJournal")
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/getFoldersJournal")
             .post({ "brand": brand,"codeHotel":codeHotel,"nameField":nameField })
             .json(json =>{
                 console.log(json)
@@ -70,7 +73,7 @@ export default class Service{
             } )
     }
     getJournalsForName(brand,codeHotel,nameFolder,nameField,callBack){
-        wretch("http://"+_HOST_+"/web/guest/home/-/generator/resource/getJournals")
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/getJournals")
             .post({ "brand": brand,"codeHotel":codeHotel,"nameFolder":nameFolder,"nameField":nameField })
             .json(json =>{
                 console.log(json)
@@ -78,7 +81,7 @@ export default class Service{
             } )
     }
     getJournalsForFolder(brand,codeHotel,folderId,nameField,callBack){
-        wretch("http://"+_HOST_+"/web/guest/home/-/generator/resource/getJournals")
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/getJournals")
             .post({ "brand": brand,"codeHotel":codeHotel,"folderId":folderId,"nameField":nameField })
             .json(json =>{
                 console.log(json)
@@ -87,7 +90,7 @@ export default class Service{
     }
 
     validateCodeHotel(brand,codeHotel,brandId,callBack){
-        wretch("http://"+_HOST_+"/web/guest/home/-/generator/resource/validateCodeHotel")
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/validateCodeHotel")
             .post({ "brand": brand,"codeHotel":codeHotel,"brandId":brandId })
             .json(json =>{
                 console.log(json)
@@ -95,7 +98,7 @@ export default class Service{
             } )
     }
     validateCodeBrand(brand,callBack){
-        wretch("http://"+_HOST_+"/web/guest/home/-/generator/resource/validateCodeBrand")
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/validateCodeBrand")
             .post({ "brand": brand})
             .json(json =>{
                 console.log(json)
@@ -103,7 +106,7 @@ export default class Service{
             } )
     }
     savejournal(data,callBack){
-        wretch("http://"+_HOST_+"/web/guest/home/-/generator/resource/saveJournal")
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/saveJournal")
             .post(data)
             .json(json =>{
                 console.log(json)

@@ -288,6 +288,10 @@ class NewStructure extends Component {
         const _parent =this
         new Service().savejournal(_data, result => {
             console.log("----------" + result)
+            if(result['id']==undefined){
+                alert("ocurrio un error"+ JSON.stringify( result));
+                return;
+            }
         if(_parent.nested){
             window.setTimeout(handler =>{
                 var data = {idParent: 'bar'}
@@ -303,9 +307,12 @@ class NewStructure extends Component {
 
     cancelStructure(event) {
         if(this.nested) {
-            var data = {idParent: 'bar'}
+            var data = {idParent: 'cancel'}
             var event = new CustomEvent('cancelEvent', {detail: data})
             window.parent.document.dispatchEvent(event)
+        }else{
+            window.location="http://localhost:8080/web/guest/home"
+            //window.location="http://10.43.162.99/web/posadas-completo-nuevo/personalizacion/"
         }
     }
 

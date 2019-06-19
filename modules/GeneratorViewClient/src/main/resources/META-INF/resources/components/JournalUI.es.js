@@ -16,7 +16,7 @@ const mapTypeContent={
     'ratelinkBrand':structureIdRate
 }
 const urlNewJournal = "http://localhost:8080/web/guest/home?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_mode=nested&_generatorviewclient_structureId=";
-
+//const urlNewJournal = "http://10.43.162.99/web/posadas-completo-nuevo/personalizacion?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_mode=nested&_generatorviewclient_structureId=";
 
 class JournalUI extends Component {
     disposed() {

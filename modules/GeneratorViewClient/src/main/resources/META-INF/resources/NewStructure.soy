@@ -268,7 +268,7 @@
 											{param path: $field['name'] /}
 											{param handleChangeValue:  $handleChangeValue /}
 										{/call}
-									{elseif $field['type'] == 'ddm-text-html'or $field['type'] == 'textarea' }
+									{elseif $field['type'] == 'ddm-text-html' or $field['type'] == 'textarea'}
 										{call TextAreaUI.render}
 											{param id: $field['name'] /}
 											{param label: $field['label'][$selectedLanguage] /}
