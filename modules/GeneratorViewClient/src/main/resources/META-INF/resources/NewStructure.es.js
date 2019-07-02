@@ -231,6 +231,10 @@ class NewStructure extends Component {
 
     saveStructure(event) {
         console.log("--------saveStructure----------")
+
+        var myselect = $("select#select_selectTemplate");
+        myselect[0].selectedIndex = 1;
+
         let _structureKey = this.initialConfig_.structureKey;
         let _fields = []
         for (var field of this.model.getState()['fields']) {

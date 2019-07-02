@@ -278,7 +278,7 @@ class DocumentUI extends Component {
 
             }else{
                 $("div#"+this.id+"_AlertErrorNew").css('display','block');
-                $("div#"+this.id+"_MsgErrorNew").text(response)
+                $("div#"+this.id+"_MsgErrorNew").text(response.errorMessage)
             }
         },1000)
 

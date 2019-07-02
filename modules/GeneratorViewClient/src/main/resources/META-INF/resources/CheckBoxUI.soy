@@ -7,29 +7,38 @@
 	{@param id: any}
 	{@param? nameParent: string}
 	{@param? checkedOption: ?}
-	{@param? label: ?}
+	{@param label: ?}
 	{@param? checked: bool}
+	{@param defaultLanguageId: string}
 	{@param? path: string}
 
 	{let $finalValue: isNonnull($checked) ? $checked : false /}
+	{let $nameV kind="text"}
+		{foreach $lab in keys($label)}
+			"{$lab}":"{$label[$lab]}",
+		{/foreach}
+	{/let}
 	<div id="{$id}" class="custom-control custom-checkbox custom-control-inline">
-			 <label>
-				 {if $checkedOption!=null}
+		<label>
+		{if $checkedOption!=null}
 
-						 <input data-onclick="handleChange" onclick="{$checkedOption}" pattern="{$nameParent}" data-path="{$path}"
-								title="{$label}" id="checkbox_{$id}" class="custom-control-input" type="checkbox"/>
+			<input data-onclick="handleChange" onclick="{$checkedOption}" pattern="{$nameParent}" data-path="{$path}"
+				   title="{$nameV}" id="checkbox_{$id}" class="custom-control-input" type="checkbox">
 
-				 {else}
+			</input>
 
 
-						 <input data-onclick="handleChange"  pattern="{$nameParent}" data-path="{$path}"
-								title="{$label}" id="checkbox_{$id}" class="custom-control-input" type="checkbox"/>
+		{else}
 
-				 {/if}
 
-				<span class="custom-control-label">
-					<span class="custom-control-label-text">{$label}</span>
+			<input data-onclick="handleChange"  pattern="{$nameParent}" data-path="{$path}"
+				   title="{$nameV}" id="checkbox_{$id}" class="custom-control-input" type="checkbox"/>
+
+		{/if}
+
+		<span class="custom-control-label">
+					<span class="custom-control-label-text">{$label[$defaultLanguageId]}</span>
 				</span>
-			</label>
+		</label>
 	</div>
 {/template}

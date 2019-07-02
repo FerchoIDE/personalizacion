@@ -193,7 +193,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenEnd();
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('onclick', changeTab);
-            incrementalDom.attr('style', 'font-size: 14px');
+            incrementalDom.attr('style', 'font-size: 18px');
             incrementalDom.attr('aria-controls', 'navUnderlineHotels');
             incrementalDom.attr('aria-expanded', selectedTab == 'navUnderlineHotelsTab' ? 'true' : 'false');
             incrementalDom.attr('class', (selectedTab == 'navUnderlineHotelsTab' ? 'active' : '') + ' nav-link');
@@ -210,7 +210,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenEnd();
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('onclick', changeTab);
-            incrementalDom.attr('style', 'font-size: 14px');
+            incrementalDom.attr('style', 'font-size: 18px');
             incrementalDom.attr('aria-controls', 'navUnderlineRooms');
             incrementalDom.attr('aria-expanded', selectedTab == 'navUnderlineRoomsTab' ? 'true' : 'false');
             incrementalDom.attr('class', (selectedTab == 'navUnderlineRoomsTab' ? 'active' : '') + ' nav-link');
@@ -227,7 +227,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenEnd();
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('onclick', changeTab);
-            incrementalDom.attr('style', 'font-size: 14px');
+            incrementalDom.attr('style', 'font-size: 18px');
             incrementalDom.attr('aria-controls', 'navUnderlineRates');
             incrementalDom.attr('aria-expanded', selectedTab == 'navUnderlineRatesTab' ? 'true' : 'false');
             incrementalDom.attr('class', (selectedTab == 'navUnderlineRatesTab' ? 'active' : '') + ' nav-link');
@@ -244,7 +244,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenEnd();
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('onclick', changeTab);
-            incrementalDom.attr('style', 'font-size: 14px');
+            incrementalDom.attr('style', 'font-size: 18px');
             incrementalDom.attr('aria-controls', 'navUnderlinePubs');
             incrementalDom.attr('aria-expanded', selectedTab == 'navUnderlinePubsTab' ? 'true' : 'false');
             incrementalDom.attr('class', (selectedTab == 'navUnderlinePubsTab' ? 'active' : '') + ' nav-link');
@@ -261,7 +261,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenEnd();
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('onclick', changeTab);
-            incrementalDom.attr('style', 'font-size: 14px');
+            incrementalDom.attr('style', 'font-size: 18px');
             incrementalDom.attr('aria-controls', 'navUnderlineRestaurants');
             incrementalDom.attr('aria-expanded', selectedTab == 'navUnderlineRestaurantsTab' ? 'true' : 'false');
             incrementalDom.attr('class', (selectedTab == 'navUnderlineRestaurantsTab' ? 'active' : '') + ' nav-link');
@@ -279,7 +279,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('onclick', changeTab);
             incrementalDom.attr('aria-controls', 'navUnderlineSpa');
-            incrementalDom.attr('style', 'font-size: 14px');
+            incrementalDom.attr('style', 'font-size: 18px');
             incrementalDom.attr('aria-expanded', selectedTab == 'navUnderlineSpaTab' ? 'true' : 'false');
             incrementalDom.attr('class', (selectedTab == 'navUnderlineSpaTab' ? 'active' : '') + ' nav-link');
             incrementalDom.attr('data-toggle', 'tab');
@@ -296,7 +296,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('onclick', changeTab);
             incrementalDom.attr('aria-controls', 'navUnderlineBrands');
-            incrementalDom.attr('style', 'font-size: 14px');
+            incrementalDom.attr('style', 'font-size: 18px');
             incrementalDom.attr('aria-expanded', selectedTab == 'navUnderlineBrandsTab' ? 'true' : 'false');
             incrementalDom.attr('class', (selectedTab == 'navUnderlineBrandsTab' ? 'active' : '') + ' nav-link');
             incrementalDom.attr('data-toggle', 'tab');
@@ -312,7 +312,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenEnd();
         incrementalDom.elementOpenStart('a');
             incrementalDom.attr('aria-expanded', 'false');
-            incrementalDom.attr('style', 'font-size: 14px');
+            incrementalDom.attr('style', 'font-size: 18px');
             incrementalDom.attr('aria-haspopup', 'true');
             incrementalDom.attr('class', 'dropdown-toggle nav-link');
             incrementalDom.attr('data-toggle', 'dropdown');
@@ -336,7 +336,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementOpenEnd();
           incrementalDom.elementOpenStart('a');
               incrementalDom.attr('aria-controls', 'navUnderlineGyms');
-              incrementalDom.attr('style', 'font-size: 14px');
+              incrementalDom.attr('style', 'font-size: 18px');
               incrementalDom.attr('class', 'dropdown-item');
               incrementalDom.attr('data-toggle', 'tab');
               incrementalDom.attr('href', '#navUnderlineGyms');
@@ -362,7 +362,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementClose('a');
           incrementalDom.elementOpenStart('a');
               incrementalDom.attr('aria-controls', 'navUnderlineDestinations');
-              incrementalDom.attr('style', 'font-size: 14px');
+              incrementalDom.attr('style', 'font-size: 18px');
               incrementalDom.attr('class', 'dropdown-item');
               incrementalDom.attr('data-toggle', 'tab');
               incrementalDom.attr('href', '#navUnderlineDestinations');
@@ -388,7 +388,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementClose('a');
           incrementalDom.elementOpenStart('a');
               incrementalDom.attr('aria-controls', 'navUnderlineGeo');
-              incrementalDom.attr('style', 'font-size: 14px');
+              incrementalDom.attr('style', 'font-size: 18px');
               incrementalDom.attr('class', 'dropdown-item');
               incrementalDom.attr('data-toggle', 'tab');
               incrementalDom.attr('href', '#navUnderlineGeo');
@@ -414,7 +414,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementClose('a');
           incrementalDom.elementOpenStart('a');
               incrementalDom.attr('aria-controls', 'navUnderlineFacilities');
-              incrementalDom.attr('style', 'font-size: 14px');
+              incrementalDom.attr('style', 'font-size: 18px');
               incrementalDom.attr('class', 'dropdown-item');
               incrementalDom.attr('data-toggle', 'tab');
               incrementalDom.attr('href', '#navUnderlineFacilities');
@@ -440,7 +440,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementClose('a');
           incrementalDom.elementOpenStart('a');
               incrementalDom.attr('aria-controls', 'navUnderlineGenerics');
-              incrementalDom.attr('style', 'font-size: 14px');
+              incrementalDom.attr('style', 'font-size: 18px');
               incrementalDom.attr('class', 'dropdown-item');
               incrementalDom.attr('data-toggle', 'tab');
               incrementalDom.attr('href', '#navUnderlineGenerics');
@@ -466,7 +466,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementClose('a');
           incrementalDom.elementOpenStart('a');
               incrementalDom.attr('aria-controls', 'navUnderlineChildrensClub');
-              incrementalDom.attr('style', 'font-size: 14px');
+              incrementalDom.attr('style', 'font-size: 18px');
               incrementalDom.attr('class', 'dropdown-item');
               incrementalDom.attr('data-toggle', 'tab');
               incrementalDom.attr('href', '#navUnderlineChildrensClub');
@@ -492,7 +492,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementClose('a');
           incrementalDom.elementOpenStart('a');
               incrementalDom.attr('aria-controls', 'navUnderlineMeetingRooms');
-              incrementalDom.attr('style', 'font-size: 14px');
+              incrementalDom.attr('style', 'font-size: 18px');
               incrementalDom.attr('class', 'dropdown-item');
               incrementalDom.attr('data-toggle', 'tab');
               incrementalDom.attr('href', '#navUnderlineMeetingRooms');

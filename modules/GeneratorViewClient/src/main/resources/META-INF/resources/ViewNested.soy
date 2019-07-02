@@ -78,9 +78,10 @@
 											{call CheckBoxUI.render}
 												{param id: $field['name'] /}
 												{param nameParent: $name /}
-												{param label: $field['label'][$defaultLanguage] /}
+												{param label: $field['label'] /}
 												{param checkedOption: $checkedOption /}
 												{param path:$path+'/'+ $field['name'] /}
+												{param defaultLanguageId: $defaultLanguage /}
 												{param handleChangeValue:  $handleChangeValue /}
 
 											{/call}
@@ -161,7 +162,7 @@
 
 											<div class="input-group">
 											<span class="label label-info">
-												<span class="label-item label-item-expand">{$checkedConcat[$name]}</span>
+												<span class="label-item label-item-expand" style="text-transform:none">{$checkedConcat[$name][$defaultLanguage]}</span>
 											</span>
 										{/if}
 									{/if}

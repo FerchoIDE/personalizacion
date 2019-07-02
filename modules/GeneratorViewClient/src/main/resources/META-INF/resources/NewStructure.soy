@@ -61,7 +61,7 @@
 				<strong class="lead">Aviso:</strong>{$msgInfo}
 			</div>
 		 {/if}
-			  <div aria-labelledby="claySmallModalDlg" id="claySmallModal1" class="fade modal {$isOnLoad ? 'show in' : ''}"
+			  <div aria-labelledby="claySmallModalDlg" id="claySmallModal1" class="modal {$isOnLoad ? 'show in' : ''}"
 				  style="{$isOnLoad ? '' : 'display: none'}"  role="dialog" tabindex="-1">
 				 <div class="modal-info modal-dialog modal-sm">
 					 <div class="modal-content">
@@ -255,8 +255,9 @@
 									{elseif $field['type'] == 'checkbox'}
 										{call CheckBoxUI.render}
 											{param id: $field['name'] /}
-											{param label: $field['label'][$selectedLanguage] /}
+											{param label: $field['label'] /}
 											{param path: $field['name'] /}
+											{param defaultLanguageId: $selectedLanguage /}
 											{param handleChangeValue:  $handleChangeValue /}
 										{/call}
 									{elseif $field['type'] == 'ddm-date'}

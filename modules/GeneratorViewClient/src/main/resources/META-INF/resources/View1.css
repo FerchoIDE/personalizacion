@@ -1203,7 +1203,7 @@ pre code {
     box-shadow: none;
     color: #272833;
     display: block;
-    font-size: 1rem;
+    /*font-size: 1rem;*/
     line-height: 1.5;
     padding: 0.5rem 1rem;
     width: 100% !important;
@@ -1570,7 +1570,7 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
     border: 1px solid transparent;
     border-radius: 0.25rem;
     display: inline-block;
-    font-size: 1rem;
+    /*font-size: 1rem;*/
     font-weight: 600;
     line-height: 1.5;
     padding: 0.4375rem 0.9375rem;
@@ -2052,7 +2052,7 @@ input[type="button"].btn-block {
     color: #272833;
     display: none;
     float: left;
-    font-size: 1rem;
+    /*font-size: 1rem;*/
     left: 0;
     list-style: none;
     margin: 0.125rem 0 0;
@@ -6845,18 +6845,20 @@ a.text-dark:hover, a.text-dark:focus {
     padding: 0; }
 
 .btn {
-    font-size: 1rem; }
+    /*font-size: 1rem;*/
+}
 .btn:not(:disabled):not(.disabled) {
     cursor: pointer; }
 .btn.disabled, .btn:disabled {
     cursor: not-allowed; }
 
 .btn .inline-item {
-    font-size: 1rem; }
+    /*font-size: 1rem; */
+}
 
 .btn-section {
     display: block;
-    font-size: 0.6875rem;
+    /*font-size: 0.6875rem;*/
     font-weight: 400;
     line-height: 1; }
 
@@ -6912,7 +6914,7 @@ a.text-dark:hover, a.text-dark:focus {
     padding: 0.4375rem 0.75rem; }
 
 .btn-monospaced {
-    height: 2.5rem;
+    /*height: 2.5rem;*/
     line-height: 1;
     overflow: hidden;
     padding-bottom: 0.25rem;
@@ -6921,7 +6923,7 @@ a.text-dark:hover, a.text-dark:focus {
     padding-top: 0.25rem;
     text-align: center;
     white-space: normal;
-    width: 2.5rem;
+    /*width: 2.5rem;*/
     word-wrap: break-word; }
 .btn-monospaced.btn-lg, .btn-group-lg > .btn-monospaced.btn, .btn-group-lg .btn-group > .btn-monospaced.btn {
     height: 3rem;
@@ -8387,7 +8389,7 @@ button.label-light:focus {
     margin-top: 1rem; }
 
 .dropdown-menu {
-    font-size: 0.875rem;
+    /*font-size: 0.875rem;*/
     max-height: 500px;
     max-width: 240px;
     min-height: 40px;
@@ -8639,7 +8641,7 @@ fieldset {
 
 label {
     color: #272833;
-    font-size: 0.875rem;
+    /*font-size: 0.875rem;*/
     font-weight: 600;
     margin-bottom: 0.25rem;
     max-width: 100%;
@@ -8654,7 +8656,9 @@ label .reference-mark {
     font-size: 6px; }
 
 .form-group {
-    position: relative; }
+    position: relative;
+    padding-bottom: 20px;
+}
 @media (max-width: 767.98px) {
     .form-group {
         margin-bottom: 1rem; } }
@@ -8886,6 +8890,11 @@ fieldset[disabled] .form-control::placeholder, .form-control[disabled]::placehol
         width: 100%; } }
 .form-group-autofit label {
     align-self: flex-start; }
+.form-group-item{
+    padding-left: 20px;
+    padding-bottom: 20px;
+    width: 30%;
+}
 .form-group-autofit .form-group-item {
     display: flex;
     flex-basis: auto;
@@ -9093,15 +9102,16 @@ button.component-action:focus {
     min-height: 1.5625rem; }
 .custom-control label {
     cursor: pointer;
-    font-size: 1rem; }
+    font-size: 1.3rem; }
 
 .custom-control-label {
-    font-size: 0.875rem;
+    /*font-size: 0.875rem;*/
     line-height: 1.5625rem;
     position: static; }
 
 label.custom-control-label {
-    font-size: 0.875rem; }
+    /*font-size: 0.875rem;*/
+}
 
 .custom-control-label-text {
     padding-left: 0.5rem; }
@@ -9929,7 +9939,7 @@ a.collapse-icon {
 
 .modal-title {
     flex-grow: 1;
-    font-size: 1.25rem;
+    /*font-size: 1.25rem;*/
     font-weight: 700;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -13706,7 +13716,7 @@ fieldset + .sheet-footer {
 
 .sheet-title {
     display: block;
-    font-size: 1.25rem;
+    font-size: 2.25rem;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1.5rem;
@@ -13722,7 +13732,7 @@ fieldset + .sheet-footer {
     border-width: 0 0 1px 0;
     color: #272833;
     display: block;
-    font-size: 0.875rem;
+    /*font-size: 0.875rem;*/
     font-weight: 600;
     line-height: 1.2;
     margin-bottom: 1.5rem;
@@ -14079,7 +14089,7 @@ th {
 
 .table {
     border-collapse: collapse;
-    font-size: 0.875rem;
+    /*font-size: 0.875rem;*/
     margin-bottom: 0; }
 .table thead td,
 .table thead th {

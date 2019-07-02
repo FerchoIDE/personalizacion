@@ -28,17 +28,30 @@ class ViewNested extends Component {
             return
         console.log('-----receive event checkedOption----'+event.currentTarget.id+'--'+event.currentTarget.title+'--'+event.currentTarget.pattern+'--'+event.currentTarget.checked)
        var _checkedSelected = this.checkedSelected
+        var _defaultLanguage = this.initialConfig_.defaultLanguage
         if(_checkedSelected[event.currentTarget.pattern]=== undefined)
             _checkedSelected[event.currentTarget.pattern]={}
+
+
         if(event.currentTarget.checked){
-            _checkedSelected[event.currentTarget.pattern][event.currentTarget.id]=event.currentTarget.title
+            _checkedSelected[event.currentTarget.pattern][event.currentTarget.id]=
+                JSON.parse("{"+event.currentTarget.title.slice(0,event.currentTarget.title.length - 1)+"}")
         }else{
             delete _checkedSelected[event.currentTarget.pattern][event.currentTarget.id]
         }
         // event.preventDefault();
         var _checkedConcat = this.checkedConcat
-        _checkedConcat[event.currentTarget.pattern]=Object.values(_checkedSelected[event.currentTarget.pattern]).join('-')
-       // console.log(JSON.stringify())
+        for(var _cC of this.initialConfig_.availableLanguageIds){
+            if(_checkedConcat[event.currentTarget.pattern] === undefined)
+                _checkedConcat[event.currentTarget.pattern]={}
+            var _lst =[]
+            for(var _cT in _checkedSelected[event.currentTarget.pattern]){
+                _lst.push(_checkedSelected[event.currentTarget.pattern][_cT][_cC])
+            }
+            _checkedConcat[event.currentTarget.pattern][_cC]=_lst.join(' ')//Object.values(_checkedSelected[event.currentTarget.pattern]).join(' ')
+
+        }
+        // console.log(JSON.stringify())
         this.setState({checkedConcat: _checkedConcat })
         this.setState({checkedSelected: _checkedSelected })
         console.log('finishh event checkedOption')

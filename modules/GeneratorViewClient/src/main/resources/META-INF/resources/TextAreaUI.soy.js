@@ -53,7 +53,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var path = soy.asserts.assertType(opt_data.path == null || (goog.isString(opt_data.path) || opt_data.path instanceof goog.soy.data.SanitizedContent), 'path', opt_data.path, '!goog.soy.data.SanitizedContent|null|string|undefined');
-  var finalValue__soy1903 = (value != null) ? value : '';
+  var finalValue__soy1918 = (value != null) ? value : '';
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'form-group-item');
@@ -63,19 +63,19 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
     incrementalDom.elementOpenEnd();
       soyIdom.print(label);
     incrementalDom.elementClose('label');
-    var language1942List = availableLanguageIds;
-    var language1942ListLen = language1942List.length;
-    for (var language1942Index = 0; language1942Index < language1942ListLen; language1942Index++) {
-        var language1942Data = language1942List[language1942Index];
-        if (language1942Data == defaultLanguageId) {
+    var language1957List = availableLanguageIds;
+    var language1957ListLen = language1957List.length;
+    for (var language1957Index = 0; language1957Index < language1957ListLen; language1957Index++) {
+        var language1957Data = language1957List[language1957Index];
+        if (language1957Data == defaultLanguageId) {
           incrementalDom.elementOpenStart('textarea');
               incrementalDom.attr('class', 'form-control');
               incrementalDom.attr('data-onkeyup', 'handleChange');
               incrementalDom.attr('data-path', path);
-              incrementalDom.attr('data-language', language1942Data);
-              incrementalDom.attr('id', 'inputarea_' + id + '_' + language1942Data);
+              incrementalDom.attr('data-language', language1957Data);
+              incrementalDom.attr('id', 'inputarea_' + id + '_' + language1957Data);
               incrementalDom.attr('placeholder', placeholder);
-              incrementalDom.attr('value', finalValue__soy1903);
+              incrementalDom.attr('value', finalValue__soy1918);
           incrementalDom.elementOpenEnd();
           incrementalDom.elementClose('textarea');
         } else {
@@ -83,11 +83,11 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.attr('class', 'form-control');
               incrementalDom.attr('data-onkeyup', 'handleChange');
               incrementalDom.attr('data-path', path);
-              incrementalDom.attr('data-language', language1942Data);
-              incrementalDom.attr('id', 'inputarea_' + id + '_' + language1942Data);
+              incrementalDom.attr('data-language', language1957Data);
+              incrementalDom.attr('id', 'inputarea_' + id + '_' + language1957Data);
               incrementalDom.attr('placeholder', placeholder);
               incrementalDom.attr('style', 'display: none');
-              incrementalDom.attr('value', finalValue__soy1903);
+              incrementalDom.attr('value', finalValue__soy1918);
           incrementalDom.elementOpenEnd();
           incrementalDom.elementClose('textarea');
         }

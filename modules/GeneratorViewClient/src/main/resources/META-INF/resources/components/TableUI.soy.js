@@ -56,10 +56,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
     incrementalDom.elementOpenEnd();
       incrementalDom.elementOpen('thead');
         incrementalDom.elementOpen('tr');
-          var field7880List = keys;
-          var field7880ListLen = field7880List.length;
-          for (var field7880Index = 0; field7880Index < field7880ListLen; field7880Index++) {
-              var field7880Data = field7880List[field7880Index];
+          var field7905List = keys;
+          var field7905ListLen = field7905List.length;
+          for (var field7905Index = 0; field7905Index < field7905ListLen; field7905Index++) {
+              var field7905Data = field7905List[field7905Index];
               incrementalDom.elementOpenStart('th');
                   incrementalDom.attr('class', 'table-head-title');
               incrementalDom.elementOpenEnd();
@@ -68,10 +68,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                     incrementalDom.attr('href', '#1');
                 incrementalDom.elementOpenEnd();
                   incrementalDom.elementOpenStart('span');
-                      incrementalDom.attr('style', 'font-size: 10px');
-                      incrementalDom.attr('title', header[field7880Data]);
+                      incrementalDom.attr('style', 'font-size: 18px');
+                      incrementalDom.attr('title', header[field7905Data]);
                   incrementalDom.elementOpenEnd();
-                    soyIdom.print(header[field7880Data]);
+                    soyIdom.print(header[field7905Data]);
                   incrementalDom.elementClose('span');
                 incrementalDom.elementClose('a');
               incrementalDom.elementClose('th');
@@ -81,17 +81,17 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('tr');
       incrementalDom.elementClose('thead');
       incrementalDom.elementOpen('tbody');
-        var fieldData7894List = data;
-        var fieldData7894ListLen = fieldData7894List.length;
-        for (var fieldData7894Index = 0; fieldData7894Index < fieldData7894ListLen; fieldData7894Index++) {
-            var fieldData7894Data = fieldData7894List[fieldData7894Index];
+        var fieldData7919List = data;
+        var fieldData7919ListLen = fieldData7919List.length;
+        for (var fieldData7919Index = 0; fieldData7919Index < fieldData7919ListLen; fieldData7919Index++) {
+            var fieldData7919Data = fieldData7919List[fieldData7919Index];
             incrementalDom.elementOpen('tr');
-              var field7887List = keys;
-              var field7887ListLen = field7887List.length;
-              for (var field7887Index = 0; field7887Index < field7887ListLen; field7887Index++) {
-                  var field7887Data = field7887List[field7887Index];
+              var field7912List = keys;
+              var field7912ListLen = field7912List.length;
+              for (var field7912Index = 0; field7912Index < field7912ListLen; field7912Index++) {
+                  var field7912Data = field7912List[field7912Index];
                   incrementalDom.elementOpen('td');
-                    soyIdom.print(fieldData7894Data[field7887Data]);
+                    soyIdom.print(fieldData7919Data[field7912Data]);
                   incrementalDom.elementClose('td');
                 }
               incrementalDom.elementOpen('td');

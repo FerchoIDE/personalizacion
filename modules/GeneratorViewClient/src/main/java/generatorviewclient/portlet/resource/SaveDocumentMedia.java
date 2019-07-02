@@ -14,6 +14,7 @@ import org.osgi.service.component.annotations.Component;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Iterator;
@@ -30,6 +31,8 @@ public class SaveDocumentMedia implements MVCResourceCommand {
     @Override
     public boolean serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws PortletException {
         try {
+            resourceResponse.setContentType("application/json");
+
             System.out.println("before service SaveDocumentMedia");
             ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
             long portletGroupId = themeDisplay.getLayout().getGroupId();
@@ -78,13 +81,18 @@ public class SaveDocumentMedia implements MVCResourceCommand {
                 resourceResponse.getPortletOutputStream().write(resp.toString().getBytes());
                 return false;
             } else {
+                resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE,
+                        Integer.toString(HttpServletResponse.SC_INTERNAL_SERVER_ERROR));
                 resourceResponse.getPortletOutputStream().write(resp.toString().getBytes());
-                return true;
+               return true;
             }
 
         } catch (Exception e) {
             System.out.println("------------------" + e.getMessage());
             e.printStackTrace();
+            resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE,
+                    Integer.toString(HttpServletResponse.SC_INTERNAL_SERVER_ERROR));
+           // throw new PortletException(e.getMessage(),e);
             try {
                 generateError(resourceResponse.getPortletOutputStream(), e.getMessage());
             } catch (Exception ex) {

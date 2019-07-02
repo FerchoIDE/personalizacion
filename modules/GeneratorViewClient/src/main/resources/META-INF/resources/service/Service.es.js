@@ -51,7 +51,7 @@ export default class Service{
             } )
             .catch(error =>{
                 console.log(error)
-                callBack('BAD',error)
+                callBack('BAD',JSON.parse(error.message))
             })
     }
 

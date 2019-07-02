@@ -18,6 +18,7 @@ goog.module('CheckBoxUI.incrementaldom');
 
 goog.require('goog.soy.data.SanitizedContent');
 var incrementalDom = goog.require('incrementaldom');
+goog.require('soy');
 goog.require('soy.asserts');
 var soyIdom = goog.require('soy.idom');
 
@@ -29,6 +30,7 @@ var soyIdom = goog.require('soy.idom');
  *  checkedOption: (?),
  *  label: (?),
  *  checked: (boolean|null|undefined),
+ *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined)
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
@@ -48,9 +50,22 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var label = opt_data.label;
   /** @type {boolean|null|undefined} */
   var checked = soy.asserts.assertType(opt_data.checked == null || (goog.isBoolean(opt_data.checked) || opt_data.checked === 1 || opt_data.checked === 0), 'checked', opt_data.checked, 'boolean|null|undefined');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var path = soy.asserts.assertType(opt_data.path == null || (goog.isString(opt_data.path) || opt_data.path instanceof goog.soy.data.SanitizedContent), 'path', opt_data.path, '!goog.soy.data.SanitizedContent|null|string|undefined');
-  var finalValue__soy10 = (checked != null) ? checked : false;
+  var finalValue__soy11 = (checked != null) ? checked : false;
+  var nameV__soy13 = '';
+  var lab20List = (soy.$$getMapKeys(label));
+  var lab20ListLen = lab20List.length;
+  for (var lab20Index = 0; lab20Index < lab20ListLen; lab20Index++) {
+      var lab20Data = lab20List[lab20Index];
+      nameV__soy13 += '"';
+      nameV__soy13 += lab20Data;
+      nameV__soy13 += '":"';
+      nameV__soy13 += label[lab20Data];
+      nameV__soy13 += '",';
+    }
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'custom-control custom-checkbox custom-control-inline');
@@ -62,7 +77,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.attr('onclick', checkedOption);
             incrementalDom.attr('pattern', nameParent);
             incrementalDom.attr('data-path', path);
-            incrementalDom.attr('title', label);
+            incrementalDom.attr('title', nameV__soy13);
             incrementalDom.attr('id', 'checkbox_' + id);
             incrementalDom.attr('class', 'custom-control-input');
             incrementalDom.attr('type', 'checkbox');
@@ -73,7 +88,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.attr('data-onclick', 'handleChange');
             incrementalDom.attr('pattern', nameParent);
             incrementalDom.attr('data-path', path);
-            incrementalDom.attr('title', label);
+            incrementalDom.attr('title', nameV__soy13);
             incrementalDom.attr('id', 'checkbox_' + id);
             incrementalDom.attr('class', 'custom-control-input');
             incrementalDom.attr('type', 'checkbox');
@@ -86,7 +101,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementOpenStart('span');
             incrementalDom.attr('class', 'custom-control-label-text');
         incrementalDom.elementOpenEnd();
-          soyIdom.print(label);
+          soyIdom.print(label[defaultLanguageId]);
         incrementalDom.elementClose('span');
       incrementalDom.elementClose('span');
     incrementalDom.elementClose('label');
@@ -100,6 +115,7 @@ exports.render = $render;
  *  checkedOption: (?),
  *  label: (?),
  *  checked: (boolean|null|undefined),
+ *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined)
  * }}
  */
@@ -108,8 +124,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'CheckBoxUI.render';
 }
 
-exports.render.params = ["id","nameParent","checkedOption","label","checked","path"];
-exports.render.types = {"id":"any","nameParent":"string","checkedOption":"?","label":"?","checked":"bool","path":"string"};
+exports.render.params = ["id","nameParent","checkedOption","label","checked","defaultLanguageId","path"];
+exports.render.types = {"id":"any","nameParent":"string","checkedOption":"?","label":"?","checked":"bool","defaultLanguageId":"string","path":"string"};
 templates = exports;
 return exports;
 
