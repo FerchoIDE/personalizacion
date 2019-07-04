@@ -9,18 +9,29 @@
 	{@param options: list<?>}
 	{@param defaultLanguageId: string}
 	{@param? path: string}
+	{@param? multiple: bool}
 	{let $finalValue: isNonnull($value) ? $value : '' /}
 	<div id="{$id}">
 		<div class="form-group">
 			<label for="select_{$id}">{$label}</label>
-			 <select class="form-control" data-path="{$path}" data-language="{$defaultLanguageId}"
-					 data-onchange="handleChange"
-					 id="select_{$id}">
-				 <option disabled selected>Selecciona {$label}</option>
-				{foreach $option in $options}
-					<option value="{$option.value}">{$option.label[$defaultLanguageId]}</option>
-				{/foreach}
-			</select>
+			{if $multiple}
+				<select class="form-control" data-path="{$path}" data-language="{$defaultLanguageId}"
+						data-onchange="handleChange" multiple
+						id="select_{$id}">
+					{foreach $option in $options}
+						<option value="{$option.value}">{$option.label[$defaultLanguageId]}</option>
+					{/foreach}
+				</select>
+			{else}
+				<select class="form-control" data-path="{$path}" data-language="{$defaultLanguageId}"
+						data-onchange="handleChange"
+						id="select_{$id}">
+					<option disabled selected>Selecciona {$label}</option>
+					{foreach $option in $options}
+						<option value="{$option.value}">{$option.label[$defaultLanguageId]}</option>
+					{/foreach}
+				</select>
+			{/if}
 		</div>
 	</div>
 {/template}

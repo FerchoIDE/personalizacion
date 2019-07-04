@@ -302,6 +302,10 @@ class NewStructure extends Component {
                 var event = new CustomEvent(_parent.structureId+'_saveEvent', {detail: result})
                 window.parent.document.dispatchEvent(event)
             },100);
+        }else{
+            alert("Se guardo correctamente la información")
+            window.location="http://localhost:8080/web/guest/home"
+            //window.location="http://10.43.162.99/web/posadas-completo-nuevo/personalizacion/"
         }
 
 

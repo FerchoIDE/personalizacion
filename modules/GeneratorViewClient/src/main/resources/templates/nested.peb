@@ -16,7 +16,7 @@
 		{% elseif field.type =="ddm-separator" %}
 			{{ separator(field) }}
 		{% elseif field.type =="select" %}
-			{{ basic(field,'list') }}
+			{{ select(field) }}
 		{% elseif field.type =="ddm-documentlibrary" %}
 			{{ documentlibrary(field) }}
 		{% elseif field.type =="ddm-journal-article" %}
@@ -32,6 +32,27 @@
 		<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{ info.name }}"  type="{{ type }}" index-type="{{ info.indexType }}">
 			{% for item in value %}
 				<dynamic-content language-id="{{ item.key }}"><![CDATA[{{ item.value }}]]></dynamic-content>
+			{% endfor %}
+		</dynamic-element>
+		{% else %}
+		<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{ info.name }}"  type="{{ type }}" index-type="{{ info.indexType }}">
+		</dynamic-element>
+	{% endfor %}
+{% endmacro %}
+
+{% macro select(info) %}
+	{% for value in info.values %}
+		<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{ info.name }}"  type="list" index-type="{{ info.indexType }}">
+			{% for item in value %}
+				<dynamic-content language-id="{{ item.key }}">
+					{% if item.value is iterable %}
+						{% for val in item.value %}
+							<option><![CDATA[{{ val }}]]></option>
+						{% endfor %}
+					{% else %}
+						<![CDATA[{{ item.value }}]]>
+					{% endif %}
+				</dynamic-content>
 			{% endfor %}
 		</dynamic-element>
 		{% else %}

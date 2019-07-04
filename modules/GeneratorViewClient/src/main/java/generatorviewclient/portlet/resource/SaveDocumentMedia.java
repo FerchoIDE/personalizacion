@@ -57,7 +57,9 @@ public class SaveDocumentMedia implements MVCResourceCommand {
 
             if(newFolder!=null && !newFolder.isEmpty()){
                 for(String folderName :newFolder.split("/")){
-                   Folder folder = new FileEntryApi().createFolder(folderId,portletGroupId,folderName,folderName) ;
+                    if(folderName==null || folderName.isEmpty())
+                        throw new Exception("La ruta no debe iniciar con \"/\", y no se debe tener separadores \"/\" juntos");
+                   Folder folder = new FileEntryApi().createIfNoExistFolder(folderId,portletGroupId,folderName,folderName) ;
                    folderId = folder.getFolderId();
                 }
 
@@ -88,13 +90,21 @@ public class SaveDocumentMedia implements MVCResourceCommand {
             }
 
         } catch (Exception e) {
-            System.out.println("------------------" + e.getMessage());
+            System.out.println("Error------------------" + e.getMessage());
             e.printStackTrace();
+            String errorMessage = e.getMessage();
+            if(e instanceof com.liferay.document.library.kernel.exception.FolderNameException){
+                errorMessage="Error en el nombre del Folder";
+            }else if(e instanceof com.liferay.document.library.kernel.exception.DuplicateFolderNameException){
+                errorMessage="El nombre del Folder ya existe \""+e.getMessage()+"\"";
+            }else if(errorMessage==null || errorMessage.isEmpty()){
+                errorMessage=e.toString();
+            }
             resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE,
                     Integer.toString(HttpServletResponse.SC_INTERNAL_SERVER_ERROR));
            // throw new PortletException(e.getMessage(),e);
             try {
-                generateError(resourceResponse.getPortletOutputStream(), e.getMessage());
+                generateError(resourceResponse.getPortletOutputStream(), errorMessage);
             } catch (Exception ex) {
 
             }

@@ -170,6 +170,7 @@
                                                                                 {param defaultLanguageId: $defaultLanguageId /}
                                                                                 {param options: $nestedField['options'] /}
                                                                                 {param path:  $field+'/'+$nestedField['name'] /}
+                                                                                {param multiple: $field['multiple'] /}
                                                                                 {param handleChangeValue:  $handleChangeValueDocument /}
                                                                             {/call}
                                                                         {elseif $nestedField['type'] == 'ddm-integer'}
@@ -366,14 +367,14 @@
         <div aria-labelledby="clayLargeModalLabelNew" class="fade modal {$isOpenNew ? 'show in' : ''}"
              style="{$isOpenNew ? '' : 'display: none'}" id="{$id}_ModalNew" role="dialog" tabindex="-1">
             <div class="modal-info modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content" style="width:600px;height: 330px">
                     <div class="modal-header">
                         <div class="modal-title" id="claySmallModalLabelNew">Nuevo {$label}</div>
 
                     </div>
 
-                    <div class="modal-body">
-                        <div class="container-fluid">
+                    <div class="modal-body" >
+                        <div class="container-fluid"  >
 
                             <div class="alert alert-danger" id="{$id}_AlertErrorNew" style="display:none" role="alert">
                                 <span class="alert-indicator">
@@ -387,7 +388,7 @@
                             </div>
 
 
-                            <div class="form-group">
+                            <div class="form-group" style="margin-top: 20px">
                                 <select class="form-control" id="{$id}_FolderNew">
                                     <option disabled selected>Selecciona la carpeta donde se almacenara el nuevo
                                         recurso
@@ -400,18 +401,18 @@
                                     {/if}
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-top: 20px">
                                 <input id="{$id}_DescriptionNew" class="form-control"
                                        class="form-control input-group-inset input-group-inset-after"
                                        placeholder="Ingrese la descripción del nuevo recurso"
                                        type="text"/>
-                                <input id="{$id}_FolderNestedNew" class="form-control"
+                                <input id="{$id}_FolderNestedNew" class="form-control" style="margin-top: 10px"
                                        class="form-control input-group-inset input-group-inset-after"
                                        placeholder="Nombre de nueva carpeta separado por / para mas de una carpeta"
                                        type="text"/>
                             </div>
                             <div class="form-group">
-                                <input id="{$id}_FileNew" class="form-control" onchange="{$fileNew}" type="file" />
+                                <input id="{$id}_FileNew" class="form-control" style="height: 60px;;margin-top:20px" onchange="{$fileNew}" type="file" />
                             </div>
 
                         </div>

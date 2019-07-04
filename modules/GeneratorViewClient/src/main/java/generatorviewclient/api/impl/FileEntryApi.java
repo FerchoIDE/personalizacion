@@ -3,6 +3,7 @@ package generatorviewclient.api.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import generatorviewclient.api.IFileEntryApi;
 import generatorviewclient.constants.Contants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -47,8 +48,25 @@ public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
     	 ServiceContext serviceContext = new ServiceContext();
 	     serviceContext.setScopeGroupId(groupId);
 	     serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
 		return DLAppServiceUtil.addFolder(groupId, parentFolderId, name, description, serviceContext);
+    }
+    public Folder createIfNoExistFolder(Long parentFolderId,
+                               Long groupId,
+                               String name,
+                               String description) throws PortalException{
+        ServiceContext serviceContext = new ServiceContext();
+        serviceContext.setScopeGroupId(groupId);
+        serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+        try {
+            Folder result = DLAppServiceUtil.getFolder(groupId, parentFolderId, name);
+            if(result!=null)
+                return result;
+        }catch(NoSuchFolderException ex){
+            _log.info(ex.getMessage());
+        }
+        return DLAppServiceUtil.addFolder(groupId, parentFolderId, name, description, serviceContext);
+
+
     }
     
     @Override

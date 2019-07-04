@@ -114,6 +114,11 @@ class JournalUI extends Component {
         window.document.addEventListener(typeJournal+'_saveEvent', handleEvent, false)
         function handleEvent(e) {
             console.log(e.detail) // outputs: {foo: 'bar'}
+            if(e.detail!==undefined && e.detail.idParent==="cancel"){
+                _parent.setState({isOpenJournalNew: false })
+                $("#"+_parent.id+"_Iframe").attr('src','about:blank');
+                return
+            }
             _parent.setState({isOpenJournalNew: false })
             $("#"+_parent.id+"_Iframe").attr('src','about:blank');
 

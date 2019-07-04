@@ -257,6 +257,7 @@ public class JsonUtil {
 		mapResult.put("type", "ddm-separator");
 		mapResult.put("name", objectParent.get("name"));
 		mapResult.put("localizable", objectParent.get("localizable"));
+		mapResult.put("multiple", objectParent.get("multiple"));
 
 		List<Object> fieldsResult = ((List<Object>)objectParent.get("nestedFields")).stream()
 				.map(object -> {
