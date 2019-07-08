@@ -190,7 +190,9 @@ public class JsonUtil {
 		List<String> availableLanguageId = getList("$.availableLanguageIds");
 
 		Map<String, String> titleEstructure =
-			getMap("$.fields.[0].label");
+				getMap("$.fields.[0].label");
+			//getMapLocale(map); //getMap("$.fields.[0].label");
+		//String nameEstructure = name; //get("$.fields.[0].name");
 		String nameEstructure = get("$.fields.[0].name");
 
 		List<Object> fields = getList("$.fields.[0].nestedFields");

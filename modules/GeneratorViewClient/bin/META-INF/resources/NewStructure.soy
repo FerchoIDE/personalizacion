@@ -7,16 +7,23 @@
 	{@param id: string}
 	{@param data: map<string, ?>}
 	{@param contextPath: string}
+	{@param? closeOpenTabC: ?}
 	{@param? closeOpenTab: ?}
 	{@param? changeLanguage: ?}
 	{@param collapseInfo: map<string,bool>}
-
+   	{@param? itemsCategories: list<?>}
+	{@param? itemsCategoriesKeys: list<?>}
+	{@param? itemsMarcasKeys: list<?>}
+	{@param? setSelectedCategories: ?}
+	{@param? itemsCategoriesKeysRender: ?}
+	{@param? itemsCategoriesSelected: ?}
+	{@param? removeSelectedCategory: ?}
+	
 	{let $selectedLanguage: $data['selectedLanguage'] /}
 	{let $defaultLanguage: $data['defaultLanguage'] /}
 	{let $availableLanguageIds: $data['availableLanguageId'] /}
 	{let $availableLanguageIdsStyle: $data['availableLanguageId-style'] /}
 	 <div id="{$id}">
-<div>funcion {$closeOpenTab}</div>
 			 <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
 				 <div class="panel">
 					 <a onclick="{$closeOpenTab}" aria-controls="accordionPrincipalCollapse" aria-expanded="true" class="collapse-icon sheet-subtitle"
@@ -145,7 +152,228 @@
 									{else}
 										Ninguno<br/>
 									{/if}
+					<div>&nbsp;&nbsp;</div>
 				{/foreach}
+ 
+ 
+ <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
+	<div class="panel">
+		<a onclick="{$closeOpenTab}"  aria-controls="accordionCatCollapse" aria-expanded="false" 
+		class="collapse-icon sheet-subtitle" data-toggle="collapse" href="#accordionCatCollapse" 
+		id="accordionCatHeading" role="tab">
+			<span>Categorias</span>
+			<span class="collapse-icon-closed">
+				<svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
+					<use href="{$contextPath}/images/icons/icons.svg#angle-right" />
+				</svg>
+			</span>
+			<span class="collapse-icon-open">
+				<svg class="lexicon-icon lexicon-icon-angle-down" focusable="false" role="presentation">
+					<use href="{$contextPath}/images/icons/icons.svg#angle-down" />
+				</svg>
+		    </span>
+		</a>																	
+		<div aria-labelledby="accordionCatHeading" class="panel-collapse collapse  {$collapseInfo?['accordionCatHeading']?'':'show'}"
+		id="accordionCatCollapse" role="tabpanel">
+			<div class="panel-body">	
+	
+		  		<div>
+    				{if $itemsCategoriesKeysRender}
+     				{if $itemsCategoriesSelected}
+   
+    	 			{foreach $key in $itemsCategoriesKeysRender}
+    	 	
+    				<span id="{$key},S" style="font-size: 1.110rem;" class="label label-dismissible label-secondary">
+						<span class="label-item label-item-expand">{$itemsCategoriesSelected[$key]}</span>
+						<span class="label-item label-item-after">
+							<button id="{$key},B" aria-label="Close" class="close" type="button" onclick="{$removeSelectedCategory}"> 
+								<svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
+									<use href="{$contextPath}/images/icons/icons.svg#times"></use>
+								</svg>
+							</button>
+						</span>
+					</span>
+    	 			{/foreach}
+    				{/if}
+     				{/if}
+    			</div>
+   
 
+
+
+
+{if $itemsCategories}
+  {if $itemsCategoriesKeys}
+	{foreach $key in $itemsCategoriesKeys}
+		{if $key.name != 'Marcas'}
+
+			<nav class="menubar menubar-transparent menubar-vertical-expand-md">
+				
+				<div class="collapse menubar-collapse" id="menubarVertical{$key.nameFormat}Collapse01">
+					<ul class="nav nav-nested">
+						<div class="panel">
+						<li class="nav-item">
+							<a onclick="{$closeOpenTabC}" id="{$key.nameFormat},OC" aria-controls="menubarVertical{$key.nameFormat}NestedCollapse01" aria-expanded="false" 
+							class="collapse-icon nav-link" data-toggle="collapse" href="#menubarVertical{$key.nameFormat}NestedCollapse01" role="button">
+								{$key.name}
+								<span class="collapse-icon-closed">
+									<svg class="lexicon-icon lexicon-icon-caret-right" focusable="false" role="presentation">
+										<use href="{$contextPath}/images/icons/icons.svg#caret-right" />
+									</svg>
+								</span>
+								<span class="collapse-icon-open">
+									<svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
+										<use href="{$contextPath}/images/icons/icons.svg#caret-bottom" />
+									</svg>
+								</span>
+							</a>
+							
+							<div class="panel-collapse collapse  {$collapseInfo?['menubarVertical'+$key.nameFormat+'Collapse01']?'':'show'}" id="menubarVertical{$key.nameFormat}NestedCollapse01">
+							
+							{foreach $field in $itemsCategories}
+								{if $field[$key.name]}
+   
+									<ul id="{$key.nameFormat}UL" style="display:none;" class="nav nav-stacked">
+						
+										{foreach $value in $field[$key.name]}
+       	 
+       	 								{if $value.isMultiValue}
+										<li class="nav-item">
+										<a id="{$value.categoryId},{$value.parentCategoryId},{$value.parentName},T" 
+										class="nav-link" style="text-decoration: none;"
+										onclick="{$setSelectedCategories}"
+										href="#1">{$value.name}</a></li>
+										{else}
+										<li class="nav-item">
+										<a id="{$value.categoryId},{$value.parentCategoryId},{$value.parentName},F" 
+										onclick="{$setSelectedCategories}" style="text-decoration: none;" 
+										class="nav-link" href="#1">{$value.name}</a></li>
+										{/if} 
+										{/foreach}
+									</ul>
+						
+								{/if}
+							{/foreach}	
+       						
+							</div>
+						</li>
+						</div>
+					</ul>
+				</div>
+			</nav>
+			
+			{else}
+			
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	{foreach $field in $itemsCategories}
+	{if $field[$key.name]}	
+		{if $itemsMarcasKeys}
+	
+<nav class="menubar menubar-transparent menubar-vertical-expand-md">
+	<div class="collapse menubar-collapse" id="menubarVerticalCollapse01">
+		<ul class="nav nav-nested">
+		<div class="panel">
+			<li class="nav-item">
+				<a aria-controls="menubarVerticalNestedCollapse01" aria-expanded="true" class="collapse-icon nav-link" data-toggle="collapse" href="#menubarVerticalNestedCollapse01" role="button">
+					{$key.name}
+					<span class="collapse-icon-closed">
+						<svg class="lexicon-icon lexicon-icon-caret-right" focusable="false" role="presentation">
+							<use href="/images/icons/icons.svg#caret-right" />
+						</svg>
+					</span>
+					<span class="collapse-icon-open">
+						<svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
+							<use href="/images/icons/icons.svg#caret-bottom" />
+						</svg>
+					</span>
+				</a>
+				
+				{foreach $key1 in $itemsMarcasKeys}
+				
+				<div class="collapse show" id="menubarVerticalNestedCollapse01">
+					<ul class="nav nav-stacked">
+						<li class="nav-item">
+							<a aria-controls="menubarVerticalNestedCollapse02" aria-expanded="false" class="collapsed collapse-icon nav-link" data-toggle="collapse" href="#menubarVerticalNestedCollapse02" role="button">
+								{$key1}
+								<span class="collapse-icon-closed">
+									<svg class="lexicon-icon lexicon-icon-caret-right" focusable="false" role="presentation">
+										<use href="/images/icons/icons.svg#caret-right" />
+									</svg>
+								</span>
+								<span class="collapse-icon-open">
+									<svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
+										<use href="/images/icons/icons.svg#caret-bottom" />
+									</svg>
+								</span>
+							</a>
+							<div class="collapse" id="menubarVerticalNestedCollapse02">
+								<ul class="nav nav-stacked">
+									<li class="nav-item"><a class="nav-link" href="#1">Details</a></li>
+									<li class="nav-item"><a class="nav-link" href="#1">Catagorization</a></li>
+									<li class="nav-item"><a class="nav-link" href="#1">Documents and Media</a></li>
+									<li class="nav-item"><a class="nav-link" href="#1">Site Template</a></li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</div>
+				{/foreach}
+			</li>
+			</div>
+		</ul>
 	</div>
+</nav>
+	{/if}
+{/if}		
+{/foreach}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+			
+			{/if}
+		{/foreach}
+	{/if}
+{/if}
+
+
+
+
+
+
+
+	 
+			</div>
+		</div>
+	</div>
+</div>
 {/template}

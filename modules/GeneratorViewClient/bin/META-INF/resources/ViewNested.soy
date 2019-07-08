@@ -80,10 +80,22 @@
 												{param id: $field['name'] /}
 												{param label: $field['label'][$defaultLanguage] /}
 												{param contextPath: $contextPath /}
+												{param itemsResultSelected: ['aa':'bb'] /}
+
+											{/call}
+										{elseif $field['type'] == 'ddm-documentlibrary'}
+											{call DocumentUI.render}
+												{param id: $field['name'] /}
+												{param label: $field['label'][$defaultLanguage] /}
+												{param contextPath: $contextPath /}
+												{param itemsResultSelected: ['aa':'bb'] /}
+												{param itemsAsociated: ['_XX_':'bb'] /}
+
 											{/call}
 										{else}
 											{$field['type']} -- Ninguno<br/>
 										{/if}
+										<div>&nbsp;&nbsp;</div>
 									{/foreach}
 								</div>
 							</div>
