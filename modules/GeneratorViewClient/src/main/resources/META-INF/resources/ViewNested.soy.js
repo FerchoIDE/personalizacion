@@ -105,8 +105,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var handleChangeValue = opt_data.handleChangeValue;
   /** @type {?} */
   var handleRemoveValue = opt_data.handleRemoveValue;
-  var structureIdRate__soy4307 = '35796';
-  var show__soy4309 = ((collapseInfo == null ? null : collapseInfo['accordion' + id + 'Heading']) != null) ? ((collapseInfo == null ? null : collapseInfo['accordion' + id + 'Heading']) ? '' : 'show') : '';
+  var structureIdRate__soy4365 = '35796';
+  var show__soy4367 = ((collapseInfo == null ? null : collapseInfo['accordion' + id + 'Heading']) != null) ? ((collapseInfo == null ? null : collapseInfo['accordion' + id + 'Heading']) ? '' : 'show') : '';
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
@@ -162,7 +162,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('div');
             incrementalDom.attr('aria-labelledby', 'accordion' + id + 'Heading');
-            incrementalDom.attr('class', 'panel-collapse collapse ' + show__soy4309);
+            incrementalDom.attr('class', 'panel-collapse collapse ' + show__soy4367);
             incrementalDom.attr('id', 'accordion' + id + 'Collapse');
             incrementalDom.attr('role', 'tabpanel');
         incrementalDom.elementOpenEnd();
@@ -175,32 +175,32 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenStart('div');
                   incrementalDom.attr('class', 'input-group');
               incrementalDom.elementOpenEnd();
-                var field4437List = data;
-                var field4437ListLen = field4437List.length;
-                for (var field4437Index = 0; field4437Index < field4437ListLen; field4437Index++) {
-                    var field4437Data = field4437List[field4437Index];
-                    if (field4437Data['type'] == 'ddm-separator') {
+                var field4495List = data;
+                var field4495ListLen = field4495List.length;
+                for (var field4495Index = 0; field4495Index < field4495ListLen; field4495Index++) {
+                    var field4495Data = field4495List[field4495Index];
+                    if (field4495Data['type'] == 'ddm-separator') {
                       incrementalDom.text('anidado');
                       incrementalDom.elementOpen('br');
                       incrementalDom.elementClose('br');
-                    } else if (field4437Data['type'] == 'text') {
-                      $templateAlias1({id: field4437Data['name'], path: path + '/' + field4437Data['name'], type: field4437Data['type'], labels: field4437Data['label'], placeholder: field4437Data['tip'], localizable: field4437Data['localizable'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
-                    } else if (field4437Data['type'] == 'checkbox') {
-                      $templateAlias2({id: field4437Data['name'], nameParent: name, label: field4437Data['label'], checkedOption: checkedOption, path: path + '/' + field4437Data['name'], defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
-                    } else if (field4437Data['type'] == 'ddm-date') {
-                      $templateAlias3({id: field4437Data['name'], label: field4437Data['label'][defaultLanguage], placeholder: field4437Data['tip'][defaultLanguage], defaultLanguageId: defaultLanguage, path: path + '/' + field4437Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-                    } else if (field4437Data['type'] == 'ddm-text-html' || field4437Data['type'] == 'textarea') {
-                      $templateAlias4({id: field4437Data['name'], label: field4437Data['label'][defaultLanguage], placeholder: field4437Data['tip'][defaultLanguage], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, path: path + '/' + field4437Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-                    } else if (field4437Data['type'] == 'ddm-journal-article') {
-                      $templateAlias5({id: field4437Data['name'], label: field4437Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected, brandIdSelected: brandIdSelected, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, hotelIdSelected: hotelIdSelected, path: path + '/' + field4437Data['name']}, null, opt_ijData);
-                    } else if (field4437Data['type'] == 'ddm-documentlibrary') {
-                      $templateAlias6({id: field4437Data['name'], label: field4437Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected, nestedFields: field4437Data['nestedFields'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, path: path + '/' + field4437Data['name']}, null, opt_ijData);
-                    } else if (field4437Data['type'] == 'radio') {
-                      $templateAlias7({id: field4437Data['name'], label: field4437Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field4437Data['options'], path: path + '/' + field4437Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-                    } else if (field4437Data['type'] == 'select') {
-                      $templateAlias8({id: field4437Data['name'], label: field4437Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field4437Data['options'], path: path + '/' + field4437Data['name'], multiple: field4437Data['multiple'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                    } else if (field4495Data['type'] == 'text') {
+                      $templateAlias1({id: field4495Data['name'], path: path + '/' + field4495Data['name'], type: field4495Data['type'], labels: field4495Data['label'], placeholder: field4495Data['tip'], localizable: field4495Data['localizable'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
+                    } else if (field4495Data['type'] == 'checkbox') {
+                      $templateAlias2({id: field4495Data['name'], nameParent: name, label: field4495Data['label'], checkedOption: checkedOption, path: path + '/' + field4495Data['name'], defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
+                    } else if (field4495Data['type'] == 'ddm-date') {
+                      $templateAlias3({id: field4495Data['name'], label: field4495Data['label'][defaultLanguage], placeholder: field4495Data['tip'][defaultLanguage], defaultLanguageId: defaultLanguage, path: path + '/' + field4495Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                    } else if (field4495Data['type'] == 'ddm-text-html' || field4495Data['type'] == 'textarea') {
+                      $templateAlias4({id: field4495Data['name'], label: field4495Data['label'][defaultLanguage], placeholder: field4495Data['tip'][defaultLanguage], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, path: path + '/' + field4495Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                    } else if (field4495Data['type'] == 'ddm-journal-article') {
+                      $templateAlias5({id: field4495Data['name'], label: field4495Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected, brandIdSelected: brandIdSelected, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, hotelIdSelected: hotelIdSelected, path: path + '/' + field4495Data['name']}, null, opt_ijData);
+                    } else if (field4495Data['type'] == 'ddm-documentlibrary') {
+                      $templateAlias6({id: field4495Data['name'], label: field4495Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected, nestedFields: field4495Data['nestedFields'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, path: path + '/' + field4495Data['name']}, null, opt_ijData);
+                    } else if (field4495Data['type'] == 'radio') {
+                      $templateAlias7({id: field4495Data['name'], label: field4495Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field4495Data['options'], path: path + '/' + field4495Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                    } else if (field4495Data['type'] == 'select') {
+                      $templateAlias8({id: field4495Data['name'], label: field4495Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field4495Data['options'], path: path + '/' + field4495Data['name'], multiple: field4495Data['multiple'], handleChangeValue: handleChangeValue}, null, opt_ijData);
                     } else {
-                      soyIdom.print(field4437Data['type']);
+                      soyIdom.print(field4495Data['type']);
                       incrementalDom.text(' -- Ninguno');
                       incrementalDom.elementOpen('br');
                       incrementalDom.elementClose('br');
@@ -210,7 +210,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                     incrementalDom.elementClose('div');
                   }
                 if ((checkedConcat != null)) {
-                  if (structureId == structureIdRate__soy4307 && (checkedConcat[name] != null) && (name == 'Restrictions' || name == 'Benefits1' || name == 'occupationRate')) {
+                  if (structureId == structureIdRate__soy4365 && (checkedConcat[name] != null) && (name == 'Restrictions' || name == 'Benefits1' || name == 'occupationRate')) {
                     incrementalDom.elementClose('div');
                   incrementalDom.elementOpenStart('div');
                       incrementalDom.attr('class', 'input-group');

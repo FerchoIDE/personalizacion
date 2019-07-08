@@ -96,6 +96,10 @@ export default class Service{
                 console.log(json)
                 callBack(json)
             } )
+            .catch(error =>{
+                console.log(error)
+                callBack(error)
+            })
     }
     validateCodeBrand(brand,callBack){
         wretch("http://"+_HOST_+_PATH_+"-/generator/resource/validateCodeBrand")
@@ -104,6 +108,10 @@ export default class Service{
                 console.log(json)
                 callBack(json)
             } )
+            .catch(error =>{
+                console.log(error)
+                callBack(error)
+            })
     }
     savejournal(data,callBack){
         wretch("http://"+_HOST_+_PATH_+"-/generator/resource/saveJournal")

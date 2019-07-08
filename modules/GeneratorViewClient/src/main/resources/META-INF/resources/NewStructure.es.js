@@ -66,8 +66,16 @@ class NewStructure extends Component {
     changeBrand(event) {
         console.log('-----changeBrand----')
         // event.preventDefault();
-        let _brandIdSelect =Number( event.currentTarget.value)
+        var _brandIdSelect =Number( event.currentTarget.value)
         let _brandSelect = event.currentTarget.selectedOptions["0"].label
+        if (this.structureId === structureIdRate) {
+            var result = [];
+            for ( var i = 0; i < event.target.selectedOptions.length; i++) {
+                result.push( event.target.selectedOptions[i].value);
+            }
+            _brandIdSelect = result
+        }
+
         this.setState({msgErrorPath: null})
         this.setState({brandIdSelected: _brandIdSelect})
         this.setState({brandSelected: _brandSelect})

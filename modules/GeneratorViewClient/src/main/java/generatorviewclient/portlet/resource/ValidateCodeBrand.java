@@ -10,12 +10,14 @@ import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import generatorviewclient.util.ConstantUtil;
 import generatorviewclient.util.FileUtil;
 import generatorviewclient.util.FolderUtil;
+import generatorviewclient.util.JsonUtil;
 import org.json.JSONObject;
 import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,11 +36,20 @@ public class ValidateCodeBrand implements MVCResourceCommand {
         long portletGroupId = themeDisplay.getLayout().getGroupId();
         Long userId = themeDisplay.getUserId();
         String body = null;
+
+        resourceResponse.setContentType("application/json");
         try {
             body = FileUtil.getBuffer(resourceRequest.getReader());
         } catch (IOException e) {
             e.printStackTrace();
-            throw new PortletException(e);
+            resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE,
+                    Integer.toString(HttpServletResponse.SC_INTERNAL_SERVER_ERROR));
+            try {
+                JsonUtil.generateError(resourceResponse.getPortletOutputStream(), e.getMessage());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return true;
         }
         System.out.println("step 0 " + body);
         JSONObject jsonObject = new JSONObject(body);
@@ -78,8 +89,16 @@ public class ValidateCodeBrand implements MVCResourceCommand {
             return false;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new PortletException(e);
+            resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE,
+                    Integer.toString(HttpServletResponse.SC_INTERNAL_SERVER_ERROR));
+           // throw new PortletException(e);
+            try {
+                JsonUtil.generateError(resourceResponse.getPortletOutputStream(), e.getMessage());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
 
         }
+        return true;
     }
 }

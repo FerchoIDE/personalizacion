@@ -133,6 +133,8 @@ public class QueriesLiferayApi {
 	        for (com.liferay.journal.model.impl.JournalFolderImpl dlFolder : journalfolderResults) {
 	            listIdFolders.add(dlFolder.getFolderId());
 	        }
+	        if(listIdFolders.isEmpty())
+	        	return parentFolder;
 	        return listIdFolders.get(0);
 	    }
 

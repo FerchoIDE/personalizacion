@@ -9,6 +9,7 @@ import generatorviewclient.api.impl.JournalApi;
 import generatorviewclient.constants.GeneratorViewClientPortletKeys;
 import generatorviewclient.util.ConstantUtil;
 import generatorviewclient.util.FileUtil;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.osgi.service.component.annotations.Component;
 
@@ -84,7 +85,16 @@ public class SaveJournal implements MVCResourceCommand {
             jsonObject.put("folderId", folderId);
 
             if(jsonObject.has("brandId")){
-                jsonObject.getJSONArray("categories").put(jsonObject.getLong("brandId"));
+                Long brandId = jsonObject.optLong("brandId");
+                if(brandId!=0)
+                    jsonObject.getJSONArray("categories").put(brandId);
+                else{
+                    JSONArray jsonArray = jsonObject.optJSONArray("brandId");
+                    if(jsonArray!=null){
+                        jsonArray.forEach(o ->jsonObject.getJSONArray("categories").put(o) );
+                    }
+                }
+
             }
             if(jsonObject.has("hotelId")){
                 jsonObject.getJSONArray("categories").put(jsonObject.getLong("hotelId"));

@@ -74,6 +74,18 @@
 									 <div class="form-group">
 										 <input id="txtCodeBrand"  class="form-control" data-onkeyup="handleChangeBrand" style="text-transform: uppercase" placeholder="Ingrese el codigo de la marca" type="text" />
 									 </div>
+								{elseif $structureId==$structureIdRate }
+									 <div class="form-group">
+										 <select multiple onchange="{$changeBrand}"  class="form-control" id="brandSelect">
+											 <option disabled selected>Selecciona una Marca</option>
+											 {foreach $field in $categoryBrands}
+												 <option value="{$field.key}">{$field.category}</option>
+											 {/foreach}
+										 </select>
+									 </div>
+
+									 <div class="form-group">
+									 </div>
 								 {else}
 									 <div class="form-group">
 										 <select onchange="{$changeBrand}"  class="form-control" id="brandSelect">
@@ -86,8 +98,6 @@
 									 <div class="form-group">
 										 {if $structureId==$structureIdHotel}
 											 <input id="txtCodeHotel" disabled class="form-control" data-onkeyup="handleChangeCode" style="text-transform: uppercase" placeholder="Ingrese el codigo de hotel" type="text" />
-										 {elseif $structureId==$structureIdRate }
-											 &nbsp;&nbsp;
 										 {else}
 											 <select onchange="{$changeHotels}"  class="form-control" id="hotelSelect">
 												 <option disabled selected>Selecciona un Hotel</option>

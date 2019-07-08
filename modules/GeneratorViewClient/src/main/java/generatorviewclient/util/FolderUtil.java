@@ -28,12 +28,41 @@ public abstract class FolderUtil {
             throw new PortletException(e1);
         }
     }
+    public static Long createFolderIfNotExist(Long groupId, Long userId, String name, String description, long parentFolderId) throws PortletException {
+        try {
+            //ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFolder.class.getName(), resourceRequest);
+            ServiceContext serviceContext = new ServiceContext();
+            Folder folder = DLAppLocalServiceUtil.getFolder(groupId,parentFolderId, name);
+            if(folder!=null)
+                return folder.getFolderId();
+            folder = DLAppLocalServiceUtil.addFolder(userId, groupId, parentFolderId, name, description, serviceContext);
+            return folder.getFolderId();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+            throw new PortletException(e1);
+        }
+    }
 
     public static Long createFolderJournal(Long groupId, Long userId, String name, String description, long parentFolderId) throws PortletException {
         try {
             //ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFolder.class.getName(), resourceRequest);
             ServiceContext serviceContext = new ServiceContext();
             JournalFolder folder = JournalFolderLocalServiceUtil.addFolder(userId, groupId, parentFolderId, name, description, serviceContext);
+            return folder.getFolderId();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+            throw new PortletException(e1);
+        }
+    }
+
+    public static Long createFolderJournalIfNotExist(Long groupId, Long userId, String name, String description, long parentFolderId) throws PortletException {
+        try {
+            //ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFolder.class.getName(), resourceRequest);
+            ServiceContext serviceContext = new ServiceContext();
+            JournalFolder folder =JournalFolderLocalServiceUtil.fetchFolder(groupId, parentFolderId, name);
+            if(folder!=null)
+                return folder.getFolderId();
+             folder = JournalFolderLocalServiceUtil.addFolder(userId, groupId, parentFolderId, name, description, serviceContext);
             return folder.getFolderId();
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -53,9 +82,11 @@ public abstract class FolderUtil {
 
         String[] categoryProperties = {""};
         ServiceContext serviceContext = new ServiceContext();
-
+        AssetCategory ac =AssetCategoryLocalServiceUtil.fetchCategory(groupId,parentCategoryId,title,vocabularyId);
+        if(ac!=null)
+            return ac.getCategoryId();
         try {
-            AssetCategory ac = AssetCategoryLocalServiceUtil.
+             ac = AssetCategoryLocalServiceUtil.
                     addCategory(
                             userId, groupId, parentCategoryId, titleMap, descriptionMap, vocabularyId, categoryProperties, serviceContext);
             return ac.getCategoryId();

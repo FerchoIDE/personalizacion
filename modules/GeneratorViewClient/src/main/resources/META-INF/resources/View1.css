@@ -7320,7 +7320,7 @@ a.text-dark:hover, a.text-dark:focus {
     border-style: solid;
     border-width: 0.0625rem;
     display: inline-flex;
-    font-size: 0.625rem;
+    /*font-size: 0.625rem;*/
     font-weight: 600;
     line-height: 1;
     margin-bottom: 0.125rem;
@@ -16437,6 +16437,7 @@ span.flatpickr-weekday {
 .flatpickr-input[readonly] {
     cursor: pointer;
 }
+
 @-webkit-keyframes fpFadeInDown {
     from {
         opacity: 0;

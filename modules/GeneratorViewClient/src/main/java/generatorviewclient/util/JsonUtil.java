@@ -278,5 +278,11 @@ public class JsonUtil {
 	}
 
 	private Object document;
+	static public void generateError(OutputStream outputStream, String errorMessage) throws IOException {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("status", "BAD");
+		jsonObject.put("errorMessage", errorMessage);
+		outputStream.write(jsonObject.toString().getBytes());
+	}
 
 }

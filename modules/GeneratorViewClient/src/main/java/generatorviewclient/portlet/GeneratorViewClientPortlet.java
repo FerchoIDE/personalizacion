@@ -18,7 +18,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 			"com.liferay.portlet.css-class-wrapper=gv-portlet",
-			"com.liferay.portlet.header-portlet-css=/View1.css",
+			"com.liferay.portlet.header-portlet-css=/View.css",
 			"com.liferay.portlet.add-default-resource=true",
 			"com.liferay.portlet.application-type=full-page-application",
 			"com.liferay.portlet.application-type=widget",
