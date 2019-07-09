@@ -32,7 +32,10 @@ public abstract class FolderUtil {
         try {
             //ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFolder.class.getName(), resourceRequest);
             ServiceContext serviceContext = new ServiceContext();
-            Folder folder = DLAppLocalServiceUtil.getFolder(groupId,parentFolderId, name);
+            Folder folder=null;
+            try {
+                folder = DLAppLocalServiceUtil.getFolder(groupId, parentFolderId, name);
+            }catch(Exception ex){}
             if(folder!=null)
                 return folder.getFolderId();
             folder = DLAppLocalServiceUtil.addFolder(userId, groupId, parentFolderId, name, description, serviceContext);
@@ -59,7 +62,10 @@ public abstract class FolderUtil {
         try {
             //ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFolder.class.getName(), resourceRequest);
             ServiceContext serviceContext = new ServiceContext();
-            JournalFolder folder =JournalFolderLocalServiceUtil.fetchFolder(groupId, parentFolderId, name);
+            JournalFolder folder=null;
+            try {
+                folder = JournalFolderLocalServiceUtil.fetchFolder(groupId, parentFolderId, name);
+            }catch(Exception ex){}
             if(folder!=null)
                 return folder.getFolderId();
              folder = JournalFolderLocalServiceUtil.addFolder(userId, groupId, parentFolderId, name, description, serviceContext);

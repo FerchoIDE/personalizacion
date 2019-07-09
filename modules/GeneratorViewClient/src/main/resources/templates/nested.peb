@@ -36,6 +36,7 @@
 		</dynamic-element>
 		{% else %}
 		<dynamic-element instance-id="{{ instanceIdFunction() }}" name="{{ info.name }}"  type="{{ type }}" index-type="{{ info.indexType }}">
+			<dynamic-content language-id="es_ES"><![CDATA[]]></dynamic-content>
 		</dynamic-element>
 	{% endfor %}
 {% endmacro %}

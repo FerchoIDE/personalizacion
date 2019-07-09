@@ -21,6 +21,42 @@ export default class NewStructureState extends State {
         const names = pathField.split('/');
         const deep = names.length
         const name = names.shift()
+        if(name.search('___')>0){
+            var nameOrigin = name.split('___').shift()
+            var existElement=false
+            var _fieldClon=undefined
+            for (let _field of _fields) {
+                if (name == _field.name) {
+                    existElement=true
+                }
+                if (nameOrigin == _field.name) {
+                    _fieldClon=_field
+                }
+            }
+            if(!existElement){
+                if(_fieldClon!==undefined){
+                    var _newField =new FieldState()
+                    _newField.name=name
+                    _newField.path = _fieldClon.name
+                    _newField.type = _fieldClon.type
+                    _newField.required = _fieldClon.required
+                    _newField.multiple = _fieldClon.repeatable
+                    _newField.indexType = _fieldClon.indexType
+
+                    _newField.nested = this.nestedFields(_fieldClon.nested, _newField.name)
+
+                    /*var arrNested =[]
+                    for (let _fieldN of _fieldClon.nested){
+                        arrNested.push(Object.assign(new FieldState(),_fieldN))
+                    }
+                    _newField.nested=arrNested*/
+
+                    _fields.push(_newField)
+                }else{
+                    return false
+                }
+            }
+        }
 
         for (let _field of _fields) {
             if (name == _field.name) {
@@ -45,6 +81,20 @@ export default class NewStructureState extends State {
         return false
     }
 
+    removeItem(pathField) {
+        const names = pathField.split('/');
+        const name = names.shift()
+        var _i=0
+        for (let _field of this.fields) {
+            if (name == _field.name) {
+                delete this.fields[_i]
+                return true
+                break;
+            }
+            _i++
+        }
+        return false
+    }
     removeValue(pathField, value, language) {
         if (language === undefined)
             language = this.localeDefault;
@@ -78,6 +128,7 @@ export default class NewStructureState extends State {
         return false
     }
 
+
     setFields(data) {
         if (data === undefined)
             return data
@@ -107,6 +158,7 @@ export default class NewStructureState extends State {
             fieldNew.type = field.type
             fieldNew.required = field.required
 
+            fieldNew.indexType = field.indexType
             fieldNew.multiple = field.repeatable
             if (field.nestedFields !== undefined)
                 fieldNew.nested = this.nestedFields(field.nestedFields, field.name)

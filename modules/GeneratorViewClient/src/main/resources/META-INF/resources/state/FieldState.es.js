@@ -64,8 +64,12 @@ export default class FieldState extends State {
         }else if(Object.keys(this.values).length>0){
             _arrayValues.push(this.values)
         }
+        var nameFinal=this.name
+        if(this.name.search('___')>0){
+            nameFinal=this.name.split('___').shift()
+        }
         return {
-            name:this.name,
+            name:nameFinal,
             type:this.type,
             values:_arrayValues,
            // required:this.required,

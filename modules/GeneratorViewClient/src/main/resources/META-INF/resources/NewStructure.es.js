@@ -237,6 +237,12 @@ class NewStructure extends Component {
         console.log('-------NewStructure-handleRemoveValue-- resut==' + result)
     }
 
+    handleRemoveItem(event) {
+        console.log('-------NewStructure-handleRemoveItem-- v6********path=' + event.path )
+        var result = this.model.removeItem(event.path)
+        console.log('-------NewStructure-handleRemoveItem-- resut==' + result)
+    }
+
     saveStructure(event) {
         console.log("--------saveStructure----------")
 
@@ -246,6 +252,8 @@ class NewStructure extends Component {
         let _structureKey = this.initialConfig_.structureKey;
         let _fields = []
         for (var field of this.model.getState()['fields']) {
+            if(field===undefined)
+                continue;
             console.log(field.toJson())
             _fields.push(field.toJson())
         }

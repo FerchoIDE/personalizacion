@@ -28,6 +28,9 @@
 
 	{@param? handleChangeValue: ?}
 	{@param? handleRemoveValue: ?}
+
+	{@param? handleRemoveItem: ?}
+
 	{@param? saveStructure: ?}
 	{@param? cancelStructure: ?}
 
@@ -189,8 +192,10 @@
 			 <div class="autofit-row">
 				 <div class="autofit-col autofit-col-expand">&nbsp;</div>
 				 <div class="autofit-col">
-					 <button onclick="{$saveStructure}" class="btn btn-primary" type="button">Guardar</button>
-					 <button onclick="{$cancelStructure}"  class="btn btn-secondary" data-dismiss="modal" type="button">Cancelar</button>
+					 <div class="btn-group" role="group">
+					 	<button onclick="{$saveStructure}" class="btn btn-primary" type="button">Guardar</button>
+					 	<button onclick="{$cancelStructure}"  class="btn btn-secondary" data-dismiss="modal" type="button">Cancelar</button>
+					 </div>
 				 </div>
 			 </div>
 			 <div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
@@ -237,6 +242,7 @@
 											{param path: $field['name'] /}
 											{param data: $field['nestedFields'] /}
 											{param title: $field['label'] /}
+											{param repeatable: $field['repeatable'] /}
 											{param availableLanguageIds: $availableLanguageIds /}
 											{param defaultLanguage: $selectedLanguage /}
 											{param closeOpenTab: $closeOpenTab/}
@@ -248,6 +254,8 @@
 											{param hotelIdSelected: $hotelIdSelected/}
 											{param handleChangeValue:  $handleChangeValue /}
 											{param handleRemoveValue:  $handleRemoveValue /}
+											{param handleRemoveItem:  $handleRemoveItem /}
+
 
 										{/call}
 									{elseif $field['type'] == 'text'}
@@ -354,8 +362,10 @@
 		 <div class="autofit-row">
 			 <div class="autofit-col autofit-col-expand">&nbsp;</div>
 			 <div class="autofit-col">
-				 <button onclick="{$saveStructure}"  class="btn btn-primary" type="button">Guardar</button>
-				 <button onclick="{$cancelStructure}"  class="btn btn-secondary" data-dismiss="modal" type="button">Cancelar</button>
+				 <div class="btn-group" role="group">
+				 	<button onclick="{$saveStructure}"  class="btn btn-primary" type="button">Guardar</button>
+				 	<button onclick="{$cancelStructure}"  class="btn btn-secondary" data-dismiss="modal" type="button">Cancelar</button>
+				 </div>
 			 </div>
 		 </div>
 	</div>

@@ -7,12 +7,15 @@
 	{@param id: string}
 	{@param structureId: string}
 	{@param name: string}
+	{@param repeatable: bool}
 	{@param? path: string}
 	{@param data: list<?>}
 	{@param title: map<string, string>}
 	{@param defaultLanguage: string}
 	{@param availableLanguageIds: list<string>}
 	{@param contextPath: string}
+	{@param? countSection: list<?>}
+
 	{@param? closeOpenTab: ?}
 	{@param collapseInfo: map<string,bool>}
 	{@param? checkedOption: ?}
@@ -24,10 +27,14 @@
 	{@param? hotelIdSelected: ?}
 	{@param? handleChangeValue: ?}
 	{@param? handleRemoveValue: ?}
+	{@param? handleAddSection: ?}
+	{@param? handleRemoveSection: ?}
+
 
 
 	{let $structureIdRate: '35796' /}
 	{let $show: isNonnull($collapseInfo?['accordion' + $id + 'Heading'])?($collapseInfo?['accordion' + $id + 'Heading'] ? '' : 'show'):'' /}
+	{let $_countSections: isNonnull($countSection) ? $countSection : [1] /}
 	<div id="{$id}">
 			<div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
 				<div class="panel">
@@ -53,122 +60,261 @@
 						 class="panel-collapse collapse {$show}"
 						 id="accordion{$id}Collapse" role="tabpanel">
 						<div class="panel-body">
-							<div class="form-group">
-								<div class="input-group">
-
-
-									{foreach $field in $data}
-
-										{if $field['type'] == 'ddm-separator'}
-
-											anidado<br/>
-										{elseif $field['type'] == 'text'}
-											{call TextLocalizableUI.render}
-												{param id: $field['name'] /}
-												{param path:$path+'/'+ $field['name'] /}
-												{param type: $field['type'] /}
-												{param labels: $field['label'] /}
-												{param placeholder: $field['tip'] /}
-												{param localizable: $field['localizable'] /}
-												{param availableLanguageIds: $availableLanguageIds /}
-												{param defaultLanguageId: $defaultLanguage /}
-												{param handleChangeValue:  $handleChangeValue /}
-											{/call}
-										{elseif $field['type'] == 'checkbox'}
-											{call CheckBoxUI.render}
-												{param id: $field['name'] /}
-												{param nameParent: $name /}
-												{param label: $field['label'] /}
-												{param checkedOption: $checkedOption /}
-												{param path:$path+'/'+ $field['name'] /}
-												{param defaultLanguageId: $defaultLanguage /}
-												{param handleChangeValue:  $handleChangeValue /}
-
-											{/call}
-										{elseif $field['type'] == 'ddm-date'}
-											{call DateUI.render}
-												{param id: $field['name'] /}
-												{param label: $field['label'][$defaultLanguage] /}
-												{param placeholder: $field['tip'][$defaultLanguage] /}
-												{param defaultLanguageId: $defaultLanguage /}
-												{param path:$path+'/'+ $field['name'] /}
-												{param handleChangeValue:  $handleChangeValue /}
-											{/call}
-
-										{elseif $field['type'] == 'ddm-text-html' or $field['type'] == 'textarea'}
-											{call TextAreaUI.render}
-												{param id: $field['name'] /}
-												{param label: $field['label'][$defaultLanguage] /}
-												{param placeholder: $field['tip'][$defaultLanguage] /}
-												{param availableLanguageIds: $availableLanguageIds /}
-												{param defaultLanguageId: $defaultLanguage /}
-												{param path:$path+'/'+ $field['name'] /}
-												{param handleChangeValue:  $handleChangeValue /}
-											{/call}
-										{elseif $field['type'] == 'ddm-journal-article'}
-											{call JournalUI.render}
-												{param id: $field['name'] /}
-												{param label: $field['label'][$defaultLanguage] /}
-												{param contextPath: $contextPath /}
-												{param brandSelected: $brandSelected/}
-												{param hotelSelected: $hotelSelected/}
-												{param brandIdSelected: $brandIdSelected/}
-												{param handleChangeValue:  $handleChangeValue /}
-												{param handleRemoveValue:  $handleRemoveValue /}
-												{param hotelIdSelected: $hotelIdSelected/}
-												{param path:$path+'/'+ $field['name'] /}
-											{/call}
-										{elseif $field['type'] == 'ddm-documentlibrary'}
-											{call DocumentUI.render}
-												{param id: $field['name'] /}
-												{param label: $field['label'][$defaultLanguage] /}
-												{param contextPath: $contextPath /}
-												{param brandSelected: $brandSelected/}
-												{param hotelSelected: $hotelSelected/}
-												{param nestedFields: $field['nestedFields'] /}
-
-												{param availableLanguageIds: $availableLanguageIds /}
-												{param defaultLanguageId: $defaultLanguage /}
-												{param handleChangeValue:  $handleChangeValue /}
-												{param handleRemoveValue:  $handleRemoveValue /}
-												{param path:$path+'/'+ $field['name'] /}
-											{/call}
-										{elseif $field['type'] == 'radio'}
-											{call RadioUI.render}
-												{param id: $field['name'] /}
-												{param label: $field['label'][$defaultLanguage] /}
-												{param defaultLanguageId: $defaultLanguage /}
-												{param options: $field['options'] /}
-												{param path:$path+'/'+ $field['name'] /}
-												{param handleChangeValue:  $handleChangeValue /}
-											{/call}
-										{elseif $field['type'] == 'select'}
-											{call SelectUI.render}
-												{param id: $field['name'] /}
-												{param label: $field['label'][$defaultLanguage] /}
-												{param defaultLanguageId: $defaultLanguage /}
-												{param options: $field['options'] /}
-												{param path:$path+'/'+ $field['name'] /}
-												{param multiple: $field['multiple'] /}
-												{param handleChangeValue:  $handleChangeValue /}
-											{/call}
-										{else}
-											{$field['type']} -- Ninguno<br/>
-										{/if}
-										<div>&nbsp;&nbsp;</div>
-									{/foreach}
-									{if isNonnull($checkedConcat)}
-										{if $structureId ==$structureIdRate and isNonnull($checkedConcat[$name]) and  ($name == 'Restrictions' or $name == 'Benefits1' or $name == 'occupationRate')}
-											</div>
-
-											<div class="input-group">
-											<span class="label label-info">
-												<span class="label-item label-item-expand" style="text-transform:none">{$checkedConcat[$name][$defaultLanguage]}</span>
-											</span>
-										{/if}
-									{/if}
+							{if $repeatable}
+								<div class="autofit-row">
+									<div class="autofit-col autofit-col-expand">&nbsp;</div>
+									<div class="autofit-col">
+										<div class="btn-group" role="group">
+											<button onclick="{$handleAddSection}" class="btn btn-monospaced btn-sm btn-primary" type="button">
+												<svg class="lexicon-icon lexicon-icon-plus" focusable="false"
+													 role="presentation">
+													<use href="{$contextPath}/images/icons/icons.svg#plus"></use>
+												</svg>
+											</button>
+											<button onclick="{$handleRemoveSection}" class="btn btn-monospaced btn-sm btn-primary" type="button">
+												<svg class="lexicon-icon lexicon-icon-plus" focusable="false"
+													 role="presentation">
+													<use href="{$contextPath}/images/icons/icons.svg#hr"></use>
+												</svg>
+											</button>
+										</div>
+									</div>
 								</div>
-							</div>
+								<div class="form-group">
+									{foreach $_countSection in $_countSections}
+										<div class="input-group">
+
+
+											{foreach $field in $data}
+
+												{if $field['type'] == 'ddm-separator'}
+
+													anidado<br/>
+												{elseif $field['type'] == 'text'}
+													{call TextLocalizableUI.render}
+														{param id: $field['name']+'___'+index($_countSection) /}
+														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
+														{param type: $field['type'] /}
+														{param labels: $field['label'] /}
+														{param placeholder: $field['tip'] /}
+														{param localizable: $field['localizable'] /}
+														{param availableLanguageIds: $availableLanguageIds /}
+														{param defaultLanguageId: $defaultLanguage /}
+														{param handleChangeValue:  $handleChangeValue /}
+													{/call}
+												{elseif $field['type'] == 'checkbox'}
+													{call CheckBoxUI.render}
+														{param id: $field['name']+'___'+index($_countSection) /}
+														{param nameParent: $name /}
+														{param label: $field['label'] /}
+														{param checkedOption: $checkedOption /}
+														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
+														{param defaultLanguageId: $defaultLanguage /}
+														{param handleChangeValue:  $handleChangeValue /}
+
+													{/call}
+												{elseif $field['type'] == 'ddm-date'}
+													{call DateUI.render}
+														{param id: $field['name']+'___'+index($_countSection) /}
+														{param label: $field['label'][$defaultLanguage] /}
+														{param placeholder: $field['tip'][$defaultLanguage] /}
+														{param defaultLanguageId: $defaultLanguage /}
+														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
+														{param handleChangeValue:  $handleChangeValue /}
+													{/call}
+
+												{elseif $field['type'] == 'ddm-text-html' or $field['type'] == 'textarea'}
+													{call TextAreaUI.render}
+														{param id: $field['name']+'___'+index($_countSection) /}
+														{param label: $field['label'][$defaultLanguage] /}
+														{param placeholder: $field['tip'][$defaultLanguage] /}
+														{param availableLanguageIds: $availableLanguageIds /}
+														{param defaultLanguageId: $defaultLanguage /}
+														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
+														{param handleChangeValue:  $handleChangeValue /}
+													{/call}
+												{elseif $field['type'] == 'ddm-journal-article'}
+													{call JournalUI.render}
+														{param id: $field['name']+'___'+index($_countSection) /}
+														{param label: $field['label'][$defaultLanguage] /}
+														{param contextPath: $contextPath /}
+														{param brandSelected: $brandSelected/}
+														{param hotelSelected: $hotelSelected/}
+														{param brandIdSelected: $brandIdSelected/}
+														{param handleChangeValue:  $handleChangeValue /}
+														{param handleRemoveValue:  $handleRemoveValue /}
+														{param hotelIdSelected: $hotelIdSelected/}
+														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
+													{/call}
+												{elseif $field['type'] == 'ddm-documentlibrary'}
+													{call DocumentUI.render}
+														{param id: $field['name']+'___'+index($_countSection) /}
+														{param label: $field['label'][$defaultLanguage] /}
+														{param contextPath: $contextPath /}
+														{param brandSelected: $brandSelected/}
+														{param hotelSelected: $hotelSelected/}
+														{param nestedFields: $field['nestedFields'] /}
+
+														{param availableLanguageIds: $availableLanguageIds /}
+														{param defaultLanguageId: $defaultLanguage /}
+														{param handleChangeValue:  $handleChangeValue /}
+														{param handleRemoveValue:  $handleRemoveValue /}
+														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
+													{/call}
+												{elseif $field['type'] == 'radio'}
+													{call RadioUI.render}
+														{param id: $field['name']+'___'+index($_countSection) /}
+														{param label: $field['label'][$defaultLanguage] /}
+														{param defaultLanguageId: $defaultLanguage /}
+														{param options: $field['options'] /}
+														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
+														{param handleChangeValue:  $handleChangeValue /}
+													{/call}
+												{elseif $field['type'] == 'select'}
+													{call SelectUI.render}
+														{param id: $field['name']+'___'+index($_countSection) /}
+														{param label: $field['label'][$defaultLanguage] /}
+														{param defaultLanguageId: $defaultLanguage /}
+														{param options: $field['options'] /}
+														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
+														{param multiple: $field['multiple'] /}
+														{param handleChangeValue:  $handleChangeValue /}
+													{/call}
+												{else}
+													{$field['type']} -- Ninguno<br/>
+												{/if}
+												<div>&nbsp;&nbsp;</div>
+											{/foreach}
+											{if isNonnull($checkedConcat)}
+												{if $structureId ==$structureIdRate and isNonnull($checkedConcat[$name]) and  ($name == 'Restrictions' or $name == 'Benefits1' or $name == 'occupationRate')}
+													</div>
+
+													<div class="input-group">
+													<span class="label label-info">
+														<span class="label-item label-item-expand" style="text-transform:none">{$checkedConcat[$name][$defaultLanguage]}</span>
+													</span>
+												{/if}
+											{/if}
+										</div>
+									{/foreach}
+								</div>
+							{else}
+								<div class="form-group">
+									<div class="input-group">
+										{foreach $field in $data}
+
+											{if $field['type'] == 'ddm-separator'}
+
+												anidado<br/>
+											{elseif $field['type'] == 'text'}
+												{call TextLocalizableUI.render}
+													{param id: $field['name'] /}
+													{param path:$path+'/'+ $field['name'] /}
+													{param type: $field['type'] /}
+													{param labels: $field['label'] /}
+													{param placeholder: $field['tip'] /}
+													{param localizable: $field['localizable'] /}
+													{param availableLanguageIds: $availableLanguageIds /}
+													{param defaultLanguageId: $defaultLanguage /}
+													{param handleChangeValue:  $handleChangeValue /}
+												{/call}
+											{elseif $field['type'] == 'checkbox'}
+												{call CheckBoxUI.render}
+													{param id: $field['name'] /}
+													{param nameParent: $name /}
+													{param label: $field['label'] /}
+													{param checkedOption: $checkedOption /}
+													{param path:$path+'/'+ $field['name'] /}
+													{param defaultLanguageId: $defaultLanguage /}
+													{param handleChangeValue:  $handleChangeValue /}
+
+												{/call}
+											{elseif $field['type'] == 'ddm-date'}
+												{call DateUI.render}
+													{param id: $field['name'] /}
+													{param label: $field['label'][$defaultLanguage] /}
+													{param placeholder: $field['tip'][$defaultLanguage] /}
+													{param defaultLanguageId: $defaultLanguage /}
+													{param path:$path+'/'+ $field['name'] /}
+													{param handleChangeValue:  $handleChangeValue /}
+												{/call}
+
+											{elseif $field['type'] == 'ddm-text-html' or $field['type'] == 'textarea'}
+												{call TextAreaUI.render}
+													{param id: $field['name'] /}
+													{param label: $field['label'][$defaultLanguage] /}
+													{param placeholder: $field['tip'][$defaultLanguage] /}
+													{param availableLanguageIds: $availableLanguageIds /}
+													{param defaultLanguageId: $defaultLanguage /}
+													{param path:$path+'/'+ $field['name'] /}
+													{param handleChangeValue:  $handleChangeValue /}
+												{/call}
+											{elseif $field['type'] == 'ddm-journal-article'}
+												{call JournalUI.render}
+													{param id: $field['name'] /}
+													{param label: $field['label'][$defaultLanguage] /}
+													{param contextPath: $contextPath /}
+													{param brandSelected: $brandSelected/}
+													{param hotelSelected: $hotelSelected/}
+													{param brandIdSelected: $brandIdSelected/}
+													{param handleChangeValue:  $handleChangeValue /}
+													{param handleRemoveValue:  $handleRemoveValue /}
+													{param hotelIdSelected: $hotelIdSelected/}
+													{param path:$path+'/'+ $field['name'] /}
+												{/call}
+											{elseif $field['type'] == 'ddm-documentlibrary'}
+												{call DocumentUI.render}
+													{param id: $field['name'] /}
+													{param label: $field['label'][$defaultLanguage] /}
+													{param contextPath: $contextPath /}
+													{param brandSelected: $brandSelected/}
+													{param hotelSelected: $hotelSelected/}
+													{param nestedFields: $field['nestedFields'] /}
+
+													{param availableLanguageIds: $availableLanguageIds /}
+													{param defaultLanguageId: $defaultLanguage /}
+													{param handleChangeValue:  $handleChangeValue /}
+													{param handleRemoveValue:  $handleRemoveValue /}
+													{param path:$path+'/'+ $field['name'] /}
+												{/call}
+											{elseif $field['type'] == 'radio'}
+												{call RadioUI.render}
+													{param id: $field['name'] /}
+													{param label: $field['label'][$defaultLanguage] /}
+													{param defaultLanguageId: $defaultLanguage /}
+													{param options: $field['options'] /}
+													{param path:$path+'/'+ $field['name'] /}
+													{param handleChangeValue:  $handleChangeValue /}
+												{/call}
+											{elseif $field['type'] == 'select'}
+												{call SelectUI.render}
+													{param id: $field['name'] /}
+													{param label: $field['label'][$defaultLanguage] /}
+													{param defaultLanguageId: $defaultLanguage /}
+													{param options: $field['options'] /}
+													{param path:$path+'/'+ $field['name'] /}
+													{param multiple: $field['multiple'] /}
+													{param handleChangeValue:  $handleChangeValue /}
+												{/call}
+											{else}
+												{$field['type']} -- Ninguno<br/>
+											{/if}
+											<div>&nbsp;&nbsp;</div>
+										{/foreach}
+										{if isNonnull($checkedConcat)}
+											{if $structureId ==$structureIdRate and isNonnull($checkedConcat[$name]) and  ($name == 'Restrictions' or $name == 'Benefits1' or $name == 'occupationRate')}
+												</div>
+
+												<div class="input-group">
+												<span class="label label-info">
+													<span class="label-item label-item-expand" style="text-transform:none">{$checkedConcat[$name][$defaultLanguage]}</span>
+												</span>
+											{/if}
+										{/if}
+									</div>
+								</div>
+							{/if}
+
 						</div>
 					</div>
 				</div>

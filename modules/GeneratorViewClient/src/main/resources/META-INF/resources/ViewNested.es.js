@@ -23,6 +23,29 @@ class ViewNested extends Component {
         this.setState({checkedConcat: {} })
         this.setState({checkedSelected: {} })
     }
+    handleAddSection(event) {
+        console.log('-----add section----')
+        var _countSection = this.countSection
+        if( _countSection===undefined)
+           _countSection = [1]
+        _countSection.push(_countSection.length+1)
+        this.setState({countSection: _countSection })
+
+    }
+    handleRemoveSection(event) {
+        console.log('-----remove section----')
+        var _countSection = this.countSection
+        if(_countSection!==undefined && _countSection.length>1){
+            let pathT = this.path+'___'+(_countSection.length-1)
+            this.initialConfig_.handleRemoveItem( {
+                path: pathT
+            })
+            _countSection.pop()
+            this.setState({countSection: _countSection })
+        }
+
+
+    }
     checkedOption(event) {
         if(event === undefined)
             return
