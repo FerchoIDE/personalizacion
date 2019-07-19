@@ -31,6 +31,7 @@ var $templateAlias1 = Soy.getTemplate('TableUI.incrementaldom', 'render');
  *  selectedTab: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  contextPath: (!goog.soy.data.SanitizedContent|string),
  *  navigationNewURL: (!goog.soy.data.SanitizedContent|string),
+ *  navigationEditURL: (!goog.soy.data.SanitizedContent|string),
  *  data: !Object<!goog.soy.data.SanitizedContent|string,!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>>,
  *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  keys: !Array<!goog.soy.data.SanitizedContent|string>,
@@ -54,6 +55,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var contextPath = soy.asserts.assertType(goog.isString(opt_data.contextPath) || opt_data.contextPath instanceof goog.soy.data.SanitizedContent, 'contextPath', opt_data.contextPath, '!goog.soy.data.SanitizedContent|string');
   /** @type {!goog.soy.data.SanitizedContent|string} */
   var navigationNewURL = soy.asserts.assertType(goog.isString(opt_data.navigationNewURL) || opt_data.navigationNewURL instanceof goog.soy.data.SanitizedContent, 'navigationNewURL', opt_data.navigationNewURL, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var navigationEditURL = soy.asserts.assertType(goog.isString(opt_data.navigationEditURL) || opt_data.navigationEditURL instanceof goog.soy.data.SanitizedContent, 'navigationEditURL', opt_data.navigationEditURL, '!goog.soy.data.SanitizedContent|string');
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>>} */
   var data = soy.asserts.assertType(goog.isObject(opt_data.data), 'data', opt_data.data, '!Object<!goog.soy.data.SanitizedContent|string,!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>>');
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>} */
@@ -532,7 +535,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['HOTEL'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['HOTEL']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['HOTEL'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['HOTEL']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineRoomsTab');
@@ -544,7 +547,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['ROOM'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['ROOM']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['ROOM'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['ROOM']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineRatesTab');
@@ -556,7 +559,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['RATE'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['RATE']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['RATE'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['RATE']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlinePubsTab');
@@ -568,7 +571,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['PUB'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['PUB']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['PUB'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['PUB']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineRestaurantsTab');
@@ -580,7 +583,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['RESTAURANT'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['RESTAURANT']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['RESTAURANT'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['RESTAURANT']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineSpaTab');
@@ -592,7 +595,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['SPA'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['SPA']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['SPA'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['SPA']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineBrandsTab');
@@ -604,7 +607,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['BRAND'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['BRAND']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['BRAND'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['BRAND']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineGymsTab');
@@ -616,7 +619,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['GYM'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['GYM']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['GYM'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['GYM']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineDestinationsTab');
@@ -628,7 +631,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['DESTINATION'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['DESTINATION']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['DESTINATION'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['DESTINATION']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineFacilitiesTab');
@@ -640,7 +643,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['FACILITY'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['FACILITY']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['FACILITY'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['FACILITY']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineGenericsTab');
@@ -652,7 +655,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['GENERIC'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['GENERIC']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['GENERIC'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['GENERIC']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineChildrensClubTab');
@@ -664,7 +667,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['KIDSCLUB'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['KIDSCLUB']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['KIDSCLUB'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['KIDSCLUB']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineMeetingRoomsTab');
@@ -676,7 +679,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['MEETING'], header: header, contextPath: contextPath, keys: keys, data: data[STRUCTURE_KEY['MEETING']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['MEETING'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['MEETING']]}, null, opt_ijData);
       incrementalDom.elementClose('div');
     incrementalDom.elementClose('div');
   incrementalDom.elementClose('div');
@@ -689,6 +692,7 @@ exports.render = $render;
  *  selectedTab: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  contextPath: (!goog.soy.data.SanitizedContent|string),
  *  navigationNewURL: (!goog.soy.data.SanitizedContent|string),
+ *  navigationEditURL: (!goog.soy.data.SanitizedContent|string),
  *  data: !Object<!goog.soy.data.SanitizedContent|string,!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>>,
  *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  keys: !Array<!goog.soy.data.SanitizedContent|string>,
@@ -701,8 +705,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'View.render';
 }
 
-exports.render.params = ["id","changeTab","selectedTab","contextPath","navigationNewURL","data","header","keys","STRUCTURE_ID","STRUCTURE_KEY"];
-exports.render.types = {"id":"string","changeTab":"?","selectedTab":"string","contextPath":"string","navigationNewURL":"string","data":"map<string,list<map<string,string>>>","header":"map<string,string>","keys":"list<string>","STRUCTURE_ID":"map<string,?>","STRUCTURE_KEY":"map<string,?>"};
+exports.render.params = ["id","changeTab","selectedTab","contextPath","navigationNewURL","navigationEditURL","data","header","keys","STRUCTURE_ID","STRUCTURE_KEY"];
+exports.render.types = {"id":"string","changeTab":"?","selectedTab":"string","contextPath":"string","navigationNewURL":"string","navigationEditURL":"string","data":"map<string,list<map<string,string>>>","header":"map<string,string>","keys":"list<string>","STRUCTURE_ID":"map<string,?>","STRUCTURE_KEY":"map<string,?>"};
 templates = exports;
 return exports;
 

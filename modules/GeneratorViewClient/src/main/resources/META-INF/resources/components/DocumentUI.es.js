@@ -13,6 +13,9 @@ import Service from "../service/Service.es"
 /**
  * TextUI Component
  */
+
+const _HOST_=location.hostname+(location.port ? ':'+location.port: '');
+
 class DocumentUI extends Component {
     disposed() {
         console.log('-----receive event disposed----'+this.id)
@@ -25,6 +28,7 @@ class DocumentUI extends Component {
         this.setFileInfo = this.setFileInfo.bind(this);
         this.resultSaveDocument = this.resultSaveDocument.bind(this);
 
+        this.pathBase = _HOST_
         this.itemsAsociated={}
         this.setState({itemsAsociated: {} })
         this.setState({searchText: undefined })
@@ -328,6 +332,7 @@ DocumentUI.STATE = {
     handleChangeValue: {},
     handleRemoveValue: {},
     path:{},
+    pathBase:{},
     modelDocument:{value:{}}
 }
 // Register component

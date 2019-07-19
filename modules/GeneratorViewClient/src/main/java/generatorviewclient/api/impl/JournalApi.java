@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import generatorviewclient.api.IJournalApi;
 import generatorviewclient.constants.Contants;
 
@@ -32,6 +35,15 @@ import com.liferay.portal.kernel.util.Validator;
 public class JournalApi extends QueriesLiferayApi implements IJournalApi {
 	 private static final Log _log = LogFactoryUtil.getLog(JournalApi.class);
 
+	 public static JournalArticle getJournalArticleFromJson(String jsonData) throws Exception {
+
+		 JSONObject jsonObject = JSONFactoryUtil.createJSONObject(jsonData);
+
+		 long classPK = GetterUtil.getLong(jsonObject.get("classPK"));
+
+		 return
+				 JournalArticleLocalServiceUtil.fetchLatestArticle(classPK);
+	 }
 	public Long getBaseFolder(Long groupId,String brand,String code_hotel) throws PortalException {
 		if(!Validator.isNull(code_hotel)&& !Validator.isNull(brand)) {
 			Long brandFolder= getFolderWC(groupId, brand, Contants.JOURNAL_HOTEL);

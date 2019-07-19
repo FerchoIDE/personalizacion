@@ -66,6 +66,14 @@ var $templateAlias2 = Soy.getTemplate('ViewNested.incrementaldom', 'render');
  *  handleChangeValueTempl: (?),
  *  msgErrorPath: (?),
  *  msgInfo: (?),
+ *  closeOpenTabCategory: (?),
+ *  itemsCategories: (!Array<?>|null|undefined),
+ *  itemsCategoriesKeys: (!Array<?>|null|undefined),
+ *  itemsMarcasKeys: (!Array<?>|null|undefined),
+ *  setSelectedCategories: (?),
+ *  itemsCategoriesKeysRender: (?),
+ *  itemsCategoriesSelected: (?),
+ *  removeSelectedCategory: (?),
  *  collapseInfo: !Object<!goog.soy.data.SanitizedContent|string,boolean>
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
@@ -127,15 +135,31 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var msgErrorPath = opt_data.msgErrorPath;
   /** @type {?} */
   var msgInfo = opt_data.msgInfo;
+  /** @type {?} */
+  var closeOpenTabCategory = opt_data.closeOpenTabCategory;
+  /** @type {!Array<?>|null|undefined} */
+  var itemsCategories = soy.asserts.assertType(opt_data.itemsCategories == null || goog.isArray(opt_data.itemsCategories), 'itemsCategories', opt_data.itemsCategories, '!Array<?>|null|undefined');
+  /** @type {!Array<?>|null|undefined} */
+  var itemsCategoriesKeys = soy.asserts.assertType(opt_data.itemsCategoriesKeys == null || goog.isArray(opt_data.itemsCategoriesKeys), 'itemsCategoriesKeys', opt_data.itemsCategoriesKeys, '!Array<?>|null|undefined');
+  /** @type {!Array<?>|null|undefined} */
+  var itemsMarcasKeys = soy.asserts.assertType(opt_data.itemsMarcasKeys == null || goog.isArray(opt_data.itemsMarcasKeys), 'itemsMarcasKeys', opt_data.itemsMarcasKeys, '!Array<?>|null|undefined');
+  /** @type {?} */
+  var setSelectedCategories = opt_data.setSelectedCategories;
+  /** @type {?} */
+  var itemsCategoriesKeysRender = opt_data.itemsCategoriesKeysRender;
+  /** @type {?} */
+  var itemsCategoriesSelected = opt_data.itemsCategoriesSelected;
+  /** @type {?} */
+  var removeSelectedCategory = opt_data.removeSelectedCategory;
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,boolean>} */
   var collapseInfo = soy.asserts.assertType(goog.isObject(opt_data.collapseInfo), 'collapseInfo', opt_data.collapseInfo, '!Object<!goog.soy.data.SanitizedContent|string,boolean>');
-  var selectedLanguage__soy408 = data['selectedLanguage'];
-  var defaultLanguage__soy410 = data['defaultLanguage'];
-  var availableLanguageIds__soy412 = data['availableLanguageId'];
-  var availableLanguageIdsStyle__soy414 = data['availableLanguageId-style'];
-  var structureIdHotel__soy416 = '35835';
-  var structureIdBrand__soy418 = '35912';
-  var structureIdRate__soy420 = '35796';
+  var selectedLanguage__soy507 = data['selectedLanguage'];
+  var defaultLanguage__soy509 = data['defaultLanguage'];
+  var availableLanguageIds__soy511 = data['availableLanguageId'];
+  var availableLanguageIdsStyle__soy513 = data['availableLanguageId-style'];
+  var structureIdHotel__soy515 = '35835';
+  var structureIdBrand__soy517 = '35912';
+  var structureIdRate__soy519 = '35796';
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
@@ -196,7 +220,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.elementOpenStart('div');
                 incrementalDom.attr('class', 'container-fluid');
             incrementalDom.elementOpenEnd();
-              if (structureId == structureIdBrand__soy418) {
+              if (structureId == structureIdBrand__soy517) {
                 incrementalDom.elementOpenStart('div');
                     incrementalDom.attr('class', 'form-group');
                 incrementalDom.elementOpenEnd();
@@ -210,7 +234,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.elementOpenEnd();
                   incrementalDom.elementClose('input');
                 incrementalDom.elementClose('div');
-              } else if (structureId == structureIdRate__soy420) {
+              } else if (structureId == structureIdRate__soy519) {
                 incrementalDom.elementOpenStart('div');
                     incrementalDom.attr('class', 'form-group');
                 incrementalDom.elementOpenEnd();
@@ -226,14 +250,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                     incrementalDom.elementOpenEnd();
                       incrementalDom.text('Selecciona una Marca');
                     incrementalDom.elementClose('option');
-                    var field448List = categoryBrands;
-                    var field448ListLen = field448List.length;
-                    for (var field448Index = 0; field448Index < field448ListLen; field448Index++) {
-                        var field448Data = field448List[field448Index];
+                    var field547List = categoryBrands;
+                    var field547ListLen = field547List.length;
+                    for (var field547Index = 0; field547Index < field547ListLen; field547Index++) {
+                        var field547Data = field547List[field547Index];
                         incrementalDom.elementOpenStart('option');
-                            incrementalDom.attr('value', field448Data.key);
+                            incrementalDom.attr('value', field547Data.key);
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(field448Data.category);
+                          soyIdom.print(field547Data.category);
                         incrementalDom.elementClose('option');
                       }
                   incrementalDom.elementClose('select');
@@ -257,14 +281,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                     incrementalDom.elementOpenEnd();
                       incrementalDom.text('Selecciona una Marca');
                     incrementalDom.elementClose('option');
-                    var field460List = categoryBrands;
-                    var field460ListLen = field460List.length;
-                    for (var field460Index = 0; field460Index < field460ListLen; field460Index++) {
-                        var field460Data = field460List[field460Index];
+                    var field559List = categoryBrands;
+                    var field559ListLen = field559List.length;
+                    for (var field559Index = 0; field559Index < field559ListLen; field559Index++) {
+                        var field559Data = field559List[field559Index];
                         incrementalDom.elementOpenStart('option');
-                            incrementalDom.attr('value', field460Data.key);
+                            incrementalDom.attr('value', field559Data.key);
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(field460Data.category);
+                          soyIdom.print(field559Data.category);
                         incrementalDom.elementClose('option');
                       }
                   incrementalDom.elementClose('select');
@@ -272,7 +296,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementOpenStart('div');
                     incrementalDom.attr('class', 'form-group');
                 incrementalDom.elementOpenEnd();
-                  if (structureId == structureIdHotel__soy416) {
+                  if (structureId == structureIdHotel__soy515) {
                     incrementalDom.elementOpenStart('input');
                         incrementalDom.attr('id', 'txtCodeHotel');
                         incrementalDom.attr('disabled', '');
@@ -295,14 +319,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                       incrementalDom.elementOpenEnd();
                         incrementalDom.text('Selecciona un Hotel');
                       incrementalDom.elementClose('option');
-                      var field475List = hotelsXBrands;
-                      var field475ListLen = field475List.length;
-                      for (var field475Index = 0; field475Index < field475ListLen; field475Index++) {
-                          var field475Data = field475List[field475Index];
+                      var field574List = hotelsXBrands;
+                      var field574ListLen = field574List.length;
+                      for (var field574Index = 0; field574Index < field574ListLen; field574Index++) {
+                          var field574Data = field574List[field574Index];
                           incrementalDom.elementOpenStart('option');
-                              incrementalDom.attr('value', field475Data.key);
+                              incrementalDom.attr('value', field574Data.key);
                           incrementalDom.elementOpenEnd();
-                            soyIdom.print(field475Data.category);
+                            soyIdom.print(field574Data.category);
                           incrementalDom.elementClose('option');
                         }
                     incrementalDom.elementClose('select');
@@ -398,7 +422,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenStart('h2');
                   incrementalDom.attr('class', 'sheet-title');
               incrementalDom.elementOpenEnd();
-                soyIdom.print(name[defaultLanguage__soy410]);
+                soyIdom.print(name[defaultLanguage__soy509]);
               incrementalDom.elementClose('h2');
             incrementalDom.elementClose('div');
           incrementalDom.elementClose('span');
@@ -440,8 +464,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenStart('div');
               incrementalDom.attr('class', 'panel-body');
           incrementalDom.elementOpenEnd();
-            $templateAlias1({id: 'title_principal', label: 'Titulo', placeholder: 'Titulo principal', contextPath: contextPath, availableLanguageIds: availableLanguageIds__soy412, defaultLanguage: defaultLanguage__soy410, changeLanguage: changeLanguage, availableLanguageIdsStyle: availableLanguageIdsStyle__soy414, selectedLanguage: selectedLanguage__soy408}, null, opt_ijData);
-            $templateAlias1({id: 'description_prinipal', label: 'Descripcion', placeholder: 'Descripcion principal', contextPath: contextPath, availableLanguageIds: availableLanguageIds__soy412, defaultLanguage: defaultLanguage__soy410, changeLanguage: changeLanguage, availableLanguageIdsStyle: availableLanguageIdsStyle__soy414, selectedLanguage: selectedLanguage__soy408}, null, opt_ijData);
+            $templateAlias1({id: 'title_principal', label: 'Titulo', placeholder: 'Titulo principal', contextPath: contextPath, availableLanguageIds: availableLanguageIds__soy511, defaultLanguage: defaultLanguage__soy509, changeLanguage: changeLanguage, availableLanguageIdsStyle: availableLanguageIdsStyle__soy513, selectedLanguage: selectedLanguage__soy507}, null, opt_ijData);
+            $templateAlias1({id: 'description_prinipal', label: 'Resumen', placeholder: 'Resumen', contextPath: contextPath, availableLanguageIds: availableLanguageIds__soy511, defaultLanguage: defaultLanguage__soy509, changeLanguage: changeLanguage, availableLanguageIdsStyle: availableLanguageIdsStyle__soy513, selectedLanguage: selectedLanguage__soy507}, null, opt_ijData);
           incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');
       incrementalDom.elementClose('div');
@@ -469,6 +493,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.elementOpenEnd();
               incrementalDom.text('Guardar');
             incrementalDom.elementClose('button');
+            incrementalDom.text('\u00A0\u00A0');
             incrementalDom.elementOpenStart('button');
                 incrementalDom.attr('onclick', cancelStructure);
                 incrementalDom.attr('class', 'btn btn-secondary');
@@ -477,6 +502,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.elementOpenEnd();
               incrementalDom.text('Cancelar');
             incrementalDom.elementClose('button');
+            incrementalDom.text('\u00A0\u00A0');
           incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');
       incrementalDom.elementClose('div');
@@ -545,12 +571,12 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementOpenStart('div');
                     incrementalDom.attr('class', 'input-group');
                 incrementalDom.elementOpenEnd();
-                  var field634List = data['nestedFields'];
-                  var field634ListLen = field634List.length;
-    for (var field634Index = 0; field634Index < field634ListLen; field634Index++) {
-        var field634Data = field634List[field634Index];
-        if (field634Data['type'] == 'ddm-separator') {
-          if (field634Index > 0 && data['nestedFields'][field634Index - 1]['type'] != 'ddm-separator') {
+                  var field739List = data['nestedFields'];
+                  var field739ListLen = field739List.length;
+    for (var field739Index = 0; field739Index < field739ListLen; field739Index++) {
+        var field739Data = field739List[field739Index];
+        if (field739Data['type'] == 'ddm-separator') {
+          if (field739Index > 0 && data['nestedFields'][field739Index - 1]['type'] != 'ddm-separator') {
             incrementalDom.elementClose('div');
                       incrementalDom.elementClose('div');
                     incrementalDom.elementClose('div');
@@ -559,23 +585,23 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementClose('div');
             incrementalDom.elementClose('div');
           }
-          $templateAlias2({id: 'id_' + field634Index, structureId: structureId, name: field634Data['name'], path: field634Data['name'], data: field634Data['nestedFields'], title: field634Data['label'], repeatable: field634Data['repeatable'], availableLanguageIds: availableLanguageIds__soy412, defaultLanguage: selectedLanguage__soy408, closeOpenTab: closeOpenTab, contextPath: contextPath, collapseInfo: collapseInfo, brandSelected: brandSelected, hotelSelected: hotelSelected, brandIdSelected: brandIdSelected, hotelIdSelected: hotelIdSelected, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, handleRemoveItem: handleRemoveItem}, null, opt_ijData);
-        } else if (field634Data['type'] == 'text') {
-          $templateAlias3({id: field634Data['name'], type: field634Data['type'], path: field634Data['name'], localizable: field634Data['localizable'], labels: field634Data['label'], placeholder: field634Data['tip'], availableLanguageIds: availableLanguageIds__soy412, defaultLanguageId: selectedLanguage__soy408, handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field634Data['type'] == 'checkbox') {
-          $templateAlias4({id: field634Data['name'], label: field634Data['label'], path: field634Data['name'], defaultLanguageId: selectedLanguage__soy408, handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field634Data['type'] == 'ddm-date') {
-          $templateAlias5({id: field634Data['name'], label: field634Data['label'][defaultLanguage__soy410], placeholder: field634Data['tip'][defaultLanguage__soy410], defaultLanguageId: selectedLanguage__soy408, path: field634Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field634Data['type'] == 'ddm-text-html' || field634Data['type'] == 'textarea') {
-          $templateAlias6({id: field634Data['name'], label: field634Data['label'][selectedLanguage__soy408], placeholder: field634Data['tip'][selectedLanguage__soy408], availableLanguageIds: availableLanguageIds__soy412, defaultLanguageId: selectedLanguage__soy408, path: field634Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field634Data['type'] == 'radio') {
-          $templateAlias7({id: field634Data['name'], label: field634Data['label'][selectedLanguage__soy408], defaultLanguageId: selectedLanguage__soy408, options: field634Data['options'], path: field634Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field634Data['type'] == 'select') {
-          $templateAlias8({id: field634Data['name'], label: field634Data['label'][selectedLanguage__soy408], defaultLanguageId: selectedLanguage__soy408, options: field634Data['options'], path: field634Data['name'], multiple: field634Data['multiple'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+          $templateAlias2({id: 'id_' + field739Index, structureId: structureId, name: field739Data['name'], path: field739Data['name'], data: field739Data['nestedFields'], title: field739Data['label'], repeatable: field739Data['repeatable'], availableLanguageIds: availableLanguageIds__soy511, defaultLanguage: selectedLanguage__soy507, closeOpenTab: closeOpenTab, contextPath: contextPath, collapseInfo: collapseInfo, brandSelected: brandSelected, hotelSelected: hotelSelected, brandIdSelected: brandIdSelected, hotelIdSelected: hotelIdSelected, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, handleRemoveItem: handleRemoveItem}, null, opt_ijData);
+        } else if (field739Data['type'] == 'text') {
+          $templateAlias3({id: field739Data['name'], type: field739Data['type'], path: field739Data['name'], localizable: field739Data['localizable'], labels: field739Data['label'], placeholder: field739Data['tip'], values: field739Data['values'], repeatable: field739Data['repeatable'], contextPath: contextPath, availableLanguageIds: availableLanguageIds__soy511, defaultLanguageId: selectedLanguage__soy507, handleChangeValue: handleChangeValue, handleRemoveItem: handleRemoveItem}, null, opt_ijData);
+        } else if (field739Data['type'] == 'checkbox') {
+          $templateAlias4({id: field739Data['name'], label: field739Data['label'], path: field739Data['name'], values: field739Data['values'], defaultLanguageId: selectedLanguage__soy507, handleChangeValue: handleChangeValue}, null, opt_ijData);
+        } else if (field739Data['type'] == 'ddm-date') {
+          $templateAlias5({id: field739Data['name'], label: field739Data['label'][defaultLanguage__soy509], placeholder: field739Data['tip'][defaultLanguage__soy509], defaultLanguageId: selectedLanguage__soy507, path: field739Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+        } else if (field739Data['type'] == 'ddm-text-html' || field739Data['type'] == 'textarea') {
+          $templateAlias6({id: field739Data['name'], label: field739Data['label'][selectedLanguage__soy507], placeholder: field739Data['tip'][selectedLanguage__soy507], availableLanguageIds: availableLanguageIds__soy511, defaultLanguageId: selectedLanguage__soy507, path: field739Data['name'], values: field739Data['values'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+        } else if (field739Data['type'] == 'radio') {
+          $templateAlias7({id: field739Data['name'], label: field739Data['label'][selectedLanguage__soy507], defaultLanguageId: selectedLanguage__soy507, options: field739Data['options'], path: field739Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+        } else if (field739Data['type'] == 'select') {
+          $templateAlias8({id: field739Data['name'], label: field739Data['label'][selectedLanguage__soy507], defaultLanguageId: selectedLanguage__soy507, options: field739Data['options'], path: field739Data['name'], multiple: field739Data['multiple'], handleChangeValue: handleChangeValue}, null, opt_ijData);
         } else {
-          soyIdom.print(field634Data['type']);
+          soyIdom.print(field739Data['type']);
           incrementalDom.text('--');
-          soyIdom.print(field634Data['name']);
+          soyIdom.print(field739Data['name']);
           incrementalDom.text('--Ninguno');
           incrementalDom.elementOpen('br');
           incrementalDom.elementClose('br');
@@ -651,7 +677,438 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenStart('div');
               incrementalDom.attr('class', 'panel-body');
           incrementalDom.elementOpenEnd();
-            $templateAlias8({id: 'selectTemplate', label: 'Selecciona un template', defaultLanguageId: selectedLanguage__soy408, options: selectTempl, path: 'selectTemplate', handleChangeValue: handleChangeValueTempl}, null, opt_ijData);
+            $templateAlias8({id: 'selectTemplate', label: 'Selecciona un template', defaultLanguageId: selectedLanguage__soy507, options: selectTempl, path: 'selectTemplate', handleChangeValue: handleChangeValueTempl}, null, opt_ijData);
+          incrementalDom.elementClose('div');
+        incrementalDom.elementClose('div');
+      incrementalDom.elementClose('div');
+    incrementalDom.elementClose('div');
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('aria-orientation', 'vertical');
+        incrementalDom.attr('class', 'panel-group panel-group-flush');
+        incrementalDom.attr('role', 'tablist');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'panel');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('a');
+            incrementalDom.attr('onclick', closeOpenTab);
+            incrementalDom.attr('aria-controls', 'accordionCatCollapse');
+            incrementalDom.attr('aria-expanded', 'false');
+            incrementalDom.attr('class', 'collapse-icon sheet-subtitle');
+            incrementalDom.attr('data-toggle', 'collapse');
+            incrementalDom.attr('href', '#accordionCatCollapse');
+            incrementalDom.attr('id', 'accordionCatHeading');
+            incrementalDom.attr('role', 'tab');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpen('span');
+            incrementalDom.text('Categorias');
+          incrementalDom.elementClose('span');
+          incrementalDom.elementOpenStart('span');
+              incrementalDom.attr('class', 'collapse-icon-closed');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('svg');
+                incrementalDom.attr('class', 'lexicon-icon lexicon-icon-angle-right');
+                incrementalDom.attr('focusable', 'false');
+                incrementalDom.attr('role', 'presentation');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('use');
+                  incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#angle-right');
+              incrementalDom.elementOpenEnd();
+              incrementalDom.elementClose('use');
+            incrementalDom.elementClose('svg');
+          incrementalDom.elementClose('span');
+          incrementalDom.elementOpenStart('span');
+              incrementalDom.attr('class', 'collapse-icon-open');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('svg');
+                incrementalDom.attr('class', 'lexicon-icon lexicon-icon-angle-down');
+                incrementalDom.attr('focusable', 'false');
+                incrementalDom.attr('role', 'presentation');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('use');
+                  incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#angle-down');
+              incrementalDom.elementOpenEnd();
+              incrementalDom.elementClose('use');
+            incrementalDom.elementClose('svg');
+          incrementalDom.elementClose('span');
+        incrementalDom.elementClose('a');
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('aria-labelledby', 'accordionCatHeading');
+            incrementalDom.attr('class', 'panel-collapse collapse  ' + ((collapseInfo == null ? null : collapseInfo['accordionCatHeading']) ? '' : 'show'));
+            incrementalDom.attr('id', 'accordionCatCollapse');
+            incrementalDom.attr('role', 'tabpanel');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'panel-body');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpen('div');
+              if (itemsCategoriesKeysRender) {
+                if (itemsCategoriesSelected) {
+                  var key783List = itemsCategoriesKeysRender;
+                  var key783ListLen = key783List.length;
+                  for (var key783Index = 0; key783Index < key783ListLen; key783Index++) {
+                      var key783Data = key783List[key783Index];
+                      incrementalDom.elementOpenStart('span');
+                          incrementalDom.attr('id', key783Data + ',S');
+                          incrementalDom.attr('style', 'font-size: 1.110rem;');
+                          incrementalDom.attr('class', 'label label-dismissible label-secondary');
+                      incrementalDom.elementOpenEnd();
+                        incrementalDom.elementOpenStart('span');
+                            incrementalDom.attr('class', 'label-item label-item-expand');
+                        incrementalDom.elementOpenEnd();
+                          soyIdom.print(itemsCategoriesSelected[key783Data]);
+                        incrementalDom.elementClose('span');
+                        incrementalDom.elementOpenStart('span');
+                            incrementalDom.attr('class', 'label-item label-item-after');
+                        incrementalDom.elementOpenEnd();
+                          incrementalDom.elementOpenStart('button');
+                              incrementalDom.attr('id', key783Data + ',B');
+                              incrementalDom.attr('aria-label', 'Close');
+                              incrementalDom.attr('class', 'close');
+                              incrementalDom.attr('type', 'button');
+                              incrementalDom.attr('onclick', removeSelectedCategory);
+                          incrementalDom.elementOpenEnd();
+                            incrementalDom.elementOpenStart('svg');
+                                incrementalDom.attr('class', 'lexicon-icon lexicon-icon-times');
+                                incrementalDom.attr('focusable', 'false');
+                                incrementalDom.attr('role', 'presentation');
+                            incrementalDom.elementOpenEnd();
+                              incrementalDom.elementOpenStart('use');
+                                  incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#times');
+                              incrementalDom.elementOpenEnd();
+                              incrementalDom.elementClose('use');
+                            incrementalDom.elementClose('svg');
+                          incrementalDom.elementClose('button');
+                        incrementalDom.elementClose('span');
+                      incrementalDom.elementClose('span');
+                    }
+                }
+              }
+            incrementalDom.elementClose('div');
+            incrementalDom.elementOpenStart('div');
+                incrementalDom.attr('class', 'table-responsive');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('table');
+                  incrementalDom.attr('class', 'table table-autofit table-list');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpen('tbody');
+                  if (itemsCategories) {
+                    if (itemsCategoriesKeys) {
+                      var key915List = itemsCategoriesKeys;
+                      var key915ListLen = key915List.length;
+                      for (var key915Index = 0; key915Index < key915ListLen; key915Index++) {
+                          var key915Data = key915List[key915Index];
+                          if (key915Index == 0) {
+                              incrementalDom.elementOpen('tr');
+                            }
+                            if ((key915Index + 3) % 3 == 0 && !(key915Index == 0)) {
+                              incrementalDom.elementClose('tr');
+                            incrementalDom.elementOpen('tr');
+                            }
+                            incrementalDom.elementOpenStart('td');
+                                incrementalDom.attr('class', 'table-cell-expand');
+                            incrementalDom.elementOpenEnd();
+                              if (key915Data.name != 'Marcas') {
+                                incrementalDom.elementOpenStart('nav');
+                                    incrementalDom.attr('class', 'menubar menubar-transparent menubar-vertical-expand-md');
+                                incrementalDom.elementOpenEnd();
+                                  incrementalDom.elementOpenStart('div');
+                                      incrementalDom.attr('class', 'collapse menubar-collapse');
+                                      incrementalDom.attr('id', 'menubarVertical' + key915Data.nameFormat + 'Collapse01');
+                                  incrementalDom.elementOpenEnd();
+                                    incrementalDom.elementOpenStart('ul');
+                                        incrementalDom.attr('class', 'nav nav-nested');
+                                    incrementalDom.elementOpenEnd();
+                                      incrementalDom.elementOpenStart('div');
+                                          incrementalDom.attr('class', 'panel');
+                                      incrementalDom.elementOpenEnd();
+                                        incrementalDom.elementOpenStart('li');
+                                            incrementalDom.attr('class', 'nav-item');
+                                        incrementalDom.elementOpenEnd();
+                                          incrementalDom.elementOpenStart('a');
+                                              incrementalDom.attr('onclick', closeOpenTabCategory);
+                                              incrementalDom.attr('id', key915Data.nameFormat + ',OC');
+                                              incrementalDom.attr('aria-controls', 'menubarVertical' + key915Data.nameFormat + 'NestedCollapse01');
+                                              incrementalDom.attr('aria-expanded', 'false');
+                                              incrementalDom.attr('class', 'collapse-icon nav-link collapsed');
+                                              incrementalDom.attr('data-toggle', 'collapse');
+                                              incrementalDom.attr('href', '#menubarVertical' + key915Data.nameFormat + 'NestedCollapse01');
+                                              incrementalDom.attr('role', 'button');
+                                          incrementalDom.elementOpenEnd();
+                                            soyIdom.print(key915Data.name);
+                                            incrementalDom.elementOpenStart('span');
+                                                incrementalDom.attr('class', 'collapse-icon-closed');
+                                            incrementalDom.elementOpenEnd();
+                                              incrementalDom.elementOpenStart('svg');
+                                                  incrementalDom.attr('class', 'lexicon-icon lexicon-icon-caret-right');
+                                                  incrementalDom.attr('focusable', 'false');
+                                                  incrementalDom.attr('role', 'presentation');
+                                              incrementalDom.elementOpenEnd();
+                                                incrementalDom.elementOpenStart('use');
+                                                    incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#caret-right');
+                                                incrementalDom.elementOpenEnd();
+                                                incrementalDom.elementClose('use');
+                                              incrementalDom.elementClose('svg');
+                                            incrementalDom.elementClose('span');
+                                            incrementalDom.elementOpenStart('span');
+                                                incrementalDom.attr('class', 'collapse-icon-open');
+                                            incrementalDom.elementOpenEnd();
+                                              incrementalDom.elementOpenStart('svg');
+                                                  incrementalDom.attr('class', 'lexicon-icon lexicon-icon-caret-bottom');
+                                                  incrementalDom.attr('focusable', 'false');
+                                                  incrementalDom.attr('role', 'presentation');
+                                              incrementalDom.elementOpenEnd();
+                                                incrementalDom.elementOpenStart('use');
+                                                    incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#caret-bottom');
+                                                incrementalDom.elementOpenEnd();
+                                                incrementalDom.elementClose('use');
+                                              incrementalDom.elementClose('svg');
+                                            incrementalDom.elementClose('span');
+                                          incrementalDom.elementClose('a');
+                                          incrementalDom.elementOpenStart('div');
+                                              incrementalDom.attr('class', 'panel-collapse collapse  ' + ((collapseInfo == null ? null : collapseInfo['menubarVertical' + key915Data.nameFormat + 'Collapse01']) ? '' : 'show'));
+                                              incrementalDom.attr('id', 'menubarVertical' + key915Data.nameFormat + 'NestedCollapse01');
+                                          incrementalDom.elementOpenEnd();
+                                            var field863List = itemsCategories;
+                                            var field863ListLen = field863List.length;
+                                            for (var field863Index = 0; field863Index < field863ListLen; field863Index++) {
+                                                var field863Data = field863List[field863Index];
+                                                if (field863Data[key915Data.name]) {
+                                                  incrementalDom.elementOpenStart('ul');
+                                                      incrementalDom.attr('id', key915Data.nameFormat + 'UL');
+                                                      incrementalDom.attr('style', 'display:none;');
+                                                      incrementalDom.attr('class', 'nav nav-stacked');
+                                                  incrementalDom.elementOpenEnd();
+                                                    var value859List = field863Data[key915Data.name];
+                                                    var value859ListLen = value859List.length;
+                                                    for (var value859Index = 0; value859Index < value859ListLen; value859Index++) {
+                                                        var value859Data = value859List[value859Index];
+                                                        if (value859Data.isMultiValue) {
+                                                          incrementalDom.elementOpenStart('li');
+                                                              incrementalDom.attr('class', 'nav-item');
+                                                          incrementalDom.elementOpenEnd();
+                                                            incrementalDom.elementOpenStart('a');
+                                                                incrementalDom.attr('id', value859Data.categoryId + ',' + value859Data.parentCategoryId + ',' + value859Data.parentName + ',T');
+                                                                incrementalDom.attr('class', 'nav-link');
+                                                                incrementalDom.attr('style', 'text-decoration: none;');
+                                                                incrementalDom.attr('onclick', setSelectedCategories);
+                                                                incrementalDom.attr('href', '#1');
+                                                            incrementalDom.elementOpenEnd();
+                                                              soyIdom.print(value859Data.name);
+                                                            incrementalDom.elementClose('a');
+                                                          incrementalDom.elementClose('li');
+                                                        } else {
+                                                          incrementalDom.elementOpenStart('li');
+                                                              incrementalDom.attr('class', 'nav-item');
+                                                          incrementalDom.elementOpenEnd();
+                                                            incrementalDom.elementOpenStart('a');
+                                                                incrementalDom.attr('id', value859Data.categoryId + ',' + value859Data.parentCategoryId + ',' + value859Data.parentName + ',F');
+                                                                incrementalDom.attr('onclick', setSelectedCategories);
+                                                                incrementalDom.attr('style', 'text-decoration: none;');
+                                                                incrementalDom.attr('class', 'nav-link');
+                                                                incrementalDom.attr('href', '#1');
+                                                            incrementalDom.elementOpenEnd();
+                                                              soyIdom.print(value859Data.name);
+                                                            incrementalDom.elementClose('a');
+                                                          incrementalDom.elementClose('li');
+                                                        }
+                                                      }
+                                                  incrementalDom.elementClose('ul');
+                                                }
+                                              }
+                                          incrementalDom.elementClose('div');
+                                        incrementalDom.elementClose('li');
+                                      incrementalDom.elementClose('div');
+                                    incrementalDom.elementClose('ul');
+                                  incrementalDom.elementClose('div');
+                                incrementalDom.elementClose('nav');
+                              } else {
+                                var field907List = itemsCategories;
+                                var field907ListLen = field907List.length;
+                                for (var field907Index = 0; field907Index < field907ListLen; field907Index++) {
+                                    var field907Data = field907List[field907Index];
+                                    if (field907Data[key915Data.name]) {
+                                      if (itemsMarcasKeys) {
+                                        incrementalDom.elementOpenStart('nav');
+                                            incrementalDom.attr('class', 'menubar menubar-transparent menubar-vertical-expand-md');
+                                        incrementalDom.elementOpenEnd();
+                                          incrementalDom.elementOpenStart('div');
+                                              incrementalDom.attr('class', 'collapse menubar-collapse');
+                                              incrementalDom.attr('id', 'menubarVertical' + key915Data.nameFormat + 'Collapse01');
+                                          incrementalDom.elementOpenEnd();
+                                            incrementalDom.elementOpenStart('ul');
+                                                incrementalDom.attr('class', 'nav nav-nested');
+                                            incrementalDom.elementOpenEnd();
+                                              incrementalDom.elementOpenStart('div');
+                                                  incrementalDom.attr('class', 'panel');
+                                              incrementalDom.elementOpenEnd();
+                                                incrementalDom.elementOpenStart('li');
+                                                    incrementalDom.attr('class', 'nav-item');
+                                                incrementalDom.elementOpenEnd();
+                                                  incrementalDom.elementOpenStart('a');
+                                                      incrementalDom.attr('onclick', closeOpenTabCategory);
+                                                      incrementalDom.attr('id', key915Data.nameFormat + ',OC');
+                                                      incrementalDom.attr('aria-controls', 'menubarVertical' + key915Data.nameFormat + 'NestedCollapse01');
+                                                      incrementalDom.attr('aria-expanded', 'false');
+                                                      incrementalDom.attr('class', 'collapse-icon nav-link collapsed');
+                                                      incrementalDom.attr('data-toggle', 'collapse');
+                                                      incrementalDom.attr('href', '#menubarVertical' + key915Data.nameFormat + 'NestedCollapse01');
+                                                      incrementalDom.attr('role', 'button');
+                                                  incrementalDom.elementOpenEnd();
+                                                    soyIdom.print(key915Data.name);
+                                                    incrementalDom.elementOpenStart('span');
+                                                        incrementalDom.attr('class', 'collapse-icon-closed');
+                                                    incrementalDom.elementOpenEnd();
+                                                      incrementalDom.elementOpenStart('svg');
+                                                          incrementalDom.attr('class', 'lexicon-icon lexicon-icon-caret-right');
+                                                          incrementalDom.attr('focusable', 'false');
+                                                          incrementalDom.attr('role', 'presentation');
+                                                      incrementalDom.elementOpenEnd();
+                                                        incrementalDom.elementOpenStart('use');
+                                                            incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#caret-right');
+                                                        incrementalDom.elementOpenEnd();
+                                                        incrementalDom.elementClose('use');
+                                                      incrementalDom.elementClose('svg');
+                                                    incrementalDom.elementClose('span');
+                                                    incrementalDom.elementOpenStart('span');
+                                                        incrementalDom.attr('class', 'collapse-icon-open');
+                                                    incrementalDom.elementOpenEnd();
+                                                      incrementalDom.elementOpenStart('svg');
+                                                          incrementalDom.attr('class', 'lexicon-icon lexicon-icon-caret-bottom');
+                                                          incrementalDom.attr('focusable', 'false');
+                                                          incrementalDom.attr('role', 'presentation');
+                                                      incrementalDom.elementOpenEnd();
+                                                        incrementalDom.elementOpenStart('use');
+                                                            incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#caret-bottom');
+                                                        incrementalDom.elementOpenEnd();
+                                                        incrementalDom.elementClose('use');
+                                                      incrementalDom.elementClose('svg');
+                                                    incrementalDom.elementClose('span');
+                                                  incrementalDom.elementClose('a');
+                                                  incrementalDom.elementOpenStart('div');
+                                                      incrementalDom.attr('class', 'panel-collapse collapse  ' + ((collapseInfo == null ? null : collapseInfo['menubarVertical' + key915Data.nameFormat + 'Collapse01']) ? '' : 'show'));
+                                                      incrementalDom.attr('id', 'menubarVertical' + key915Data.nameFormat + 'NestedCollapse01');
+                                                  incrementalDom.elementOpenEnd();
+                                                    var key1902List = itemsMarcasKeys;
+                                                    var key1902ListLen = key1902List.length;
+                                                    for (var key1902Index = 0; key1902Index < key1902ListLen; key1902Index++) {
+                                                        var key1902Data = key1902List[key1902Index];
+                                                        incrementalDom.elementOpenStart('ul');
+                                                            incrementalDom.attr('class', 'nav nav-stacked');
+                                                        incrementalDom.elementOpenEnd();
+                                                          incrementalDom.elementOpenStart('li');
+                                                              incrementalDom.attr('class', 'nav-item');
+                                                          incrementalDom.elementOpenEnd();
+                                                            incrementalDom.elementOpenStart('a');
+                                                                incrementalDom.attr('aria-controls', 'menubarVerticalNestedCollapse02');
+                                                                incrementalDom.attr('aria-expanded', 'false');
+                                                                incrementalDom.attr('class', 'collapsed collapse-icon nav-link');
+                                                                incrementalDom.attr('data-toggle', 'collapse1');
+                                                                incrementalDom.attr('href', '#menubarVerticalNestedCollapse02');
+                                                                incrementalDom.attr('role', 'button');
+                                                            incrementalDom.elementOpenEnd();
+                                                              soyIdom.print(key1902Data);
+                                                              incrementalDom.elementOpenStart('span');
+                                                                  incrementalDom.attr('class', 'collapse-icon-closed');
+                                                              incrementalDom.elementOpenEnd();
+                                                                incrementalDom.elementOpenStart('svg');
+                                                                    incrementalDom.attr('class', 'lexicon-icon lexicon-icon-caret-right');
+                                                                    incrementalDom.attr('focusable', 'false');
+                                                                    incrementalDom.attr('role', 'presentation');
+                                                                incrementalDom.elementOpenEnd();
+                                                                  incrementalDom.elementOpenStart('use');
+                                                                      incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#caret-right');
+                                                                  incrementalDom.elementOpenEnd();
+                                                                  incrementalDom.elementClose('use');
+                                                                incrementalDom.elementClose('svg');
+                                                              incrementalDom.elementClose('span');
+                                                              incrementalDom.elementOpenStart('span');
+                                                                  incrementalDom.attr('class', 'collapse-icon-open');
+                                                              incrementalDom.elementOpenEnd();
+                                                                incrementalDom.elementOpenStart('svg');
+                                                                    incrementalDom.attr('class', 'lexicon-icon lexicon-icon-caret-bottom');
+                                                                    incrementalDom.attr('focusable', 'false');
+                                                                    incrementalDom.attr('role', 'presentation');
+                                                                incrementalDom.elementOpenEnd();
+                                                                  incrementalDom.elementOpenStart('use');
+                                                                      incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#caret-bottom');
+                                                                  incrementalDom.elementOpenEnd();
+                                                                  incrementalDom.elementClose('use');
+                                                                incrementalDom.elementClose('svg');
+                                                              incrementalDom.elementClose('span');
+                                                            incrementalDom.elementClose('a');
+                                                            incrementalDom.elementOpenStart('div');
+                                                                incrementalDom.attr('class', 'collapse');
+                                                                incrementalDom.attr('id', 'menubarVerticalNestedCollapse02');
+                                                            incrementalDom.elementOpenEnd();
+                                                              incrementalDom.elementOpenStart('ul');
+                                                                  incrementalDom.attr('class', 'nav nav-stacked');
+                                                              incrementalDom.elementOpenEnd();
+                                                                incrementalDom.elementOpenStart('li');
+                                                                    incrementalDom.attr('class', 'nav-item');
+                                                                incrementalDom.elementOpenEnd();
+                                                                  incrementalDom.elementOpenStart('a');
+                                                                      incrementalDom.attr('class', 'nav-link');
+                                                                      incrementalDom.attr('href', '#1');
+                                                                  incrementalDom.elementOpenEnd();
+                                                                    incrementalDom.text('Details');
+                                                                  incrementalDom.elementClose('a');
+                                                                incrementalDom.elementClose('li');
+                                                                incrementalDom.elementOpenStart('li');
+                                                                    incrementalDom.attr('class', 'nav-item');
+                                                                incrementalDom.elementOpenEnd();
+                                                                  incrementalDom.elementOpenStart('a');
+                                                                      incrementalDom.attr('class', 'nav-link');
+                                                                      incrementalDom.attr('href', '#1');
+                                                                  incrementalDom.elementOpenEnd();
+                                                                    incrementalDom.text('Catagorization');
+                                                                  incrementalDom.elementClose('a');
+                                                                incrementalDom.elementClose('li');
+                                                                incrementalDom.elementOpenStart('li');
+                                                                    incrementalDom.attr('class', 'nav-item');
+                                                                incrementalDom.elementOpenEnd();
+                                                                  incrementalDom.elementOpenStart('a');
+                                                                      incrementalDom.attr('class', 'nav-link');
+                                                                      incrementalDom.attr('href', '#1');
+                                                                  incrementalDom.elementOpenEnd();
+                                                                    incrementalDom.text('Documents and Media');
+                                                                  incrementalDom.elementClose('a');
+                                                                incrementalDom.elementClose('li');
+                                                                incrementalDom.elementOpenStart('li');
+                                                                    incrementalDom.attr('class', 'nav-item');
+                                                                incrementalDom.elementOpenEnd();
+                                                                  incrementalDom.elementOpenStart('a');
+                                                                      incrementalDom.attr('class', 'nav-link');
+                                                                      incrementalDom.attr('href', '#1');
+                                                                  incrementalDom.elementOpenEnd();
+                                                                    incrementalDom.text('Site Template');
+                                                                  incrementalDom.elementClose('a');
+                                                                incrementalDom.elementClose('li');
+                                                              incrementalDom.elementClose('ul');
+                                                            incrementalDom.elementClose('div');
+                                                          incrementalDom.elementClose('li');
+                                                        incrementalDom.elementClose('ul');
+                                                      }
+                                                  incrementalDom.elementClose('div');
+                                                incrementalDom.elementClose('li');
+                                              incrementalDom.elementClose('div');
+                                            incrementalDom.elementClose('ul');
+                                          incrementalDom.elementClose('div');
+                                        incrementalDom.elementClose('nav');
+                                      }
+                                    }
+                                  }
+                              }
+                            incrementalDom.elementClose('td');
+                          if (key915Index == key915ListLen - 1) {
+                            incrementalDom.elementClose('tr');
+                          }
+                        }
+                    }
+                  }
+                incrementalDom.elementClose('tbody');
+              incrementalDom.elementClose('table');
+            incrementalDom.elementClose('div');
           incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');
       incrementalDom.elementClose('div');
@@ -678,6 +1135,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenEnd();
             incrementalDom.text('Guardar');
           incrementalDom.elementClose('button');
+          incrementalDom.text('\u00A0\u00A0');
           incrementalDom.elementOpenStart('button');
               incrementalDom.attr('onclick', cancelStructure);
               incrementalDom.attr('class', 'btn btn-secondary');
@@ -686,6 +1144,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenEnd();
             incrementalDom.text('Cancelar');
           incrementalDom.elementClose('button');
+          incrementalDom.text('\u00A0\u00A0');
         incrementalDom.elementClose('div');
       incrementalDom.elementClose('div');
     incrementalDom.elementClose('div');
@@ -720,6 +1179,14 @@ exports.render = $render;
  *  handleChangeValueTempl: (?),
  *  msgErrorPath: (?),
  *  msgInfo: (?),
+ *  closeOpenTabCategory: (?),
+ *  itemsCategories: (!Array<?>|null|undefined),
+ *  itemsCategoriesKeys: (!Array<?>|null|undefined),
+ *  itemsMarcasKeys: (!Array<?>|null|undefined),
+ *  setSelectedCategories: (?),
+ *  itemsCategoriesKeysRender: (?),
+ *  itemsCategoriesSelected: (?),
+ *  removeSelectedCategory: (?),
  *  collapseInfo: !Object<!goog.soy.data.SanitizedContent|string,boolean>
  * }}
  */
@@ -728,8 +1195,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'NewStructure.render';
 }
 
-exports.render.params = ["id","structureId","isOnLoad","data","name","categoryBrands","hotelsXBrands","contextPath","selectTempl","closeOpenTab","changeLanguage","changeBrand","changeHotels","saveSelectPath","brandSelected","hotelSelected","brandIdSelected","hotelIdSelected","handleChangeValue","handleRemoveValue","handleRemoveItem","saveStructure","cancelStructure","handleChangeValueTempl","msgErrorPath","msgInfo","collapseInfo"];
-exports.render.types = {"id":"string","structureId":"string","isOnLoad":"bool","data":"map<string, ?>","name":"map<string, ?>","categoryBrands":"list<?>","hotelsXBrands":"list<?>","contextPath":"string","selectTempl":"list<?>","closeOpenTab":"?","changeLanguage":"?","changeBrand":"?","changeHotels":"?","saveSelectPath":"?","brandSelected":"string","hotelSelected":"string","brandIdSelected":"?","hotelIdSelected":"?","handleChangeValue":"?","handleRemoveValue":"?","handleRemoveItem":"?","saveStructure":"?","cancelStructure":"?","handleChangeValueTempl":"?","msgErrorPath":"?","msgInfo":"?","collapseInfo":"map<string,bool>"};
+exports.render.params = ["id","structureId","isOnLoad","data","name","categoryBrands","hotelsXBrands","contextPath","selectTempl","closeOpenTab","changeLanguage","changeBrand","changeHotels","saveSelectPath","brandSelected","hotelSelected","brandIdSelected","hotelIdSelected","handleChangeValue","handleRemoveValue","handleRemoveItem","saveStructure","cancelStructure","handleChangeValueTempl","msgErrorPath","msgInfo","closeOpenTabCategory","itemsCategories","itemsCategoriesKeys","itemsMarcasKeys","setSelectedCategories","itemsCategoriesKeysRender","itemsCategoriesSelected","removeSelectedCategory","collapseInfo"];
+exports.render.types = {"id":"string","structureId":"string","isOnLoad":"bool","data":"map<string, ?>","name":"map<string, ?>","categoryBrands":"list<?>","hotelsXBrands":"list<?>","contextPath":"string","selectTempl":"list<?>","closeOpenTab":"?","changeLanguage":"?","changeBrand":"?","changeHotels":"?","saveSelectPath":"?","brandSelected":"string","hotelSelected":"string","brandIdSelected":"?","hotelIdSelected":"?","handleChangeValue":"?","handleRemoveValue":"?","handleRemoveItem":"?","saveStructure":"?","cancelStructure":"?","handleChangeValueTempl":"?","msgErrorPath":"?","msgInfo":"?","closeOpenTabCategory":"?","itemsCategories":"list<?>","itemsCategoriesKeys":"list<?>","itemsMarcasKeys":"list<?>","setSelectedCategories":"?","itemsCategoriesKeysRender":"?","itemsCategoriesSelected":"?","removeSelectedCategory":"?","collapseInfo":"map<string,bool>"};
 templates = exports;
 return exports;
 

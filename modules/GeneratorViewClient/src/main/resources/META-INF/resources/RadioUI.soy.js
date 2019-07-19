@@ -50,7 +50,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var path = soy.asserts.assertType(opt_data.path == null || (goog.isString(opt_data.path) || opt_data.path instanceof goog.soy.data.SanitizedContent), 'path', opt_data.path, '!goog.soy.data.SanitizedContent|null|string|undefined');
-  var finalValue__soy1783 = (value != null) ? value : '';
+  var finalValue__soy2925 = (value != null) ? value : '';
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
@@ -67,16 +67,16 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('class', 'form-group');
       incrementalDom.elementOpenEnd();
-        var option1802List = options;
-        var option1802ListLen = option1802List.length;
-        for (var option1802Index = 0; option1802Index < option1802ListLen; option1802Index++) {
-            var option1802Data = option1802List[option1802Index];
+        var option2944List = options;
+        var option2944ListLen = option2944List.length;
+        for (var option2944Index = 0; option2944Index < option2944ListLen; option2944Index++) {
+            var option2944Data = option2944List[option2944Index];
             incrementalDom.elementOpenStart('div');
                 incrementalDom.attr('class', 'custom-control custom-radio custom-control-inline');
             incrementalDom.elementOpenEnd();
               incrementalDom.elementOpen('label');
                 incrementalDom.elementOpenStart('input');
-                    incrementalDom.attr('value', option1802Data.value);
+                    incrementalDom.attr('value', option2944Data.value);
                     incrementalDom.attr('class', 'custom-control-input');
                     incrementalDom.attr('data-language', defaultLanguageId);
                     incrementalDom.attr('data-path', path);
@@ -92,7 +92,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.elementOpenStart('span');
                       incrementalDom.attr('class', 'custom-control-label-text');
                   incrementalDom.elementOpenEnd();
-                    soyIdom.print(option1802Data.label[defaultLanguageId]);
+                    soyIdom.print(option2944Data.label[defaultLanguageId]);
                   incrementalDom.elementClose('span');
                 incrementalDom.elementClose('span');
               incrementalDom.elementClose('label');

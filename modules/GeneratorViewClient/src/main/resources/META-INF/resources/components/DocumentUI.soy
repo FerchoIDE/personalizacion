@@ -32,7 +32,7 @@
     {@param? itemsResultSelected: ?}
     {@param? itemsAsociated: ?}
 
-
+    {@param? pathBase: string}
     {@param contextPath: string}
     {@param? isOpen: map<string,bool>}
     {@param? closeOpenTab: ?}
@@ -44,7 +44,7 @@
     {let $_itemsAsociated: isNonnull($itemsAsociated)?$itemsAsociated[$id]:$itemsAsociated /}
     {let $_isOpen: isNonnull($isOpen)?$isOpen: quoteKeysIfJs(['a': false]) /}
     {let $m: quoteKeysIfJs(['a': false]) /}
-    {let $_host_: 'localhost:8080' /}
+    {let $_host_: isNonnull($pathBase)?$pathBase:'localhost:8080' /}
 
     <div id="{$id}" class="container">
         <div class="row">
@@ -123,6 +123,7 @@
                                                                                 {param localizable: $nestedField['localizable'] /}
                                                                                 {param labels: $nestedField['label'] /}
                                                                                 {param placeholder: $nestedField['tip'] /}
+                                                                                {param contextPath: $contextPath/}
                                                                                 {param availableLanguageIds: $availableLanguageIds /}
                                                                                 {param defaultLanguageId: $defaultLanguageId /}
                                                                                 {param handleChangeValue:  $handleChangeValueDocument /}
@@ -181,6 +182,7 @@
                                                                                 {param localizable: $nestedField['localizable'] /}
                                                                                 {param labels: $nestedField['label'] /}
                                                                                 {param placeholder: $nestedField['tip'] /}
+                                                                                {param contextPath: $contextPath/}
                                                                                 {param availableLanguageIds: $availableLanguageIds /}
                                                                                 {param defaultLanguageId: $defaultLanguageId /}
                                                                                 {param handleChangeValue:  $handleChangeValueDocument /}

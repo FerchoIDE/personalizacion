@@ -15,8 +15,10 @@ const mapTypeContent={
     'destinationLinkHotel':structureIdDestination,
     'ratelinkBrand':structureIdRate
 }
-const urlNewJournal = "http://localhost:8080/web/guest/home?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_mode=nested&_generatorviewclient_structureId=";
-//const urlNewJournal = "http://10.43.162.99/web/posadas-completo-nuevo/personalizacion?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_mode=nested&_generatorviewclient_structureId=";
+
+const _PATHBASE_ = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+const urlNewJournal = _PATHBASE_+"/web/guest/home?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_mode=nested&_generatorviewclient_structureId=";
+//const urlNewJournal = _PATHBASE_+"/web/posadas-completo-nuevo/personalizacion?p_p_id=generatorviewclient&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_generatorviewclient_mvcRenderCommandName=NewStructure&_generatorviewclient_mode=nested&_generatorviewclient_structureId=";
 
 class JournalUI extends Component {
     disposed() {
@@ -30,8 +32,25 @@ class JournalUI extends Component {
        // this.resultSaveJournal = this.resultSaveJournal.bind(this);
        // var _itemsJournalAsociated ={}
        // _itemsJournalAsociated[this.id]={}
-        this.itemsJournalAsociated={}
-        this.setState({itemsJournalAsociated:{}  })
+
+        if(this.initialConfig_.values!=undefined){
+
+            let _itemsAsociated = this.itemsJournalAsociated
+            if(_itemsAsociated===undefined)
+                _itemsAsociated={}
+            if(_itemsAsociated[this.id]===undefined)
+                _itemsAsociated[this.id]={}
+            for(var result of  this.initialConfig_.values['es_ES']){
+                let _data = JSON.parse(result)
+                _itemsAsociated[this.id][_data['id']]=_data
+            }
+
+            this.setState({itemsJournalAsociated:_itemsAsociated  })
+        }else{
+
+            this.itemsJournalAsociated={}
+            this.setState({itemsJournalAsociated:{}  })
+        }
 
         this.setState({searchJournalText: undefined })
 

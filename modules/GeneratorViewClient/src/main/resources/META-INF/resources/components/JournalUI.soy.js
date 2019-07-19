@@ -93,8 +93,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var closeSelectJournalType = opt_data.closeSelectJournalType;
   /** @type {?} */
   var saveSelectJournalType = opt_data.saveSelectJournalType;
-  var _itemsJournalAsociated__soy6757 = (itemsJournalAsociated != null) ? itemsJournalAsociated[id] : itemsJournalAsociated;
-  var structureId__soy6759 = {PUB: '35956', RESTAURANT: '35832', SPA: '35829', GYM: '35962', FACILITY: '35820', KIDSCLUB: '35959', MEETING: '35823'};
+  var _itemsJournalAsociated__soy8137 = (itemsJournalAsociated != null) ? itemsJournalAsociated[id] : itemsJournalAsociated;
+  var structureId__soy8139 = {PUB: '35956', RESTAURANT: '35832', SPA: '35829', GYM: '35962', FACILITY: '35820', KIDSCLUB: '35959', MEETING: '35823'};
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'container');
@@ -118,15 +118,15 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.attr('class', 'table table-autofit table-list');
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
-                  if (_itemsJournalAsociated__soy6757 != null) {
-                    var field6797List = (soy.$$getMapKeys(_itemsJournalAsociated__soy6757));
-                    var field6797ListLen = field6797List.length;
-                    for (var field6797Index = 0; field6797Index < field6797ListLen; field6797Index++) {
-                        var field6797Data = field6797List[field6797Index];
-                        if (field6797Index == 0) {
+                  if (_itemsJournalAsociated__soy8137 != null) {
+                    var field8177List = (soy.$$getMapKeys(_itemsJournalAsociated__soy8137));
+                    var field8177ListLen = field8177List.length;
+                    for (var field8177Index = 0; field8177Index < field8177ListLen; field8177Index++) {
+                        var field8177Data = field8177List[field8177Index];
+                        if (field8177Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field6797Index + 4) % 4 == 0 && !(field6797Index == 0)) {
+                          if ((field8177Index + 3) % 3 == 0 && !(field8177Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -145,7 +145,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('span');
                                       incrementalDom.attr('class', 'badge-item badge-item-expand');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(_itemsJournalAsociated__soy6757[field6797Data].structureName);
+                                    soyIdom.print(_itemsJournalAsociated__soy8137[field8177Data].structureName);
                                   incrementalDom.elementClose('span');
                                 incrementalDom.elementClose('span');
                               incrementalDom.elementClose('div');
@@ -158,25 +158,25 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(_itemsJournalAsociated__soy6757[field6797Data].title);
+                                    soyIdom.print(_itemsJournalAsociated__soy8137[field8177Data].title);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(_itemsJournalAsociated__soy6757[field6797Data].path);
+                                  soyIdom.print(_itemsJournalAsociated__soy8137[field8177Data].path);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(_itemsJournalAsociated__soy6757[field6797Data].user);
+                                  soyIdom.print(_itemsJournalAsociated__soy8137[field8177Data].user);
                                   incrementalDom.text('\u00A0 hace  ');
-                                  soyIdom.print(_itemsJournalAsociated__soy6757[field6797Data].date);
+                                  soyIdom.print(_itemsJournalAsociated__soy8137[field8177Data].date);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(_itemsJournalAsociated__soy6757[field6797Data].status);
+                                  soyIdom.print(_itemsJournalAsociated__soy8137[field8177Data].status);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                               incrementalDom.elementOpenStart('div');
@@ -185,7 +185,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                 incrementalDom.elementOpenStart('a');
                                     incrementalDom.attr('onclick', deleteJournal);
                                     incrementalDom.attr('href', '#1');
-                                    incrementalDom.attr('id', field6797Data);
+                                    incrementalDom.attr('id', field8177Data);
                                     incrementalDom.attr('style', 'font-size: 18px');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpenStart('svg');
@@ -202,7 +202,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field6797Index == field6797ListLen - 1) {
+                        if (field8177Index == field8177ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -311,14 +311,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.text('Selecciona una opci\u00F3n o');
                       incrementalDom.elementClose('option');
                       if (foldersJournals) {
-                        var field6829List = foldersJournals;
-                        var field6829ListLen = field6829List.length;
-                        for (var field6829Index = 0; field6829Index < field6829ListLen; field6829Index++) {
-                            var field6829Data = field6829List[field6829Index];
+                        var field8209List = foldersJournals;
+                        var field8209ListLen = field8209List.length;
+                        for (var field8209Index = 0; field8209Index < field8209ListLen; field8209Index++) {
+                            var field8209Data = field8209List[field8209Index];
                             incrementalDom.elementOpenStart('option');
-                                incrementalDom.attr('value', field6829Data.key);
+                                incrementalDom.attr('value', field8209Data.key);
                             incrementalDom.elementOpenEnd();
-                              soyIdom.print(field6829Data.category);
+                              soyIdom.print(field8209Data.category);
                             incrementalDom.elementClose('option');
                           }
                       }
@@ -368,14 +368,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
                   if (itemsResult) {
-                    var field6887List = itemsResult;
-                    var field6887ListLen = field6887List.length;
-                    for (var field6887Index = 0; field6887Index < field6887ListLen; field6887Index++) {
-                        var field6887Data = field6887List[field6887Index];
-                        if (field6887Index == 0) {
+                    var field8267List = itemsResult;
+                    var field8267ListLen = field8267List.length;
+                    for (var field8267Index = 0; field8267Index < field8267ListLen; field8267Index++) {
+                        var field8267Data = field8267List[field8267Index];
+                        if (field8267Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field6887Index + 3) % 3 == 0 && !(field6887Index == 0)) {
+                          if ((field8267Index + 3) % 3 == 0 && !(field8267Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -393,12 +393,12 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpen('label');
                                     if ((itemsResultSelected != null)) {
-                                      if (itemsResultSelected[field6887Data.id]) {
+                                      if (itemsResultSelected[field8267Data.id]) {
                                         incrementalDom.elementOpenStart('input');
                                             incrementalDom.attr('checked', '');
                                             incrementalDom.attr('onclick', setSelectedResult);
-                                            incrementalDom.attr('value', field6887Data.all);
-                                            incrementalDom.attr('id', field6887Data.id);
+                                            incrementalDom.attr('value', field8267Data.all);
+                                            incrementalDom.attr('id', field8267Data.id);
                                             incrementalDom.attr('class', 'custom-control-input');
                                             incrementalDom.attr('type', 'checkbox');
                                         incrementalDom.elementOpenEnd();
@@ -406,8 +406,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                       } else {
                                         incrementalDom.elementOpenStart('input');
                                             incrementalDom.attr('onclick', setSelectedResult);
-                                            incrementalDom.attr('value', field6887Data.all);
-                                            incrementalDom.attr('id', field6887Data.id);
+                                            incrementalDom.attr('value', field8267Data.all);
+                                            incrementalDom.attr('id', field8267Data.id);
                                             incrementalDom.attr('class', 'custom-control-input');
                                             incrementalDom.attr('type', 'checkbox');
                                         incrementalDom.elementOpenEnd();
@@ -430,7 +430,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('span');
                                       incrementalDom.attr('class', 'badge-item badge-item-expand');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(field6887Data.structureName);
+                                    soyIdom.print(field8267Data.structureName);
                                   incrementalDom.elementClose('span');
                                 incrementalDom.elementClose('span');
                               incrementalDom.elementClose('div');
@@ -443,30 +443,30 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(field6887Data.title);
+                                    soyIdom.print(field8267Data.title);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field6887Data.path);
+                                  soyIdom.print(field8267Data.path);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field6887Data.user);
+                                  soyIdom.print(field8267Data.user);
                                   incrementalDom.text('\u00A0 hace  ');
-                                  soyIdom.print(field6887Data.date);
+                                  soyIdom.print(field8267Data.date);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field6887Data.status);
+                                  soyIdom.print(field8267Data.status);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field6887Index == field6887ListLen - 1) {
+                        if (field8267Index == field8267ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -593,7 +593,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_R');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy6759.RESTAURANT);
+                        incrementalDom.attr('value', structureId__soy8139.RESTAURANT);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');
@@ -616,7 +616,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_SR');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy6759.MEETING);
+                        incrementalDom.attr('value', structureId__soy8139.MEETING);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');
@@ -639,7 +639,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_G');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy6759.GYM);
+                        incrementalDom.attr('value', structureId__soy8139.GYM);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');
@@ -662,7 +662,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_B');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy6759.PUB);
+                        incrementalDom.attr('value', structureId__soy8139.PUB);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');
@@ -685,7 +685,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_S');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy6759.SPA);
+                        incrementalDom.attr('value', structureId__soy8139.SPA);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');
@@ -708,7 +708,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_FKC');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy6759.KIDSCLUB);
+                        incrementalDom.attr('value', structureId__soy8139.KIDSCLUB);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');
@@ -731,7 +731,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_I');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy6759.FACILITY);
+                        incrementalDom.attr('value', structureId__soy8139.FACILITY);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');

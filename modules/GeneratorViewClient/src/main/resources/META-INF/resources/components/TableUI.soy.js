@@ -26,6 +26,7 @@ var soyIdom = goog.require('soy.idom');
  * @param {{
  *  id: *,
  *  contextPath: (!goog.soy.data.SanitizedContent|string),
+ *  navigationEditURL: (!goog.soy.data.SanitizedContent|string),
  *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  data: !Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>,
  *  keys: !Array<!goog.soy.data.SanitizedContent|string>
@@ -41,6 +42,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var id = opt_data.id;
   /** @type {!goog.soy.data.SanitizedContent|string} */
   var contextPath = soy.asserts.assertType(goog.isString(opt_data.contextPath) || opt_data.contextPath instanceof goog.soy.data.SanitizedContent, 'contextPath', opt_data.contextPath, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var navigationEditURL = soy.asserts.assertType(goog.isString(opt_data.navigationEditURL) || opt_data.navigationEditURL instanceof goog.soy.data.SanitizedContent, 'navigationEditURL', opt_data.navigationEditURL, '!goog.soy.data.SanitizedContent|string');
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>} */
   var header = soy.asserts.assertType(goog.isObject(opt_data.header), 'header', opt_data.header, '!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>');
   /** @type {!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>} */
@@ -56,10 +59,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
     incrementalDom.elementOpenEnd();
       incrementalDom.elementOpen('thead');
         incrementalDom.elementOpen('tr');
-          var field8376List = keys;
-          var field8376ListLen = field8376List.length;
-          for (var field8376Index = 0; field8376Index < field8376ListLen; field8376Index++) {
-              var field8376Data = field8376List[field8376Index];
+          var field9757List = keys;
+          var field9757ListLen = field9757List.length;
+          for (var field9757Index = 0; field9757Index < field9757ListLen; field9757Index++) {
+              var field9757Data = field9757List[field9757Index];
               incrementalDom.elementOpenStart('th');
                   incrementalDom.attr('class', 'table-head-title');
               incrementalDom.elementOpenEnd();
@@ -69,9 +72,9 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementOpenEnd();
                   incrementalDom.elementOpenStart('span');
                       incrementalDom.attr('style', 'font-size: 18px');
-                      incrementalDom.attr('title', header[field8376Data]);
+                      incrementalDom.attr('title', header[field9757Data]);
                   incrementalDom.elementOpenEnd();
-                    soyIdom.print(header[field8376Data]);
+                    soyIdom.print(header[field9757Data]);
                   incrementalDom.elementClose('span');
                 incrementalDom.elementClose('a');
               incrementalDom.elementClose('th');
@@ -81,17 +84,17 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('tr');
       incrementalDom.elementClose('thead');
       incrementalDom.elementOpen('tbody');
-        var fieldData8390List = data;
-        var fieldData8390ListLen = fieldData8390List.length;
-        for (var fieldData8390Index = 0; fieldData8390Index < fieldData8390ListLen; fieldData8390Index++) {
-            var fieldData8390Data = fieldData8390List[fieldData8390Index];
+        var fieldData9775List = data;
+        var fieldData9775ListLen = fieldData9775List.length;
+        for (var fieldData9775Index = 0; fieldData9775Index < fieldData9775ListLen; fieldData9775Index++) {
+            var fieldData9775Data = fieldData9775List[fieldData9775Index];
             incrementalDom.elementOpen('tr');
-              var field8383List = keys;
-              var field8383ListLen = field8383List.length;
-              for (var field8383Index = 0; field8383Index < field8383ListLen; field8383Index++) {
-                  var field8383Data = field8383List[field8383Index];
+              var field9764List = keys;
+              var field9764ListLen = field9764List.length;
+              for (var field9764Index = 0; field9764Index < field9764ListLen; field9764Index++) {
+                  var field9764Data = field9764List[field9764Index];
                   incrementalDom.elementOpen('td');
-                    soyIdom.print(fieldData8390Data[field8383Data]);
+                    soyIdom.print(fieldData9775Data[field9764Data]);
                   incrementalDom.elementClose('td');
                 }
               incrementalDom.elementOpen('td');
@@ -118,7 +121,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.elementOpenStart('a');
                       incrementalDom.attr('class', 'component-action quick-action-item');
                       incrementalDom.attr('style', 'font-size: 14px');
-                      incrementalDom.attr('href', '#1');
+                      incrementalDom.attr('href', navigationEditURL + '&_generatorviewclient_articleId=' + fieldData9775Data['id']);
                       incrementalDom.attr('role', 'button');
                   incrementalDom.elementOpenEnd();
                     incrementalDom.elementOpenStart('svg');
@@ -145,6 +148,7 @@ exports.render = $render;
  * @typedef {{
  *  id: *,
  *  contextPath: (!goog.soy.data.SanitizedContent|string),
+ *  navigationEditURL: (!goog.soy.data.SanitizedContent|string),
  *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  data: !Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>,
  *  keys: !Array<!goog.soy.data.SanitizedContent|string>
@@ -155,8 +159,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'TableUI.render';
 }
 
-exports.render.params = ["id","contextPath","header","data","keys"];
-exports.render.types = {"id":"any","contextPath":"string","header":"map<string,string>","data":"list<map<string,string>>","keys":"list<string>"};
+exports.render.params = ["id","contextPath","navigationEditURL","header","data","keys"];
+exports.render.types = {"id":"any","contextPath":"string","navigationEditURL":"string","header":"map<string,string>","data":"list<map<string,string>>","keys":"list<string>"};
 templates = exports;
 return exports;
 

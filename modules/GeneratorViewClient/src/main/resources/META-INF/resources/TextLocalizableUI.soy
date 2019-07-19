@@ -7,24 +7,82 @@
 	{@param id: any}
 	{@param? path: string}
 	{@param localizable: bool}
+	{@param contextPath: string}
+	{@param? repeatable: bool}
 	{@param labels: map<string,string>}
-	{@param? value: string}
+	{@param? values: map<string,list<?>>}
 	{@param? type: any}
 	{@param placeholder: ?}
 	{@param availableLanguageIds: list<string>}
 	{@param defaultLanguageId: string}
 	{@param? handleChangeValue: ?}
 
-			{call TextUI.render}
-				{param id: $id /}
-				{param type: $type /}
-				{param localizable: $localizable /}
-				{param label: $labels[$defaultLanguageId] /}
-				{param placeholder: $placeholder[$defaultLanguageId] /}
-				{param value: $value /}
-				{param path: $path /}
-				{param availableLanguageIds: $availableLanguageIds /}
-				{param defaultLanguageId: $defaultLanguageId /}
-				{param onChangeValue:  $handleChangeValue /}
-			{/call}
+	{@param? countSection: list<?>}
+	{@param? handleAddSection: ?}
+	{@param? handleRemoveSection: ?}
+	{let $_countSections: isNonnull($countSection) ? $countSection : [1] /}
+
+	{if $repeatable}
+		<div class="form-group-item">
+			<div class="autofit-row">
+				<div class="autofit-col autofit-col-expand">&nbsp;</div>
+				<div class="autofit-col">
+					<div class="btn-group" role="group">
+						<button onclick="{$handleAddSection}" class="btn btn-monospaced btn-sm btn-primary" type="button">
+							<svg class="lexicon-icon lexicon-icon-plus" focusable="false"
+								 role="presentation">
+								<use href="{$contextPath}/images/icons/icons.svg#plus"></use>
+							</svg>
+						</button>
+						<button onclick="{$handleRemoveSection}" class="btn btn-monospaced btn-sm btn-primary" type="button">
+							<svg class="lexicon-icon lexicon-icon-plus" focusable="false"
+								 role="presentation">
+								<use href="{$contextPath}/images/icons/icons.svg#hr"></use>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="autofit-row">
+				<div class="autofit-col autofit-col-expand">
+					<div class="form-group">
+						{foreach $_countSection in $_countSections}
+							{call TextUI.render}
+								{param id: $id /}
+								{param type: $type /}
+								{param localizable: $localizable /}
+								{param label: $labels[$defaultLanguageId] /}
+								{param placeholder: $placeholder[$defaultLanguageId] /}
+								{param values: $values /}
+								{param _index: index($_countSection) /}
+								{param repeatable: $repeatable /}
+								{param path: $path /}
+								{param availableLanguageIds: $availableLanguageIds /}
+								{param defaultLanguageId: $defaultLanguageId /}
+								{param onChangeValue:  $handleChangeValue /}
+							{/call}
+						{/foreach}
+					</div>
+				</div>
+				<div class="autofit-col"></div>
+			</div>
+		</div>
+
+	{else}
+		{call TextUI.render}
+			{param id: $id /}
+			{param type: $type /}
+			{param localizable: $localizable /}
+			{param label: $labels[$defaultLanguageId] /}
+			{param placeholder: $placeholder[$defaultLanguageId] /}
+			{param values: $values /}
+			{param _index: 0 /}
+			{param repeatable: $repeatable /}
+			{param path: $path /}
+			{param availableLanguageIds: $availableLanguageIds /}
+			{param defaultLanguageId: $defaultLanguageId /}
+			{param onChangeValue:  $handleChangeValue /}
+		{/call}
+	{/if}
+
 {/template}

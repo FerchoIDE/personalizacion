@@ -6,6 +6,8 @@
 {template .render}
 	{@param id: any}
 	{@param contextPath: string}
+
+	{@param navigationEditURL: string}
 	{@param header: map<string,string>}
 	{@param data: list<map<string,string>>}
 	{@param keys: list<string>}
@@ -29,6 +31,7 @@
 					{foreach $fieldData in $data}
 						<tr>
 							{foreach $field in $keys}
+
 								<td>{$fieldData[$field]}</td>
 							{/foreach}
 							<td>
@@ -39,7 +42,7 @@
 										</svg>
 									</a>
 
-									<a class="component-action quick-action-item" style="font-size: 14px" href="#1" role="button">
+									<a class="component-action quick-action-item" style="font-size: 14px" href="{$navigationEditURL}&_generatorviewclient_articleId={$fieldData['id']}" role="button">
 										<svg class="lexicon-icon lexicon-icon-text-editor" focusable="false" role="presentation">
 											<use href="{$contextPath}/images/icons/icons.svg#text-editor" />
 										</svg>

@@ -11916,7 +11916,7 @@
     }
 }
 .gv-portlet .nav {
-    font-size: 0.875rem;
+   /* font-size: 0.875rem;*/
 }
 .gv-portlet .nav-btn.btn-unstyled,
 .gv-portlet .nav-link {

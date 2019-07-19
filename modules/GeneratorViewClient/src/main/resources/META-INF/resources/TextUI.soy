@@ -7,24 +7,28 @@
 	{@param id: any}
 	{@param? label: ?}
 	{@param localizable: bool}
+	{@param _index: number}
 	{@param? path: string}
-	{@param? value: string}
+	{@param? values: map<string,list<?>>}
+	{@param? repeatable: bool}
 	{@param? placeholder: any}
 	{@param type: any}
 	{@param availableLanguageIds: list<string>}
 	{@param defaultLanguageId: string}
-	{let $finalValue: isNonnull($value) ? $value : '' /}
-	<div id="{$id}" class="form-group-item">
+	{let $_values: isNonnull($values) ? $values : quoteKeysIfJs(['es_ES':[''],'en_US':['']]) /}
+	<div id="{$id}" class="form-group-item" style="{$repeatable?'width:99%':''}">
 			<label for="input_{$id}">{$label}</label>
 
 		{if $localizable == true}
 			{foreach $language in $availableLanguageIds}
 				{if $language == $defaultLanguageId}
 					<input class="form-control" data-onkeyup="handleChange" id="input_{$id}_{$language}"
+						   value="{isNonnull($_values[$language])?$_values[$language][$_index]:''}"
 						   data-language="{$language}" data-path="{$path}"
 						   placeholder="{$placeholder}" type="{$type}"/>{\t}
 				{else}
 					<input class="form-control" id="input_{$id}_{$language}" placeholder="{$placeholder}"
+						   value="{isNonnull($_values[$language])?$_values[$language][$_index]:''}"
 						   data-language="{$language}" data-path="{$path}"
 						   style="display: none" type="{$type}"/>{\t}
 				{/if}
@@ -33,6 +37,7 @@
 		{else}
 			<input class="form-control" data-onkeyup="handleChange" id="input_{$id}"
 				    data-path="{$path}"
+				   value="{$_values[$defaultLanguageId][$_index]}"
 				   placeholder="{$placeholder}" type="{$type}"/>
 		{/if}
 		 </div>

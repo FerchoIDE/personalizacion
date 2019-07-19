@@ -1,5 +1,8 @@
 import wretch from "wretch"
-const _HOST_="localhost:8080"
+
+//const _PATHBASE_ = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+const _HOST_=location.hostname+(location.port ? ':'+location.port: '');
+//const _HOST_="localhost:8080"
 //const _HOST_="10.43.162.99"
 const _PATH_="/web/guest/home/"
 //const _PATH_="/web/posadas-completo-nuevo/personalizacion/"
@@ -124,6 +127,14 @@ export default class Service{
                 console.log(error)
                 callBack(error)
             })
+    }
+    getCategories(callBack){
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/getCategories")
+            .post()
+            .json(json =>{
+                console.log(json)
+                callBack(json)
+            } )
     }
 
 

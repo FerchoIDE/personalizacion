@@ -27,8 +27,10 @@ var soyIdom = goog.require('soy.idom');
  *  id: *,
  *  label: (?),
  *  localizable: boolean,
+ *  _index: number,
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined),
- *  value: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
+ *  repeatable: (boolean|null|undefined),
  *  placeholder: (*|null|undefined),
  *  type: *,
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
@@ -47,10 +49,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var label = opt_data.label;
   /** @type {boolean} */
   var localizable = soy.asserts.assertType(goog.isBoolean(opt_data.localizable) || opt_data.localizable === 1 || opt_data.localizable === 0, 'localizable', opt_data.localizable, 'boolean');
+  /** @type {number} */
+  var _index = soy.asserts.assertType(goog.isNumber(opt_data._index), '_index', opt_data._index, 'number');
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var path = soy.asserts.assertType(opt_data.path == null || (goog.isString(opt_data.path) || opt_data.path instanceof goog.soy.data.SanitizedContent), 'path', opt_data.path, '!goog.soy.data.SanitizedContent|null|string|undefined');
-  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
-  var value = soy.asserts.assertType(opt_data.value == null || (goog.isString(opt_data.value) || opt_data.value instanceof goog.soy.data.SanitizedContent), 'value', opt_data.value, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  /** @type {!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined} */
+  var values = soy.asserts.assertType(opt_data.values == null || goog.isObject(opt_data.values), 'values', opt_data.values, '!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined');
+  /** @type {boolean|null|undefined} */
+  var repeatable = soy.asserts.assertType(opt_data.repeatable == null || (goog.isBoolean(opt_data.repeatable) || opt_data.repeatable === 1 || opt_data.repeatable === 0), 'repeatable', opt_data.repeatable, 'boolean|null|undefined');
   /** @type {*|null|undefined} */
   var placeholder = opt_data.placeholder;
   /** @type {*} */
@@ -59,10 +65,11 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var availableLanguageIds = soy.asserts.assertType(goog.isArray(opt_data.availableLanguageIds), 'availableLanguageIds', opt_data.availableLanguageIds, '!Array<!goog.soy.data.SanitizedContent|string>');
   /** @type {!goog.soy.data.SanitizedContent|string} */
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
-  var finalValue__soy2216 = (value != null) ? value : '';
+  var _values__soy3550 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'form-group-item');
+      incrementalDom.attr('style', repeatable ? 'width:99%' : '');
   incrementalDom.elementOpenEnd();
     incrementalDom.elementOpenStart('label');
         incrementalDom.attr('for', 'input_' + id);
@@ -70,16 +77,17 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       soyIdom.print(label);
     incrementalDom.elementClose('label');
     if (localizable == true) {
-      var language2258List = availableLanguageIds;
-      var language2258ListLen = language2258List.length;
-      for (var language2258Index = 0; language2258Index < language2258ListLen; language2258Index++) {
-          var language2258Data = language2258List[language2258Index];
-          if (language2258Data == defaultLanguageId) {
+      var language3598List = availableLanguageIds;
+      var language3598ListLen = language3598List.length;
+      for (var language3598Index = 0; language3598Index < language3598ListLen; language3598Index++) {
+          var language3598Data = language3598List[language3598Index];
+          if (language3598Data == defaultLanguageId) {
             incrementalDom.elementOpenStart('input');
                 incrementalDom.attr('class', 'form-control');
                 incrementalDom.attr('data-onkeyup', 'handleChange');
-                incrementalDom.attr('id', 'input_' + id + '_' + language2258Data);
-                incrementalDom.attr('data-language', language2258Data);
+                incrementalDom.attr('id', 'input_' + id + '_' + language3598Data);
+                incrementalDom.attr('value', (_values__soy3550[language3598Data] != null) ? _values__soy3550[language3598Data][_index] : '');
+                incrementalDom.attr('data-language', language3598Data);
                 incrementalDom.attr('data-path', path);
                 incrementalDom.attr('placeholder', placeholder);
                 incrementalDom.attr('type', type);
@@ -89,9 +97,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           } else {
             incrementalDom.elementOpenStart('input');
                 incrementalDom.attr('class', 'form-control');
-                incrementalDom.attr('id', 'input_' + id + '_' + language2258Data);
+                incrementalDom.attr('id', 'input_' + id + '_' + language3598Data);
                 incrementalDom.attr('placeholder', placeholder);
-                incrementalDom.attr('data-language', language2258Data);
+                incrementalDom.attr('value', (_values__soy3550[language3598Data] != null) ? _values__soy3550[language3598Data][_index] : '');
+                incrementalDom.attr('data-language', language3598Data);
                 incrementalDom.attr('data-path', path);
                 incrementalDom.attr('style', 'display: none');
                 incrementalDom.attr('type', type);
@@ -106,6 +115,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.attr('data-onkeyup', 'handleChange');
           incrementalDom.attr('id', 'input_' + id);
           incrementalDom.attr('data-path', path);
+          incrementalDom.attr('value', _values__soy3550[defaultLanguageId][_index]);
           incrementalDom.attr('placeholder', placeholder);
           incrementalDom.attr('type', type);
       incrementalDom.elementOpenEnd();
@@ -119,8 +129,10 @@ exports.render = $render;
  *  id: *,
  *  label: (?),
  *  localizable: boolean,
+ *  _index: number,
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined),
- *  value: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
+ *  repeatable: (boolean|null|undefined),
  *  placeholder: (*|null|undefined),
  *  type: *,
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
@@ -132,8 +144,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'TextUI.render';
 }
 
-exports.render.params = ["id","label","localizable","path","value","placeholder","type","availableLanguageIds","defaultLanguageId"];
-exports.render.types = {"id":"any","label":"?","localizable":"bool","path":"string","value":"string","placeholder":"any","type":"any","availableLanguageIds":"list<string>","defaultLanguageId":"string"};
+exports.render.params = ["id","label","localizable","_index","path","values","repeatable","placeholder","type","availableLanguageIds","defaultLanguageId"];
+exports.render.types = {"id":"any","label":"?","localizable":"bool","_index":"number","path":"string","values":"map<string,list<?>>","repeatable":"bool","placeholder":"any","type":"any","availableLanguageIds":"list<string>","defaultLanguageId":"string"};
 templates = exports;
 return exports;
 

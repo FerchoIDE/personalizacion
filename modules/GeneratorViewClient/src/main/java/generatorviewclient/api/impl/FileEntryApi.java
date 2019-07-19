@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import generatorviewclient.api.IFileEntryApi;
 import generatorviewclient.constants.Contants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -27,6 +30,15 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 public class FileEntryApi extends QueriesLiferayApi implements IFileEntryApi {
     private static final Log _log = LogFactoryUtil.getLog(FileEntryApi.class);
+
+    public static FileEntry getFileFromJson(String jsonData) throws Exception {
+
+        JSONObject jsonObject = JSONFactoryUtil.createJSONObject(jsonData);
+
+        String uuid = jsonObject.getString("uuid");
+        long groupId = GetterUtil.getLong(jsonObject.get("groupId"));
+        return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(uuid,groupId);
+    }
 
     public Long getBaseFolder(Long groupId,String brand,String code_hotel) throws PortalException {
     	_log.info("getBaseFolder");

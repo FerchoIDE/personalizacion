@@ -1,11 +1,19 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './TextAreaUI.soy';
-import TextUI from "./TextUI.es";
+
+//import 'trumbowyg/dist/ui/trumbowyg.min.css';
+//import Trumbowyg from 'trumbowyg'
 /**
  * TextUI Component
  */
 class TextAreaUI extends Component {
+    created() {
+        console.log('-----TextAreaUI event created----')
+       // var editor = wysiwyg(document.querySelector('#inputarea_'+this.id+'_'+this.defaultLanguageId))
+        //AlloyEditor.editable('inputarea_'+this.id+'_'+this.defaultLanguageId);
+       // $('#dv_'+this.id+'_'+this.defaultLanguageId).trumbowyg()
+    }
     handleChange(event) {
 
         let value = event.target.value;

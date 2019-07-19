@@ -40,6 +40,15 @@
 	{@param? msgErrorPath: ?}
 	{@param? msgInfo: ?}
 
+	{@param? closeOpenTabCategory: ?}
+	{@param? itemsCategories: list<?>}
+	{@param? itemsCategoriesKeys: list<?>}
+	{@param? itemsMarcasKeys: list<?>}
+	{@param? setSelectedCategories: ?}
+	{@param? itemsCategoriesKeysRender: ?}
+	{@param? itemsCategoriesSelected: ?}
+	{@param? removeSelectedCategory: ?}
+
 
 
 	{@param collapseInfo: map<string,bool>}
@@ -174,8 +183,8 @@
 							 {/call}
 							 {call TitleLocalizableUI.render}
 								 {param id: 'description_prinipal' /}
-								 {param label: 'Descripcion' /}
-								 {param placeholder: 'Descripcion principal' /}
+								 {param label: 'Resumen' /}
+								 {param placeholder: 'Resumen' /}
 								 {param contextPath: $contextPath/}
 								 {param availableLanguageIds: $availableLanguageIds /}
 								 {param defaultLanguage: $defaultLanguage /}
@@ -194,7 +203,9 @@
 				 <div class="autofit-col">
 					 <div class="btn-group" role="group">
 					 	<button onclick="{$saveStructure}" class="btn btn-primary" type="button">Guardar</button>
+						 &nbsp;&nbsp;
 					 	<button onclick="{$cancelStructure}"  class="btn btn-secondary" data-dismiss="modal" type="button">Cancelar</button>
+						 &nbsp;&nbsp;
 					 </div>
 				 </div>
 			 </div>
@@ -266,15 +277,20 @@
 											{param localizable: $field['localizable'] /}
 											{param labels: $field['label'] /}
 											{param placeholder: $field['tip'] /}
+											{param values: $field['values'] /}
+											{param repeatable: $field['repeatable'] /}
+											{param contextPath: $contextPath/}
 											{param availableLanguageIds: $availableLanguageIds /}
 											{param defaultLanguageId: $selectedLanguage /}
 											{param handleChangeValue:  $handleChangeValue /}
+											{param handleRemoveItem:  $handleRemoveItem /}
 										{/call}
 									{elseif $field['type'] == 'checkbox'}
 										{call CheckBoxUI.render}
 											{param id: $field['name'] /}
 											{param label: $field['label'] /}
 											{param path: $field['name'] /}
+											{param values: $field['values'] /}
 											{param defaultLanguageId: $selectedLanguage /}
 											{param handleChangeValue:  $handleChangeValue /}
 										{/call}
@@ -295,6 +311,7 @@
 											{param availableLanguageIds: $availableLanguageIds /}
 											{param defaultLanguageId: $selectedLanguage /}
 											{param path: $field['name'] /}
+											{param values: $field['values'] /}
 											{param handleChangeValue:  $handleChangeValue /}
 										{/call}
 									{elseif $field['type'] == 'radio'}
@@ -359,12 +376,201 @@
 			 </div>
 		 </div>
 
+
+
+
+
+
+		<div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
+			<div class="panel">
+				<a onclick="{$closeOpenTab}"  aria-controls="accordionCatCollapse" aria-expanded="false"
+					class="collapse-icon sheet-subtitle" data-toggle="collapse" href="#accordionCatCollapse"
+					id="accordionCatHeading" role="tab">
+					<span>Categorias</span>
+					<span class="collapse-icon-closed">
+						<svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
+							<use href="{$contextPath}/images/icons/icons.svg#angle-right" />
+						</svg>
+					</span>
+					<span class="collapse-icon-open">
+						<svg class="lexicon-icon lexicon-icon-angle-down" focusable="false" role="presentation">
+							<use href="{$contextPath}/images/icons/icons.svg#angle-down" />
+						</svg>
+					</span>
+				</a>
+				<div aria-labelledby="accordionCatHeading" class="panel-collapse collapse  {$collapseInfo?['accordionCatHeading']?'':'show'}"
+					 id="accordionCatCollapse" role="tabpanel">
+					<div class="panel-body">
+						<div>
+							{if $itemsCategoriesKeysRender}
+								{if $itemsCategoriesSelected}
+									{foreach $key in $itemsCategoriesKeysRender}
+										<span id="{$key},S" style="font-size: 1.110rem;" class="label label-dismissible label-secondary">
+											<span class="label-item label-item-expand">{$itemsCategoriesSelected[$key]}</span>
+											<span class="label-item label-item-after">
+												<button id="{$key},B" aria-label="Close" class="close" type="button" onclick="{$removeSelectedCategory}">
+													<svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
+														<use href="{$contextPath}/images/icons/icons.svg#times"></use>
+													</svg>
+												</button>
+											</span>
+										</span>
+									{/foreach}
+								{/if}
+							{/if}
+						</div>
+						<div class="table-responsive">
+							<table class="table table-autofit table-list">
+								<tbody>
+									{if $itemsCategories}
+										{if $itemsCategoriesKeys}
+											{foreach $key in $itemsCategoriesKeys}
+												{if isFirst($key)}
+													<tr>
+												{/if}
+												{if (index($key)+3)%3==0 and not isFirst($key)}
+													</tr>
+													<tr>
+												{/if}
+												<td class="table-cell-expand">
+													{if $key.name != 'Marcas'}
+														<nav class="menubar menubar-transparent menubar-vertical-expand-md">
+															<div class="collapse menubar-collapse" id="menubarVertical{$key.nameFormat}Collapse01">
+																<ul class="nav nav-nested">
+																	<div class="panel">
+																		<li class="nav-item">
+																			<a onclick="{$closeOpenTabCategory}" id="{$key.nameFormat},OC" aria-controls="menubarVertical{$key.nameFormat}NestedCollapse01" aria-expanded="false"
+																			   class="collapse-icon nav-link collapsed" data-toggle="collapse" href="#menubarVertical{$key.nameFormat}NestedCollapse01" role="button">
+																				{$key.name}
+																				<span class="collapse-icon-closed">
+																					<svg class="lexicon-icon lexicon-icon-caret-right" focusable="false" role="presentation">
+																						<use href="{$contextPath}/images/icons/icons.svg#caret-right" />
+																					</svg>
+																				</span>
+																				<span class="collapse-icon-open">
+																					<svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
+																						<use href="{$contextPath}/images/icons/icons.svg#caret-bottom" />
+																					</svg>
+																				</span>
+																			</a>
+
+																			<div class="panel-collapse collapse  {$collapseInfo?['menubarVertical'+$key.nameFormat+'Collapse01']?'':'show'}" id="menubarVertical{$key.nameFormat}NestedCollapse01">
+																				{foreach $field in $itemsCategories}
+																					{if $field[$key.name]}
+																						<ul id="{$key.nameFormat}UL" style="display:none;" class="nav nav-stacked">
+																							{foreach $value in $field[$key.name]}
+																								{if $value.isMultiValue}
+																									<li class="nav-item">
+																										<a id="{$value.categoryId},{$value.parentCategoryId},{$value.parentName},T"
+																										   class="nav-link" style="text-decoration: none;"
+																										   onclick="{$setSelectedCategories}"
+																										   href="#1">{$value.name}</a>
+																									</li>
+																								{else}
+																									<li class="nav-item">
+																										<a id="{$value.categoryId},{$value.parentCategoryId},{$value.parentName},F"
+																											onclick="{$setSelectedCategories}" style="text-decoration: none;"
+																											class="nav-link" href="#1">{$value.name}</a>
+																									</li>
+																								{/if}
+																							{/foreach}
+																						</ul>
+																					{/if}
+																				{/foreach}
+																			</div>
+																		</li>
+																	</div>
+																</ul>
+															</div>
+														</nav>
+													{else}
+														{foreach $field in $itemsCategories}
+															{if $field[$key.name]}
+																{if $itemsMarcasKeys}
+																	<nav class="menubar menubar-transparent menubar-vertical-expand-md">
+																		<div class="collapse menubar-collapse" id="menubarVertical{$key.nameFormat}Collapse01">
+																			<ul class="nav nav-nested">
+																				<div class="panel">
+																					<li class="nav-item">
+																						<a onclick="{$closeOpenTabCategory}" id="{$key.nameFormat},OC"  aria-controls="menubarVertical{$key.nameFormat}NestedCollapse01" aria-expanded="false"
+																						   class="collapse-icon nav-link collapsed" data-toggle="collapse" href="#menubarVertical{$key.nameFormat}NestedCollapse01" role="button">
+																							{$key.name}
+																							<span class="collapse-icon-closed">
+																								<svg class="lexicon-icon lexicon-icon-caret-right" focusable="false" role="presentation">
+																									<use href="{$contextPath}/images/icons/icons.svg#caret-right" />
+																								</svg>
+																							</span>
+																							<span class="collapse-icon-open">
+																								<svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
+																									<use href="{$contextPath}/images/icons/icons.svg#caret-bottom" />
+																								</svg>
+																							</span>
+																						</a>
+																						<div class="panel-collapse collapse  {$collapseInfo?['menubarVertical'+$key.nameFormat+'Collapse01']?'':'show'}" id="menubarVertical{$key.nameFormat}NestedCollapse01">
+																							{foreach $key1 in $itemsMarcasKeys}
+																								<ul class="nav nav-stacked">
+																									<li class="nav-item">
+																										<a aria-controls="menubarVerticalNestedCollapse02" aria-expanded="false" class="collapsed collapse-icon nav-link" data-toggle="collapse1" href="#menubarVerticalNestedCollapse02" role="button">
+																											{$key1}
+																											<span class="collapse-icon-closed">
+																												<svg class="lexicon-icon lexicon-icon-caret-right" focusable="false" role="presentation">
+																													<use href="{$contextPath}/images/icons/icons.svg#caret-right" />
+																												</svg>
+																											</span>
+																											<span class="collapse-icon-open">
+																												<svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
+																													<use href="{$contextPath}/images/icons/icons.svg#caret-bottom" />
+																												</svg>
+																											</span>
+																										</a>
+																										<div class="collapse" id="menubarVerticalNestedCollapse02">
+																											<ul class="nav nav-stacked">
+																												<li class="nav-item"><a class="nav-link" href="#1">Details</a></li>
+																												<li class="nav-item"><a class="nav-link" href="#1">Catagorization</a></li>
+																												<li class="nav-item"><a class="nav-link" href="#1">Documents and Media</a></li>
+																												<li class="nav-item"><a class="nav-link" href="#1">Site Template</a></li>
+																											</ul>
+																										</div>
+																									</li>
+																								</ul>
+																							{/foreach}
+																						</div>
+																					</li>
+																				</div>
+																			</ul>
+																		</div>
+																	</nav>
+																{/if}
+															{/if}
+														{/foreach}
+													{/if}
+												</td>
+												{if isLast($key)}
+													</tr>
+												{/if}
+											{/foreach}
+										{/if}
+									{/if}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
 		 <div class="autofit-row">
 			 <div class="autofit-col autofit-col-expand">&nbsp;</div>
 			 <div class="autofit-col">
 				 <div class="btn-group" role="group">
 				 	<button onclick="{$saveStructure}"  class="btn btn-primary" type="button">Guardar</button>
+					 &nbsp;&nbsp;
 				 	<button onclick="{$cancelStructure}"  class="btn btn-secondary" data-dismiss="modal" type="button">Cancelar</button>
+					 &nbsp;&nbsp;
 				 </div>
 			 </div>
 		 </div>

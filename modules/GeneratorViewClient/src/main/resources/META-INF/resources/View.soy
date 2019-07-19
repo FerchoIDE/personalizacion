@@ -10,6 +10,7 @@
 	{@param? selectedTab: string}
 	{@param contextPath: string}
 	{@param navigationNewURL: string}
+	{@param navigationEditURL: string}
 	{@param data: map<string,list<map<string,string>>>}
 	{@param header: map<string,string>}
 	{@param keys: list<string>}
@@ -167,6 +168,7 @@
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
+					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['HOTEL']] /}
 				{/call}
 			</div>
@@ -180,6 +182,7 @@
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
+					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['ROOM']] /}
 				{/call}
 			</div>
@@ -193,6 +196,7 @@
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
+					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['RATE']] /}
 				{/call}
 			</div>
@@ -205,6 +209,7 @@
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
+					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['PUB']] /}
 				{/call}
 			</div>
@@ -218,6 +223,7 @@
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
+					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['RESTAURANT']] /}
 				{/call}
 			</div>
@@ -230,6 +236,7 @@
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
+					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['SPA']] /}
 				{/call}
 			</div>
@@ -242,6 +249,7 @@
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
+					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['BRAND']] /}
 				{/call}
 			</div>
@@ -254,6 +262,7 @@
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
+					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['GYM']] /}
 				{/call}
 			</div>
@@ -266,6 +275,7 @@
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
+					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['DESTINATION']] /}
 				{/call}
 			</div>
@@ -278,6 +288,7 @@
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
+					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['FACILITY']] /}
 				{/call}
 			</div>
@@ -290,6 +301,7 @@
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
+					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['GENERIC']] /}
 				{/call}
 			</div>
@@ -302,6 +314,7 @@
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
+					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['KIDSCLUB']] /}
 				{/call}
 			</div>
@@ -314,6 +327,7 @@
 					{param header: $header /}
 					{param contextPath: $contextPath /}
 					{param keys: $keys /}
+					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['MEETING']] /}
 				{/call}
 			</div>

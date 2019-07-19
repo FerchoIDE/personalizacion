@@ -17,6 +17,7 @@ var soydata = goog.require('soydata');
 goog.module('TextLocalizableUI.incrementaldom');
 
 goog.require('goog.soy.data.SanitizedContent');
+var incrementalDom = goog.require('incrementaldom');
 goog.require('soy.asserts');
 var soyIdom = goog.require('soy.idom');
 
@@ -28,13 +29,18 @@ var $templateAlias1 = Soy.getTemplate('TextUI.incrementaldom', 'render');
  *  id: *,
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  localizable: boolean,
+ *  contextPath: (!goog.soy.data.SanitizedContent|string),
+ *  repeatable: (boolean|null|undefined),
  *  labels: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
- *  value: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
  *  type: (*|null|undefined),
  *  placeholder: (?),
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
- *  handleChangeValue: (?)
+ *  handleChangeValue: (?),
+ *  countSection: (!Array<?>|null|undefined),
+ *  handleAddSection: (?),
+ *  handleRemoveSection: (?)
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
  * @param {Object<string, *>=} opt_ijData_deprecated
@@ -49,10 +55,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var path = soy.asserts.assertType(opt_data.path == null || (goog.isString(opt_data.path) || opt_data.path instanceof goog.soy.data.SanitizedContent), 'path', opt_data.path, '!goog.soy.data.SanitizedContent|null|string|undefined');
   /** @type {boolean} */
   var localizable = soy.asserts.assertType(goog.isBoolean(opt_data.localizable) || opt_data.localizable === 1 || opt_data.localizable === 0, 'localizable', opt_data.localizable, 'boolean');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var contextPath = soy.asserts.assertType(goog.isString(opt_data.contextPath) || opt_data.contextPath instanceof goog.soy.data.SanitizedContent, 'contextPath', opt_data.contextPath, '!goog.soy.data.SanitizedContent|string');
+  /** @type {boolean|null|undefined} */
+  var repeatable = soy.asserts.assertType(opt_data.repeatable == null || (goog.isBoolean(opt_data.repeatable) || opt_data.repeatable === 1 || opt_data.repeatable === 0), 'repeatable', opt_data.repeatable, 'boolean|null|undefined');
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>} */
   var labels = soy.asserts.assertType(goog.isObject(opt_data.labels), 'labels', opt_data.labels, '!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>');
-  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
-  var value = soy.asserts.assertType(opt_data.value == null || (goog.isString(opt_data.value) || opt_data.value instanceof goog.soy.data.SanitizedContent), 'value', opt_data.value, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  /** @type {!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined} */
+  var values = soy.asserts.assertType(opt_data.values == null || goog.isObject(opt_data.values), 'values', opt_data.values, '!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined');
   /** @type {*|null|undefined} */
   var type = opt_data.type;
   /** @type {?} */
@@ -63,7 +73,93 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
   /** @type {?} */
   var handleChangeValue = opt_data.handleChangeValue;
-  $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], value: value, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
+  /** @type {!Array<?>|null|undefined} */
+  var countSection = soy.asserts.assertType(opt_data.countSection == null || goog.isArray(opt_data.countSection), 'countSection', opt_data.countSection, '!Array<?>|null|undefined');
+  /** @type {?} */
+  var handleAddSection = opt_data.handleAddSection;
+  /** @type {?} */
+  var handleRemoveSection = opt_data.handleRemoveSection;
+  var _countSections__soy3333 = (countSection != null) ? countSection : [1];
+  if (repeatable) {
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('class', 'form-group-item');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'autofit-row');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'autofit-col autofit-col-expand');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.text('\u00A0');
+        incrementalDom.elementClose('div');
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'autofit-col');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'btn-group');
+              incrementalDom.attr('role', 'group');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('button');
+                incrementalDom.attr('onclick', handleAddSection);
+                incrementalDom.attr('class', 'btn btn-monospaced btn-sm btn-primary');
+                incrementalDom.attr('type', 'button');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('svg');
+                  incrementalDom.attr('class', 'lexicon-icon lexicon-icon-plus');
+                  incrementalDom.attr('focusable', 'false');
+                  incrementalDom.attr('role', 'presentation');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpenStart('use');
+                    incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#plus');
+                incrementalDom.elementOpenEnd();
+                incrementalDom.elementClose('use');
+              incrementalDom.elementClose('svg');
+            incrementalDom.elementClose('button');
+            incrementalDom.elementOpenStart('button');
+                incrementalDom.attr('onclick', handleRemoveSection);
+                incrementalDom.attr('class', 'btn btn-monospaced btn-sm btn-primary');
+                incrementalDom.attr('type', 'button');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('svg');
+                  incrementalDom.attr('class', 'lexicon-icon lexicon-icon-plus');
+                  incrementalDom.attr('focusable', 'false');
+                  incrementalDom.attr('role', 'presentation');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpenStart('use');
+                    incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#hr');
+                incrementalDom.elementOpenEnd();
+                incrementalDom.elementClose('use');
+              incrementalDom.elementClose('svg');
+            incrementalDom.elementClose('button');
+          incrementalDom.elementClose('div');
+        incrementalDom.elementClose('div');
+      incrementalDom.elementClose('div');
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'autofit-row');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'autofit-col autofit-col-expand');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'form-group');
+          incrementalDom.elementOpenEnd();
+            var _countSection3361List = _countSections__soy3333;
+            var _countSection3361ListLen = _countSection3361List.length;
+            for (var _countSection3361Index = 0; _countSection3361Index < _countSection3361ListLen; _countSection3361Index++) {
+                var _countSection3361Data = _countSection3361List[_countSection3361Index];
+                $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: _countSection3361Index, repeatable: repeatable, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
+              }
+          incrementalDom.elementClose('div');
+        incrementalDom.elementClose('div');
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'autofit-col');
+        incrementalDom.elementOpenEnd();
+        incrementalDom.elementClose('div');
+      incrementalDom.elementClose('div');
+    incrementalDom.elementClose('div');
+  } else {
+    $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: 0, repeatable: repeatable, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
+  }
 }
 exports.render = $render;
 /**
@@ -71,13 +167,18 @@ exports.render = $render;
  *  id: *,
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  localizable: boolean,
+ *  contextPath: (!goog.soy.data.SanitizedContent|string),
+ *  repeatable: (boolean|null|undefined),
  *  labels: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
- *  value: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
  *  type: (*|null|undefined),
  *  placeholder: (?),
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
- *  handleChangeValue: (?)
+ *  handleChangeValue: (?),
+ *  countSection: (!Array<?>|null|undefined),
+ *  handleAddSection: (?),
+ *  handleRemoveSection: (?)
  * }}
  */
 $render.Params;
@@ -85,8 +186,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'TextLocalizableUI.render';
 }
 
-exports.render.params = ["id","path","localizable","labels","value","type","placeholder","availableLanguageIds","defaultLanguageId","handleChangeValue"];
-exports.render.types = {"id":"any","path":"string","localizable":"bool","labels":"map<string,string>","value":"string","type":"any","placeholder":"?","availableLanguageIds":"list<string>","defaultLanguageId":"string","handleChangeValue":"?"};
+exports.render.params = ["id","path","localizable","contextPath","repeatable","labels","values","type","placeholder","availableLanguageIds","defaultLanguageId","handleChangeValue","countSection","handleAddSection","handleRemoveSection"];
+exports.render.types = {"id":"any","path":"string","localizable":"bool","contextPath":"string","repeatable":"bool","labels":"map<string,string>","values":"map<string,list<?>>","type":"any","placeholder":"?","availableLanguageIds":"list<string>","defaultLanguageId":"string","handleChangeValue":"?","countSection":"list<?>","handleAddSection":"?","handleRemoveSection":"?"};
 templates = exports;
 return exports;
 

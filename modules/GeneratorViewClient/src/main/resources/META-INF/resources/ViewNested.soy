@@ -98,6 +98,9 @@
 														{param labels: $field['label'] /}
 														{param placeholder: $field['tip'] /}
 														{param localizable: $field['localizable'] /}
+														{param values: $field['values'] /}
+														{param repeatable: $field['repeatable'] /}
+														{param contextPath: $contextPath/}
 														{param availableLanguageIds: $availableLanguageIds /}
 														{param defaultLanguageId: $defaultLanguage /}
 														{param handleChangeValue:  $handleChangeValue /}
@@ -214,6 +217,9 @@
 													{param labels: $field['label'] /}
 													{param placeholder: $field['tip'] /}
 													{param localizable: $field['localizable'] /}
+													{param values: $field['values'] /}
+													{param repeatable: $field['repeatable'] /}
+													{param contextPath: $contextPath/}
 													{param availableLanguageIds: $availableLanguageIds /}
 													{param defaultLanguageId: $defaultLanguage /}
 													{param handleChangeValue:  $handleChangeValue /}
@@ -225,6 +231,7 @@
 													{param label: $field['label'] /}
 													{param checkedOption: $checkedOption /}
 													{param path:$path+'/'+ $field['name'] /}
+													{param values: $field['values'] /}
 													{param defaultLanguageId: $defaultLanguage /}
 													{param handleChangeValue:  $handleChangeValue /}
 
@@ -247,12 +254,14 @@
 													{param availableLanguageIds: $availableLanguageIds /}
 													{param defaultLanguageId: $defaultLanguage /}
 													{param path:$path+'/'+ $field['name'] /}
+													{param values: $field['values'] /}
 													{param handleChangeValue:  $handleChangeValue /}
 												{/call}
 											{elseif $field['type'] == 'ddm-journal-article'}
 												{call JournalUI.render}
 													{param id: $field['name'] /}
 													{param label: $field['label'][$defaultLanguage] /}
+													{param values: $field['values'] /}
 													{param contextPath: $contextPath /}
 													{param brandSelected: $brandSelected/}
 													{param hotelSelected: $hotelSelected/}
