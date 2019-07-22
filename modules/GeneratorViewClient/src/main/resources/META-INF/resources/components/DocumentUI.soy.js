@@ -126,10 +126,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
   /** @type {?} */
   var handleChangeValueDocument = opt_data.handleChangeValueDocument;
-  var _itemsAsociated__soy6471 = (itemsAsociated != null) ? itemsAsociated[id] : itemsAsociated;
-  var _isOpen__soy6473 = (isOpen != null) ? isOpen : {'a': false};
-  var m__soy6475 = {'a': false};
-  var _host___soy6477 = (pathBase != null) ? pathBase : 'localhost:8080';
+  var _itemsAsociated__soy6929 = (itemsAsociated != null) ? itemsAsociated[id] : itemsAsociated;
+  var _isOpen__soy6931 = (isOpen != null) ? isOpen : {'a': false};
+  var m__soy6933 = {'a': false};
+  var _host___soy6935 = (pathBase != null) ? pathBase : 'localhost:8080';
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'container');
@@ -153,16 +153,16 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.attr('class', 'table table-autofit table-list');
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
-                  if (_itemsAsociated__soy6471 != null) {
-                    var field6627List = (soy.$$getMapKeys(_itemsAsociated__soy6471));
-                    var field6627ListLen = field6627List.length;
-                    for (var field6627Index = 0; field6627Index < field6627ListLen; field6627Index++) {
-                        var field6627Data = field6627List[field6627Index];
-                        var _isOpenField__soy6485 = _isOpen__soy6473[field6627Data] ? 'true' : 'false';
-                          if (field6627Index == 0) {
+                  if (_itemsAsociated__soy6929 != null) {
+                    var field7087List = (soy.$$getMapKeys(_itemsAsociated__soy6929));
+                    var field7087ListLen = field7087List.length;
+                    for (var field7087Index = 0; field7087Index < field7087ListLen; field7087Index++) {
+                        var field7087Data = field7087List[field7087Index];
+                        var _isOpenField__soy6943 = _isOpen__soy6931[field7087Data] ? 'true' : 'false';
+                          if (field7087Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field6627Index + 2) % 2 == 0 && !(field6627Index == 0)) {
+                          if ((field7087Index + 2) % 2 == 0 && !(field7087Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -182,7 +182,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                       incrementalDom.attr('width', '128');
                                       incrementalDom.attr('style', 'max-height: 256px;max-width: 100%');
                                       incrementalDom.attr('alt', 'Not Image');
-                                      incrementalDom.attr('src', 'http://' + _host___soy6477 + _itemsAsociated__soy6471[field6627Data].imageThumbnail);
+                                      incrementalDom.attr('src', 'http://' + _host___soy6935 + _itemsAsociated__soy6929[field7087Data].imageThumbnail);
                                   incrementalDom.elementOpenEnd();
                                   incrementalDom.elementClose('img');
                                 incrementalDom.elementClose('span');
@@ -196,13 +196,13 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(_itemsAsociated__soy6471[field6627Data].filename);
+                                    soyIdom.print(_itemsAsociated__soy6929[field7087Data].filename);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(_itemsAsociated__soy6471[field6627Data].path);
+                                  soyIdom.print(_itemsAsociated__soy6929[field7087Data].path);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                               incrementalDom.elementOpenStart('div');
@@ -211,7 +211,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                 incrementalDom.elementOpenStart('a');
                                     incrementalDom.attr('onclick', deleteDocument);
                                     incrementalDom.attr('href', '#1');
-                                    incrementalDom.attr('id', field6627Data);
+                                    incrementalDom.attr('id', field7087Data);
                                     incrementalDom.attr('style', 'font-size: 18px');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpenStart('svg');
@@ -236,13 +236,13 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.attr('class', 'panel');
                               incrementalDom.elementOpenEnd();
                                 incrementalDom.elementOpenStart('a');
-                                    incrementalDom.attr('aria-controls', 'accordion03CollapseTwo' + field6627Data);
-                                    incrementalDom.attr('aria-expanded', _isOpenField__soy6485);
+                                    incrementalDom.attr('aria-controls', 'accordion03CollapseTwo' + field7087Data);
+                                    incrementalDom.attr('aria-expanded', _isOpenField__soy6943);
                                     incrementalDom.attr('class', 'collapse-icon sheet-subtitle collapsed');
                                     incrementalDom.attr('data-toggle', 'collapse');
                                     incrementalDom.attr('onclick', closeOpenTab);
-                                    incrementalDom.attr('href', '#accordion03CollapseTwo' + field6627Data);
-                                    incrementalDom.attr('id', 'accordion03HeadingTwo__' + field6627Data);
+                                    incrementalDom.attr('href', '#accordion03CollapseTwo' + field7087Data);
+                                    incrementalDom.attr('id', 'accordion03HeadingTwo__' + field7087Data);
                                     incrementalDom.attr('role', 'tab');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpen('span');
@@ -278,9 +278,9 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementClose('span');
                                 incrementalDom.elementClose('a');
                                 incrementalDom.elementOpenStart('div');
-                                    incrementalDom.attr('aria-labelledby', 'accordion03HeadingTwo__' + field6627Data);
-                                    incrementalDom.attr('class', 'panel-collapse collapse ' + (_isOpenField__soy6485 == 'true' ? 'show' : ''));
-                                    incrementalDom.attr('id', 'accordion03CollapseTwo' + field6627Data);
+                                    incrementalDom.attr('aria-labelledby', 'accordion03HeadingTwo__' + field7087Data);
+                                    incrementalDom.attr('class', 'panel-collapse collapse ' + (_isOpenField__soy6943 == 'true' ? 'show' : ''));
+                                    incrementalDom.attr('id', 'accordion03CollapseTwo' + field7087Data);
                                     incrementalDom.attr('role', 'tabpanel');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpenStart('div');
@@ -293,28 +293,28 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                           incrementalDom.attr('class', 'input-group');
                                       incrementalDom.elementOpenEnd();
                                         if ((nestedFields != null)) {
-                                          var nestedField6619List = nestedFields;
-                                          var nestedField6619ListLen = nestedField6619List.length;
-                                          for (var nestedField6619Index = 0; nestedField6619Index < nestedField6619ListLen; nestedField6619Index++) {
-                                              var nestedField6619Data = nestedField6619List[nestedField6619Index];
-                                              if (nestedField6619Data['type'] == 'text') {
-                                                $templateAlias1({id: nestedField6619Data['name'] + '_' + field6627Data, type: nestedField6619Data['type'], path: field6627Data + '/' + nestedField6619Data['name'], localizable: nestedField6619Data['localizable'], labels: nestedField6619Data['label'], placeholder: nestedField6619Data['tip'], contextPath: contextPath, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
-                                              } else if (nestedField6619Data['type'] == 'checkbox') {
-                                                $templateAlias2({id: nestedField6619Data['name'] + '_' + field6627Data, label: nestedField6619Data['label'][defaultLanguageId], defaultLanguageId: defaultLanguageId, path: field6627Data + '/' + nestedField6619Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
-                                              } else if (nestedField6619Data['type'] == 'ddm-date') {
-                                                $templateAlias3({id: nestedField6619Data['name'] + '_' + field6627Data, label: nestedField6619Data['label'][defaultLanguageId], placeholder: nestedField6619Data['tip'][defaultLanguageId], defaultLanguageId: defaultLanguageId, path: field6627Data + '/' + nestedField6619Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
-                                              } else if (nestedField6619Data['type'] == 'ddm-text-html') {
-                                                $templateAlias4({id: nestedField6619Data['name'] + '_' + field6627Data, label: field6627Data['label'][defaultLanguageId], placeholder: nestedField6619Data['tip'][defaultLanguageId], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, path: field6627Data + '/' + nestedField6619Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
-                                              } else if (nestedField6619Data['type'] == 'radio') {
-                                                $templateAlias5({id: nestedField6619Data['name'] + '_' + field6627Data, label: nestedField6619Data['label'][defaultLanguageId], defaultLanguageId: defaultLanguageId, options: nestedField6619Data['options'], path: field6627Data + '/' + nestedField6619Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
-                                              } else if (nestedField6619Data['type'] == 'select') {
-                                                $templateAlias6({id: nestedField6619Data['name'] + '_' + field6627Data, label: nestedField6619Data['label'][defaultLanguageId], defaultLanguageId: defaultLanguageId, options: nestedField6619Data['options'], path: field6627Data + '/' + nestedField6619Data['name'], multiple: field6627Data['multiple'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
-                                              } else if (nestedField6619Data['type'] == 'ddm-integer') {
-                                                $templateAlias1({id: nestedField6619Data['name'] + '_' + field6627Data, type: 'number', path: field6627Data + '/' + nestedField6619Data['name'], localizable: nestedField6619Data['localizable'], labels: nestedField6619Data['label'], placeholder: nestedField6619Data['tip'], contextPath: contextPath, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
+                                          var nestedField7079List = nestedFields;
+                                          var nestedField7079ListLen = nestedField7079List.length;
+                                          for (var nestedField7079Index = 0; nestedField7079Index < nestedField7079ListLen; nestedField7079Index++) {
+                                              var nestedField7079Data = nestedField7079List[nestedField7079Index];
+                                              if (nestedField7079Data['type'] == 'text') {
+                                                $templateAlias1({id: nestedField7079Data['name'] + '_' + field7087Data, type: nestedField7079Data['type'], path: field7087Data + '/' + nestedField7079Data['name'], localizable: nestedField7079Data['localizable'], labels: nestedField7079Data['label'], placeholder: nestedField7079Data['tip'], contextPath: contextPath, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
+                                              } else if (nestedField7079Data['type'] == 'checkbox') {
+                                                $templateAlias2({id: nestedField7079Data['name'] + '_' + field7087Data, label: nestedField7079Data['label'][defaultLanguageId], defaultLanguageId: defaultLanguageId, path: field7087Data + '/' + nestedField7079Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
+                                              } else if (nestedField7079Data['type'] == 'ddm-date') {
+                                                $templateAlias3({id: nestedField7079Data['name'] + '_' + field7087Data, label: nestedField7079Data['label'][defaultLanguageId], placeholder: nestedField7079Data['tip'][defaultLanguageId], defaultLanguageId: defaultLanguageId, path: field7087Data + '/' + nestedField7079Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
+                                              } else if (nestedField7079Data['type'] == 'ddm-text-html' || nestedField7079Data['type'] == 'textarea') {
+                                                $templateAlias4({id: nestedField7079Data['name'] + '_' + field7087Data, type: nestedField7079Data['type'], label: field7087Data['label'][defaultLanguageId], placeholder: nestedField7079Data['tip'][defaultLanguageId], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, path: field7087Data + '/' + nestedField7079Data['name'], handleChangeValue: handleChangeValueDocument, contextPath: contextPath}, null, opt_ijData);
+                                              } else if (nestedField7079Data['type'] == 'radio') {
+                                                $templateAlias5({id: nestedField7079Data['name'] + '_' + field7087Data, label: nestedField7079Data['label'][defaultLanguageId], defaultLanguageId: defaultLanguageId, options: nestedField7079Data['options'], path: field7087Data + '/' + nestedField7079Data['name'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
+                                              } else if (nestedField7079Data['type'] == 'select') {
+                                                $templateAlias6({id: nestedField7079Data['name'] + '_' + field7087Data, label: nestedField7079Data['label'][defaultLanguageId], defaultLanguageId: defaultLanguageId, options: nestedField7079Data['options'], path: field7087Data + '/' + nestedField7079Data['name'], multiple: field7087Data['multiple'], handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
+                                              } else if (nestedField7079Data['type'] == 'ddm-integer') {
+                                                $templateAlias1({id: nestedField7079Data['name'] + '_' + field7087Data, type: 'number', path: field7087Data + '/' + nestedField7079Data['name'], localizable: nestedField7079Data['localizable'], labels: nestedField7079Data['label'], placeholder: nestedField7079Data['tip'], contextPath: contextPath, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, handleChangeValue: handleChangeValueDocument}, null, opt_ijData);
                                               } else {
-                                                soyIdom.print(nestedField6619Data['type']);
+                                                soyIdom.print(nestedField7079Data['type']);
                                                 incrementalDom.text('--');
-                                                soyIdom.print(nestedField6619Data['name']);
+                                                soyIdom.print(nestedField7079Data['name']);
                                                 incrementalDom.text('--Ninguno');
                                                 incrementalDom.elementOpen('br');
                                                 incrementalDom.elementClose('br');
@@ -331,7 +331,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field6627Index == field6627ListLen - 1) {
+                        if (field7087Index == field7087ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -450,14 +450,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.text('Selecciona una opci\u00F3n o');
                       incrementalDom.elementClose('option');
                       if (foldersDocuments) {
-                        var field6659List = foldersDocuments;
-                        var field6659ListLen = field6659List.length;
-                        for (var field6659Index = 0; field6659Index < field6659ListLen; field6659Index++) {
-                            var field6659Data = field6659List[field6659Index];
+                        var field7119List = foldersDocuments;
+                        var field7119ListLen = field7119List.length;
+                        for (var field7119Index = 0; field7119Index < field7119ListLen; field7119Index++) {
+                            var field7119Data = field7119List[field7119Index];
                             incrementalDom.elementOpenStart('option');
-                                incrementalDom.attr('value', field6659Data.folderId);
+                                incrementalDom.attr('value', field7119Data.folderId);
                             incrementalDom.elementOpenEnd();
-                              soyIdom.print(field6659Data.nameFolder);
+                              soyIdom.print(field7119Data.nameFolder);
                             incrementalDom.elementClose('option');
                           }
                       }
@@ -507,14 +507,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
                   if (itemsResult) {
-                    var field6712List = itemsResult;
-                    var field6712ListLen = field6712List.length;
-                    for (var field6712Index = 0; field6712Index < field6712ListLen; field6712Index++) {
-                        var field6712Data = field6712List[field6712Index];
-                        if (field6712Index == 0) {
+                    var field7172List = itemsResult;
+                    var field7172ListLen = field7172List.length;
+                    for (var field7172Index = 0; field7172Index < field7172ListLen; field7172Index++) {
+                        var field7172Data = field7172List[field7172Index];
+                        if (field7172Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field6712Index + 2) % 2 == 0 && !(field6712Index == 0)) {
+                          if ((field7172Index + 2) % 2 == 0 && !(field7172Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -532,12 +532,12 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpen('label');
                                     if ((itemsResultSelected != null)) {
-                                      if (itemsResultSelected[field6712Data.idFile]) {
+                                      if (itemsResultSelected[field7172Data.idFile]) {
                                         incrementalDom.elementOpenStart('input');
                                             incrementalDom.attr('checked', '');
                                             incrementalDom.attr('onclick', setSelectedResult);
-                                            incrementalDom.attr('value', field6712Data.all);
-                                            incrementalDom.attr('id', field6712Data.idFile);
+                                            incrementalDom.attr('value', field7172Data.all);
+                                            incrementalDom.attr('id', field7172Data.idFile);
                                             incrementalDom.attr('class', 'custom-control-input');
                                             incrementalDom.attr('type', 'checkbox');
                                         incrementalDom.elementOpenEnd();
@@ -545,8 +545,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                       } else {
                                         incrementalDom.elementOpenStart('input');
                                             incrementalDom.attr('onclick', setSelectedResult);
-                                            incrementalDom.attr('value', field6712Data.all);
-                                            incrementalDom.attr('id', field6712Data.idFile);
+                                            incrementalDom.attr('value', field7172Data.all);
+                                            incrementalDom.attr('id', field7172Data.idFile);
                                             incrementalDom.attr('class', 'custom-control-input');
                                             incrementalDom.attr('type', 'checkbox');
                                         incrementalDom.elementOpenEnd();
@@ -570,7 +570,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                       incrementalDom.attr('width', '128');
                                       incrementalDom.attr('style', 'max-height: 256px;max-width: 100%');
                                       incrementalDom.attr('alt', 'Not Image');
-                                      incrementalDom.attr('src', 'http://' + _host___soy6477 + field6712Data.imageThumbnail);
+                                      incrementalDom.attr('src', 'http://' + _host___soy6935 + field7172Data.imageThumbnail);
                                   incrementalDom.elementOpenEnd();
                                   incrementalDom.elementClose('img');
                                 incrementalDom.elementClose('span');
@@ -584,18 +584,18 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(field6712Data.filename);
+                                    soyIdom.print(field7172Data.filename);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field6712Data.path);
+                                  soyIdom.print(field7172Data.path);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field6712Index == field6712ListLen - 1) {
+                        if (field7172Index == field7172ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -720,14 +720,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                     incrementalDom.text('Selecciona la carpeta donde se almacenara el nuevo recurso');
                   incrementalDom.elementClose('option');
                   if (foldersDocuments) {
-                    var field6744List = foldersDocuments;
-                    var field6744ListLen = field6744List.length;
-                    for (var field6744Index = 0; field6744Index < field6744ListLen; field6744Index++) {
-                        var field6744Data = field6744List[field6744Index];
+                    var field7204List = foldersDocuments;
+                    var field7204ListLen = field7204List.length;
+                    for (var field7204Index = 0; field7204Index < field7204ListLen; field7204Index++) {
+                        var field7204Data = field7204List[field7204Index];
                         incrementalDom.elementOpenStart('option');
-                            incrementalDom.attr('value', field6744Data.folderId);
+                            incrementalDom.attr('value', field7204Data.folderId);
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(field6744Data.nameFolder);
+                          soyIdom.print(field7204Data.nameFolder);
                         incrementalDom.elementClose('option');
                       }
                   }

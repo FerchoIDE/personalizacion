@@ -145,15 +145,17 @@
                                                                                 {param path:  $field+'/'+$nestedField['name'] /}
                                                                                 {param handleChangeValue:  $handleChangeValueDocument /}
                                                                             {/call}
-                                                                        {elseif $nestedField['type'] == 'ddm-text-html'}
+                                                                        {elseif $nestedField['type'] == 'ddm-text-html' or $nestedField['type'] == 'textarea' }
                                                                             {call TextAreaUI.render}
                                                                                 {param id: $nestedField['name']+'_'+$field  /}
+                                                                                {param type: $nestedField['type'] /}
                                                                                 {param label: $field['label'][$defaultLanguageId] /}
                                                                                 {param placeholder: $nestedField['tip'][$defaultLanguageId] /}
                                                                                 {param availableLanguageIds: $availableLanguageIds /}
                                                                                 {param defaultLanguageId: $defaultLanguageId /}
                                                                                 {param path:  $field+'/'+$nestedField['name'] /}
                                                                                 {param handleChangeValue:  $handleChangeValueDocument /}
+                                                                                {param contextPath: $contextPath/}
                                                                             {/call}
                                                                         {elseif $nestedField['type'] == 'radio'}
                                                                             {call RadioUI.render}

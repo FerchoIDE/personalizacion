@@ -59,10 +59,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
     incrementalDom.elementOpenEnd();
       incrementalDom.elementOpen('thead');
         incrementalDom.elementOpen('tr');
-          var field9757List = keys;
-          var field9757ListLen = field9757List.length;
-          for (var field9757Index = 0; field9757Index < field9757ListLen; field9757Index++) {
-              var field9757Data = field9757List[field9757Index];
+          var field10217List = keys;
+          var field10217ListLen = field10217List.length;
+          for (var field10217Index = 0; field10217Index < field10217ListLen; field10217Index++) {
+              var field10217Data = field10217List[field10217Index];
               incrementalDom.elementOpenStart('th');
                   incrementalDom.attr('class', 'table-head-title');
               incrementalDom.elementOpenEnd();
@@ -72,9 +72,9 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementOpenEnd();
                   incrementalDom.elementOpenStart('span');
                       incrementalDom.attr('style', 'font-size: 18px');
-                      incrementalDom.attr('title', header[field9757Data]);
+                      incrementalDom.attr('title', header[field10217Data]);
                   incrementalDom.elementOpenEnd();
-                    soyIdom.print(header[field9757Data]);
+                    soyIdom.print(header[field10217Data]);
                   incrementalDom.elementClose('span');
                 incrementalDom.elementClose('a');
               incrementalDom.elementClose('th');
@@ -84,17 +84,17 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('tr');
       incrementalDom.elementClose('thead');
       incrementalDom.elementOpen('tbody');
-        var fieldData9775List = data;
-        var fieldData9775ListLen = fieldData9775List.length;
-        for (var fieldData9775Index = 0; fieldData9775Index < fieldData9775ListLen; fieldData9775Index++) {
-            var fieldData9775Data = fieldData9775List[fieldData9775Index];
+        var fieldData10235List = data;
+        var fieldData10235ListLen = fieldData10235List.length;
+        for (var fieldData10235Index = 0; fieldData10235Index < fieldData10235ListLen; fieldData10235Index++) {
+            var fieldData10235Data = fieldData10235List[fieldData10235Index];
             incrementalDom.elementOpen('tr');
-              var field9764List = keys;
-              var field9764ListLen = field9764List.length;
-              for (var field9764Index = 0; field9764Index < field9764ListLen; field9764Index++) {
-                  var field9764Data = field9764List[field9764Index];
+              var field10224List = keys;
+              var field10224ListLen = field10224List.length;
+              for (var field10224Index = 0; field10224Index < field10224ListLen; field10224Index++) {
+                  var field10224Data = field10224List[field10224Index];
                   incrementalDom.elementOpen('td');
-                    soyIdom.print(fieldData9775Data[field9764Data]);
+                    soyIdom.print(fieldData10235Data[field10224Data]);
                   incrementalDom.elementClose('td');
                 }
               incrementalDom.elementOpen('td');
@@ -121,7 +121,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.elementOpenStart('a');
                       incrementalDom.attr('class', 'component-action quick-action-item');
                       incrementalDom.attr('style', 'font-size: 14px');
-                      incrementalDom.attr('href', navigationEditURL + '&_generatorviewclient_articleId=' + fieldData9775Data['id']);
+                      incrementalDom.attr('href', navigationEditURL + '&_generatorviewclient_articleId=' + fieldData10235Data['id']);
                       incrementalDom.attr('role', 'button');
                   incrementalDom.elementOpenEnd();
                     incrementalDom.elementOpenStart('svg');

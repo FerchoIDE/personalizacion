@@ -5,30 +5,82 @@
  */
 {template .render}
 	{@param id: any}
+	{@param type: string}
 	{@param? label: ?}
-	{@param? values: map<string,list<?>>}
+	{@param? values: map<string,list<?>> }
 	{@param? placeholder: any}
 	{@param availableLanguageIds: list<string>}
 	{@param defaultLanguageId: string}
 	{@param? path: string}
 
+	{@param contextPath: string}
+	{@param? handleShowEdit: ?}
+	{@param? handleCancelEdit: ?}
+	{@param? handleSaveEdit: ?}
+	{@param? isOnLoadETA: bool}
+
 
 	{let $_values: isNonnull($values) ? $values : quoteKeysIfJs(['es_ES':[''],'en_US':['']]) /}
+
 	<div id="{$id}" class="form-group-item">
-			<label for="input_{$id}">{$label}</label>
+			<label for="input_{$id}">{$label}
+				{if $type=='ddm-text-html'}
+					{sp}{sp}{sp}{sp}<a onclick="{$handleShowEdit}" value="inputarea_{$id}_{$defaultLanguageId}" href="#"
+					   style="font-size: 16px">
+						<svg class="lexicon-icon lexicon-icon-trash" focusable="false"
+							 role="presentation">
+							<use href="{$contextPath}/images/icons/icons.svg#pencil"></use>
+						</svg>
+					</a>
+				{/if}
+			</label>
 			{foreach $language in $availableLanguageIds}
 				{if $language == $defaultLanguageId}
-					<textarea class="form-control" data-onkeyup="handleChange" data-path="{$path}" data-language="{$language}"
+					<textarea  class="form-control" data-onkeyup="handleChange" data-path="{$path}" data-language="{$language}"
 							  id="inputarea_{$id}_{$language}" placeholder="{$placeholder}" >
-						{isNonnull($_values[$language])?$_values[$language]:''}
+						{isNonnull($_values[$language])?$_values[$language][0]:''}
 					</textarea>
+
+
 
 				{else}
 					<textarea class="form-control" data-onkeyup="handleChange" data-path="{$path}"  data-language="{$language}"
 							  id="inputarea_{$id}_{$language}" placeholder="{$placeholder}" style="display: none" >
-						{isNonnull($_values[$language])?$_values[$language]:''}
+						{isNonnull($_values[$language])?$_values[$language][0]:''}
 					</textarea>
 				{/if}
 			{/foreach}
+		<div aria-labelledby="claySmallModalETADlg" id="claySmallModalETA" class="modal {$isOnLoadETA ? 'show in' : ''}"
+			 style="{$isOnLoadETA ? '' : 'display: none'}"  role="dialog" tabindex="-1">
+			<div class="modal-info modal-dialog modal-full-screen">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="modal-title" id="claySmallModalETADlg">Editando {$label}</div>
+					</div>
+					<div class="modal-body" >
+
+						<div id="editor_TXTAREA_{$id}"></div>
+					</div>
+
+					<div class="modal-footer">
+						<div class="modal-item-last">
+							<div class="btn-group">
+								<div class="btn-group-item">
+									<button class="btn btn-secondary" onclick="{$handleCancelEdit}"
+											data-dismiss="modal" type="button">Cancelar
+									</button>
+								</div>
+
+								<div class="btn-group-item">
+									<button class="btn btn-primary" onclick="{$handleSaveEdit}"
+											data-dismiss="modal" type="button">Guardar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 {/template}
+

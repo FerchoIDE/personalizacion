@@ -6,12 +6,14 @@
 {template .render}
 	{@param id: any}
 	{@param? label: ?}
-	{@param? value: string}
+	{@param? values: map<string,list<?>>}
 	{@param options: list<?>}
 	{@param defaultLanguageId: string}
 	{@param? path: string}
 
-	{let $finalValue: isNonnull($value) ? $value : '' /}
+	{let $_values: isNonnull($values) ? $values : quoteKeysIfJs(['es_ES':[''],'en_US':['']]) /}
+	{let $_val: isNonnull($_values[$defaultLanguageId])?$_values[$defaultLanguageId]:'' /}
+
 	<div id="{$id}">
 		<h4>
 			<span class="custom-control-label-text">{$label}</span>
@@ -21,9 +23,16 @@
 				{foreach $option in $options}
 					<div class="custom-control custom-radio custom-control-inline">
 						<label>
-							<input value="{$option.value}"  class="custom-control-input" data-language="{$defaultLanguageId}"
-								   data-path="{$path}" data-onclick="handleChange"
-								   id="radio_{$id}_1" name="radio_{$id}" type="radio">
+							{if $_val=='["'+$option.value+'"]'}
+								<input value="{$option.value}"  class="custom-control-input" data-language="{$defaultLanguageId}"
+									   data-path="{$path}" data-onclick="handleChange" checked
+									   id="radio_{$id}_1" name="radio_{$id}" type="radio">
+							{else}
+								<input value="{$option.value}"  class="custom-control-input" data-language="{$defaultLanguageId}"
+									   data-path="{$path}" data-onclick="handleChange"
+									   id="radio_{$id}_1" name="radio_{$id}" type="radio">
+							{/if}
+
 							<span class="custom-control-label">
 								<span class="custom-control-label-text">{$option.label[$defaultLanguageId]}</span>
 							</span>

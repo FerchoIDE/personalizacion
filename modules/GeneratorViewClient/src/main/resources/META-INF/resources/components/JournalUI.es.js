@@ -54,9 +54,7 @@ class JournalUI extends Component {
 
         this.setState({searchJournalText: undefined })
 
-        this.on('itemsJournalAsociatedChanged',function(event){
-            console.log('--------change itemsJournalAsociated --- ')
-        })
+
         /*try{
             this.getDataManager().getStateInstance(this).stateConfigs_.itemsJournalAsociated={}
         }catch (e) {

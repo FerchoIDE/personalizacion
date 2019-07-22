@@ -26,7 +26,7 @@ var soyIdom = goog.require('soy.idom');
  * @param {{
  *  id: *,
  *  label: (?),
- *  value: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
  *  options: !Array<?>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined),
@@ -43,8 +43,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var id = opt_data.id;
   /** @type {?} */
   var label = opt_data.label;
-  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
-  var value = soy.asserts.assertType(opt_data.value == null || (goog.isString(opt_data.value) || opt_data.value instanceof goog.soy.data.SanitizedContent), 'value', opt_data.value, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  /** @type {!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined} */
+  var values = soy.asserts.assertType(opt_data.values == null || goog.isObject(opt_data.values), 'values', opt_data.values, '!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined');
   /** @type {!Array<?>} */
   var options = soy.asserts.assertType(goog.isArray(opt_data.options), 'options', opt_data.options, '!Array<?>');
   /** @type {!goog.soy.data.SanitizedContent|string} */
@@ -53,7 +53,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var path = soy.asserts.assertType(opt_data.path == null || (goog.isString(opt_data.path) || opt_data.path instanceof goog.soy.data.SanitizedContent), 'path', opt_data.path, '!goog.soy.data.SanitizedContent|null|string|undefined');
   /** @type {boolean|null|undefined} */
   var multiple = soy.asserts.assertType(opt_data.multiple == null || (goog.isBoolean(opt_data.multiple) || opt_data.multiple === 1 || opt_data.multiple === 0), 'multiple', opt_data.multiple, 'boolean|null|undefined');
-  var finalValue__soy3052 = (value != null) ? value : '';
+  var _values__soy3255 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
+  var _val__soy3257 = (_values__soy3255[defaultLanguageId] != null) ? _values__soy3255[defaultLanguageId] : '';
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
@@ -74,15 +75,24 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.attr('multiple', '');
             incrementalDom.attr('id', 'select_' + id);
         incrementalDom.elementOpenEnd();
-          var option3074List = options;
-          var option3074ListLen = option3074List.length;
-          for (var option3074Index = 0; option3074Index < option3074ListLen; option3074Index++) {
-              var option3074Data = option3074List[option3074Index];
-              incrementalDom.elementOpenStart('option');
-                  incrementalDom.attr('value', option3074Data.value);
-              incrementalDom.elementOpenEnd();
-                soyIdom.print(option3074Data.label[defaultLanguageId]);
-              incrementalDom.elementClose('option');
+          var option3289List = options;
+          var option3289ListLen = option3289List.length;
+          for (var option3289Index = 0; option3289Index < option3289ListLen; option3289Index++) {
+              var option3289Data = option3289List[option3289Index];
+              if ((('' + _val__soy3257[0]).indexOf('' + option3289Data.value) != -1)) {
+                incrementalDom.elementOpenStart('option');
+                    incrementalDom.attr('selected', '');
+                    incrementalDom.attr('value', option3289Data.value);
+                incrementalDom.elementOpenEnd();
+                  soyIdom.print(option3289Data.label[defaultLanguageId]);
+                incrementalDom.elementClose('option');
+              } else {
+                incrementalDom.elementOpenStart('option');
+                    incrementalDom.attr('value', option3289Data.value);
+                incrementalDom.elementOpenEnd();
+                  soyIdom.print(option3289Data.label[defaultLanguageId]);
+                incrementalDom.elementClose('option');
+              }
             }
         incrementalDom.elementClose('select');
       } else {
@@ -93,22 +103,33 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.attr('data-onchange', 'handleChange');
             incrementalDom.attr('id', 'select_' + id);
         incrementalDom.elementOpenEnd();
-          incrementalDom.elementOpenStart('option');
-              incrementalDom.attr('disabled', '');
-              incrementalDom.attr('selected', '');
-          incrementalDom.elementOpenEnd();
-            incrementalDom.text('Selecciona ');
-            soyIdom.print(label);
-          incrementalDom.elementClose('option');
-          var option3092List = options;
-          var option3092ListLen = option3092List.length;
-          for (var option3092Index = 0; option3092Index < option3092ListLen; option3092Index++) {
-              var option3092Data = option3092List[option3092Index];
-              incrementalDom.elementOpenStart('option');
-                  incrementalDom.attr('value', option3092Data.value);
-              incrementalDom.elementOpenEnd();
-                soyIdom.print(option3092Data.label[defaultLanguageId]);
-              incrementalDom.elementClose('option');
+          if (_val__soy3257 == '') {
+            incrementalDom.elementOpenStart('option');
+                incrementalDom.attr('disabled', '');
+                incrementalDom.attr('selected', '');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.text('Selecciona ');
+              soyIdom.print(label);
+            incrementalDom.elementClose('option');
+          }
+          var option3321List = options;
+          var option3321ListLen = option3321List.length;
+          for (var option3321Index = 0; option3321Index < option3321ListLen; option3321Index++) {
+              var option3321Data = option3321List[option3321Index];
+              if (_val__soy3257 == '["' + option3321Data.value + '"]') {
+                incrementalDom.elementOpenStart('option');
+                    incrementalDom.attr('selected', '');
+                    incrementalDom.attr('value', option3321Data.value);
+                incrementalDom.elementOpenEnd();
+                  soyIdom.print(option3321Data.label[defaultLanguageId]);
+                incrementalDom.elementClose('option');
+              } else {
+                incrementalDom.elementOpenStart('option');
+                    incrementalDom.attr('value', option3321Data.value);
+                incrementalDom.elementOpenEnd();
+                  soyIdom.print(option3321Data.label[defaultLanguageId]);
+                incrementalDom.elementClose('option');
+              }
             }
         incrementalDom.elementClose('select');
       }
@@ -120,7 +141,7 @@ exports.render = $render;
  * @typedef {{
  *  id: *,
  *  label: (?),
- *  value: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
  *  options: !Array<?>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined),
@@ -132,8 +153,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'SelectUI.render';
 }
 
-exports.render.params = ["id","label","value","options","defaultLanguageId","path","multiple"];
-exports.render.types = {"id":"any","label":"?","value":"string","options":"list<?>","defaultLanguageId":"string","path":"string","multiple":"bool"};
+exports.render.params = ["id","label","values","options","defaultLanguageId","path","multiple"];
+exports.render.types = {"id":"any","label":"?","values":"map<string,list<?>>","options":"list<?>","defaultLanguageId":"string","path":"string","multiple":"bool"};
 templates = exports;
 return exports;
 

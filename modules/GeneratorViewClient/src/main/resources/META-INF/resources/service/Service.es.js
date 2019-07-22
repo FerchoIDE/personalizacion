@@ -132,7 +132,6 @@ export default class Service{
         wretch("http://"+_HOST_+_PATH_+"-/generator/resource/getCategories")
             .post()
             .json(json =>{
-                console.log(json)
                 callBack(json)
             } )
     }

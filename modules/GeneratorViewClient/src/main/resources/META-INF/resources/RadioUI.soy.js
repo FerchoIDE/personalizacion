@@ -26,7 +26,7 @@ var soyIdom = goog.require('soy.idom');
  * @param {{
  *  id: *,
  *  label: (?),
- *  value: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
  *  options: !Array<?>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined)
@@ -42,15 +42,16 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var id = opt_data.id;
   /** @type {?} */
   var label = opt_data.label;
-  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
-  var value = soy.asserts.assertType(opt_data.value == null || (goog.isString(opt_data.value) || opt_data.value instanceof goog.soy.data.SanitizedContent), 'value', opt_data.value, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  /** @type {!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined} */
+  var values = soy.asserts.assertType(opt_data.values == null || goog.isObject(opt_data.values), 'values', opt_data.values, '!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined');
   /** @type {!Array<?>} */
   var options = soy.asserts.assertType(goog.isArray(opt_data.options), 'options', opt_data.options, '!Array<?>');
   /** @type {!goog.soy.data.SanitizedContent|string} */
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var path = soy.asserts.assertType(opt_data.path == null || (goog.isString(opt_data.path) || opt_data.path instanceof goog.soy.data.SanitizedContent), 'path', opt_data.path, '!goog.soy.data.SanitizedContent|null|string|undefined');
-  var finalValue__soy2925 = (value != null) ? value : '';
+  var _values__soy3076 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
+  var _val__soy3078 = (_values__soy3076[defaultLanguageId] != null) ? _values__soy3076[defaultLanguageId] : '';
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
@@ -67,32 +68,47 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('class', 'form-group');
       incrementalDom.elementOpenEnd();
-        var option2944List = options;
-        var option2944ListLen = option2944List.length;
-        for (var option2944Index = 0; option2944Index < option2944ListLen; option2944Index++) {
-            var option2944Data = option2944List[option2944Index];
+        var option3113List = options;
+        var option3113ListLen = option3113List.length;
+        for (var option3113Index = 0; option3113Index < option3113ListLen; option3113Index++) {
+            var option3113Data = option3113List[option3113Index];
             incrementalDom.elementOpenStart('div');
                 incrementalDom.attr('class', 'custom-control custom-radio custom-control-inline');
             incrementalDom.elementOpenEnd();
               incrementalDom.elementOpen('label');
-                incrementalDom.elementOpenStart('input');
-                    incrementalDom.attr('value', option2944Data.value);
-                    incrementalDom.attr('class', 'custom-control-input');
-                    incrementalDom.attr('data-language', defaultLanguageId);
-                    incrementalDom.attr('data-path', path);
-                    incrementalDom.attr('data-onclick', 'handleChange');
-                    incrementalDom.attr('id', 'radio_' + id + '_1');
-                    incrementalDom.attr('name', 'radio_' + id);
-                    incrementalDom.attr('type', 'radio');
-                incrementalDom.elementOpenEnd();
-                incrementalDom.elementClose('input');
+                if (_val__soy3078 == '["' + option3113Data.value + '"]') {
+                  incrementalDom.elementOpenStart('input');
+                      incrementalDom.attr('value', option3113Data.value);
+                      incrementalDom.attr('class', 'custom-control-input');
+                      incrementalDom.attr('data-language', defaultLanguageId);
+                      incrementalDom.attr('data-path', path);
+                      incrementalDom.attr('data-onclick', 'handleChange');
+                      incrementalDom.attr('checked', '');
+                      incrementalDom.attr('id', 'radio_' + id + '_1');
+                      incrementalDom.attr('name', 'radio_' + id);
+                      incrementalDom.attr('type', 'radio');
+                  incrementalDom.elementOpenEnd();
+                  incrementalDom.elementClose('input');
+                } else {
+                  incrementalDom.elementOpenStart('input');
+                      incrementalDom.attr('value', option3113Data.value);
+                      incrementalDom.attr('class', 'custom-control-input');
+                      incrementalDom.attr('data-language', defaultLanguageId);
+                      incrementalDom.attr('data-path', path);
+                      incrementalDom.attr('data-onclick', 'handleChange');
+                      incrementalDom.attr('id', 'radio_' + id + '_1');
+                      incrementalDom.attr('name', 'radio_' + id);
+                      incrementalDom.attr('type', 'radio');
+                  incrementalDom.elementOpenEnd();
+                  incrementalDom.elementClose('input');
+                }
                 incrementalDom.elementOpenStart('span');
                     incrementalDom.attr('class', 'custom-control-label');
                 incrementalDom.elementOpenEnd();
                   incrementalDom.elementOpenStart('span');
                       incrementalDom.attr('class', 'custom-control-label-text');
                   incrementalDom.elementOpenEnd();
-                    soyIdom.print(option2944Data.label[defaultLanguageId]);
+                    soyIdom.print(option3113Data.label[defaultLanguageId]);
                   incrementalDom.elementClose('span');
                 incrementalDom.elementClose('span');
               incrementalDom.elementClose('label');
@@ -107,7 +123,7 @@ exports.render = $render;
  * @typedef {{
  *  id: *,
  *  label: (?),
- *  value: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
  *  options: !Array<?>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined)
@@ -118,8 +134,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'RadioUI.render';
 }
 
-exports.render.params = ["id","label","value","options","defaultLanguageId","path"];
-exports.render.types = {"id":"any","label":"?","value":"string","options":"list<?>","defaultLanguageId":"string","path":"string"};
+exports.render.params = ["id","label","values","options","defaultLanguageId","path"];
+exports.render.types = {"id":"any","label":"?","values":"map<string,list<?>>","options":"list<?>","defaultLanguageId":"string","path":"string"};
 templates = exports;
 return exports;
 

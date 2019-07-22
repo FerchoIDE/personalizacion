@@ -34,7 +34,7 @@
 
 	{let $structureIdRate: '35796' /}
 	{let $show: isNonnull($collapseInfo?['accordion' + $id + 'Heading'])?($collapseInfo?['accordion' + $id + 'Heading'] ? '' : 'show'):'' /}
-	{let $_countSections: isNonnull($countSection) ? $countSection : [1] /}
+	{let $_countSections: isNonnull($countSection) ? $countSection : [0] /}
 	<div id="{$id}">
 			<div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
 				<div class="panel">
@@ -101,6 +101,7 @@
 														{param values: $field['values'] /}
 														{param repeatable: $field['repeatable'] /}
 														{param contextPath: $contextPath/}
+														{param _index: index($_countSection)/}
 														{param availableLanguageIds: $availableLanguageIds /}
 														{param defaultLanguageId: $defaultLanguage /}
 														{param handleChangeValue:  $handleChangeValue /}
@@ -119,6 +120,7 @@
 												{elseif $field['type'] == 'ddm-date'}
 													{call DateUI.render}
 														{param id: $field['name']+'___'+index($_countSection) /}
+														{param values: $field['values'] /}
 														{param label: $field['label'][$defaultLanguage] /}
 														{param placeholder: $field['tip'][$defaultLanguage] /}
 														{param defaultLanguageId: $defaultLanguage /}
@@ -129,12 +131,14 @@
 												{elseif $field['type'] == 'ddm-text-html' or $field['type'] == 'textarea'}
 													{call TextAreaUI.render}
 														{param id: $field['name']+'___'+index($_countSection) /}
+														{param type: $field['type'] /}
 														{param label: $field['label'][$defaultLanguage] /}
 														{param placeholder: $field['tip'][$defaultLanguage] /}
 														{param availableLanguageIds: $availableLanguageIds /}
 														{param defaultLanguageId: $defaultLanguage /}
 														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
 														{param handleChangeValue:  $handleChangeValue /}
+														{param contextPath: $contextPath/}
 													{/call}
 												{elseif $field['type'] == 'ddm-journal-article'}
 													{call JournalUI.render}
@@ -167,6 +171,7 @@
 												{elseif $field['type'] == 'radio'}
 													{call RadioUI.render}
 														{param id: $field['name']+'___'+index($_countSection) /}
+														{param values: $field['values'] /}
 														{param label: $field['label'][$defaultLanguage] /}
 														{param defaultLanguageId: $defaultLanguage /}
 														{param options: $field['options'] /}
@@ -176,6 +181,7 @@
 												{elseif $field['type'] == 'select'}
 													{call SelectUI.render}
 														{param id: $field['name']+'___'+index($_countSection) /}
+														{param values: $field['values'] /}
 														{param label: $field['label'][$defaultLanguage] /}
 														{param defaultLanguageId: $defaultLanguage /}
 														{param options: $field['options'] /}
@@ -239,6 +245,7 @@
 											{elseif $field['type'] == 'ddm-date'}
 												{call DateUI.render}
 													{param id: $field['name'] /}
+													{param values: $field['values'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param placeholder: $field['tip'][$defaultLanguage] /}
 													{param defaultLanguageId: $defaultLanguage /}
@@ -249,6 +256,7 @@
 											{elseif $field['type'] == 'ddm-text-html' or $field['type'] == 'textarea'}
 												{call TextAreaUI.render}
 													{param id: $field['name'] /}
+													{param type: $field['type'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param placeholder: $field['tip'][$defaultLanguage] /}
 													{param availableLanguageIds: $availableLanguageIds /}
@@ -256,6 +264,7 @@
 													{param path:$path+'/'+ $field['name'] /}
 													{param values: $field['values'] /}
 													{param handleChangeValue:  $handleChangeValue /}
+													{param contextPath: $contextPath/}
 												{/call}
 											{elseif $field['type'] == 'ddm-journal-article'}
 												{call JournalUI.render}
@@ -289,6 +298,7 @@
 											{elseif $field['type'] == 'radio'}
 												{call RadioUI.render}
 													{param id: $field['name'] /}
+													{param values: $field['values'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param defaultLanguageId: $defaultLanguage /}
 													{param options: $field['options'] /}
@@ -298,6 +308,7 @@
 											{elseif $field['type'] == 'select'}
 												{call SelectUI.render}
 													{param id: $field['name'] /}
+													{param values: $field['values'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param defaultLanguageId: $defaultLanguage /}
 													{param options: $field['options'] /}
@@ -310,16 +321,6 @@
 											{/if}
 											<div>&nbsp;&nbsp;</div>
 										{/foreach}
-										{if isNonnull($checkedConcat)}
-											{if $structureId ==$structureIdRate and isNonnull($checkedConcat[$name]) and  ($name == 'Restrictions' or $name == 'Benefits1' or $name == 'occupationRate')}
-												</div>
-
-												<div class="input-group">
-												<span class="label label-info">
-													<span class="label-item label-item-expand" style="text-transform:none">{$checkedConcat[$name][$defaultLanguage]}</span>
-												</span>
-											{/if}
-										{/if}
 									</div>
 								</div>
 							{/if}

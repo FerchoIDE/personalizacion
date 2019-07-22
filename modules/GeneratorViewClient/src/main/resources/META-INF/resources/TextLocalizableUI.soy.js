@@ -31,6 +31,7 @@ var $templateAlias1 = Soy.getTemplate('TextUI.incrementaldom', 'render');
  *  localizable: boolean,
  *  contextPath: (!goog.soy.data.SanitizedContent|string),
  *  repeatable: (boolean|null|undefined),
+ *  _index: (null|number|undefined),
  *  labels: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
  *  type: (*|null|undefined),
@@ -59,6 +60,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var contextPath = soy.asserts.assertType(goog.isString(opt_data.contextPath) || opt_data.contextPath instanceof goog.soy.data.SanitizedContent, 'contextPath', opt_data.contextPath, '!goog.soy.data.SanitizedContent|string');
   /** @type {boolean|null|undefined} */
   var repeatable = soy.asserts.assertType(opt_data.repeatable == null || (goog.isBoolean(opt_data.repeatable) || opt_data.repeatable === 1 || opt_data.repeatable === 0), 'repeatable', opt_data.repeatable, 'boolean|null|undefined');
+  /** @type {null|number|undefined} */
+  var _index = soy.asserts.assertType(opt_data._index == null || goog.isNumber(opt_data._index), '_index', opt_data._index, 'null|number|undefined');
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>} */
   var labels = soy.asserts.assertType(goog.isObject(opt_data.labels), 'labels', opt_data.labels, '!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>');
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined} */
@@ -79,7 +82,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var handleAddSection = opt_data.handleAddSection;
   /** @type {?} */
   var handleRemoveSection = opt_data.handleRemoveSection;
-  var _countSections__soy3333 = (countSection != null) ? countSection : [1];
+  var _countSections__soy3816 = (countSection != null) ? countSection : [1];
+  var ___index__soy3818 = (_index != null) ? _index : 0;
   if (repeatable) {
     incrementalDom.elementOpenStart('div');
         incrementalDom.attr('class', 'form-group-item');
@@ -143,11 +147,11 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenStart('div');
               incrementalDom.attr('class', 'form-group');
           incrementalDom.elementOpenEnd();
-            var _countSection3361List = _countSections__soy3333;
-            var _countSection3361ListLen = _countSection3361List.length;
-            for (var _countSection3361Index = 0; _countSection3361Index < _countSection3361ListLen; _countSection3361Index++) {
-                var _countSection3361Data = _countSection3361List[_countSection3361Index];
-                $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: _countSection3361Index, repeatable: repeatable, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
+            var _countSection3846List = _countSections__soy3816;
+            var _countSection3846ListLen = _countSection3846List.length;
+            for (var _countSection3846Index = 0; _countSection3846Index < _countSection3846ListLen; _countSection3846Index++) {
+                var _countSection3846Data = _countSection3846List[_countSection3846Index];
+                $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: _countSection3846Index, repeatable: repeatable, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
               }
           incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');
@@ -158,7 +162,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementClose('div');
     incrementalDom.elementClose('div');
   } else {
-    $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: 0, repeatable: repeatable, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
+    $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: ___index__soy3818, repeatable: repeatable, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
   }
 }
 exports.render = $render;
@@ -169,6 +173,7 @@ exports.render = $render;
  *  localizable: boolean,
  *  contextPath: (!goog.soy.data.SanitizedContent|string),
  *  repeatable: (boolean|null|undefined),
+ *  _index: (null|number|undefined),
  *  labels: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
  *  type: (*|null|undefined),
@@ -186,8 +191,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'TextLocalizableUI.render';
 }
 
-exports.render.params = ["id","path","localizable","contextPath","repeatable","labels","values","type","placeholder","availableLanguageIds","defaultLanguageId","handleChangeValue","countSection","handleAddSection","handleRemoveSection"];
-exports.render.types = {"id":"any","path":"string","localizable":"bool","contextPath":"string","repeatable":"bool","labels":"map<string,string>","values":"map<string,list<?>>","type":"any","placeholder":"?","availableLanguageIds":"list<string>","defaultLanguageId":"string","handleChangeValue":"?","countSection":"list<?>","handleAddSection":"?","handleRemoveSection":"?"};
+exports.render.params = ["id","path","localizable","contextPath","repeatable","_index","labels","values","type","placeholder","availableLanguageIds","defaultLanguageId","handleChangeValue","countSection","handleAddSection","handleRemoveSection"];
+exports.render.types = {"id":"any","path":"string","localizable":"bool","contextPath":"string","repeatable":"bool","_index":"number","labels":"map<string,string>","values":"map<string,list<?>>","type":"any","placeholder":"?","availableLanguageIds":"list<string>","defaultLanguageId":"string","handleChangeValue":"?","countSection":"list<?>","handleAddSection":"?","handleRemoveSection":"?"};
 templates = exports;
 return exports;
 

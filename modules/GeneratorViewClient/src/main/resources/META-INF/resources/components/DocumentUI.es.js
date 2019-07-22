@@ -32,9 +32,7 @@ class DocumentUI extends Component {
         this.itemsAsociated={}
         this.setState({itemsAsociated: {} })
         this.setState({searchText: undefined })
-        this.on('itemsAsociatedChanged',function(event){
-            console.log('--------change itemsAsociated --- ')
-        })
+
 
     }
 
@@ -72,6 +70,7 @@ class DocumentUI extends Component {
         $("input#"+this.id+"_FolderNestedNew.form-control").val('');
         var myselect = $("select#"+this.id+"_FolderNew.form-control");
         myselect[0].selectedIndex = 0;
+        $("#"+this.id+"_BtnNew").attr('disabled','disabled');
 
 
         this.setState({fileInfo: undefined })

@@ -5,12 +5,13 @@
 {template .render}
 	{@param id: any}
 	{@param? label: ?}
-	{@param? value: string}
+	{@param? values: map<string,list<?>>}
 	{@param options: list<?>}
 	{@param defaultLanguageId: string}
 	{@param? path: string}
 	{@param? multiple: bool}
-	{let $finalValue: isNonnull($value) ? $value : '' /}
+	{let $_values: isNonnull($values) ? $values : quoteKeysIfJs(['es_ES':[''],'en_US':['']]) /}
+	{let $_val: isNonnull($_values[$defaultLanguageId])?$_values[$defaultLanguageId]:'' /}
 	<div id="{$id}">
 		<div class="form-group">
 			<label for="select_{$id}">{$label}</label>
@@ -19,16 +20,28 @@
 						data-onchange="handleChange" multiple
 						id="select_{$id}">
 					{foreach $option in $options}
-						<option value="{$option.value}">{$option.label[$defaultLanguageId]}</option>
+						{if strContains($_val[0], $option.value)}
+							<option selected value="{$option.value}">{$option.label[$defaultLanguageId]}</option>
+						{else}
+							<option value="{$option.value}">{$option.label[$defaultLanguageId]}</option>
+						{/if}
+
 					{/foreach}
 				</select>
 			{else}
 				<select class="form-control" data-path="{$path}" data-language="{$defaultLanguageId}"
 						data-onchange="handleChange"
 						id="select_{$id}">
-					<option disabled selected>Selecciona {$label}</option>
+					{if $_val==''}
+						<option disabled selected>Selecciona {$label}</option>
+					{/if}
 					{foreach $option in $options}
-						<option value="{$option.value}">{$option.label[$defaultLanguageId]}</option>
+						{if $_val=='["'+$option.value+'"]'}
+							<option selected value="{$option.value}">{$option.label[$defaultLanguageId]}</option>
+						{else}
+							<option value="{$option.value}">{$option.label[$defaultLanguageId]}</option>
+						{/if}
+
 					{/foreach}
 				</select>
 			{/if}

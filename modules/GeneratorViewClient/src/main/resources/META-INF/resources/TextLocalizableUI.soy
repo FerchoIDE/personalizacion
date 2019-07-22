@@ -9,6 +9,7 @@
 	{@param localizable: bool}
 	{@param contextPath: string}
 	{@param? repeatable: bool}
+	{@param? _index: number}
 	{@param labels: map<string,string>}
 	{@param? values: map<string,list<?>>}
 	{@param? type: any}
@@ -21,6 +22,7 @@
 	{@param? handleAddSection: ?}
 	{@param? handleRemoveSection: ?}
 	{let $_countSections: isNonnull($countSection) ? $countSection : [1] /}
+	{let $___index: isNonnull($_index) ? $_index : 0 /}
 
 	{if $repeatable}
 		<div class="form-group-item">
@@ -76,7 +78,7 @@
 			{param label: $labels[$defaultLanguageId] /}
 			{param placeholder: $placeholder[$defaultLanguageId] /}
 			{param values: $values /}
-			{param _index: 0 /}
+			{param _index: $___index /}
 			{param repeatable: $repeatable /}
 			{param path: $path /}
 			{param availableLanguageIds: $availableLanguageIds /}

@@ -37,8 +37,8 @@
 		{else}
 			<input class="form-control" data-onkeyup="handleChange" id="input_{$id}"
 				    data-path="{$path}"
-				   value="{$_values[$defaultLanguageId][$_index]}"
+				   value="{isNonnull($_values[$defaultLanguageId])?$_values[$defaultLanguageId][$_index]:''}"
 				   placeholder="{$placeholder}" type="{$type}"/>
 		{/if}
-		 </div>
+	</div>
 {/template}

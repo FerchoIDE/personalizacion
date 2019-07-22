@@ -1,5 +1,4 @@
 import Component from 'metal-component';
-
 import Service from "./service/Service.es.js"
 import TextLocalizableUI from './TextLocalizableUI.es';
 import CheckBoxUI from './CheckBoxUI.es';
@@ -15,6 +14,8 @@ import DocumentUI from './components/DocumentUI.es';
 import Soy from 'metal-soy';
 import templates from './NewStructure.soy';
 import NewStructureStateEs from "./state/NewStructureState.es.js"
+import Tokenfield from 'tokenfield'
+
 
 const structureIdHotel= '35835'
 const structureIdBrand= '35912'
@@ -27,11 +28,12 @@ const _PATHBASE_ = location.protocol+'//'+location.hostname+(location.port ? ':'
 class NewStructure extends Component {
     disposed() {
         console.log('-----receive event disposed----'+this.id)
+
         delete  this.model
     }
     created() {
         this.setResultCategories = this.setResultCategories.bind(this);
-        console.log('----NewStructure ----created----' + this.id)
+        console.log('---------NewStructure ----created----' + this.id)
         this.model = new NewStructureStateEs()
         this.model.idStructure = this.structureId
         this.model.fields = this.data
@@ -43,7 +45,35 @@ class NewStructure extends Component {
 
         new Service().getCategories(this.setResultCategories);
 
+
+
         //this.setState({isOnLoad: false})
+    }
+    attached() {
+        console.log('---------NewStructure ----willAttach----' + this.id)
+
+
+        var myselect = $("select#select_selectTemplate");
+        myselect[0].selectedIndex = 1;
+    }
+
+    rendered(firstRender) {
+        window.setTimeout(handler => {
+            let _PATH_="/web/guest/home/"
+            //let _PATH_="/web/posadas-completo-nuevo/personalizacion/"
+            let _url = _PATHBASE_+_PATH_+"-/generator/resource/getTags"
+            var tf = new Tokenfield({
+                el: document.querySelector('#input_Etiqueta'),
+                placeholder:"Ingrese las etiquetas asociadas a este contenido",
+                addItemOnBlur: true,
+                addItemsOnPaste: true,
+                delimiters: [',', ' '],
+                remote: {
+                    url: _url,
+                    queryParam: '_generatorviewclient_nameTag'
+                }
+            });
+        },1000)
     }
 
     setResultCategories(resultCategories){
@@ -52,7 +82,6 @@ class NewStructure extends Component {
         var _itemsCategoriesKeys1= [];
 
         var _itemsMarcasKeys= [];
-        var _itemsMarcasKeys1= [];
 
         var subMarcas;
 
@@ -63,8 +92,6 @@ class NewStructure extends Component {
                 subMarcas = resultCategories[i];
         }
 
-        console.log("MARCASSSKEYSS");
-        console.log(subMarcas['Marcas']);
         subMarcas = subMarcas['Marcas'];
         for(var j = 0; j < _itemsCategoriesKeys.length;j++){
             var temp = new Object();
@@ -78,17 +105,23 @@ class NewStructure extends Component {
 
 
         for(var i = 0; i< subMarcas.length; i++)
-        {console.log(subMarcas[i]);
-            _itemsMarcasKeys.push(Object.keys(subMarcas[i]));}
+        {
+            var nameMarca = Object.keys(subMarcas[i])[0]
+            var childrenMarca = subMarcas[i][nameMarca]
 
+            var tempMarca = new Object();
+            tempMarca.categoryId=childrenMarca[0].parentCategoryId
+            tempMarca.isMultiValue= true
+            tempMarca.name=nameMarca
+            tempMarca.nameFormat=nameMarca.replace(" ","").replace(" ","");
+            tempMarca.parentCategoryId=0
+            tempMarca.parentName=childrenMarca[0].parentName
+            tempMarca.vocabularyId=childrenMarca[0].vocabularyId
+            tempMarca.children=childrenMarca
 
-        console.log("_itemsMarcasKeys");
-        console.log(_itemsMarcasKeys);
+            _itemsMarcasKeys.push(tempMarca);
+        }
 
-        console.log("resultCategories");
-        console.log(resultCategories);
-        console.log("_itemsCategoriesKeys");
-        console.log(_itemsCategoriesKeys1);
 
         this.setState({itemsMarcasKeys: _itemsMarcasKeys });
         this.setState({itemsCategories: resultCategories });
@@ -98,22 +131,41 @@ class NewStructure extends Component {
     setSelectedCategories(event){
         if(event === undefined)
             return;
-        event.preventDefault();
+        var isCheked=false
+        if(event.currentTarget.type=="checkbox")
+            isCheked=true
+        if(!isCheked)
+            event.preventDefault();
         console.log(event.target.id);
         var _itemsCategoriesKeysRender= [];
         var _itemsCategoriesSelected = this.itemsCategoriesSelected;
         var currentArray = event.target.id.split(",");
         console.log(event.target.id);
         if(currentArray[3] == "T"){
+
+
             if(_itemsCategoriesSelected[event.target.id]){
                 delete  _itemsCategoriesSelected[event.target.id];
                 var element = document.getElementById(event.target.id);
-                element.setAttribute("style","text-decoration: none;");
+                if(isCheked){
+                    element.removeAttribute("checked");
+                }else{
+                    element.setAttribute("style","text-decoration: none;");
+                }
+
                 _itemsCategoriesKeysRender = Object.keys(_itemsCategoriesSelected);
             }else{
-                _itemsCategoriesSelected[event.target.id]=event.target.innerText;
+
                 var element = document.getElementById(event.target.id);
-                element.setAttribute("style","text-decoration: underline;");
+                if(isCheked) {
+                    _itemsCategoriesSelected[event.target.id]=event.currentTarget.title;
+                    element.setAttribute("checked", "checked");
+                }else{
+                    _itemsCategoriesSelected[event.target.id]=event.target.innerText;
+                    element.setAttribute("style","text-decoration: underline;");
+                }
+
+
                 _itemsCategoriesKeysRender = Object.keys(_itemsCategoriesSelected);
             }
         }
@@ -434,8 +486,7 @@ class NewStructure extends Component {
     saveStructure(event) {
         console.log("--------saveStructure----------")
 
-        var myselect = $("select#select_selectTemplate");
-        myselect[0].selectedIndex = 1;
+
 
         let _structureKey = this.initialConfig_.structureKey;
         let _fields = []

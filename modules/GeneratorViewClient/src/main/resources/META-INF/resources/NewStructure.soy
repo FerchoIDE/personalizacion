@@ -297,6 +297,7 @@
 									{elseif $field['type'] == 'ddm-date'}
 										{call DateUI.render}
 											{param id: $field['name'] /}
+											{param values: $field['values'] /}
 											{param label: $field['label'][$defaultLanguage] /}
 											{param placeholder: $field['tip'][$defaultLanguage] /}
 											{param defaultLanguageId: $selectedLanguage /}
@@ -306,6 +307,7 @@
 									{elseif $field['type'] == 'ddm-text-html' or $field['type'] == 'textarea'}
 										{call TextAreaUI.render}
 											{param id: $field['name'] /}
+											{param type: $field['type'] /}
 											{param label: $field['label'][$selectedLanguage] /}
 											{param placeholder: $field['tip'][$selectedLanguage] /}
 											{param availableLanguageIds: $availableLanguageIds /}
@@ -313,10 +315,12 @@
 											{param path: $field['name'] /}
 											{param values: $field['values'] /}
 											{param handleChangeValue:  $handleChangeValue /}
+											{param contextPath: $contextPath/}
 										{/call}
 									{elseif $field['type'] == 'radio'}
 										{call RadioUI.render}
 											{param id: $field['name'] /}
+											{param values: $field['values'] /}
 											{param label: $field['label'][$selectedLanguage] /}
 											{param defaultLanguageId: $selectedLanguage /}
 											{param options: $field['options'] /}
@@ -326,6 +330,7 @@
 									{elseif $field['type'] == 'select'}
 										{call SelectUI.render}
 											{param id: $field['name'] /}
+											{param values: $field['values'] /}
 											{param label: $field['label'][$selectedLanguage] /}
 											{param defaultLanguageId: $selectedLanguage /}
 											{param options: $field['options'] /}
@@ -347,7 +352,7 @@
 				 <a onclick="{$closeOpenTab}" aria-controls="accordionAditionalCollapse" aria-expanded="true" class="collapse-icon sheet-subtitle"
 					data-toggle="collapse" href="#accordionAditionalCollapse" id="accordionAditionalHeading" role="tab">
 						 <span >
-							 <div class="sheet-header"><h3 class="sheet-title">Información adicional</h3></div>
+							 <div class="sheet-header"><h3 class="sheet-title">Metadatos</h3></div>
 						 </span>
 					 <span class="collapse-icon-closed">
 							<svg class="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation">
@@ -405,7 +410,7 @@
 							{if $itemsCategoriesKeysRender}
 								{if $itemsCategoriesSelected}
 									{foreach $key in $itemsCategoriesKeysRender}
-										<span id="{$key},S" style="font-size: 1.110rem;" class="label label-dismissible label-secondary">
+										<span id="{$key},S" style="font-size: 1.375rem;" class="label label-dismissible label-secondary">
 											<span class="label-item label-item-expand">{$itemsCategoriesSelected[$key]}</span>
 											<span class="label-item label-item-after">
 												<button id="{$key},B" aria-label="Close" class="close" type="button" onclick="{$removeSelectedCategory}">
@@ -426,11 +431,11 @@
 										{if $itemsCategoriesKeys}
 											{foreach $key in $itemsCategoriesKeys}
 												{if isFirst($key)}
-													<tr>
+													<tr valign="top">
 												{/if}
 												{if (index($key)+3)%3==0 and not isFirst($key)}
 													</tr>
-													<tr>
+													<tr valign="top">
 												{/if}
 												<td class="table-cell-expand">
 													{if $key.name != 'Marcas'}
@@ -507,33 +512,52 @@
 																							</span>
 																						</a>
 																						<div class="panel-collapse collapse  {$collapseInfo?['menubarVertical'+$key.nameFormat+'Collapse01']?'':'show'}" id="menubarVertical{$key.nameFormat}NestedCollapse01">
-																							{foreach $key1 in $itemsMarcasKeys}
-																								<ul class="nav nav-stacked">
+																							<ul  id="{$key.nameFormat}UL" style="display:none;"  class="nav nav-stacked">
+																								{foreach $key1 in $itemsMarcasKeys}
 																									<li class="nav-item">
-																										<a aria-controls="menubarVerticalNestedCollapse02" aria-expanded="false" class="collapsed collapse-icon nav-link" data-toggle="collapse1" href="#menubarVerticalNestedCollapse02" role="button">
-																											{$key1}
-																											<span class="collapse-icon-closed">
+																										<div class="input-group">
+																											<div class="input-group-inset-item custom-control custom-checkbox">
+																												<label>
+																													<input onclick="{$setSelectedCategories}" id="{$key1.categoryId},{$key1.parentCategoryId},{$key1.parentName},T"
+																														   class="custom-control-input" type="checkbox" title="{$key1.name}"/>
+																													<span class="custom-control-label">
+																													<span class="custom-control-label-text sr-only">select-items</span>
+																												</span>
+																												</label>
+																											</div>
+
+																											<a  onclick="{$closeOpenTabCategory}" id="{$key1.nameFormat},OC"
+																												aria-controls="menubarVertical{$key1.nameFormat}NestedCollapse02" aria-expanded="false"
+																												class="input-group-item collapsed collapse-icon nav-link" data-toggle="collapse" href="#menubarVertical{$key1.nameFormat}NestedCollapse02" role="button">
+																												{$key1.name}
+																												<span class="collapse-icon-closed">
 																												<svg class="lexicon-icon lexicon-icon-caret-right" focusable="false" role="presentation">
 																													<use href="{$contextPath}/images/icons/icons.svg#caret-right" />
 																												</svg>
 																											</span>
-																											<span class="collapse-icon-open">
+																												<span class="collapse-icon-open">
 																												<svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
 																													<use href="{$contextPath}/images/icons/icons.svg#caret-bottom" />
 																												</svg>
 																											</span>
-																										</a>
-																										<div class="collapse" id="menubarVerticalNestedCollapse02">
-																											<ul class="nav nav-stacked">
-																												<li class="nav-item"><a class="nav-link" href="#1">Details</a></li>
-																												<li class="nav-item"><a class="nav-link" href="#1">Catagorization</a></li>
-																												<li class="nav-item"><a class="nav-link" href="#1">Documents and Media</a></li>
-																												<li class="nav-item"><a class="nav-link" href="#1">Site Template</a></li>
+																											</a>
+																										</div>
+																										<div class="panel-collapse collapse  {$collapseInfo?['menubarVertical'+$key1.nameFormat+'Collapse02']?'':'show'}" id="menubarVertical{$key1.nameFormat}NestedCollapse02">
+																											<ul id="{$key1.nameFormat}UL" style="display:none;"   class="nav nav-stacked">
+																												{foreach $key2 in $key1.children}
+																													<li class="nav-item">
+																														<a id="{$key2.categoryId},{$key2.parentCategoryId},{$key2.parentName},T"
+																														   class="nav-link"
+																														   style="text-decoration: none;"
+																														   onclick="{$setSelectedCategories}"
+																														   href="#1">{$key2.name}</a>
+																													</li>
+																												{/foreach}
 																											</ul>
 																										</div>
 																									</li>
-																								</ul>
-																							{/foreach}
+																								{/foreach}
+																							</ul>
 																						</div>
 																					</li>
 																				</div>
@@ -553,6 +577,14 @@
 									{/if}
 								</tbody>
 							</table>
+						</div>
+						<div>
+							<h2>Etiquetas</h2>
+							<form>
+								<input class="form-control"
+										  id="input_Etiqueta"/>
+							</form>
+
 						</div>
 					</div>
 				</div>

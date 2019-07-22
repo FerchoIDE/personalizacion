@@ -305,27 +305,32 @@ public class JsonUtil {
 					((List)field.getValuesMap().get(new Locale("es", "ES"))).forEach(o -> {
 						try {
 							JournalArticle journalArticle =JournalApi.getJournalArticleFromJson((String)o);
-							JSONObject mpObject = new JSONObject();
-							mpObject.put("description", journalArticle.getDescriptionMap());
-							mpObject.put("id", journalArticle.getResourcePrimKey());
-							mpObject.put("title", journalArticle.getTitleCurrentValue());
-							long _month = Period.between(journalArticle.getStatusDate().toInstant().atZone(ZoneId.systemDefault())
-									.toLocalDate(), LocalDate.now()).toTotalMonths();
-							mpObject.put("date", String.format("%d meses", _month));
-							mpObject.put("status", WorkflowConstants.getStatusLabel(journalArticle.getStatus()));
-							mpObject.put("user", journalArticle.getStatusByUserName());
-							try {
-								mpObject.put("structureName", journalArticle.getDDMStructure().getNameCurrentValue());
-								mpObject.put("structureId", journalArticle.getDDMStructure().getStructureId());
-							} catch (Exception e) {
+							if(journalArticle==null)
+								System.out.println("no existe el article==="+o);
+							else{
+								JSONObject mpObject = new JSONObject();
+								mpObject.put("description", journalArticle.getDescriptionMap());
+								mpObject.put("id", journalArticle.getResourcePrimKey());
+								mpObject.put("title", journalArticle.getTitleCurrentValue());
+								long _month = Period.between(journalArticle.getStatusDate().toInstant().atZone(ZoneId.systemDefault())
+										.toLocalDate(), LocalDate.now()).toTotalMonths();
+								mpObject.put("date", String.format("%d meses", _month));
+								mpObject.put("status", WorkflowConstants.getStatusLabel(journalArticle.getStatus()));
+								mpObject.put("user", journalArticle.getStatusByUserName());
+								try {
+									mpObject.put("structureName", journalArticle.getDDMStructure().getNameCurrentValue());
+									mpObject.put("structureId", journalArticle.getDDMStructure().getStructureId());
+								} catch (Exception e) {
+								}
+
+								try {
+									mpObject.put("path", ConstantUtil.fullPath(journalArticle.getFolder()));
+								} catch (Exception ex) {
+
+								}
+								lst.add(mpObject.toString());
 							}
 
-							try {
-								mpObject.put("path", ConstantUtil.fullPath(journalArticle.getFolder()));
-							} catch (Exception ex) {
-
-							}
-							lst.add(mpObject.toString());
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
