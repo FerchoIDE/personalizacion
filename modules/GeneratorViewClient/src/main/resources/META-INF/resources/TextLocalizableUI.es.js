@@ -14,8 +14,8 @@ class TextLocalizableUI extends Component {
     created() {
         console.log('-..-.-.-.-.-.-.TextLocalizableUI---created.-...-.-.-.-.-.-.-'+this.id)
         this.countSection=[]
-        if(this.initialConfig_.values !== null
-            &&this.initialConfig_.values['es_ES'] !== null
+        if(this.initialConfig_.values !== undefined
+            &&this.initialConfig_.values['es_ES'] !== undefined
             &&this.initialConfig_.values['es_ES'].length>1){
             for(var _i=0;_i<this.initialConfig_.values['es_ES'].length;_i++){
                 this.countSection.push(_i+1)
