@@ -75,8 +75,8 @@ public class GeneratorViewClientViewMVCRenderCommand
             //keys[0] = s;
             List<Map<String, String>> lstElement = new LinkedList<>();
             List<JournalArticle> lst =
-                    journalArticleService.getStructureArticles(portletGroupId, s, 0, 20, comparator);
-            //journalArticleService.getStructureArticles(keys);
+                    journalArticleService.getArticlesByStructureId(portletGroupId, s, 0, 20, comparator);
+           //journalArticleService.getStructureArticles(keys);
 
             if (lst != null) {
                 lst.forEach(journalArticle -> {
@@ -136,6 +136,18 @@ public class GeneratorViewClientViewMVCRenderCommand
                         AbstractMap.SimpleEntry::getKey,
                         AbstractMap.SimpleEntry::getValue));
 
+        Map<String, Integer> mpCount = keysLst.stream().map(s -> {
+             int countArticles = journalArticleService.getStructureArticlesCount(portletGroupId,s);
+             if(countArticles%20==0){
+                 return new AbstractMap.SimpleEntry<>(s, countArticles/20);
+             }else{
+                 return new AbstractMap.SimpleEntry<>(s,( (countArticles-(countArticles%20))/20)+1);
+             }
+        }).collect(
+                Collectors.toMap(
+                        AbstractMap.SimpleEntry::getKey,
+                        AbstractMap.SimpleEntry::getValue));
+
         Map<String, String> mapHeader = new HashMap<>();
         mapHeader.put("id", "Identificador");
         mapHeader.put("lastUpdated", "Fecha Modificación");
@@ -148,6 +160,7 @@ public class GeneratorViewClientViewMVCRenderCommand
 
         template.put("contextPath", renderRequest.getContextPath());
         template.put("data", mpResult);
+        template.put("dataCount", mpCount);
         template.put("header", mapHeader);
         template.put(
                 "keys",

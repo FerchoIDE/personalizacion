@@ -1,5 +1,9 @@
 package generatorviewclient.portlet.action;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -71,7 +75,22 @@ public class GeneratorViewClientEditMVCRenderCommand  implements MVCRenderComman
             throw  new PortletException(e);
         }
 
+        Map titleMap = new HashMap();
+        journalArticle.getTitleMap().forEach((locale, s) -> {
+            titleMap.put(locale.toString(), s);
+        });
+        template.put("titleMap",titleMap);
+        Map descriptionMap = new HashMap();
+        journalArticle.getDescriptionMap().forEach((locale, s) -> {
+            descriptionMap.put(locale.toString(), s);
+        });
+        template.put("descriptionMap",descriptionMap);
 
+        List<AssetCategory> categories = AssetCategoryLocalServiceUtil.getCategories(JournalArticle.class.getName(), journalArticle.getResourcePrimKey());
+        List<AssetTag> tags = AssetTagLocalServiceUtil.getTags(JournalArticle.class.getName(), journalArticle.getResourcePrimKey());
+
+        template.put("categoriesCurrent",categories);
+        template.put("tagsCurrent",tags);
         String structureId = journalArticle.getDDMStructureKey();
 
         try {

@@ -23,6 +23,7 @@ class ViewNested extends Component {
         this.resizeTA = this.resizeTA.bind(this);
         if(this.initialConfig_.repeatable
             && this.initialConfig_.data[0]!==undefined
+            &&  this.initialConfig_.data[0].values!==undefined
             &&  this.initialConfig_.data[0].values['es_ES']!==undefined
             && this.initialConfig_.data[0].values['es_ES'].length>1){
             var _countSection=[]

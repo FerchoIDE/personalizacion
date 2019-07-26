@@ -45,6 +45,21 @@ class NewStructure extends Component {
 
         new Service().getCategories(this.setResultCategories);
 
+        if(this.initialConfig_.tagsCurrent!==undefined){
+            for(var tagItem of this.initialConfig_.tagsCurrent ){
+                this.itemsTags.push({id:tagItem.tagId,name:tagItem.name})
+            }
+        }
+
+        if(this.initialConfig_.titleMap!==undefined && this.initialConfig_.titleMap!=={}){
+            $("#input_title_principal").val(this.initialConfig_.titleMap[this.initialConfig_.data.defaultLanguage])
+        }
+        if(this.initialConfig_.descriptionMap!==undefined && this.initialConfig_.descriptionMap!=={}){
+            $("#input_description_prinipal").val(this.initialConfig_.descriptionMap[this.initialConfig_.data.defaultLanguage])
+        }
+
+
+
 
 
         //this.setState({isOnLoad: false})
@@ -58,6 +73,7 @@ class NewStructure extends Component {
     }
 
     rendered(firstRender) {
+        var _parent=this
         window.setTimeout(handler => {
             let _PATH_="/web/guest/home/"
             //let _PATH_="/web/posadas-completo-nuevo/personalizacion/"
@@ -71,6 +87,20 @@ class NewStructure extends Component {
                 remote: {
                     url: _url,
                     queryParam: '_generatorviewclient_nameTag'
+                },
+                setItems:_parent.itemsTags
+            });
+            tf.on('addToken', function(arg1,arg2) {
+            console.log("taggggg addToken")
+                _parent.itemsTags.push({id:arg2.id,name:arg2.name})
+            });
+            tf.on('removeToken', function(arg1,arg2) {
+                console.log("taggggg removeToken")
+                for(var _i=0;_i<_parent.itemsTags.length;_i++){
+                    if(_parent.itemsTags[_i].id===arg2.id){
+                        delete _parent.itemsTags[_i]
+                        break;
+                    }
                 }
             });
         },1000)
@@ -126,6 +156,72 @@ class NewStructure extends Component {
         this.setState({itemsMarcasKeys: _itemsMarcasKeys });
         this.setState({itemsCategories: resultCategories });
         this.setState({itemsCategoriesKeys: _itemsCategoriesKeys1 });
+
+
+
+        if(this.initialConfig_.categoriesCurrent!==undefined){
+            var _itemsCategoriesSelected = {};
+            for(var itemCat of this.initialConfig_.categoriesCurrent ){
+                var itemCatComplete=undefined
+                var checked=false
+                for(var itemResult of resultCategories){
+                    for(var itemProp in itemResult){
+                        if(itemProp==='Marcas')
+                            continue
+                        for(var itemCatRes of itemResult[itemProp]){
+                            if(itemCat.categoryId===itemCatRes.categoryId){
+                                itemCatComplete= itemCatRes
+                                break;
+                            }
+                        }
+                        if(itemCatComplete!==undefined)
+                            break;
+                    }
+                    if(itemCatComplete!==undefined)
+                        break;
+                }
+                if(itemCatComplete===undefined){
+                    for(var itemResult of _itemsMarcasKeys){
+                        if(itemCat.categoryId===itemResult.categoryId){
+                            itemCatComplete= itemResult
+                            checked=true
+                            break;
+                        }
+                        for(var itemCatRes of itemResult.children){
+                            if(itemCat.categoryId===itemCatRes.categoryId){
+                                itemCatComplete= itemCatRes
+                                break;
+                            }
+                        }
+                        if(itemCatComplete!==undefined)
+                            break;
+                    }
+                }
+
+                if(itemCatComplete===undefined)
+                    continue;
+
+
+                var idCat = itemCatComplete.categoryId+","+itemCatComplete.parentCategoryId+","+itemCatComplete.parentName+(itemCatComplete.isMultiValue?",T":",F");
+                var element = document.getElementById(idCat);
+
+                _itemsCategoriesSelected[idCat]=itemCat.name;
+                if(element){
+                    if(checked){
+                        element.setAttribute("checked", "checked");
+                    }else{
+                        element.setAttribute("style","text-decoration: underline;");
+                    }
+                }
+
+            }
+
+            var _itemsCategoriesKeysRender = Object.keys(_itemsCategoriesSelected);
+            this.setState({itemsCategoriesSelected: _itemsCategoriesSelected })
+            this.setState({itemsCategoriesKeysRender: _itemsCategoriesKeysRender })
+        }
+
+
     }
 
     setSelectedCategories(event){
@@ -167,6 +263,7 @@ class NewStructure extends Component {
 
 
                 _itemsCategoriesKeysRender = Object.keys(_itemsCategoriesSelected);
+
             }
         }
 
@@ -222,6 +319,9 @@ class NewStructure extends Component {
             }
 
         }
+
+
+
 
         this.setState({itemsCategoriesSelected: _itemsCategoriesSelected })
         this.setState({itemsCategoriesKeysRender: _itemsCategoriesKeysRender })
@@ -593,7 +693,8 @@ NewStructure.STATE = {
     itemsMarcasKeys:{value:[]},
     itemsCategoriesKeys:{value:[]},
     itemsCategoriesKeysRender:{value:[]},
-    itemsCategoriesSelected:{value:{}}
+    itemsCategoriesSelected:{value:{}},
+    itemsTags:{value:[]},
 }
 Soy.register(NewStructure, templates);
 

@@ -156,6 +156,7 @@
 												{elseif $field['type'] == 'ddm-documentlibrary'}
 													{call DocumentUI.render}
 														{param id: $field['name']+'___'+index($_countSection) /}
+														{param values: $field['values'] /}
 														{param label: $field['label'][$defaultLanguage] /}
 														{param contextPath: $contextPath /}
 														{param brandSelected: $brandSelected/}
@@ -283,6 +284,7 @@
 											{elseif $field['type'] == 'ddm-documentlibrary'}
 												{call DocumentUI.render}
 													{param id: $field['name'] /}
+													{param values: $field['values'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param contextPath: $contextPath /}
 													{param brandSelected: $brandSelected/}

@@ -16,6 +16,22 @@ import 'trumbowyg/dist/plugins/resizimg/trumbowyg.resizimg.min'
  */
 class TextAreaUI extends Component {
 
+    created() {
+        console.log('------------TextAreaUI---created:'+this.id)
+        if(this.initialConfig_.values!==undefined){
+            for(var lang in this.initialConfig_.values ){
+                if(this.initialConfig_.values[lang].length>0
+                    && this.initialConfig_.values[lang][0]!=''){
+                    this.handleChangeValue( {
+                        value: this.initialConfig_.values[lang][0],
+                        language: lang,
+                        path: this.initialConfig_.path
+                    });
+                }
+            }
+        }
+    }
+
     handleShowEdit(event){
         if(event === undefined)
             return

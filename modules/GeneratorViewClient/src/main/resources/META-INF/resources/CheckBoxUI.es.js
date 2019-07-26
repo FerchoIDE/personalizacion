@@ -6,16 +6,20 @@ import templates from './CheckBoxUI.soy';
  * TextUI Component
  */
 class CheckBoxUI extends Component {
-    /*created() {
+    created() {
         console.log('------------CheckBoxUI---created:'+this.id)
-        //this.setState({checked: null})
-        this.on('checkedChanged', function(event) {
-            console.log('******-----checkedChanged----****')
-        });
+        if(this.initialConfig_.values!==undefined){
+            for(var lang in this.initialConfig_.values ){
+                if(this.initialConfig_.values[lang].length>0){
+                    this.handleChangeValue( {
+                        value: this.initialConfig_.values[lang][0],
+                        language: lang,
+                        path: this.initialConfig_.path
+                    });
+                }
+            }
+        }
     }
-    rendered(firstRender) {
-        console.log('-----CheckBoxUI-rendered----'+this.id+'--'+this.checked);
-    }*/
 
 
     handleChange(event) {

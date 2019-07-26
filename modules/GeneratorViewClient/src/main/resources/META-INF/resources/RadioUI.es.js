@@ -1,11 +1,26 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './RadioUI.soy';
-import CheckBoxUI from "./CheckBoxUI.es";
 /**
  * TextUI Component
  */
 class RadioUI extends Component {
+    created() {
+        console.log('------------RadioUI---created:'+this.id)
+        if(this.initialConfig_.values!==undefined){
+            for(var lang in this.initialConfig_.values ){
+                if(this.initialConfig_.values[lang].length>0
+                    && this.initialConfig_.values[lang][0]!=''){
+                    let valueFinal = JSON.parse(this.initialConfig_.values[lang][0])
+                    this.handleChangeValue( {
+                        value: valueFinal[0],
+                        language: lang,
+                        path: this.initialConfig_.path
+                    });
+                }
+            }
+        }
+    }
     handleChange(event) {
         let value = event.target.value
         let language = undefined

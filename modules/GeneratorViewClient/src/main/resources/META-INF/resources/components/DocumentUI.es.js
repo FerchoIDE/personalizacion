@@ -29,8 +29,58 @@ class DocumentUI extends Component {
         this.resultSaveDocument = this.resultSaveDocument.bind(this);
 
         this.pathBase = _HOST_
-        this.itemsAsociated={}
-        this.setState({itemsAsociated: {} })
+
+        if(this.initialConfig_.values!==undefined){
+            var _itemsAsociated = this.itemsAsociated
+            if(_itemsAsociated===undefined)
+                _itemsAsociated={}
+            if(_itemsAsociated[this.id]===undefined)
+                _itemsAsociated[this.id]={}
+
+            var firstItem
+
+            for (var mapIter in this.initialConfig_.values) {
+                if (this.initialConfig_.values.hasOwnProperty(mapIter)) {
+                    firstItem=this.initialConfig_.values[mapIter];
+                    break;
+                }
+            }
+
+            for(let result of firstItem){
+                try{
+                    if(result!==''){
+                        var valItem = JSON.parse(result)
+                        _itemsAsociated[this.id][valItem.idFile]=valItem
+                    }
+
+                }catch(error){
+                    console.log(error)
+                }
+            }
+
+            let _modelDocument = this.modelDocument
+            if(_modelDocument===undefined)
+                _modelDocument={}
+            for(let result in _itemsAsociated[this.id]){
+                if(_modelDocument[result]===undefined){
+                    _modelDocument[result]={}
+                    _modelDocument[result]['id']=result
+                    _modelDocument[result]['fullPath']=_itemsAsociated[this.id][result]['fullPath']
+                }
+                this.handleChangeValue( {
+                    value: _modelDocument[result],
+                    path: this.path
+                });
+            }
+
+            this.setState({modelDocument: _modelDocument })
+            this.setState({itemsAsociated: _itemsAsociated })
+        }else{
+
+            this.itemsAsociated={}
+            this.setState({itemsAsociated: {} })
+        }
+
         this.setState({searchText: undefined })
 
 

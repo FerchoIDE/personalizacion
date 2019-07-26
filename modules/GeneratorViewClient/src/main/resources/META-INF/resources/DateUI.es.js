@@ -32,6 +32,19 @@ class DateUI extends Component {
 
                 }});
 
+        if(this.initialConfig_.values!==undefined){
+            for(var lang in this.initialConfig_.values ){
+                if(this.initialConfig_.values[lang].length>0
+                    && this.initialConfig_.values[lang][0]!=''){
+                    this.handleChangeValue( {
+                        value: this.initialConfig_.values[lang][0],
+                        language: lang,
+                        path: this.initialConfig_.path
+                    });
+                }
+            }
+        }
+
 
     }
     /*rendered(firstRender) {

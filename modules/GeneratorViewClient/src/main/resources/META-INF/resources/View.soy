@@ -12,6 +12,7 @@
 	{@param navigationNewURL: string}
 	{@param navigationEditURL: string}
 	{@param data: map<string,list<map<string,string>>>}
+	{@param dataCount: map<string,number>}
 	{@param header: map<string,string>}
 	{@param keys: list<string>}
 
@@ -170,6 +171,7 @@
 					{param keys: $keys /}
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['HOTEL']] /}
+					{param dataCount: $dataCount[$STRUCTURE_KEY['HOTEL']] /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineRoomsTab" class="{$selectedTab=='navUnderlineRoomsTab'?'active show':''}  tab-pane" id="navUnderlineRoomsTab"
@@ -184,6 +186,7 @@
 					{param keys: $keys /}
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['ROOM']] /}
+					{param dataCount: $dataCount[$STRUCTURE_KEY['ROOM']] /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineRatesTab" class="{$selectedTab=='navUnderlineRatesTab'?'active show':''}  tab-pane" id="navUnderlineRates"
@@ -198,6 +201,7 @@
 					{param keys: $keys /}
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['RATE']] /}
+					{param dataCount: $dataCount[$STRUCTURE_KEY['RATE']] /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlinePubsTab" class="{$selectedTab=='navUnderlinePubsTab'?'active show':''}  tab-pane" id="navUnderlinePubs" role="tabpanel">
@@ -211,6 +215,7 @@
 					{param keys: $keys /}
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['PUB']] /}
+					{param dataCount: $dataCount[$STRUCTURE_KEY['PUB']] /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineRestaurantsTab" class="{$selectedTab=='navUnderlineRestaurantsTab'?'active show':''}  tab-pane"
@@ -225,6 +230,7 @@
 					{param keys: $keys /}
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['RESTAURANT']] /}
+					{param dataCount: $dataCount[$STRUCTURE_KEY['RESTAURANT']] /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineSpaTab" class="{$selectedTab=='navUnderlineSpaTab'?'active show':''}  tab-pane"
@@ -238,6 +244,7 @@
 					{param keys: $keys /}
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['SPA']] /}
+					{param dataCount: $dataCount[$STRUCTURE_KEY['SPA']] /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineBrandsTab" class="{$selectedTab=='navUnderlineBrandsTab'?'active show':''}  tab-pane"
@@ -251,6 +258,7 @@
 					{param keys: $keys /}
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['BRAND']] /}
+					{param dataCount: $dataCount[$STRUCTURE_KEY['BRAND']] /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineGymsTab" class="{$selectedTab=='navUnderlineGymsTab'?'active show':''}  tab-pane"
@@ -264,6 +272,7 @@
 					{param keys: $keys /}
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['GYM']] /}
+					{param dataCount: $dataCount[$STRUCTURE_KEY['GYM']] /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineDestinationsTab" class="{$selectedTab=='navUnderlineDestinationsTab'?'active show':''}  tab-pane"
@@ -277,6 +286,7 @@
 					{param keys: $keys /}
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['DESTINATION']] /}
+					{param dataCount: $dataCount[$STRUCTURE_KEY['DESTINATION']] /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineFacilitiesTab" class="{$selectedTab=='navUnderlineFacilitiesTab'?'active show':''}  tab-pane"
@@ -290,6 +300,7 @@
 					{param keys: $keys /}
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['FACILITY']] /}
+					{param dataCount: $dataCount[$STRUCTURE_KEY['FACILITY']] /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineGenericsTab" class="{$selectedTab=='navUnderlineGenericsTab'?'active show':''}  tab-pane"
@@ -303,6 +314,7 @@
 					{param keys: $keys /}
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['GENERIC']] /}
+					{param dataCount: $dataCount[$STRUCTURE_KEY['GENERIC']] /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineChildrensClubTab" class="{$selectedTab=='navUnderlineChildrensClubTab'?'active show':''}  tab-pane"
@@ -316,6 +328,7 @@
 					{param keys: $keys /}
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['KIDSCLUB']] /}
+					{param dataCount: $dataCount[$STRUCTURE_KEY['KIDSCLUB']] /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineMeetingRoomsTab" class="{$selectedTab=='navUnderlineMeetingRoomsTab'?'active show':''}  tab-pane"
@@ -329,6 +342,7 @@
 					{param keys: $keys /}
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['MEETING']] /}
+					{param dataCount: $dataCount[$STRUCTURE_KEY['MEETING']] /}
 				{/call}
 			</div>
 		</div>

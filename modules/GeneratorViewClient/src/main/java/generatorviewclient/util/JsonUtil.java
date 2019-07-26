@@ -20,11 +20,16 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import generatorviewclient.api.impl.FileEntryApi;
 import generatorviewclient.api.impl.JournalApi;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -338,7 +343,41 @@ public class JsonUtil {
 					field.getValuesMap().forEach((locale, serializables) -> {
 						valMap.put(locale.toString(),lst);
 					});
-				}else{
+				}else if(mapResult.get("type").equals("ddm-documentlibrary")){
+					System.out.println(field.getValuesMap().get("es_ES"));
+					List<String> lst = new LinkedList<>();
+					field.getValuesMap().forEach((locale, serializables) -> {
+
+						if(serializables!=null){
+							int index =0;
+							Iterator<Serializable> it =serializables.iterator();
+							while(it.hasNext()){
+								Serializable serializable=it.next();
+								String value = serializable.toString();
+								if(lst.size()>index){
+									String valueOld = lst.get(index);
+									if(valueOld.isEmpty()){
+										if(!value.isEmpty()){
+											lst.set(index,getDocumentMedia(value));
+										}
+									}
+								}else {
+									if(!value.isEmpty()){
+										lst.add(getDocumentMedia(value));
+									}else{
+										lst.add(value);
+									}
+								}
+								index++;
+							}
+						}
+					});
+
+					field.getValuesMap().forEach((locale, serializables) -> {
+						valMap.put(locale.toString(),lst);
+					});
+				}
+				else{
 					field.getValuesMap().forEach((locale, serializables) -> {
 						valMap.put(locale.toString(),serializables);
 					});
@@ -349,6 +388,31 @@ public class JsonUtil {
 
 		}
 		return mapResult;
+	}
+
+	private String getDocumentMedia(String value){
+		try {
+			FileEntry file = FileEntryApi.getFileFromJson(value);
+			JSONObject filesObject = new JSONObject();
+			filesObject.put("idFile", file.getFileEntryId());
+			filesObject.put("filename", file.getFileName());
+			String url = "/documents/" + file.getGroupId() + "/" + file.getFolderId() + "/" + file.getFileName() + "/" + file.getUuid() + "?t=" + System.currentTimeMillis();
+			filesObject.put("fullPath", url.replace(" ", "%20"));
+			filesObject.put("imageThumbnail", url.replace(" ", "%20") + "&imageThumbnail=1");
+			Folder folder = DLAppLocalServiceUtil.getFolder(file.getFolderId());
+			String name="";
+			Iterator<Folder> it = folder.getAncestors().iterator();
+			while(it.hasNext()){
+				name=it.next().getName()+"/"+name;
+			}
+			name=name+"/"+folder.getName();
+			filesObject.put("path", name);
+			filesObject.put("all",filesObject.toString());
+			return filesObject.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 	private Object document;

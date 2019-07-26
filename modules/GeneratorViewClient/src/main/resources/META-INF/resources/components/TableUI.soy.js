@@ -29,6 +29,7 @@ var soyIdom = goog.require('soy.idom');
  *  navigationEditURL: (!goog.soy.data.SanitizedContent|string),
  *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  data: !Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>,
+ *  dataCount: number,
  *  keys: !Array<!goog.soy.data.SanitizedContent|string>
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
@@ -48,6 +49,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var header = soy.asserts.assertType(goog.isObject(opt_data.header), 'header', opt_data.header, '!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>');
   /** @type {!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>} */
   var data = soy.asserts.assertType(goog.isArray(opt_data.data), 'data', opt_data.data, '!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>');
+  /** @type {number} */
+  var dataCount = soy.asserts.assertType(goog.isNumber(opt_data.dataCount), 'dataCount', opt_data.dataCount, 'number');
   /** @type {!Array<!goog.soy.data.SanitizedContent|string>} */
   var keys = soy.asserts.assertType(goog.isArray(opt_data.keys), 'keys', opt_data.keys, '!Array<!goog.soy.data.SanitizedContent|string>');
   incrementalDom.elementOpenStart('div');
@@ -59,10 +62,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
     incrementalDom.elementOpenEnd();
       incrementalDom.elementOpen('thead');
         incrementalDom.elementOpen('tr');
-          var field10217List = keys;
-          var field10217ListLen = field10217List.length;
-          for (var field10217Index = 0; field10217Index < field10217ListLen; field10217Index++) {
-              var field10217Data = field10217List[field10217Index];
+          var field10237List = keys;
+          var field10237ListLen = field10237List.length;
+          for (var field10237Index = 0; field10237Index < field10237ListLen; field10237Index++) {
+              var field10237Data = field10237List[field10237Index];
               incrementalDom.elementOpenStart('th');
                   incrementalDom.attr('class', 'table-head-title');
               incrementalDom.elementOpenEnd();
@@ -72,9 +75,9 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementOpenEnd();
                   incrementalDom.elementOpenStart('span');
                       incrementalDom.attr('style', 'font-size: 18px');
-                      incrementalDom.attr('title', header[field10217Data]);
+                      incrementalDom.attr('title', header[field10237Data]);
                   incrementalDom.elementOpenEnd();
-                    soyIdom.print(header[field10217Data]);
+                    soyIdom.print(header[field10237Data]);
                   incrementalDom.elementClose('span');
                 incrementalDom.elementClose('a');
               incrementalDom.elementClose('th');
@@ -84,17 +87,17 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('tr');
       incrementalDom.elementClose('thead');
       incrementalDom.elementOpen('tbody');
-        var fieldData10235List = data;
-        var fieldData10235ListLen = fieldData10235List.length;
-        for (var fieldData10235Index = 0; fieldData10235Index < fieldData10235ListLen; fieldData10235Index++) {
-            var fieldData10235Data = fieldData10235List[fieldData10235Index];
+        var fieldData10255List = data;
+        var fieldData10255ListLen = fieldData10255List.length;
+        for (var fieldData10255Index = 0; fieldData10255Index < fieldData10255ListLen; fieldData10255Index++) {
+            var fieldData10255Data = fieldData10255List[fieldData10255Index];
             incrementalDom.elementOpen('tr');
-              var field10224List = keys;
-              var field10224ListLen = field10224List.length;
-              for (var field10224Index = 0; field10224Index < field10224ListLen; field10224Index++) {
-                  var field10224Data = field10224List[field10224Index];
+              var field10244List = keys;
+              var field10244ListLen = field10244List.length;
+              for (var field10244Index = 0; field10244Index < field10244ListLen; field10244Index++) {
+                  var field10244Data = field10244List[field10244Index];
                   incrementalDom.elementOpen('td');
-                    soyIdom.print(fieldData10235Data[field10224Data]);
+                    soyIdom.print(fieldData10255Data[field10244Data]);
                   incrementalDom.elementClose('td');
                 }
               incrementalDom.elementOpen('td');
@@ -121,7 +124,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.elementOpenStart('a');
                       incrementalDom.attr('class', 'component-action quick-action-item');
                       incrementalDom.attr('style', 'font-size: 14px');
-                      incrementalDom.attr('href', navigationEditURL + '&_generatorviewclient_articleId=' + fieldData10235Data['id']);
+                      incrementalDom.attr('href', navigationEditURL + '&_generatorviewclient_articleId=' + fieldData10255Data['id']);
                       incrementalDom.attr('role', 'button');
                   incrementalDom.elementOpenEnd();
                     incrementalDom.elementOpenStart('svg');
@@ -140,6 +143,37 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.elementClose('tr');
           }
       incrementalDom.elementClose('tbody');
+      incrementalDom.elementOpen('tfoot');
+        incrementalDom.elementOpen('tr');
+          incrementalDom.elementOpen('th');
+          incrementalDom.elementClose('th');
+          incrementalDom.elementOpenStart('th');
+              incrementalDom.attr('style', 'text-align: center');
+              incrementalDom.attr('colspan', '4');
+              incrementalDom.attr('class', 'table-head-title');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('ul');
+                incrementalDom.attr('class', 'pagination');
+            incrementalDom.elementOpenEnd();
+              var i10258Limit = dataCount;
+              for (var i10258 = 0; i10258 < i10258Limit; i10258++) {
+                incrementalDom.elementOpenStart('li');
+                    incrementalDom.attr('class', 'page-item');
+                incrementalDom.elementOpenEnd();
+                  incrementalDom.elementOpenStart('a');
+                      incrementalDom.attr('class', 'page-link');
+                      incrementalDom.attr('href', '#1');
+                  incrementalDom.elementOpenEnd();
+                    soyIdom.print(i10258 + 1);
+                  incrementalDom.elementClose('a');
+                incrementalDom.elementClose('li');
+              }
+            incrementalDom.elementClose('ul');
+          incrementalDom.elementClose('th');
+          incrementalDom.elementOpen('th');
+          incrementalDom.elementClose('th');
+        incrementalDom.elementClose('tr');
+      incrementalDom.elementClose('tfoot');
     incrementalDom.elementClose('table');
   incrementalDom.elementClose('div');
 }
@@ -151,6 +185,7 @@ exports.render = $render;
  *  navigationEditURL: (!goog.soy.data.SanitizedContent|string),
  *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  data: !Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>,
+ *  dataCount: number,
  *  keys: !Array<!goog.soy.data.SanitizedContent|string>
  * }}
  */
@@ -159,8 +194,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'TableUI.render';
 }
 
-exports.render.params = ["id","contextPath","navigationEditURL","header","data","keys"];
-exports.render.types = {"id":"any","contextPath":"string","navigationEditURL":"string","header":"map<string,string>","data":"list<map<string,string>>","keys":"list<string>"};
+exports.render.params = ["id","contextPath","navigationEditURL","header","data","dataCount","keys"];
+exports.render.types = {"id":"any","contextPath":"string","navigationEditURL":"string","header":"map<string,string>","data":"list<map<string,string>>","dataCount":"number","keys":"list<string>"};
 templates = exports;
 return exports;
 

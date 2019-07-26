@@ -6,6 +6,22 @@ import RadioUI from "./RadioUI.es";
  * TextUI Component
  */
 class SelectUI extends Component {
+    created() {
+        console.log('------------SelectUI---created:'+this.id)
+        if(this.initialConfig_.values!==undefined){
+            for(var lang in this.initialConfig_.values ){
+                if(this.initialConfig_.values[lang].length>0
+                    && this.initialConfig_.values[lang][0]!=''){
+                    let valueFinal = JSON.parse(this.initialConfig_.values[lang][0])
+                    this.handleChangeValue( {
+                        value: valueFinal,
+                        language: lang,
+                        path: this.initialConfig_.path
+                    });
+                }
+            }
+        }
+    }
     handleChange(event) {
         var value = event.target.value
         let language = undefined

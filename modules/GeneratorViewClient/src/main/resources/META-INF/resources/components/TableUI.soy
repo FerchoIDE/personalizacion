@@ -10,6 +10,7 @@
 	{@param navigationEditURL: string}
 	{@param header: map<string,string>}
 	{@param data: list<map<string,string>>}
+	{@param dataCount: number}
 	{@param keys: list<string>}
 	<div id="{$id}" class="table-responsive">
 			<table class="show-quick-actions-on-hover table table-autofit table-hover table-list table-nowrap">
@@ -52,6 +53,19 @@
 						</tr>
 					{/foreach}
 				</tbody>
+				<tfoot>
+				<tr>
+					<th></th>
+					<th style="text-align: center" colspan="4"  class="table-head-title">
+						<ul class="pagination">
+							{for $i in range($dataCount)}
+								<li class="page-item"><a class="page-link" href="#1">{$i+1}</a></li>
+							{/for}
+						</ul>
+					</th>
+					<th></th>
+				</tr>
+				</tfoot>
 			</table>
 		</div>
 {/template}
