@@ -58,21 +58,30 @@ public class GetCategories implements MVCResourceCommand {
                 {
                     categoryObject = JSONFactoryUtil.createJSONObject();
 
-                    if(AssetCategoryLocalServiceUtil.getChildCategories(category.getCategoryId()).size()!=0) {
+                   // if(AssetCategoryLocalServiceUtil.getChildCategories(category.getCategoryId()).size()!=0) {
 
-                        categoryObject.put(category.getName(),
-                                getsubCategoryObject(category,vocabulary.isMultiValued(), vocabulary.getName()));
+                     //   categoryObject.put(category.getName(),
+                     //           getsubCategoryObject(category,vocabulary.isMultiValued(), vocabulary.getName()));
 
-                    }else {
-                        if(vocabulary.getName().equalsIgnoreCase("Marcas"))
-                            continue;
-                        categoryObject.put("name", category.getName());
-                        categoryObject.put("categoryId", category.getCategoryId());
-                        categoryObject.put("vocabularyId", category.getVocabularyId());
-                        categoryObject.put("parentCategoryId", category.getParentCategoryId());
-                        categoryObject.put("isMultiValue", vocabulary.isMultiValued());
-                        categoryObject.put("parentName", vocabulary.getName());
-                    }
+                    //}else {
+                        if(vocabulary.getName().equalsIgnoreCase("Marcas")){
+                            categoryObject.put("name", category.getName());
+                            categoryObject.put("categoryId", category.getCategoryId());
+                            categoryObject.put("vocabularyId", category.getVocabularyId());
+                            categoryObject.put("parentCategoryId", category.getParentCategoryId());
+                            categoryObject.put("isMultiValue", vocabulary.isMultiValued());
+                            categoryObject.put("parentName", vocabulary.getName());
+                            categoryObject.put("children",
+                                               getsubCategoryObject(category,vocabulary.isMultiValued(), vocabulary.getName()));
+                        }else {
+                            categoryObject.put("name", category.getName());
+                            categoryObject.put("categoryId", category.getCategoryId());
+                            categoryObject.put("vocabularyId", category.getVocabularyId());
+                            categoryObject.put("parentCategoryId", category.getParentCategoryId());
+                            categoryObject.put("isMultiValue", vocabulary.isMultiValued());
+                            categoryObject.put("parentName", vocabulary.getName());
+                        }
+                    //}
 
                     subCategoryObject.put(categoryObject);
                 }

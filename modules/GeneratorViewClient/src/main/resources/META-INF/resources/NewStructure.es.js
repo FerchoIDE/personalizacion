@@ -33,6 +33,8 @@ class NewStructure extends Component {
     }
     created() {
         this.setResultCategories = this.setResultCategories.bind(this);
+        this.setResultSaveTag = this.setResultSaveTag.bind(this);
+
         console.log('---------NewStructure ----created----' + this.id)
         this.model = new NewStructureStateEs()
         this.model.idStructure = this.structureId
@@ -62,6 +64,7 @@ class NewStructure extends Component {
 
 
 
+
         //this.setState({isOnLoad: false})
     }
     attached() {
@@ -75,6 +78,9 @@ class NewStructure extends Component {
     rendered(firstRender) {
         var _parent=this
         window.setTimeout(handler => {
+            if($('#input_Etiqueta').css('display')==="none"){
+                return;
+            }
             let _PATH_="/web/guest/home/"
             //let _PATH_="/web/posadas-completo-nuevo/personalizacion/"
             let _url = _PATHBASE_+_PATH_+"-/generator/resource/getTags"
@@ -92,7 +98,12 @@ class NewStructure extends Component {
             });
             tf.on('addToken', function(arg1,arg2) {
             console.log("taggggg addToken")
-                _parent.itemsTags.push({id:arg2.id,name:arg2.name})
+                if(arg2.isNew){
+                    new Service().saveTag({name:arg2.name},_parent.setResultSaveTag);
+
+                }else{
+                    _parent.itemsTags.push({id:arg2.id,name:arg2.name})
+                }
             });
             tf.on('removeToken', function(arg1,arg2) {
                 console.log("taggggg removeToken")
@@ -105,6 +116,13 @@ class NewStructure extends Component {
             });
         },1000)
     }
+    setResultSaveTag(newTag,error) {
+        if (newTag !== undefined)
+            this.itemsTags.push({id: newTag.id, name: newTag.name})
+        else
+            console.error(error);
+    }
+
 
     setResultCategories(resultCategories){
 
@@ -136,22 +154,12 @@ class NewStructure extends Component {
 
         for(var i = 0; i< subMarcas.length; i++)
         {
-            var nameMarca = Object.keys(subMarcas[i])[0]
-            var childrenMarca = subMarcas[i][nameMarca]
 
-            var tempMarca = new Object();
-            tempMarca.categoryId=childrenMarca[0].parentCategoryId
-            tempMarca.isMultiValue= true
-            tempMarca.name=nameMarca
-            tempMarca.nameFormat=nameMarca.replace(" ","").replace(" ","");
-            tempMarca.parentCategoryId=0
-            tempMarca.parentName=childrenMarca[0].parentName
-            tempMarca.vocabularyId=childrenMarca[0].vocabularyId
-            tempMarca.children=childrenMarca
+            var tempMarca = subMarcas[i];
+            tempMarca.nameFormat=tempMarca.name.replace(" ","").replace(" ","");
 
             _itemsMarcasKeys.push(tempMarca);
         }
-
 
         this.setState({itemsMarcasKeys: _itemsMarcasKeys });
         this.setState({itemsCategories: resultCategories });
@@ -336,7 +344,14 @@ class NewStructure extends Component {
         console.log(ar[0]+","+ar[1]+","+ar[2]+","+ar[3]);
         delete  _itemsCategoriesSelected[ar[0]+","+ar[1]+","+ar[2]+","+ar[3]];
         var element = document.getElementById(ar[0]+","+ar[1]+","+ar[2]+","+ar[3]);
-        element.setAttribute("style","text-decoration: none;");
+        if(element){
+            if(element.type==="checkbox"){
+                element.removeAttribute("checked");
+            }else{
+                element.setAttribute("style","text-decoration: none;");
+            }
+        }
+
         var element1 = document.getElementById(ar[0]+","+ar[1]+","+ar[2]+","+ar[3]+",S");
         console.log(element1);
         console.log(element1.parentNode);
@@ -484,6 +499,49 @@ class NewStructure extends Component {
         this.model.setBrand(_brandSelect)
     }
 
+    completeCategory(categoryIdSelect,resultCategories,_itemsMarcasKeys){
+        //itemsCategories
+        //itemsMarcasKeys
+
+        for(var itemResult of resultCategories){
+            for(var itemProp in itemResult){
+                if(itemProp==='Marcas')
+                    continue
+                for(var itemCatRes of itemResult[itemProp]){
+                    if(categoryIdSelect===itemCatRes.categoryId){
+                        return itemCatRes
+                    }
+                }
+            }
+        }
+
+        for(var itemResult of _itemsMarcasKeys){
+            if(categoryIdSelect===itemResult.categoryId){
+                return itemResult
+            }
+            for(var itemCatRes of itemResult.children){
+                if(categoryIdSelect===itemCatRes.categoryId){
+                    return  itemCatRes
+                }
+            }
+        }
+        return undefined
+    }
+    setCategorySelected(itemCatSelected,_itemsCategoriesSelected){
+        //itemsCategoriesSelected
+        var idCat = itemCatSelected.categoryId+","+itemCatSelected.parentCategoryId+","+itemCatSelected.parentName+(itemCatSelected.isMultiValue?",T":",F");
+        var element = document.getElementById(idCat);
+
+        _itemsCategoriesSelected[idCat]=itemCatSelected.name;
+        if(element){
+            if(element.type==="checkbox"){
+                element.setAttribute("checked", "checked");
+            }else{
+                element.setAttribute("style","text-decoration: underline;");
+            }
+        }
+        return _itemsCategoriesSelected;
+    }
     saveSelectPath(event) {
         console.log('-----saveSelectPath----')
         $("#loadingSelectPath").toggleClass("loading-animation");
@@ -515,6 +573,28 @@ class NewStructure extends Component {
 
                     _parent.setState({hotelIdSelected: result["categoryId"]})
                     _parent.setState({isOnLoad: false})
+                    new Service().getCategories(_parent.setResultCategories);
+                    window.setTimeout(handler => {
+                        var catCompleted=_parent.completeCategory(_parent.hotelIdSelected.toString(),_parent.itemsCategories,_parent.itemsMarcasKeys);
+                        if(catCompleted!==undefined){
+                            var _itemsCategoriesSelected =_parent.setCategorySelected(catCompleted,_parent.itemsCategoriesSelected);
+                            var _itemsCategoriesKeysRender = Object.keys(_itemsCategoriesSelected);
+
+                            _parent.setState({itemsCategoriesKeysRender: _itemsCategoriesKeysRender })
+                            _parent.setState({itemsCategoriesSelected: _itemsCategoriesSelected })
+                        }
+
+                        var catCompletedBrand=_parent.completeCategory(_parent.brandIdSelected.toString(),_parent.itemsCategories,_parent.itemsMarcasKeys);
+                        if(catCompletedBrand!==undefined){
+                            var _itemsCategoriesSelected =_parent.setCategorySelected(catCompletedBrand,_parent.itemsCategoriesSelected);
+                            var _itemsCategoriesKeysRender = Object.keys(_itemsCategoriesSelected);
+
+                            _parent.setState({itemsCategoriesKeysRender: _itemsCategoriesKeysRender })
+                            _parent.setState({itemsCategoriesSelected: _itemsCategoriesSelected })
+                        }
+                    },2000)
+
+
                 } else {
                     $("#btnSelectPath").attr('disabled', 'disabled');
                     this.setState({msgErrorPath: "Codigo asignado a: " + result["message"]})
@@ -551,7 +631,17 @@ class NewStructure extends Component {
 
                     _parent.setState({brandIdSelected: result["categoryId"]})
                     _parent.setState({isOnLoad: false})
+                    new Service().getCategories(_parent.setResultCategories);
+                    window.setTimeout(handler => {
+                        var catCompleted=_parent.completeCategory(_parent.brandIdSelected.toString(),_parent.itemsCategories,_parent.itemsMarcasKeys);
+                        if(catCompleted!==undefined){
+                            var _itemsCategoriesSelected =_parent.setCategorySelected(catCompleted,_parent.itemsCategoriesSelected);
+                            var _itemsCategoriesKeysRender = Object.keys(_itemsCategoriesSelected);
 
+                            _parent.setState({itemsCategoriesKeysRender: _itemsCategoriesKeysRender })
+                            _parent.setState({itemsCategoriesSelected: _itemsCategoriesSelected })
+                        }
+                    },2000);
                 } else {
                     $("#btnSelectPath").attr('disabled', 'disabled');
                     this.setState({msgErrorPath: "Codigo asignado a: " + result["message"]})
@@ -559,6 +649,22 @@ class NewStructure extends Component {
 
             })
             return;
+        }
+
+        if(Array.isArray(this.brandIdSelected)){
+
+            var _parent =this;
+            this.brandIdSelected.forEach(function(element) {
+                console.log(element);
+                var catCompleted=_parent.completeCategory(element.toString(),_parent.itemsCategories,_parent.itemsMarcasKeys);
+                if(catCompleted!==undefined){
+                    var _itemsCategoriesSelected =_parent.setCategorySelected(catCompleted,_parent.itemsCategoriesSelected);
+                    var _itemsCategoriesKeysRender = Object.keys(_itemsCategoriesSelected);
+
+                    _parent.setState({itemsCategoriesKeysRender: _itemsCategoriesKeysRender })
+                    _parent.setState({itemsCategoriesSelected: _itemsCategoriesSelected })
+                }
+            });
         }
 
         $("#loadingSelectPath").toggleClass("loading-animation");
@@ -628,6 +734,18 @@ class NewStructure extends Component {
             }
         }
 
+        var categories =[];
+        for(var item in this.itemsCategoriesSelected){
+            console.log(item);
+            categories.push(item.split(',')[0])
+        }
+
+        var _tags = []
+        for(var item of this.itemsTags){
+            console.log(item);
+            _tags.push(item.name)
+        }
+
         let _data = {
             brandId: this.brandIdSelected,
             hotelId: this.hotelIdSelected,
@@ -640,8 +758,8 @@ class NewStructure extends Component {
             description: $("#input_description_prinipal").val(),
             aviableLocales: 'es_ES,en_US',
             fields: _nestedFields,
-            categories: [],
-            tags: []
+            categories: categories,
+            tags: _tags
         }
         console.log(JSON.stringify(_data))
         const _parent =this

@@ -135,6 +135,18 @@ export default class Service{
                 callBack(json)
             } )
     }
+    saveTag(data,callBack){
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/saveTag")
+            .post(data)
+            .json(json =>{
+                console.log(json)
+                callBack(json,undefined)
+            } )
+            .catch(error =>{
+                console.log(error)
+                callBack(undefined,error)
+            })
+    }
 
 
 }
