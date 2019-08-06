@@ -33,6 +33,9 @@ export default class FieldState extends State {
         var _arrayNested =[]
         if(this.nested!==undefined){
             for(var _nested of this.nested){
+                if(_nested.values===undefined
+                    || (_nested.multiple && Object.keys(_nested.values).length<1))
+                    continue
                 _arrayNested.push(_nested.toJson())
             }
         }

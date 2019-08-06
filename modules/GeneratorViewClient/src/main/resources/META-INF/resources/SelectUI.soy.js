@@ -79,7 +79,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           var option3289ListLen = option3289List.length;
           for (var option3289Index = 0; option3289Index < option3289ListLen; option3289Index++) {
               var option3289Data = option3289List[option3289Index];
-              if ((('' + _val__soy3257[0]).indexOf('' + option3289Data.value) != -1)) {
+              if ((_val__soy3257[0] != null) && (('' + _val__soy3257[0]).indexOf('' + option3289Data.value) != -1)) {
                 incrementalDom.elementOpenStart('option');
                     incrementalDom.attr('selected', '');
                     incrementalDom.attr('value', option3289Data.value);

@@ -1,18 +1,11 @@
 import Component from 'metal-component';
-//var Component = require('metal-component')
-//import Router from 'metal-router';
-//var Router = require('metal-router')
 
 import Soy from 'metal-soy';
-//var Soy = require('metal-soy')
 
 import templates from './View.soy';
-//var templates = require('View.soy')
 
-import TableUI from './components/TableUI.soy';
-//import ClayBadge from 'clay-badge';
-//import   'clay-css';
-//var TableUI = require('components/TableUI.soy')
+import TableUI from './components/TableUI.es';
+import Service from "./service/Service.es";
 
 /**
  * View Component
@@ -25,43 +18,50 @@ class View extends Component {
         var st=event.currentTarget.attributes['id'].value
         this.setState({selectedTab: st })
     }
-    attached() {
-        // Dispatch router to the current browser url ----------------------------------
-      //  Router.router().dispatch();
-    }
+    deleteWC(event) {
+        event.preventDefault();
+        console.log('-----deleteWC----');
+        var _parent =this
+        new Service().deletejournal({articleId:this.articleIdSelected},function(response,error){
+            if(response!==undefined){
+                console.log(JSON.stringify(response))
+                location.reload();
+            }else{
+                alert('no se pudo eliminar el contenido')
+                console.log(JSON.stringify(error))
+                _parent.setState({isOnDelete: false })
+            }
+        })
 
 
-    rendered(firstRender) {
-        console.log('-----ViewNested-rendered----'+JSON.stringify(firstRender));
+    }
+    cancelWC(event) {
+        event.preventDefault();
+        console.log('-----cancelWC----');
+        this.setState({isOnDelete: false })
+    }
+    showDeleteWC(event) {
+        event.preventDefault();
+        console.log('-----showDeleteWC----'+event.currentTarget.attributes['itemid'].value);
+        var articleIdSelected=event.currentTarget.attributes['itemid'].value
+        this.articleIdSelected=articleIdSelected
+        this.setState({articleIdSelected: articleIdSelected })
+        this.setState({isOnDelete: true })
 
+    }
 
-    }
-    willReceiveState(changes) {
-        console.log('-----willReceiveState-rendered----');
-    }
-    willReceiveProps(propsChanges) {
-        console.log('-----willReceiveProps-rendered----');
-    }
-    willUpdate(changes, propsChanges) {
-        console.log('-----willUpdate-rendered----');
-    }
 
 }
 
 View.STATE = {
     selectedTab: {
         value: 'navUnderlineHotelsTab'
+    },
+    articleIdSelected:{
+        value: undefined
     }
 }
 
-/*Component.render(Router, {
-    component: View,
-    data: {
-        title: 'Home Page'
-    },
-    element: '#main > div',
-    path: '/view'
-});*/
 
 Soy.register(View, templates);
 

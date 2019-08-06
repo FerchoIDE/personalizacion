@@ -86,6 +86,11 @@ class TextAreaUI extends Component {
         this.isOnLoadETA=false
         document.querySelector('#inputarea_'+this.id+"_"+this.defaultLanguageId).value=$("#editor_TXTAREA_"+this.id).trumbowyg('html');
         $("#editor_TXTAREA_"+this.id).trumbowyg('destroy');
+        this.handleChangeValue( {
+            value: $("#editor_TXTAREA_"+this.id).trumbowyg('html'),
+            language: this.defaultLanguageId,
+            path: this.path
+        });
     }
 
 

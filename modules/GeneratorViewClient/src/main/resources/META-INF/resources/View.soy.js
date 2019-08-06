@@ -37,7 +37,11 @@ var $templateAlias1 = Soy.getTemplate('TableUI.incrementaldom', 'render');
  *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  keys: !Array<!goog.soy.data.SanitizedContent|string>,
  *  STRUCTURE_ID: !Object<!goog.soy.data.SanitizedContent|string,?>,
- *  STRUCTURE_KEY: !Object<!goog.soy.data.SanitizedContent|string,?>
+ *  STRUCTURE_KEY: !Object<!goog.soy.data.SanitizedContent|string,?>,
+ *  isOnDelete: boolean,
+ *  showDeleteWC: (?),
+ *  deleteWC: (?),
+ *  cancelWC: (?)
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
  * @param {Object<string, *>=} opt_ijData_deprecated
@@ -70,9 +74,87 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var STRUCTURE_ID = soy.asserts.assertType(goog.isObject(opt_data.STRUCTURE_ID), 'STRUCTURE_ID', opt_data.STRUCTURE_ID, '!Object<!goog.soy.data.SanitizedContent|string,?>');
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,?>} */
   var STRUCTURE_KEY = soy.asserts.assertType(goog.isObject(opt_data.STRUCTURE_KEY), 'STRUCTURE_KEY', opt_data.STRUCTURE_KEY, '!Object<!goog.soy.data.SanitizedContent|string,?>');
+  /** @type {boolean} */
+  var isOnDelete = soy.asserts.assertType(goog.isBoolean(opt_data.isOnDelete) || opt_data.isOnDelete === 1 || opt_data.isOnDelete === 0, 'isOnDelete', opt_data.isOnDelete, 'boolean');
+  /** @type {?} */
+  var showDeleteWC = opt_data.showDeleteWC;
+  /** @type {?} */
+  var deleteWC = opt_data.deleteWC;
+  /** @type {?} */
+  var cancelWC = opt_data.cancelWC;
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
+    incrementalDom.elementOpenStart('div');
+        incrementalDom.attr('aria-labelledby', 'claySmallModalDlg');
+        incrementalDom.attr('id', 'claySmallModal1');
+        incrementalDom.attr('class', 'modal ' + (isOnDelete ? 'show in' : ''));
+        incrementalDom.attr('style', isOnDelete ? '' : 'display: none');
+        incrementalDom.attr('role', 'dialog');
+        incrementalDom.attr('tabindex', '-1');
+    incrementalDom.elementOpenEnd();
+      incrementalDom.elementOpenStart('div');
+          incrementalDom.attr('class', 'modal-info modal-dialog modal-sm');
+      incrementalDom.elementOpenEnd();
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'modal-content');
+        incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'modal-header');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('div');
+                incrementalDom.attr('class', 'modal-title');
+                incrementalDom.attr('id', 'claySmallModalDlg');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.text('Eliminar');
+            incrementalDom.elementClose('div');
+          incrementalDom.elementClose('div');
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'modal-body');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('div');
+                incrementalDom.attr('class', 'container-fluid');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.text('Esta seguro que desea eliminar este contenido');
+            incrementalDom.elementClose('div');
+          incrementalDom.elementClose('div');
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'modal-footer');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('div');
+                incrementalDom.attr('class', 'modal-item-last');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('div');
+                  incrementalDom.attr('class', 'btn-group');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpenStart('div');
+                    incrementalDom.attr('class', 'btn-group');
+                    incrementalDom.attr('role', 'group');
+                incrementalDom.elementOpenEnd();
+                  incrementalDom.elementOpenStart('button');
+                      incrementalDom.attr('onclick', deleteWC);
+                      incrementalDom.attr('class', 'btn btn-primary');
+                      incrementalDom.attr('type', 'button');
+                  incrementalDom.elementOpenEnd();
+                    incrementalDom.text('Confirmar');
+                  incrementalDom.elementClose('button');
+                  incrementalDom.text('\u00A0\u00A0');
+                  incrementalDom.elementOpenStart('button');
+                      incrementalDom.attr('onclick', cancelWC);
+                      incrementalDom.attr('class', 'btn btn-secondary');
+                      incrementalDom.attr('data-dismiss', 'modal');
+                      incrementalDom.attr('type', 'button');
+                  incrementalDom.elementOpenEnd();
+                    incrementalDom.text('Cancelar');
+                  incrementalDom.elementClose('button');
+                  incrementalDom.text('\u00A0\u00A0');
+                incrementalDom.elementClose('div');
+              incrementalDom.elementClose('div');
+            incrementalDom.elementClose('div');
+          incrementalDom.elementClose('div');
+        incrementalDom.elementClose('div');
+      incrementalDom.elementClose('div');
+    incrementalDom.elementClose('div');
     incrementalDom.elementOpenStart('div');
         incrementalDom.attr('class', 'btn-group dropdown');
         incrementalDom.attr('role', 'group');
@@ -538,7 +620,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['HOTEL'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['HOTEL']], dataCount: dataCount[STRUCTURE_KEY['HOTEL']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['HOTEL'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['HOTEL']], dataCount: dataCount[STRUCTURE_KEY['HOTEL']], showDeleteWC: showDeleteWC}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineRoomsTab');
@@ -550,7 +632,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['ROOM'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['ROOM']], dataCount: dataCount[STRUCTURE_KEY['ROOM']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['ROOM'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['ROOM']], dataCount: dataCount[STRUCTURE_KEY['ROOM']], showDeleteWC: showDeleteWC}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineRatesTab');
@@ -562,7 +644,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['RATE'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['RATE']], dataCount: dataCount[STRUCTURE_KEY['RATE']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['RATE'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['RATE']], dataCount: dataCount[STRUCTURE_KEY['RATE']], showDeleteWC: showDeleteWC}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlinePubsTab');
@@ -574,7 +656,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['PUB'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['PUB']], dataCount: dataCount[STRUCTURE_KEY['PUB']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['PUB'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['PUB']], dataCount: dataCount[STRUCTURE_KEY['PUB']], showDeleteWC: showDeleteWC}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineRestaurantsTab');
@@ -586,7 +668,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['RESTAURANT'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['RESTAURANT']], dataCount: dataCount[STRUCTURE_KEY['RESTAURANT']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['RESTAURANT'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['RESTAURANT']], dataCount: dataCount[STRUCTURE_KEY['RESTAURANT']], showDeleteWC: showDeleteWC}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineSpaTab');
@@ -598,7 +680,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['SPA'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['SPA']], dataCount: dataCount[STRUCTURE_KEY['SPA']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['SPA'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['SPA']], dataCount: dataCount[STRUCTURE_KEY['SPA']], showDeleteWC: showDeleteWC}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineBrandsTab');
@@ -610,7 +692,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['BRAND'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['BRAND']], dataCount: dataCount[STRUCTURE_KEY['BRAND']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['BRAND'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['BRAND']], dataCount: dataCount[STRUCTURE_KEY['BRAND']], showDeleteWC: showDeleteWC}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineGymsTab');
@@ -622,7 +704,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['GYM'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['GYM']], dataCount: dataCount[STRUCTURE_KEY['GYM']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['GYM'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['GYM']], dataCount: dataCount[STRUCTURE_KEY['GYM']], showDeleteWC: showDeleteWC}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineDestinationsTab');
@@ -634,7 +716,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['DESTINATION'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['DESTINATION']], dataCount: dataCount[STRUCTURE_KEY['DESTINATION']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['DESTINATION'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['DESTINATION']], dataCount: dataCount[STRUCTURE_KEY['DESTINATION']], showDeleteWC: showDeleteWC}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineFacilitiesTab');
@@ -646,7 +728,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['FACILITY'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['FACILITY']], dataCount: dataCount[STRUCTURE_KEY['FACILITY']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['FACILITY'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['FACILITY']], dataCount: dataCount[STRUCTURE_KEY['FACILITY']], showDeleteWC: showDeleteWC}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineGenericsTab');
@@ -658,7 +740,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['GENERIC'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['GENERIC']], dataCount: dataCount[STRUCTURE_KEY['GENERIC']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['GENERIC'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['GENERIC']], dataCount: dataCount[STRUCTURE_KEY['GENERIC']], showDeleteWC: showDeleteWC}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineChildrensClubTab');
@@ -670,7 +752,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['KIDSCLUB'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['KIDSCLUB']], dataCount: dataCount[STRUCTURE_KEY['KIDSCLUB']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['KIDSCLUB'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['KIDSCLUB']], dataCount: dataCount[STRUCTURE_KEY['KIDSCLUB']], showDeleteWC: showDeleteWC}, null, opt_ijData);
       incrementalDom.elementClose('div');
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('aria-labelledby', 'navUnderlineMeetingRoomsTab');
@@ -682,7 +764,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('br');
         incrementalDom.elementOpen('br');
         incrementalDom.elementClose('br');
-        $templateAlias1({id: STRUCTURE_KEY['MEETING'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['MEETING']], dataCount: dataCount[STRUCTURE_KEY['MEETING']]}, null, opt_ijData);
+        $templateAlias1({id: STRUCTURE_KEY['MEETING'], header: header, contextPath: contextPath, keys: keys, navigationEditURL: navigationEditURL, data: data[STRUCTURE_KEY['MEETING']], dataCount: dataCount[STRUCTURE_KEY['MEETING']], showDeleteWC: showDeleteWC}, null, opt_ijData);
       incrementalDom.elementClose('div');
     incrementalDom.elementClose('div');
   incrementalDom.elementClose('div');
@@ -701,7 +783,11 @@ exports.render = $render;
  *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  keys: !Array<!goog.soy.data.SanitizedContent|string>,
  *  STRUCTURE_ID: !Object<!goog.soy.data.SanitizedContent|string,?>,
- *  STRUCTURE_KEY: !Object<!goog.soy.data.SanitizedContent|string,?>
+ *  STRUCTURE_KEY: !Object<!goog.soy.data.SanitizedContent|string,?>,
+ *  isOnDelete: boolean,
+ *  showDeleteWC: (?),
+ *  deleteWC: (?),
+ *  cancelWC: (?)
  * }}
  */
 $render.Params;
@@ -709,8 +795,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'View.render';
 }
 
-exports.render.params = ["id","changeTab","selectedTab","contextPath","navigationNewURL","navigationEditURL","data","dataCount","header","keys","STRUCTURE_ID","STRUCTURE_KEY"];
-exports.render.types = {"id":"string","changeTab":"?","selectedTab":"string","contextPath":"string","navigationNewURL":"string","navigationEditURL":"string","data":"map<string,list<map<string,string>>>","dataCount":"map<string,number>","header":"map<string,string>","keys":"list<string>","STRUCTURE_ID":"map<string,?>","STRUCTURE_KEY":"map<string,?>"};
+exports.render.params = ["id","changeTab","selectedTab","contextPath","navigationNewURL","navigationEditURL","data","dataCount","header","keys","STRUCTURE_ID","STRUCTURE_KEY","isOnDelete","showDeleteWC","deleteWC","cancelWC"];
+exports.render.types = {"id":"string","changeTab":"?","selectedTab":"string","contextPath":"string","navigationNewURL":"string","navigationEditURL":"string","data":"map<string,list<map<string,string>>>","dataCount":"map<string,number>","header":"map<string,string>","keys":"list<string>","STRUCTURE_ID":"map<string,?>","STRUCTURE_KEY":"map<string,?>","isOnDelete":"bool","showDeleteWC":"?","deleteWC":"?","cancelWC":"?"};
 templates = exports;
 return exports;
 

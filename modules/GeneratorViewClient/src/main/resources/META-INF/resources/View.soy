@@ -19,7 +19,41 @@
 	{@param STRUCTURE_ID: map<string,?>}
 	{@param STRUCTURE_KEY: map<string,?>}
 
+	{@param isOnDelete: bool}
+	{@param? showDeleteWC: ?}
+	{@param? deleteWC: ?}
+	{@param? cancelWC: ?}
+
 	<div id="{$id}">
+
+		<div aria-labelledby="claySmallModalDlg" id="claySmallModal1" class="modal {$isOnDelete ? 'show in' : ''}"
+			 style="{$isOnDelete ? '' : 'display: none'}"  role="dialog" tabindex="-1">
+			<div class="modal-info modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="modal-title" id="claySmallModalDlg">Eliminar</div>
+					</div>
+					<div class="modal-body" >
+						<div class="container-fluid">
+							Esta seguro que desea eliminar este contenido
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<div class="modal-item-last">
+							<div class="btn-group">
+								<div class="btn-group" role="group">
+									<button onclick="{$deleteWC}" class="btn btn-primary" type="button">Confirmar</button>
+									&nbsp;&nbsp;
+									<button onclick="{$cancelWC}"  class="btn btn-secondary" data-dismiss="modal" type="button">Cancelar</button>
+									&nbsp;&nbsp;
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<div class="btn-group dropdown" role="group">
 			<button class="btn btn-primary" type="button">Agregar nuevo contenido</button>
@@ -172,6 +206,7 @@
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['HOTEL']] /}
 					{param dataCount: $dataCount[$STRUCTURE_KEY['HOTEL']] /}
+					{param showDeleteWC: $showDeleteWC /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineRoomsTab" class="{$selectedTab=='navUnderlineRoomsTab'?'active show':''}  tab-pane" id="navUnderlineRoomsTab"
@@ -187,6 +222,7 @@
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['ROOM']] /}
 					{param dataCount: $dataCount[$STRUCTURE_KEY['ROOM']] /}
+					{param showDeleteWC: $showDeleteWC /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineRatesTab" class="{$selectedTab=='navUnderlineRatesTab'?'active show':''}  tab-pane" id="navUnderlineRates"
@@ -202,6 +238,7 @@
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['RATE']] /}
 					{param dataCount: $dataCount[$STRUCTURE_KEY['RATE']] /}
+					{param showDeleteWC: $showDeleteWC /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlinePubsTab" class="{$selectedTab=='navUnderlinePubsTab'?'active show':''}  tab-pane" id="navUnderlinePubs" role="tabpanel">
@@ -216,6 +253,7 @@
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['PUB']] /}
 					{param dataCount: $dataCount[$STRUCTURE_KEY['PUB']] /}
+					{param showDeleteWC: $showDeleteWC /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineRestaurantsTab" class="{$selectedTab=='navUnderlineRestaurantsTab'?'active show':''}  tab-pane"
@@ -231,6 +269,7 @@
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['RESTAURANT']] /}
 					{param dataCount: $dataCount[$STRUCTURE_KEY['RESTAURANT']] /}
+					{param showDeleteWC: $showDeleteWC /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineSpaTab" class="{$selectedTab=='navUnderlineSpaTab'?'active show':''}  tab-pane"
@@ -245,6 +284,7 @@
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['SPA']] /}
 					{param dataCount: $dataCount[$STRUCTURE_KEY['SPA']] /}
+					{param showDeleteWC: $showDeleteWC /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineBrandsTab" class="{$selectedTab=='navUnderlineBrandsTab'?'active show':''}  tab-pane"
@@ -259,6 +299,7 @@
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['BRAND']] /}
 					{param dataCount: $dataCount[$STRUCTURE_KEY['BRAND']] /}
+					{param showDeleteWC: $showDeleteWC /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineGymsTab" class="{$selectedTab=='navUnderlineGymsTab'?'active show':''}  tab-pane"
@@ -273,6 +314,7 @@
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['GYM']] /}
 					{param dataCount: $dataCount[$STRUCTURE_KEY['GYM']] /}
+					{param showDeleteWC: $showDeleteWC /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineDestinationsTab" class="{$selectedTab=='navUnderlineDestinationsTab'?'active show':''}  tab-pane"
@@ -287,6 +329,7 @@
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['DESTINATION']] /}
 					{param dataCount: $dataCount[$STRUCTURE_KEY['DESTINATION']] /}
+					{param showDeleteWC: $showDeleteWC /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineFacilitiesTab" class="{$selectedTab=='navUnderlineFacilitiesTab'?'active show':''}  tab-pane"
@@ -301,6 +344,7 @@
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['FACILITY']] /}
 					{param dataCount: $dataCount[$STRUCTURE_KEY['FACILITY']] /}
+					{param showDeleteWC: $showDeleteWC /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineGenericsTab" class="{$selectedTab=='navUnderlineGenericsTab'?'active show':''}  tab-pane"
@@ -315,6 +359,7 @@
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['GENERIC']] /}
 					{param dataCount: $dataCount[$STRUCTURE_KEY['GENERIC']] /}
+					{param showDeleteWC: $showDeleteWC /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineChildrensClubTab" class="{$selectedTab=='navUnderlineChildrensClubTab'?'active show':''}  tab-pane"
@@ -329,6 +374,7 @@
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['KIDSCLUB']] /}
 					{param dataCount: $dataCount[$STRUCTURE_KEY['KIDSCLUB']] /}
+					{param showDeleteWC: $showDeleteWC /}
 				{/call}
 			</div>
 			<div aria-labelledby="navUnderlineMeetingRoomsTab" class="{$selectedTab=='navUnderlineMeetingRoomsTab'?'active show':''}  tab-pane"
@@ -343,6 +389,7 @@
 					{param navigationEditURL: $navigationEditURL /}
 					{param data: $data[$STRUCTURE_KEY['MEETING']] /}
 					{param dataCount: $dataCount[$STRUCTURE_KEY['MEETING']] /}
+					{param showDeleteWC: $showDeleteWC /}
 				{/call}
 			</div>
 		</div>

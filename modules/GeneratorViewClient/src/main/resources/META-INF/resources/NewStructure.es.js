@@ -690,7 +690,12 @@ class NewStructure extends Component {
     }
 
     saveStructure(event) {
-        console.log("--------saveStructure----------")
+        if(this.initialConfig_.articleId === undefined){
+            console.log("--------saveStructure----------")
+        }else{
+            console.log("--------Update Structure----------")
+        }
+
 
 
 
@@ -698,6 +703,9 @@ class NewStructure extends Component {
         let _fields = []
         for (var field of this.model.getState()['fields']) {
             if(field===undefined)
+                continue;
+            if(field.values===undefined
+            || (field.multiple && Object.keys(field.values).length<1 ))
                 continue;
             console.log(field.toJson())
             _fields.push(field.toJson())
@@ -761,6 +769,8 @@ class NewStructure extends Component {
             categories: categories,
             tags: _tags
         }
+        if(this.initialConfig_.articleId !== undefined)
+            _data.articleId=this.initialConfig_.articleId
         console.log(JSON.stringify(_data))
         const _parent =this
         new Service().savejournal(_data, result => {

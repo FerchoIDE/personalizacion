@@ -609,6 +609,56 @@ public class QueriesLiferayApi {
 		return myArray;
 	}
 
+	protected JournalArticle UpdateWC(org.json.JSONObject jsonObject) throws PortalException{
+
+		Long userId = jsonObject.getLong("userId");
+		Long groupId = jsonObject.getLong("groupId");
+		String title= jsonObject.getString("title");
+		String articleId= jsonObject.getString("articleId");
+		String description= jsonObject.getString("description");
+		String aviableLocales= jsonObject.getString("aviableLocales");
+
+		ServiceContext serviceContext = new ServiceContext();
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+
+		for(String localItem:aviableLocales.split(",")){
+			titleMap.put(LocaleUtil.fromLanguageId(localItem), title);
+			descriptionMap.put(LocaleUtil.fromLanguageId(localItem), description);
+		}
+
+		String rootElement = XMLUtil.transformJson(jsonObject);
+
+		System.out.println(rootElement);
+
+		JournalArticle JournalToUpdate = JournalArticleLocalServiceUtil.getArticle(Long.parseLong(articleId));
+		JournalArticle JournalToInfo = JournalArticleLocalServiceUtil.getLatestArticle(JournalToUpdate.getResourcePrimKey());
+
+		JournalArticle article = JournalArticleLocalServiceUtil.updateArticle(userId,
+				groupId, JournalToInfo.getFolderId(), JournalToInfo.getArticleId(), JournalToInfo.getVersion(),
+				rootElement, serviceContext);
+
+
+		if(!Validator.isNull(article)){
+			String[] tags = null;
+			if(jsonObject.has("tags")){
+				tags = parseTags(jsonObject.getJSONArray("tags"));
+			}
+
+			long[] cats = null;
+			if(jsonObject.has("categories")){
+				cats = parseCategories(jsonObject.getJSONArray("categories"));
+			}
+
+			addCategoriesAndTags(userId, article, cats, tags);
+
+		}
+
+		return article;
+	}
 
 
 

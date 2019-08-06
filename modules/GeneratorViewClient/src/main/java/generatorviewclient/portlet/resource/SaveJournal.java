@@ -46,63 +46,71 @@ public class SaveJournal implements MVCResourceCommand {
             String body = FileUtil.getBuffer(resourceRequest.getReader());
             JSONObject jsonObject = new JSONObject(body);
 
-            String ddmStructure = jsonObject.getString("ddmStructure");
-            Long folderId;
-            if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.ROOM_STRUCTURE_KEY))) {
-                folderId = new JournalApi().getBaseFolder(portletGroupId, jsonObject.getString("brand"), jsonObject.getString("hotel"));
-                folderId = new JournalApi().getBaseFolderByName(portletGroupId, folderId, ConstantUtil.FOLDER_ROOM_NAME);
-            } else if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.GENERIC_STRUCTURE_KEY))) {
-                folderId = new JournalApi().getBaseFolder(portletGroupId, jsonObject.getString("brand"), jsonObject.getString("hotel"));
-                folderId = new JournalApi().getBaseFolderByName(portletGroupId, folderId, ConstantUtil.FOLDER_GENERIC_NAME);
-            } else if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.BAR_STRUCTURE_KEY)) ||
-                    ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.RESTAURANT_STRUCTURE_KEY)) ||
-                    ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.SPA_STRUCTURE_KEY)) ||
-                    ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.GYM_STRUCTURE_KEY)) ||
-                    ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.FACILITY_STRUCTURE_KEY)) ||
-                    ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.KIDSCLUB_STRUCTURE_KEY)) ||
-                    ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.MEETING_STRUCTURE_KEY))) {
-                folderId = new JournalApi().getBaseFolder(portletGroupId, jsonObject.getString("brand"), jsonObject.getString("hotel"));
-                folderId = new JournalApi().getBaseFolderByName(portletGroupId, folderId, ConstantUtil.FOLDER_FACILITY_NAME);
-
-            } else if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.HOTEL_STRUCTURE_KEY)))
-                folderId = new JournalApi().getBaseFolder(portletGroupId, jsonObject.getString("brand"), jsonObject.getString("hotel"));
-            else if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.BRAND_STRUCTURE_KEY)))
-                folderId = new JournalApi().getBaseFolder(portletGroupId, jsonObject.getString("brand"), null);
-            else if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.RATE_STRUCTURE_KEY))) {
-                folderId = ConstantUtil.FOLDER_RATES_ID;
-                folderId = new JournalApi().getBaseFolderByName(portletGroupId, folderId,jsonObject.getString("brand"));
-            }
-            else if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.DESTINATION_STRUCTURE_KEY)))
-                folderId = ConstantUtil.FOLDER_DESTINATION_ID;
-            else {
-                generateError(resourceResponse.getPortletOutputStream(), "No esta definida la estructura a guardar");
-                return true;
-            }
-
-
             jsonObject.put("userId", userId);
             jsonObject.put("groupId", portletGroupId);
-            jsonObject.put("folderId", folderId);
+            JournalArticle journalArticle;
 
-            if(jsonObject.has("brandId")){
-                Long brandId = jsonObject.optLong("brandId");
-                if(brandId!=0)
-                    jsonObject.getJSONArray("categories").put(brandId);
-                else{
-                    JSONArray jsonArray = jsonObject.optJSONArray("brandId");
-                    if(jsonArray!=null){
-                        jsonArray.forEach(o ->jsonObject.getJSONArray("categories").put(o) );
-                    }
+            if(jsonObject.has("articleId")){
+                journalArticle = new JournalApi().updateWC(jsonObject);
+            }else{
+                String ddmStructure = jsonObject.getString("ddmStructure");
+                Long folderId;
+                if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.ROOM_STRUCTURE_KEY))) {
+                    folderId = new JournalApi().getBaseFolder(portletGroupId, jsonObject.getString("brand"), jsonObject.getString("hotel"));
+                    folderId = new JournalApi().getBaseFolderByName(portletGroupId, folderId, ConstantUtil.FOLDER_ROOM_NAME);
+                } else if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.GENERIC_STRUCTURE_KEY))) {
+                    folderId = new JournalApi().getBaseFolder(portletGroupId, jsonObject.getString("brand"), jsonObject.getString("hotel"));
+                    folderId = new JournalApi().getBaseFolderByName(portletGroupId, folderId, ConstantUtil.FOLDER_GENERIC_NAME);
+                } else if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.BAR_STRUCTURE_KEY)) ||
+                        ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.RESTAURANT_STRUCTURE_KEY)) ||
+                        ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.SPA_STRUCTURE_KEY)) ||
+                        ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.GYM_STRUCTURE_KEY)) ||
+                        ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.FACILITY_STRUCTURE_KEY)) ||
+                        ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.KIDSCLUB_STRUCTURE_KEY)) ||
+                        ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.MEETING_STRUCTURE_KEY))) {
+                    folderId = new JournalApi().getBaseFolder(portletGroupId, jsonObject.getString("brand"), jsonObject.getString("hotel"));
+                    folderId = new JournalApi().getBaseFolderByName(portletGroupId, folderId, ConstantUtil.FOLDER_FACILITY_NAME);
+
+                } else if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.HOTEL_STRUCTURE_KEY)))
+                    folderId = new JournalApi().getBaseFolder(portletGroupId, jsonObject.getString("brand"), jsonObject.getString("hotel"));
+                else if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.BRAND_STRUCTURE_KEY)))
+                    folderId = new JournalApi().getBaseFolder(portletGroupId, jsonObject.getString("brand"), null);
+                else if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.RATE_STRUCTURE_KEY))) {
+                    folderId = ConstantUtil.FOLDER_RATES_ID;
+                    folderId = new JournalApi().getBaseFolderByName(portletGroupId, folderId,jsonObject.getString("brand"));
+                }
+                else if (ddmStructure.equalsIgnoreCase(String.valueOf(ConstantUtil.DESTINATION_STRUCTURE_KEY)))
+                    folderId = ConstantUtil.FOLDER_DESTINATION_ID;
+                else {
+                    generateError(resourceResponse.getPortletOutputStream(), "No esta definida la estructura a guardar");
+                    return true;
                 }
 
-            }
-            if(jsonObject.has("hotelId")){
-                jsonObject.getJSONArray("categories").put(jsonObject.getLong("hotelId"));
+
+                jsonObject.put("folderId", folderId);
+
+                if(jsonObject.has("brandId")){
+                    Long brandId = jsonObject.optLong("brandId");
+                    if(brandId!=0)
+                        jsonObject.getJSONArray("categories").put(brandId);
+                    else{
+                        JSONArray jsonArray = jsonObject.optJSONArray("brandId");
+                        if(jsonArray!=null){
+                            jsonArray.forEach(o ->jsonObject.getJSONArray("categories").put(o) );
+                        }
+                    }
+
+                }
+                if(jsonObject.has("hotelId")){
+                    jsonObject.getJSONArray("categories").put(jsonObject.getLong("hotelId"));
+                }
+
+                System.out.println(jsonObject.toString());
+
+                journalArticle = new JournalApi().saveWC(jsonObject);
             }
 
-            System.out.println(jsonObject.toString());
 
-            JournalArticle journalArticle = new JournalApi().saveWC(jsonObject);
             if (journalArticle == null) {
                 generateError(resourceResponse.getPortletOutputStream(), "No se pudo guardar el contenido");
             }

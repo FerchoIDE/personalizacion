@@ -151,7 +151,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             var _countSection3846ListLen = _countSection3846List.length;
             for (var _countSection3846Index = 0; _countSection3846Index < _countSection3846ListLen; _countSection3846Index++) {
                 var _countSection3846Data = _countSection3846List[_countSection3846Index];
-                $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: _countSection3846Index, repeatable: repeatable, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
+                $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: _countSection3846Index, repeatable: repeatable, path: path + '___' + _countSection3846Index, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
               }
           incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');

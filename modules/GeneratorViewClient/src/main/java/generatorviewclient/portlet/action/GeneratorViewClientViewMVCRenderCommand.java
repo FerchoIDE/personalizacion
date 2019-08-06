@@ -115,6 +115,7 @@ public class GeneratorViewClientViewMVCRenderCommand
                         }
 
                         mapElement.put("id", String.valueOf(journalArticle.getId()));
+                        mapElement.put("articleId", journalArticle.getArticleId());
                         mapElement.put(
                                 "lastUpdated",
                                 sdf.format(journalArticle.getModifiedDate()));
@@ -178,6 +179,7 @@ public class GeneratorViewClientViewMVCRenderCommand
         template.put("navigationEditURL", editURL.toString());
         template.put("STRUCTURE_ID", getStructureID());
         template.put("STRUCTURE_KEY", getStructureKEY());
+        template.put("isOnDelete", false);
 
         ResourceURL resourceURL = renderResponse.createResourceURL();
         resourceURL.setResourceID("getJournals");

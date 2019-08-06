@@ -13,11 +13,14 @@ class SelectUI extends Component {
                 if(this.initialConfig_.values[lang].length>0
                     && this.initialConfig_.values[lang][0]!=''){
                     let valueFinal = JSON.parse(this.initialConfig_.values[lang][0])
-                    this.handleChangeValue( {
-                        value: valueFinal,
-                        language: lang,
-                        path: this.initialConfig_.path
-                    });
+                    if(valueFinal){
+                        this.handleChangeValue( {
+                            value: valueFinal,
+                            language: lang,
+                            path: this.initialConfig_.path
+                        });
+                    }
+
                 }
             }
         }

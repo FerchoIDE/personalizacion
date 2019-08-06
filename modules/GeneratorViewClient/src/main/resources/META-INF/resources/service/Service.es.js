@@ -128,6 +128,30 @@ export default class Service{
                 callBack(error)
             })
     }
+    deletejournal(data,callBack){
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/deleteJournal")
+            .post(data)
+            .json(json =>{
+                console.log(json)
+                callBack(json,undefined)
+            } )
+            .catch(error =>{
+                console.log(error)
+                callBack(undefined,error)
+            })
+    }
+    getPage(data,callBack){
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/getPage")
+            .post(data)
+            .json(json =>{
+                console.log(json)
+                callBack(json)
+            } )
+            .catch(error =>{
+                console.log(error)
+                callBack(error)
+            })
+    }
     getCategories(callBack){
         wretch("http://"+_HOST_+_PATH_+"-/generator/resource/getCategories")
             .post()

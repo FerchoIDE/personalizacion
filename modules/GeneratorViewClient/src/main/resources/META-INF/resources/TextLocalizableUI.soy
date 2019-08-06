@@ -58,7 +58,7 @@
 								{param values: $values /}
 								{param _index: index($_countSection) /}
 								{param repeatable: $repeatable /}
-								{param path: $path /}
+								{param path: $path+'___'+index($_countSection) /}
 								{param availableLanguageIds: $availableLanguageIds /}
 								{param defaultLanguageId: $defaultLanguageId /}
 								{param onChangeValue:  $handleChangeValue /}

@@ -26,7 +26,7 @@ class JournalUI extends Component {
         delete  this.itemsJournalAsociated[this.id]
     }
     created() {
-        console.log('-----receive event created----'+this.id)
+        console.log('-----receive JournalUI event created----'+this.id)
         this.setResultJournal = this.setResultJournal.bind(this);
         this.setFoldersJournal = this.setFoldersJournal.bind(this);
        // this.resultSaveJournal = this.resultSaveJournal.bind(this);
@@ -46,6 +46,25 @@ class JournalUI extends Component {
             }
 
             this.setState({itemsJournalAsociated:_itemsAsociated  })
+
+            let _modelJournal = this.modelJournal
+            if(_modelJournal===undefined)
+                _modelJournal={}
+            for(const result in this.itemsJournalAsociated[this.id]){
+                console.log("------"+result)
+                if(_modelJournal[result]===undefined){
+                    _modelJournal[result]={}
+                    _modelJournal[result]['id']=result
+                }
+                this.handleChangeValue( {
+                    value: _modelJournal[result],
+                    path: this.path
+                });
+            }
+
+            this.setState({modelJournal: _modelJournal })
+
+
         }else{
 
             this.itemsJournalAsociated={}

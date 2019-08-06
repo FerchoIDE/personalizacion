@@ -12,6 +12,12 @@
 	{@param data: list<map<string,string>>}
 	{@param dataCount: number}
 	{@param keys: list<string>}
+
+	{@param? showDeleteWC: ?}
+	{@param? changePage: ?}
+	{@param? selectPage: ?}
+	{let $selectPageCurrent: isNonnull($selectPage)?(isNonnull($selectPage[$id])?$selectPage[$id]:0):0 /}
+
 	<div id="{$id}" class="table-responsive">
 			<table class="show-quick-actions-on-hover table table-autofit table-hover table-list table-nowrap">
 				<thead>
@@ -37,7 +43,7 @@
 							{/foreach}
 							<td>
 								<div class="quick-action-menu">
-									<a class="component-action quick-action-item" style="font-size: 14px" href="#1" role="button">
+									<a class="component-action quick-action-item" onclick="{$showDeleteWC}" itemid="{$fieldData['articleId']}" style="font-size: 14px" href="#1" role="button">
 										<svg class="lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
 											<use href="{$contextPath}/images/icons/icons.svg#trash" />
 										</svg>
@@ -59,7 +65,12 @@
 					<th style="text-align: center" colspan="4"  class="table-head-title">
 						<ul class="pagination">
 							{for $i in range($dataCount)}
-								<li class="page-item"><a class="page-link" href="#1">{$i+1}</a></li>
+								{if $i==$selectPageCurrent  }
+									<li class="page-item active"><a class="page-link" onclick="{$changePage}"  itemid="{$id}___{$i}" href="#1">{$i+1}</a></li>
+								{else}
+									<li class="page-item"><a class="page-link" onclick="{$changePage}"  itemid="{$id}___{$i}" href="#3">{$i+1}</a></li>
+								{/if}
+
 							{/for}
 						</ul>
 					</th>

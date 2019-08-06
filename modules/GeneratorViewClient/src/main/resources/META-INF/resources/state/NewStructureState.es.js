@@ -42,8 +42,12 @@ export default class NewStructureState extends State {
                     _newField.required = _fieldClon.required
                     _newField.multiple = _fieldClon.repeatable
                     _newField.indexType = _fieldClon.indexType
+                    if(_fieldClon.nested!=undefined){
+                        _newField.nested = this.nestedFields(_fieldClon.nested, _newField.name)
+                    }else{
+                        _newField.multiple = _fieldClon.multiple
+                    }
 
-                    _newField.nested = this.nestedFields(_fieldClon.nested, _newField.name)
 
                     /*var arrNested =[]
                     for (let _fieldN of _fieldClon.nested){

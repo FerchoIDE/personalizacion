@@ -67,6 +67,7 @@ public class GeneratorViewClientEditMVCRenderCommand  implements MVCRenderComman
         Template template = (Template) renderRequest.getAttribute(
                 WebKeys.TEMPLATE);
         String articleId = renderRequest.getParameter("articleId");
+        template.put("articleId",articleId);
         JournalArticle journalArticle;
         try {
             journalArticle = journalArticleService.getJournalArticle(Long.parseLong(articleId));
