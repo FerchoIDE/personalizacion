@@ -452,7 +452,7 @@ class NewStructure extends Component {
 
 
         for (var brand of this.categoryBrands) {
-            if (brand['key'] === _brandIdSelect) {
+            if (brand['key'] === _brandIdSelect.toString()) {
 
                 let _hotelsXBrands = brand['nested']
 

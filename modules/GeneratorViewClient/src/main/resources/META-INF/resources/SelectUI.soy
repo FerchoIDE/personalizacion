@@ -20,7 +20,7 @@
 						data-onchange="handleChange" multiple
 						id="select_{$id}">
 					{foreach $option in $options}
-						{if isNonnull($_val[0]) and  strContains($_val[0], $option.value)}
+						{if isNonnull($_val[0]) and isNonnull($option.value) and  strContains($_val[0], $option.value)}
 							<option selected value="{$option.value}">{$option.label[$defaultLanguageId]}</option>
 						{else}
 							<option value="{$option.value}">{$option.label[$defaultLanguageId]}</option>
