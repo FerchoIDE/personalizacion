@@ -50,8 +50,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var path = soy.asserts.assertType(opt_data.path == null || (goog.isString(opt_data.path) || opt_data.path instanceof goog.soy.data.SanitizedContent), 'path', opt_data.path, '!goog.soy.data.SanitizedContent|null|string|undefined');
-  var _values__soy3076 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
-  var _val__soy3078 = (_values__soy3076[defaultLanguageId] != null) ? _values__soy3076[defaultLanguageId] : '';
+  var _values__soy3370 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
+  var _val__soy3372 = (_values__soy3370[defaultLanguageId] != null) ? _values__soy3370[defaultLanguageId] : '';
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
@@ -68,17 +68,17 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('class', 'form-group');
       incrementalDom.elementOpenEnd();
-        var option3113List = options;
-        var option3113ListLen = option3113List.length;
-        for (var option3113Index = 0; option3113Index < option3113ListLen; option3113Index++) {
-            var option3113Data = option3113List[option3113Index];
+        var option3407List = options;
+        var option3407ListLen = option3407List.length;
+        for (var option3407Index = 0; option3407Index < option3407ListLen; option3407Index++) {
+            var option3407Data = option3407List[option3407Index];
             incrementalDom.elementOpenStart('div');
                 incrementalDom.attr('class', 'custom-control custom-radio custom-control-inline');
             incrementalDom.elementOpenEnd();
               incrementalDom.elementOpen('label');
-                if (_val__soy3078 == '["' + option3113Data.value + '"]') {
+                if (_val__soy3372 == '["' + option3407Data.value + '"]') {
                   incrementalDom.elementOpenStart('input');
-                      incrementalDom.attr('value', option3113Data.value);
+                      incrementalDom.attr('value', option3407Data.value);
                       incrementalDom.attr('class', 'custom-control-input');
                       incrementalDom.attr('data-language', defaultLanguageId);
                       incrementalDom.attr('data-path', path);
@@ -91,7 +91,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.elementClose('input');
                 } else {
                   incrementalDom.elementOpenStart('input');
-                      incrementalDom.attr('value', option3113Data.value);
+                      incrementalDom.attr('value', option3407Data.value);
                       incrementalDom.attr('class', 'custom-control-input');
                       incrementalDom.attr('data-language', defaultLanguageId);
                       incrementalDom.attr('data-path', path);
@@ -108,7 +108,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.elementOpenStart('span');
                       incrementalDom.attr('class', 'custom-control-label-text');
                   incrementalDom.elementOpenEnd();
-                    soyIdom.print(option3113Data.label[defaultLanguageId]);
+                    soyIdom.print(option3407Data.label[defaultLanguageId]);
                   incrementalDom.elementClose('span');
                 incrementalDom.elementClose('span');
               incrementalDom.elementClose('label');

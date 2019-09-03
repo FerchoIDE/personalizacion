@@ -117,9 +117,9 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var handleAddSection = opt_data.handleAddSection;
   /** @type {?} */
   var handleRemoveSection = opt_data.handleRemoveSection;
-  var structureIdRate__soy6443 = '35796';
-  var show__soy6445 = ((collapseInfo == null ? null : collapseInfo['accordion' + id + 'Heading']) != null) ? ((collapseInfo == null ? null : collapseInfo['accordion' + id + 'Heading']) ? '' : 'show') : '';
-  var _countSections__soy6447 = (countSection != null) ? countSection : [0];
+  var structureIdRate__soy6737 = '35796';
+  var show__soy6739 = ((collapseInfo == null ? null : collapseInfo['accordion' + id + 'Heading']) != null) ? ((collapseInfo == null ? null : collapseInfo['accordion' + id + 'Heading']) ? '' : 'show') : '';
+  var _countSections__soy6741 = (countSection != null) ? countSection : [0];
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
@@ -175,7 +175,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('div');
             incrementalDom.attr('aria-labelledby', 'accordion' + id + 'Heading');
-            incrementalDom.attr('class', 'panel-collapse collapse ' + show__soy6445);
+            incrementalDom.attr('class', 'panel-collapse collapse ' + show__soy6739);
             incrementalDom.attr('id', 'accordion' + id + 'Collapse');
             incrementalDom.attr('role', 'tabpanel');
         incrementalDom.elementOpenEnd();
@@ -236,39 +236,39 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenStart('div');
                   incrementalDom.attr('class', 'form-group');
               incrementalDom.elementOpenEnd();
-                var _countSection6610List = _countSections__soy6447;
-                var _countSection6610ListLen = _countSection6610List.length;
-                for (var _countSection6610Index = 0; _countSection6610Index < _countSection6610ListLen; _countSection6610Index++) {
-                    var _countSection6610Data = _countSection6610List[_countSection6610Index];
+                var _countSection6904List = _countSections__soy6741;
+                var _countSection6904ListLen = _countSection6904List.length;
+                for (var _countSection6904Index = 0; _countSection6904Index < _countSection6904ListLen; _countSection6904Index++) {
+                    var _countSection6904Data = _countSection6904List[_countSection6904Index];
                     incrementalDom.elementOpenStart('div');
                         incrementalDom.attr('class', 'input-group');
                     incrementalDom.elementOpenEnd();
-                      var field6597List = data;
-                      var field6597ListLen = field6597List.length;
-                      for (var field6597Index = 0; field6597Index < field6597ListLen; field6597Index++) {
-                          var field6597Data = field6597List[field6597Index];
-                          if (field6597Data['type'] == 'ddm-separator') {
+                      var field6891List = data;
+                      var field6891ListLen = field6891List.length;
+                      for (var field6891Index = 0; field6891Index < field6891ListLen; field6891Index++) {
+                          var field6891Data = field6891List[field6891Index];
+                          if (field6891Data['type'] == 'ddm-separator') {
                             incrementalDom.text('anidado');
                             incrementalDom.elementOpen('br');
                             incrementalDom.elementClose('br');
-                          } else if (field6597Data['type'] == 'text') {
-                            $templateAlias1({id: field6597Data['name'] + '___' + _countSection6610Index, path: path + '___' + _countSection6610Index + '/' + field6597Data['name'], type: field6597Data['type'], labels: field6597Data['label'], placeholder: field6597Data['tip'], localizable: field6597Data['localizable'], values: field6597Data['values'], repeatable: field6597Data['repeatable'], contextPath: contextPath, _index: _countSection6610Index, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
-                          } else if (field6597Data['type'] == 'checkbox') {
-                            $templateAlias2({id: field6597Data['name'] + '___' + _countSection6610Index, nameParent: name, label: field6597Data['label'], checkedOption: checkedOption, path: path + '___' + _countSection6610Index + '/' + field6597Data['name'], defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
-                          } else if (field6597Data['type'] == 'ddm-date') {
-                            $templateAlias3({id: field6597Data['name'] + '___' + _countSection6610Index, values: field6597Data['values'], label: field6597Data['label'][defaultLanguage], placeholder: field6597Data['tip'][defaultLanguage], defaultLanguageId: defaultLanguage, path: path + '___' + _countSection6610Index + '/' + field6597Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-                          } else if (field6597Data['type'] == 'ddm-text-html' || field6597Data['type'] == 'textarea') {
-                            $templateAlias4({id: field6597Data['name'] + '___' + _countSection6610Index, type: field6597Data['type'], label: field6597Data['label'][defaultLanguage], placeholder: field6597Data['tip'][defaultLanguage], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, path: path + '___' + _countSection6610Index + '/' + field6597Data['name'], handleChangeValue: handleChangeValue, contextPath: contextPath}, null, opt_ijData);
-                          } else if (field6597Data['type'] == 'ddm-journal-article') {
-                            $templateAlias5({id: field6597Data['name'] + '___' + _countSection6610Index, label: field6597Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected, brandIdSelected: brandIdSelected, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, hotelIdSelected: hotelIdSelected, path: path + '___' + _countSection6610Index + '/' + field6597Data['name']}, null, opt_ijData);
-                          } else if (field6597Data['type'] == 'ddm-documentlibrary') {
-                            $templateAlias6({id: field6597Data['name'] + '___' + _countSection6610Index, values: field6597Data['values'], label: field6597Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected, nestedFields: field6597Data['nestedFields'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, path: path + '___' + _countSection6610Index + '/' + field6597Data['name']}, null, opt_ijData);
-                          } else if (field6597Data['type'] == 'radio') {
-                            $templateAlias7({id: field6597Data['name'] + '___' + _countSection6610Index, values: field6597Data['values'], label: field6597Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field6597Data['options'], path: path + '___' + _countSection6610Index + '/' + field6597Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-                          } else if (field6597Data['type'] == 'select') {
-                            $templateAlias8({id: field6597Data['name'] + '___' + _countSection6610Index, values: field6597Data['values'], label: field6597Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field6597Data['options'], path: path + '___' + _countSection6610Index + '/' + field6597Data['name'], multiple: field6597Data['multiple'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                          } else if (field6891Data['type'] == 'text') {
+                            $templateAlias1({id: field6891Data['name'] + '___' + _countSection6904Index, path: path + '___' + _countSection6904Index + '/' + field6891Data['name'], type: field6891Data['type'], labels: field6891Data['label'], placeholder: field6891Data['tip'], localizable: field6891Data['localizable'], values: field6891Data['values'], repeatable: field6891Data['repeatable'], contextPath: contextPath, _index: _countSection6904Index, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
+                          } else if (field6891Data['type'] == 'checkbox') {
+                            $templateAlias2({id: field6891Data['name'] + '___' + _countSection6904Index, nameParent: name, label: field6891Data['label'], checkedOption: checkedOption, path: path + '___' + _countSection6904Index + '/' + field6891Data['name'], defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
+                          } else if (field6891Data['type'] == 'ddm-date') {
+                            $templateAlias3({id: field6891Data['name'] + '___' + _countSection6904Index, values: field6891Data['values'], label: field6891Data['label'][defaultLanguage], placeholder: field6891Data['tip'][defaultLanguage], defaultLanguageId: defaultLanguage, path: path + '___' + _countSection6904Index + '/' + field6891Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                          } else if (field6891Data['type'] == 'ddm-text-html' || field6891Data['type'] == 'textarea') {
+                            $templateAlias4({id: field6891Data['name'] + '___' + _countSection6904Index, type: field6891Data['type'], label: field6891Data['label'][defaultLanguage], placeholder: field6891Data['tip'][defaultLanguage], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, path: path + '___' + _countSection6904Index + '/' + field6891Data['name'], handleChangeValue: handleChangeValue, contextPath: contextPath}, null, opt_ijData);
+                          } else if (field6891Data['type'] == 'ddm-journal-article') {
+                            $templateAlias5({id: field6891Data['name'] + '___' + _countSection6904Index, label: field6891Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected, brandIdSelected: brandIdSelected, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, hotelIdSelected: hotelIdSelected, path: path + '___' + _countSection6904Index + '/' + field6891Data['name']}, null, opt_ijData);
+                          } else if (field6891Data['type'] == 'ddm-documentlibrary') {
+                            $templateAlias6({id: field6891Data['name'] + '___' + _countSection6904Index, values: field6891Data['values'], label: field6891Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected, nestedFields: field6891Data['nestedFields'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, path: path + '___' + _countSection6904Index + '/' + field6891Data['name']}, null, opt_ijData);
+                          } else if (field6891Data['type'] == 'radio') {
+                            $templateAlias7({id: field6891Data['name'] + '___' + _countSection6904Index, values: field6891Data['values'], label: field6891Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field6891Data['options'], path: path + '___' + _countSection6904Index + '/' + field6891Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                          } else if (field6891Data['type'] == 'select') {
+                            $templateAlias8({id: field6891Data['name'] + '___' + _countSection6904Index, values: field6891Data['values'], label: field6891Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field6891Data['options'], path: path + '___' + _countSection6904Index + '/' + field6891Data['name'], multiple: field6891Data['multiple'], handleChangeValue: handleChangeValue}, null, opt_ijData);
                           } else {
-                            soyIdom.print(field6597Data['type']);
+                            soyIdom.print(field6891Data['type']);
                             incrementalDom.text(' -- Ninguno');
                             incrementalDom.elementOpen('br');
                             incrementalDom.elementClose('br');
@@ -278,7 +278,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                           incrementalDom.elementClose('div');
                         }
                       if ((checkedConcat != null)) {
-                        if (structureId == structureIdRate__soy6443 && (checkedConcat[name] != null) && (name == 'Restrictions' || name == 'Benefits1' || name == 'occupationRate')) {
+                        if (structureId == structureIdRate__soy6737 && (checkedConcat[name] != null) && (name == 'Restrictions' || name == 'Benefits1' || name == 'occupationRate')) {
                           incrementalDom.elementClose('div');
                         incrementalDom.elementOpenStart('div');
                             incrementalDom.attr('class', 'input-group');
@@ -305,32 +305,32 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementOpenStart('div');
                     incrementalDom.attr('class', 'input-group');
                 incrementalDom.elementOpenEnd();
-                  var field6731List = data;
-                  var field6731ListLen = field6731List.length;
-                  for (var field6731Index = 0; field6731Index < field6731ListLen; field6731Index++) {
-                      var field6731Data = field6731List[field6731Index];
-                      if (field6731Data['type'] == 'ddm-separator') {
+                  var field7025List = data;
+                  var field7025ListLen = field7025List.length;
+                  for (var field7025Index = 0; field7025Index < field7025ListLen; field7025Index++) {
+                      var field7025Data = field7025List[field7025Index];
+                      if (field7025Data['type'] == 'ddm-separator') {
                         incrementalDom.text('anidado');
                         incrementalDom.elementOpen('br');
                         incrementalDom.elementClose('br');
-                      } else if (field6731Data['type'] == 'text') {
-                        $templateAlias1({id: field6731Data['name'], path: path + '/' + field6731Data['name'], type: field6731Data['type'], labels: field6731Data['label'], placeholder: field6731Data['tip'], localizable: field6731Data['localizable'], values: field6731Data['values'], repeatable: field6731Data['repeatable'], contextPath: contextPath, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
-                      } else if (field6731Data['type'] == 'checkbox') {
-                        $templateAlias2({id: field6731Data['name'], nameParent: name, label: field6731Data['label'], checkedOption: checkedOption, path: path + '/' + field6731Data['name'], values: field6731Data['values'], defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
-                      } else if (field6731Data['type'] == 'ddm-date') {
-                        $templateAlias3({id: field6731Data['name'], values: field6731Data['values'], label: field6731Data['label'][defaultLanguage], placeholder: field6731Data['tip'][defaultLanguage], defaultLanguageId: defaultLanguage, path: path + '/' + field6731Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-                      } else if (field6731Data['type'] == 'ddm-text-html' || field6731Data['type'] == 'textarea') {
-                        $templateAlias4({id: field6731Data['name'], type: field6731Data['type'], label: field6731Data['label'][defaultLanguage], placeholder: field6731Data['tip'][defaultLanguage], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, path: path + '/' + field6731Data['name'], values: field6731Data['values'], handleChangeValue: handleChangeValue, contextPath: contextPath}, null, opt_ijData);
-                      } else if (field6731Data['type'] == 'ddm-journal-article') {
-                        $templateAlias5({id: field6731Data['name'], label: field6731Data['label'][defaultLanguage], values: field6731Data['values'], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected, brandIdSelected: brandIdSelected, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, hotelIdSelected: hotelIdSelected, path: path + '/' + field6731Data['name']}, null, opt_ijData);
-                      } else if (field6731Data['type'] == 'ddm-documentlibrary') {
-                        $templateAlias6({id: field6731Data['name'], values: field6731Data['values'], label: field6731Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected, nestedFields: field6731Data['nestedFields'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, path: path + '/' + field6731Data['name']}, null, opt_ijData);
-                      } else if (field6731Data['type'] == 'radio') {
-                        $templateAlias7({id: field6731Data['name'], values: field6731Data['values'], label: field6731Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field6731Data['options'], path: path + '/' + field6731Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-                      } else if (field6731Data['type'] == 'select') {
-                        $templateAlias8({id: field6731Data['name'], values: field6731Data['values'], label: field6731Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field6731Data['options'], path: path + '/' + field6731Data['name'], multiple: field6731Data['multiple'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                      } else if (field7025Data['type'] == 'text') {
+                        $templateAlias1({id: field7025Data['name'], path: path + '/' + field7025Data['name'], type: field7025Data['type'], labels: field7025Data['label'], placeholder: field7025Data['tip'], localizable: field7025Data['localizable'], values: field7025Data['values'], repeatable: field7025Data['repeatable'], contextPath: contextPath, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
+                      } else if (field7025Data['type'] == 'checkbox') {
+                        $templateAlias2({id: field7025Data['name'], nameParent: name, label: field7025Data['label'], checkedOption: checkedOption, path: path + '/' + field7025Data['name'], values: field7025Data['values'], defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue}, null, opt_ijData);
+                      } else if (field7025Data['type'] == 'ddm-date') {
+                        $templateAlias3({id: field7025Data['name'], values: field7025Data['values'], label: field7025Data['label'][defaultLanguage], placeholder: field7025Data['tip'][defaultLanguage], defaultLanguageId: defaultLanguage, path: path + '/' + field7025Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                      } else if (field7025Data['type'] == 'ddm-text-html' || field7025Data['type'] == 'textarea') {
+                        $templateAlias4({id: field7025Data['name'], type: field7025Data['type'], label: field7025Data['label'][defaultLanguage], placeholder: field7025Data['tip'][defaultLanguage], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, path: path + '/' + field7025Data['name'], values: field7025Data['values'], handleChangeValue: handleChangeValue, contextPath: contextPath}, null, opt_ijData);
+                      } else if (field7025Data['type'] == 'ddm-journal-article') {
+                        $templateAlias5({id: field7025Data['name'], label: field7025Data['label'][defaultLanguage], values: field7025Data['values'], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected, brandIdSelected: brandIdSelected, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, hotelIdSelected: hotelIdSelected, path: path + '/' + field7025Data['name']}, null, opt_ijData);
+                      } else if (field7025Data['type'] == 'ddm-documentlibrary') {
+                        $templateAlias6({id: field7025Data['name'], values: field7025Data['values'], label: field7025Data['label'][defaultLanguage], contextPath: contextPath, brandSelected: brandSelected, hotelSelected: hotelSelected, nestedFields: field7025Data['nestedFields'], availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguage, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, path: path + '/' + field7025Data['name']}, null, opt_ijData);
+                      } else if (field7025Data['type'] == 'radio') {
+                        $templateAlias7({id: field7025Data['name'], values: field7025Data['values'], label: field7025Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field7025Data['options'], path: path + '/' + field7025Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+                      } else if (field7025Data['type'] == 'select') {
+                        $templateAlias8({id: field7025Data['name'], values: field7025Data['values'], label: field7025Data['label'][defaultLanguage], defaultLanguageId: defaultLanguage, options: field7025Data['options'], path: path + '/' + field7025Data['name'], multiple: field7025Data['multiple'], handleChangeValue: handleChangeValue}, null, opt_ijData);
                       } else {
-                        soyIdom.print(field6731Data['type']);
+                        soyIdom.print(field7025Data['type']);
                         incrementalDom.text(' -- Ninguno');
                         incrementalDom.elementOpen('br');
                         incrementalDom.elementClose('br');

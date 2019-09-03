@@ -363,6 +363,12 @@ class NewStructure extends Component {
         this.setState({itemsCategoriesKeysRender: _itemsCategoriesKeysRender })
 
     }
+    handlerShowCategory(event){
+        this.setState({showCategory: true })
+    }
+    handlerCloseCategory(event){
+        this.setState({showCategory: false })
+    }
 
     closeOpenTab(event) {
         if (event === undefined)
