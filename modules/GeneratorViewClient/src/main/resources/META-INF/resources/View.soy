@@ -11,10 +11,12 @@
 	{@param contextPath: string}
 	{@param navigationNewURL: string}
 	{@param navigationEditURL: string}
+	{@param navigationSearchURL: string}
 	{@param data: map<string,list<map<string,string>>>}
 	{@param dataCount: map<string,number>}
 	{@param header: map<string,string>}
 	{@param keys: list<string>}
+	{@param? searchQuery: string}
 
 	{@param STRUCTURE_ID: map<string,?>}
 	{@param STRUCTURE_KEY: map<string,?>}
@@ -23,6 +25,7 @@
 	{@param? showDeleteWC: ?}
 	{@param? deleteWC: ?}
 	{@param? cancelWC: ?}
+
 
 	<div id="{$id}">
 
@@ -54,32 +57,57 @@
 				</div>
 			</div>
 		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-item input-group-prepend">
+					<div class="btn-group dropdown" role="group">
+						<button class="btn btn-primary" type="button">Agregar nuevo contenido</button>
+						<button aria-expanded="false" aria-haspopup="true" class="btn btn-primary btn-monospaced dropdown-toggle" data-toggle="dropdown" type="button">
+							<svg class="lexicon-icon lexicon-icon-caret-bottom"  focusable="false" role="presentation">
+								<use href="{$contextPath}/images/icons/icons.svg#caret-bottom" />
+							</svg>
+						</button>
 
-		<div class="btn-group dropdown" role="group">
-			<button class="btn btn-primary" type="button">Agregar nuevo contenido</button>
-			<button aria-expanded="false" aria-haspopup="true" class="btn btn-primary btn-monospaced dropdown-toggle" data-toggle="dropdown" type="button">
-				<svg class="lexicon-icon lexicon-icon-caret-bottom"  focusable="false" role="presentation">
-					<use href="{$contextPath}/images/icons/icons.svg#caret-bottom" />
-				</svg>
-			</button>
+						<div class="dropdown-menu dropdown-menu-left">
+							<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['HOTEL']}">Hoteles</a>
+							<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['ROOM']}">Habitaciones</a>
+							<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['RATE']}">Promociones</a>
+							<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['PUB']}">Bar</a>
+							<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['RESTAURANT']}">Restaurante</a>
+							<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['BRAND']}">Marcas</a>
+							<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['SPA']}">Spa</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['GYM']}">Gimnasio</a>
+							<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['DESTINATION']}">Destinos</a>
+							<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['FACILITY']}">Instalaciones</a>
+							<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['GENERIC']}">Genérico</a>
+							<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['KIDSCLUB']}">Club de Fiestas Infantiles</a>
+							<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['MEETING']}">Sala de Reuniones</a>
+						</div>
+					</div>
+				</div>
+				<div class="input-group-append input-group-item input-group-item-shrink">
 
-			<div class="dropdown-menu dropdown-menu-left">
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['HOTEL']}">Hoteles</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['ROOM']}">Habitaciones</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['RATE']}">Promociones</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['PUB']}">Bar</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['RESTAURANT']}">Restaurante</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['BRAND']}">Marcas</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['SPA']}">Spa</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['GYM']}">Gimnasio</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['DESTINATION']}">Destinos</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['FACILITY']}">Instalaciones</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['GENERIC']}">Genérico</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['KIDSCLUB']}">Club de Fiestas Infantiles</a>
-				<a class="dropdown-item" href="{$navigationNewURL}&_generatorviewclient_structureId={$STRUCTURE_ID['MEETING']}">Sala de Reuniones</a>
+						<div class="input-group">
+							<div class="input-group-item input-group-prepend">
+								<input class="form-control input-group-inset input-group-inset-after" data-onkeyup="handleChangeSearch"
+									   placeholder="Buscar..." type="text">
+							</div>
+							<span class="input-group-append input-group-item input-group-item-shrink">
+								<a href="{$searchQuery?$navigationSearchURL+'&_generatorviewclient_query='+$searchQuery:'#'}"
+								 >
+									<button class="btn btn-unstyled" type="button" >
+										<svg class="lexicon-icon lexicon-icon-search" focusable="false" role="presentation">
+											<use href="{$contextPath}/images/icons/icons.svg#search" />
+										</svg>
+									</button>
+								</a>
+							</span>
+						</div>
+				</div>
 			</div>
 		</div>
+
 		<br/>
 		<ul class="nav nav-underline" role="tablist">
 			<li class="nav-item">

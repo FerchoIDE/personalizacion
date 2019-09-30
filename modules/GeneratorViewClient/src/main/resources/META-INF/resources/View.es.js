@@ -18,6 +18,15 @@ class View extends Component {
         var st=event.currentTarget.attributes['id'].value
         this.setState({selectedTab: st })
     }
+    handleChangeSearch(event) {
+        event.preventDefault();
+        let value = event.target.value;
+        console.log('-----ChangeSearch----'+value);
+        if(value!==undefined && value!=='')
+            this.setState({searchQuery: value })
+        else
+            this.setState({searchQuery: undefined })
+    }
     deleteWC(event) {
         event.preventDefault();
         console.log('-----deleteWC----');

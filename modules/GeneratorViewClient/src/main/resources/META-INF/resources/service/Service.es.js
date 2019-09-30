@@ -171,6 +171,18 @@ export default class Service{
                 callBack(undefined,error)
             })
     }
+    searchContent(data,callBack){
+        wretch("http://"+_HOST_+_PATH_+"-/generator/resource/searchContent")
+            .post(data)
+            .json(json =>{
+                console.log(json)
+                callBack(json)
+            } )
+            .catch(error =>{
+                console.log(error)
+                callBack(error)
+            })
+    }
 
 
 }

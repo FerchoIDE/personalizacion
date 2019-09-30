@@ -175,8 +175,14 @@ public class GeneratorViewClientViewMVCRenderCommand
 
         editURL.setParameter("mvcRenderCommandName", "EditStructure");
 
+        PortletURL searchURL = renderResponse.createRenderURL();
+
+        searchURL.setParameter("mvcRenderCommandName", "search");
+        System.out.println("search url===="+searchURL.toString());
+
         template.put("navigationNewURL", navigationURL.toString());
         template.put("navigationEditURL", editURL.toString());
+        template.put("navigationSearchURL", searchURL.toString());
         template.put("STRUCTURE_ID", getStructureID());
         template.put("STRUCTURE_KEY", getStructureKEY());
         template.put("isOnDelete", false);

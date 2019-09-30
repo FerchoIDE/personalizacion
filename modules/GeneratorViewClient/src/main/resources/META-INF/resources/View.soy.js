@@ -32,10 +32,12 @@ var $templateAlias1 = Soy.getTemplate('TableUI.incrementaldom', 'render');
  *  contextPath: (!goog.soy.data.SanitizedContent|string),
  *  navigationNewURL: (!goog.soy.data.SanitizedContent|string),
  *  navigationEditURL: (!goog.soy.data.SanitizedContent|string),
+ *  navigationSearchURL: (!goog.soy.data.SanitizedContent|string),
  *  data: !Object<!goog.soy.data.SanitizedContent|string,!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>>,
  *  dataCount: !Object<!goog.soy.data.SanitizedContent|string,number>,
  *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  keys: !Array<!goog.soy.data.SanitizedContent|string>,
+ *  searchQuery: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  STRUCTURE_ID: !Object<!goog.soy.data.SanitizedContent|string,?>,
  *  STRUCTURE_KEY: !Object<!goog.soy.data.SanitizedContent|string,?>,
  *  isOnDelete: boolean,
@@ -62,6 +64,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var navigationNewURL = soy.asserts.assertType(goog.isString(opt_data.navigationNewURL) || opt_data.navigationNewURL instanceof goog.soy.data.SanitizedContent, 'navigationNewURL', opt_data.navigationNewURL, '!goog.soy.data.SanitizedContent|string');
   /** @type {!goog.soy.data.SanitizedContent|string} */
   var navigationEditURL = soy.asserts.assertType(goog.isString(opt_data.navigationEditURL) || opt_data.navigationEditURL instanceof goog.soy.data.SanitizedContent, 'navigationEditURL', opt_data.navigationEditURL, '!goog.soy.data.SanitizedContent|string');
+  /** @type {!goog.soy.data.SanitizedContent|string} */
+  var navigationSearchURL = soy.asserts.assertType(goog.isString(opt_data.navigationSearchURL) || opt_data.navigationSearchURL instanceof goog.soy.data.SanitizedContent, 'navigationSearchURL', opt_data.navigationSearchURL, '!goog.soy.data.SanitizedContent|string');
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>>} */
   var data = soy.asserts.assertType(goog.isObject(opt_data.data), 'data', opt_data.data, '!Object<!goog.soy.data.SanitizedContent|string,!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>>');
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,number>} */
@@ -70,6 +74,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var header = soy.asserts.assertType(goog.isObject(opt_data.header), 'header', opt_data.header, '!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>');
   /** @type {!Array<!goog.soy.data.SanitizedContent|string>} */
   var keys = soy.asserts.assertType(goog.isArray(opt_data.keys), 'keys', opt_data.keys, '!Array<!goog.soy.data.SanitizedContent|string>');
+  /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
+  var searchQuery = soy.asserts.assertType(opt_data.searchQuery == null || (goog.isString(opt_data.searchQuery) || opt_data.searchQuery instanceof goog.soy.data.SanitizedContent), 'searchQuery', opt_data.searchQuery, '!goog.soy.data.SanitizedContent|null|string|undefined');
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,?>} */
   var STRUCTURE_ID = soy.asserts.assertType(goog.isObject(opt_data.STRUCTURE_ID), 'STRUCTURE_ID', opt_data.STRUCTURE_ID, '!Object<!goog.soy.data.SanitizedContent|string,?>');
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,?>} */
@@ -156,118 +162,172 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementClose('div');
     incrementalDom.elementClose('div');
     incrementalDom.elementOpenStart('div');
-        incrementalDom.attr('class', 'btn-group dropdown');
-        incrementalDom.attr('role', 'group');
+        incrementalDom.attr('class', 'form-group');
     incrementalDom.elementOpenEnd();
-      incrementalDom.elementOpenStart('button');
-          incrementalDom.attr('class', 'btn btn-primary');
-          incrementalDom.attr('type', 'button');
-      incrementalDom.elementOpenEnd();
-        incrementalDom.text('Agregar nuevo contenido');
-      incrementalDom.elementClose('button');
-      incrementalDom.elementOpenStart('button');
-          incrementalDom.attr('aria-expanded', 'false');
-          incrementalDom.attr('aria-haspopup', 'true');
-          incrementalDom.attr('class', 'btn btn-primary btn-monospaced dropdown-toggle');
-          incrementalDom.attr('data-toggle', 'dropdown');
-          incrementalDom.attr('type', 'button');
-      incrementalDom.elementOpenEnd();
-        incrementalDom.elementOpenStart('svg');
-            incrementalDom.attr('class', 'lexicon-icon lexicon-icon-caret-bottom');
-            incrementalDom.attr('focusable', 'false');
-            incrementalDom.attr('role', 'presentation');
-        incrementalDom.elementOpenEnd();
-          incrementalDom.elementOpenStart('use');
-              incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#caret-bottom');
-          incrementalDom.elementOpenEnd();
-          incrementalDom.elementClose('use');
-        incrementalDom.elementClose('svg');
-      incrementalDom.elementClose('button');
       incrementalDom.elementOpenStart('div');
-          incrementalDom.attr('class', 'dropdown-menu dropdown-menu-left');
+          incrementalDom.attr('class', 'input-group');
       incrementalDom.elementOpenEnd();
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['HOTEL']);
-        incrementalDom.elementOpenEnd();
-          incrementalDom.text('Hoteles');
-        incrementalDom.elementClose('a');
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['ROOM']);
-        incrementalDom.elementOpenEnd();
-          incrementalDom.text('Habitaciones');
-        incrementalDom.elementClose('a');
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['RATE']);
-        incrementalDom.elementOpenEnd();
-          incrementalDom.text('Promociones');
-        incrementalDom.elementClose('a');
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['PUB']);
-        incrementalDom.elementOpenEnd();
-          incrementalDom.text('Bar');
-        incrementalDom.elementClose('a');
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['RESTAURANT']);
-        incrementalDom.elementOpenEnd();
-          incrementalDom.text('Restaurante');
-        incrementalDom.elementClose('a');
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['BRAND']);
-        incrementalDom.elementOpenEnd();
-          incrementalDom.text('Marcas');
-        incrementalDom.elementClose('a');
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['SPA']);
-        incrementalDom.elementOpenEnd();
-          incrementalDom.text('Spa');
-        incrementalDom.elementClose('a');
         incrementalDom.elementOpenStart('div');
-            incrementalDom.attr('class', 'dropdown-divider');
+            incrementalDom.attr('class', 'input-group-item input-group-prepend');
         incrementalDom.elementOpenEnd();
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'btn-group dropdown');
+              incrementalDom.attr('role', 'group');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('button');
+                incrementalDom.attr('class', 'btn btn-primary');
+                incrementalDom.attr('type', 'button');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.text('Agregar nuevo contenido');
+            incrementalDom.elementClose('button');
+            incrementalDom.elementOpenStart('button');
+                incrementalDom.attr('aria-expanded', 'false');
+                incrementalDom.attr('aria-haspopup', 'true');
+                incrementalDom.attr('class', 'btn btn-primary btn-monospaced dropdown-toggle');
+                incrementalDom.attr('data-toggle', 'dropdown');
+                incrementalDom.attr('type', 'button');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('svg');
+                  incrementalDom.attr('class', 'lexicon-icon lexicon-icon-caret-bottom');
+                  incrementalDom.attr('focusable', 'false');
+                  incrementalDom.attr('role', 'presentation');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpenStart('use');
+                    incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#caret-bottom');
+                incrementalDom.elementOpenEnd();
+                incrementalDom.elementClose('use');
+              incrementalDom.elementClose('svg');
+            incrementalDom.elementClose('button');
+            incrementalDom.elementOpenStart('div');
+                incrementalDom.attr('class', 'dropdown-menu dropdown-menu-left');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('class', 'dropdown-item');
+                  incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['HOTEL']);
+              incrementalDom.elementOpenEnd();
+                incrementalDom.text('Hoteles');
+              incrementalDom.elementClose('a');
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('class', 'dropdown-item');
+                  incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['ROOM']);
+              incrementalDom.elementOpenEnd();
+                incrementalDom.text('Habitaciones');
+              incrementalDom.elementClose('a');
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('class', 'dropdown-item');
+                  incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['RATE']);
+              incrementalDom.elementOpenEnd();
+                incrementalDom.text('Promociones');
+              incrementalDom.elementClose('a');
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('class', 'dropdown-item');
+                  incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['PUB']);
+              incrementalDom.elementOpenEnd();
+                incrementalDom.text('Bar');
+              incrementalDom.elementClose('a');
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('class', 'dropdown-item');
+                  incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['RESTAURANT']);
+              incrementalDom.elementOpenEnd();
+                incrementalDom.text('Restaurante');
+              incrementalDom.elementClose('a');
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('class', 'dropdown-item');
+                  incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['BRAND']);
+              incrementalDom.elementOpenEnd();
+                incrementalDom.text('Marcas');
+              incrementalDom.elementClose('a');
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('class', 'dropdown-item');
+                  incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['SPA']);
+              incrementalDom.elementOpenEnd();
+                incrementalDom.text('Spa');
+              incrementalDom.elementClose('a');
+              incrementalDom.elementOpenStart('div');
+                  incrementalDom.attr('class', 'dropdown-divider');
+              incrementalDom.elementOpenEnd();
+              incrementalDom.elementClose('div');
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('class', 'dropdown-item');
+                  incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['GYM']);
+              incrementalDom.elementOpenEnd();
+                incrementalDom.text('Gimnasio');
+              incrementalDom.elementClose('a');
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('class', 'dropdown-item');
+                  incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['DESTINATION']);
+              incrementalDom.elementOpenEnd();
+                incrementalDom.text('Destinos');
+              incrementalDom.elementClose('a');
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('class', 'dropdown-item');
+                  incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['FACILITY']);
+              incrementalDom.elementOpenEnd();
+                incrementalDom.text('Instalaciones');
+              incrementalDom.elementClose('a');
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('class', 'dropdown-item');
+                  incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['GENERIC']);
+              incrementalDom.elementOpenEnd();
+                incrementalDom.text('Gen\u00E9rico');
+              incrementalDom.elementClose('a');
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('class', 'dropdown-item');
+                  incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['KIDSCLUB']);
+              incrementalDom.elementOpenEnd();
+                incrementalDom.text('Club de Fiestas Infantiles');
+              incrementalDom.elementClose('a');
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('class', 'dropdown-item');
+                  incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['MEETING']);
+              incrementalDom.elementOpenEnd();
+                incrementalDom.text('Sala de Reuniones');
+              incrementalDom.elementClose('a');
+            incrementalDom.elementClose('div');
+          incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['GYM']);
+        incrementalDom.elementOpenStart('div');
+            incrementalDom.attr('class', 'input-group-append input-group-item input-group-item-shrink');
         incrementalDom.elementOpenEnd();
-          incrementalDom.text('Gimnasio');
-        incrementalDom.elementClose('a');
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['DESTINATION']);
-        incrementalDom.elementOpenEnd();
-          incrementalDom.text('Destinos');
-        incrementalDom.elementClose('a');
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['FACILITY']);
-        incrementalDom.elementOpenEnd();
-          incrementalDom.text('Instalaciones');
-        incrementalDom.elementClose('a');
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['GENERIC']);
-        incrementalDom.elementOpenEnd();
-          incrementalDom.text('Gen\u00E9rico');
-        incrementalDom.elementClose('a');
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['KIDSCLUB']);
-        incrementalDom.elementOpenEnd();
-          incrementalDom.text('Club de Fiestas Infantiles');
-        incrementalDom.elementClose('a');
-        incrementalDom.elementOpenStart('a');
-            incrementalDom.attr('class', 'dropdown-item');
-            incrementalDom.attr('href', navigationNewURL + '&_generatorviewclient_structureId=' + STRUCTURE_ID['MEETING']);
-        incrementalDom.elementOpenEnd();
-          incrementalDom.text('Sala de Reuniones');
-        incrementalDom.elementClose('a');
+          incrementalDom.elementOpenStart('div');
+              incrementalDom.attr('class', 'input-group');
+          incrementalDom.elementOpenEnd();
+            incrementalDom.elementOpenStart('div');
+                incrementalDom.attr('class', 'input-group-item input-group-prepend');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('input');
+                  incrementalDom.attr('class', 'form-control input-group-inset input-group-inset-after');
+                  incrementalDom.attr('data-onkeyup', 'handleChangeSearch');
+                  incrementalDom.attr('placeholder', 'Buscar...');
+                  incrementalDom.attr('type', 'text');
+              incrementalDom.elementOpenEnd();
+              incrementalDom.elementClose('input');
+            incrementalDom.elementClose('div');
+            incrementalDom.elementOpenStart('span');
+                incrementalDom.attr('class', 'input-group-append input-group-item input-group-item-shrink');
+            incrementalDom.elementOpenEnd();
+              incrementalDom.elementOpenStart('a');
+                  incrementalDom.attr('href', searchQuery ? navigationSearchURL + '&_generatorviewclient_query=' + searchQuery : '#');
+              incrementalDom.elementOpenEnd();
+                incrementalDom.elementOpenStart('button');
+                    incrementalDom.attr('class', 'btn btn-unstyled');
+                    incrementalDom.attr('type', 'button');
+                incrementalDom.elementOpenEnd();
+                  incrementalDom.elementOpenStart('svg');
+                      incrementalDom.attr('class', 'lexicon-icon lexicon-icon-search');
+                      incrementalDom.attr('focusable', 'false');
+                      incrementalDom.attr('role', 'presentation');
+                  incrementalDom.elementOpenEnd();
+                    incrementalDom.elementOpenStart('use');
+                        incrementalDom.attr('href', contextPath + '/images/icons/icons.svg#search');
+                    incrementalDom.elementOpenEnd();
+                    incrementalDom.elementClose('use');
+                  incrementalDom.elementClose('svg');
+                incrementalDom.elementClose('button');
+              incrementalDom.elementClose('a');
+            incrementalDom.elementClose('span');
+          incrementalDom.elementClose('div');
+        incrementalDom.elementClose('div');
       incrementalDom.elementClose('div');
     incrementalDom.elementClose('div');
     incrementalDom.elementOpen('br');
@@ -778,10 +838,12 @@ exports.render = $render;
  *  contextPath: (!goog.soy.data.SanitizedContent|string),
  *  navigationNewURL: (!goog.soy.data.SanitizedContent|string),
  *  navigationEditURL: (!goog.soy.data.SanitizedContent|string),
+ *  navigationSearchURL: (!goog.soy.data.SanitizedContent|string),
  *  data: !Object<!goog.soy.data.SanitizedContent|string,!Array<!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>>>,
  *  dataCount: !Object<!goog.soy.data.SanitizedContent|string,number>,
  *  header: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  keys: !Array<!goog.soy.data.SanitizedContent|string>,
+ *  searchQuery: (!goog.soy.data.SanitizedContent|null|string|undefined),
  *  STRUCTURE_ID: !Object<!goog.soy.data.SanitizedContent|string,?>,
  *  STRUCTURE_KEY: !Object<!goog.soy.data.SanitizedContent|string,?>,
  *  isOnDelete: boolean,
@@ -795,8 +857,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'View.render';
 }
 
-exports.render.params = ["id","changeTab","selectedTab","contextPath","navigationNewURL","navigationEditURL","data","dataCount","header","keys","STRUCTURE_ID","STRUCTURE_KEY","isOnDelete","showDeleteWC","deleteWC","cancelWC"];
-exports.render.types = {"id":"string","changeTab":"?","selectedTab":"string","contextPath":"string","navigationNewURL":"string","navigationEditURL":"string","data":"map<string,list<map<string,string>>>","dataCount":"map<string,number>","header":"map<string,string>","keys":"list<string>","STRUCTURE_ID":"map<string,?>","STRUCTURE_KEY":"map<string,?>","isOnDelete":"bool","showDeleteWC":"?","deleteWC":"?","cancelWC":"?"};
+exports.render.params = ["id","changeTab","selectedTab","contextPath","navigationNewURL","navigationEditURL","navigationSearchURL","data","dataCount","header","keys","searchQuery","STRUCTURE_ID","STRUCTURE_KEY","isOnDelete","showDeleteWC","deleteWC","cancelWC"];
+exports.render.types = {"id":"string","changeTab":"?","selectedTab":"string","contextPath":"string","navigationNewURL":"string","navigationEditURL":"string","navigationSearchURL":"string","data":"map<string,list<map<string,string>>>","dataCount":"map<string,number>","header":"map<string,string>","keys":"list<string>","searchQuery":"string","STRUCTURE_ID":"map<string,?>","STRUCTURE_KEY":"map<string,?>","isOnDelete":"bool","showDeleteWC":"?","deleteWC":"?","cancelWC":"?"};
 templates = exports;
 return exports;
 
