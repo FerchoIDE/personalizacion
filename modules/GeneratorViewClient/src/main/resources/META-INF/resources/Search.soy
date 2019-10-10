@@ -6,17 +6,46 @@
 {template .render}
     {@param id: string}
     {@param navigationEditURL: string}
+    {@param navigationSearchURL: string}
     {@param contextPath: string}
+    {@param querySearch: string}
+    {@param? searchQuery: string}
     {@param header: map<string,string>}
     {@param data: list<map<string,string>>}
     {@param dataCount: number}
     {@param keys: list<string>}
 
-
     {@param? showDeleteWC: ?}
+    {@param? changePage: ?}
 
 
     <div id="{$id}">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-item input-group-prepend">
+                   <h1> Se busco: <b>{$querySearch}</b></h1>
+                 </div>
+                <div class="input-group-append input-group-item input-group-item-shrink">
+
+                    <div class="input-group">
+                        <div class="input-group-item input-group-prepend">
+                            <input class="form-control input-group-inset input-group-inset-after" data-onkeyup="handleChangeSearch"
+                                   placeholder="{$querySearch}" type="text">
+                        </div>
+                        <span class="input-group-append input-group-item input-group-item-shrink">
+                                    <a href="{$searchQuery?$navigationSearchURL+'&_generatorviewclient_query='+$searchQuery:'#'}"
+                                    >
+                                        <button class="btn btn-unstyled" type="button" >
+                                            <svg class="lexicon-icon lexicon-icon-search" focusable="false" role="presentation">
+                                                <use href="{$contextPath}/images/icons/icons.svg#search" />
+                                            </svg>
+                                        </button>
+                                    </a>
+                                </span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {call TableUI.render}
             {param id: $id+'_table' /}
@@ -26,6 +55,7 @@
             {param navigationEditURL: $navigationEditURL /}
             {param data: $data /}
             {param dataCount: $dataCount/}
+            {param changePageParent: $changePage/}
             {param showDeleteWC: $showDeleteWC /}
         {/call}
 

@@ -82,8 +82,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var handleAddSection = opt_data.handleAddSection;
   /** @type {?} */
   var handleRemoveSection = opt_data.handleRemoveSection;
-  var _countSections__soy4141 = (countSection != null) ? countSection : [1];
-  var ___index__soy4143 = (_index != null) ? _index : 0;
+  var _countSections__soy4294 = (countSection != null) ? countSection : [1];
+  var ___index__soy4296 = (_index != null) ? _index : 0;
   if (repeatable) {
     incrementalDom.elementOpenStart('div');
         incrementalDom.attr('class', 'form-group-item');
@@ -147,11 +147,11 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenStart('div');
               incrementalDom.attr('class', 'form-group');
           incrementalDom.elementOpenEnd();
-            var _countSection4171List = _countSections__soy4141;
-            var _countSection4171ListLen = _countSection4171List.length;
-            for (var _countSection4171Index = 0; _countSection4171Index < _countSection4171ListLen; _countSection4171Index++) {
-                var _countSection4171Data = _countSection4171List[_countSection4171Index];
-                $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: _countSection4171Index, repeatable: repeatable, path: path + '___' + _countSection4171Index, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
+            var _countSection4324List = _countSections__soy4294;
+            var _countSection4324ListLen = _countSection4324List.length;
+            for (var _countSection4324Index = 0; _countSection4324Index < _countSection4324ListLen; _countSection4324Index++) {
+                var _countSection4324Data = _countSection4324List[_countSection4324Index];
+                $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: _countSection4324Index, repeatable: repeatable, path: path + '___' + _countSection4324Index, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
               }
           incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');
@@ -162,7 +162,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementClose('div');
     incrementalDom.elementClose('div');
   } else {
-    $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: ___index__soy4143, repeatable: repeatable, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
+    $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: ___index__soy4296, repeatable: repeatable, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
   }
 }
 exports.render = $render;

@@ -15,8 +15,10 @@
 
 	{@param? showDeleteWC: ?}
 	{@param? changePage: ?}
+	{@param? changePageParent: ?}
 	{@param? selectPage: ?}
 	{let $selectPageCurrent: isNonnull($selectPage)?(isNonnull($selectPage[$id])?$selectPage[$id]:0):0 /}
+	{let $changePageCurrent: isNonnull($changePageParent)?$changePageParent:$changePage /}
 
 	<div id="{$id}" class="table-responsive">
 			<table class="show-quick-actions-on-hover table table-autofit table-hover table-list table-nowrap">
@@ -66,9 +68,9 @@
 						<ul class="pagination">
 							{for $i in range($dataCount)}
 								{if $i==$selectPageCurrent  }
-									<li class="page-item active"><a class="page-link" onclick="{$changePage}"  itemid="{$id}___{$i}" href="#1">{$i+1}</a></li>
+									<li class="page-item active"><a class="page-link" onclick="{$changePageCurrent}"  itemid="{$id}___{$i}" href="#1">{$i+1}</a></li>
 								{else}
-									<li class="page-item"><a class="page-link" onclick="{$changePage}"  itemid="{$id}___{$i}" href="#3">{$i+1}</a></li>
+									<li class="page-item"><a class="page-link" onclick="{$changePageCurrent}"  itemid="{$id}___{$i}" href="#3">{$i+1}</a></li>
 								{/if}
 
 							{/for}

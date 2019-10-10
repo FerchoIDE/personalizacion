@@ -68,11 +68,11 @@ export default class NewStructureState extends State {
                     return this.setNestedValue(names.join('/'), value, language, _field.nested)
                 } else {
                     let _values = Object.assign({}, _field.values);
-                    if (typeof value === 'object' && value['id']!==undefined) {
+                    if (value !== null && typeof value === 'object' && value['id']!==undefined) {
                         if (_values[language] === undefined)
                             _values[language] = {}
                         _values[language][value['id']] = value
-                    } else {
+                    } else if(value !== null) {
                         _values[language] = value
                     }
 

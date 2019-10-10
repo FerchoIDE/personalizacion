@@ -4,6 +4,10 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.search.*;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -43,7 +47,7 @@ public class GeneratorViewClientSearchMVCRenderCommand implements MVCRenderComma
         try {
 
             SearchContext searchContext = SearchContextFactory.getInstance(PortalUtil.getHttpServletRequest(renderRequest));
-            searchContext.setEntryClassNames(new String[]{JournalArticle.class.getName()});
+            //searchContext.setEntryClassNames(new String[]{JournalArticle.class.getName()});
             searchContext.setSorts(new Sort("modified_sortable",true));
 
             searchContext.setStart(0);
@@ -51,17 +55,36 @@ public class GeneratorViewClientSearchMVCRenderCommand implements MVCRenderComma
 //             searchContext.setAttribute("head", Boolean.TRUE);
 //             searchContext.setAttribute("latest", Boolean.TRUE);
 
-            BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
-            BooleanQuery query = BooleanQueryFactoryUtil.create(searchContext);
+            BooleanQuery fullQuery = new BooleanQueryImpl();
             Query query2 = generateQuery(searchContext,querySearch);// BooleanQueryFactoryUtil.create(searchContext);
-            BooleanQuery query1 = BooleanQueryFactoryUtil.create(searchContext);
+
+            BooleanFilter bf = new BooleanFilter();
+
+            BooleanFilter bfTF1 = new BooleanFilter();
+            BooleanFilter bfTF2 = new BooleanFilter();
+            TermsFilter tf1 = new TermsFilter("groupId");//,String.valueOf(portletGroupId));
+            tf1.addValue(String.valueOf(portletGroupId));
+            TermsFilter tf2 = new TermsFilter("scopeGroupId");//,String.valueOf(portletGroupId));
+            tf2.addValue(String.valueOf(portletGroupId));
+            bfTF2.add(tf1,BooleanClauseOccur.MUST);
+            bfTF2.add(tf2,BooleanClauseOccur.MUST);
+            bfTF1.add(bfTF2,BooleanClauseOccur.MUST);
+            bf.add(bfTF1,BooleanClauseOccur.MUST);
+
+            BooleanFilter bfTF3 = new BooleanFilter();
+            TermFilter tf3 = new TermFilter("entryClassName","com.liferay.journal.model.JournalArticle");
+            TermFilter tf4 = new TermFilter("latest","true");
+            TermFilter tf5 = new TermFilter("status","8");
+            bfTF3.add(tf3,BooleanClauseOccur.MUST);
+            bfTF3.add(tf4,BooleanClauseOccur.MUST);
+            bfTF3.add(tf5,BooleanClauseOccur.MUST_NOT);
+            bf.add(bfTF3,BooleanClauseOccur.SHOULD);
+
 
             //addExactRequiredTerm(query, Field.TITLE, "*hotel*");
 
             // addExactRequiredTerm(query, Field.STATUS, String.valueOf(0)); // No drafts
             //addExactRequiredTerm(query, "head", Boolean.TRUE.toString()); // Only the most recent version
-            query.addExactTerm("latest", Boolean.TRUE);
-            query1.addExactTerm("head", Boolean.TRUE);
 
 
             // query.addExactTerm(Field.ENTRY_CLASS_NAME, JournalArticle.class.getName());
@@ -73,7 +96,10 @@ public class GeneratorViewClientSearchMVCRenderCommand implements MVCRenderComma
             //  fullQuery.addTerm( Field.TITLE, "*hotel*");
             //searchQuery.addRequiredTerm("head",true);
             fullQuery.add(query2, BooleanClauseOccur.MUST);
-            fullQuery.add(query, BooleanClauseOccur.MUST);
+            fullQuery.setPreBooleanFilter(bf);
+           // fullQuery.add(query, BooleanClauseOccur.MUST);
+           // fullQuery.add(query3, BooleanClauseOccur.MUST);
+
 
             Hits hits = IndexSearcherHelperUtil.search(searchContext, fullQuery);// SearchEngineUtil.search(searchContext, fullQuery);
             // JournalUtil.getArticles(hits);
@@ -89,11 +115,13 @@ public class GeneratorViewClientSearchMVCRenderCommand implements MVCRenderComma
             for (Document doc : hits.getDocs()) {
                 //if(hits.getDocs().length>0){
                 // Document doc = hits.getDocs()[0];
-                System.out.println("score======"+doc.get("_score"));
+               /* System.out.println("score======"+doc.get("_score"));
                 System.out.println("score======"+doc.get("score"));
-                System.out.println((i++) + "--version===" + doc.getField("version").getValue());
+                System.out.println((i++) + "--version===" + doc.getField("version").getValue());*/
                 System.out.println("localized_title===" + doc.getField("localized_title").getValue());
-                if (doc.hasField("assetTagNames"))
+                System.out.println("titleesES===" + doc.getField("titleesES"));
+                System.out.println("title===" + doc.getField("title"));
+              /*  if (doc.hasField("assetTagNames"))
                     System.out.println("assetTagNames===" + doc.getField("assetTagNames").getValue());
                 System.out.println("entryClassName===" + doc.getField("entryClassName").getValue());
                 if (doc.hasField("latest"))
@@ -125,14 +153,17 @@ public class GeneratorViewClientSearchMVCRenderCommand implements MVCRenderComma
                         System.out.println(s + "---" + field.getValue());
                     });
                 }
-               /* doc.getFields().forEach((s, field) -> {
+                doc.getFields().forEach((s, field) -> {
                     System.out.println(s + "---" + field.getValue());
                 });*/
                 Map<String, String> mapElement = new HashMap<>();
                 JournalArticle ja = JournalArticleLocalServiceUtil.fetchLatestArticle(portletGroupId,
                         doc.getField(Field.ARTICLE_ID).getValue(),0);
-                if(ja==null )
+                if(ja==null ) {
+                    System.out.println("Conttt---articleId===" + doc.getField(Field.ARTICLE_ID).getValue());
                     continue;
+                }
+                System.out.println("getGroupId===="+ja.getId()+"---folder=="+ja.getFolder().buildTreePath());
                 mapElement.put("id",String.valueOf( ja.getId()));
                 mapElement.put("articleId", doc.getField(Field.ARTICLE_ID).getValue());
 
@@ -142,7 +173,8 @@ public class GeneratorViewClientSearchMVCRenderCommand implements MVCRenderComma
                         sdf.format(new Date(modifiedDate)));
                 mapElement.put(
                         "title",
-                        doc.getField("localized_title").getValue());
+                        ja.getTitle(
+                                ja.getDefaultLanguageId()));
                 mapElement.put(
                         "version",
                         doc.getField("version").getValue());
@@ -157,11 +189,16 @@ public class GeneratorViewClientSearchMVCRenderCommand implements MVCRenderComma
             PortletURL editURL = renderResponse.createRenderURL();
 
             editURL.setParameter("mvcRenderCommandName", "EditStructure");
+
+            PortletURL searchURL = renderResponse.createRenderURL();
+
+            searchURL.setParameter("mvcRenderCommandName", "search");
+
             Map<String, String> mapHeader = new HashMap<>();
-            mapHeader.put("id", "Identificador");
+            mapHeader.put("articleId", "Identificador");
             mapHeader.put("lastUpdated", "Fecha Modificación");
             mapHeader.put("type", "Tipo");
-            mapHeader.put("title", "Titulo");
+            mapHeader.put("title", "Título");
             mapHeader.put("version", "Versión");
             int countArticles = hits.getLength();
             if(countArticles%20==0){
@@ -175,11 +212,13 @@ public class GeneratorViewClientSearchMVCRenderCommand implements MVCRenderComma
 
             template.put(
                     "keys",
-                    Arrays.asList("id", "title", "version", "type", "lastUpdated"));
+                    Arrays.asList("articleId", "title", "version", "type", "lastUpdated"));
 
 
             template.put("navigationEditURL", editURL.toString());
+            template.put("navigationSearchURL", searchURL.toString());
             template.put("contextPath", renderRequest.getContextPath());
+            template.put("querySearch", querySearch);
         }catch(Exception ex){
             ex.printStackTrace();
             throw new PortletException(ex);
@@ -208,12 +247,6 @@ public class GeneratorViewClientSearchMVCRenderCommand implements MVCRenderComma
 
     private Query generateQuery(SearchContext searchContext, String query){
 
-//return new PhraseQueryBuilder().build(Field.TITLE,query);
-       // for (String keys :Field.KEYWORDS){
-
-       // }
-       return  new FullTextQueryBuilder(new SimpleKeywordTokenizer()).build(Field.KEYWORDS,query);
-     //   return TermQueryFactoryUtil.create(searchContext, Field.ANY, query);
-
+       return  new FullTextQueryBuilder(new SimpleKeywordTokenizer()).build(query);
     }
 }

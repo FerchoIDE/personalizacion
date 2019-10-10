@@ -65,7 +65,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var availableLanguageIds = soy.asserts.assertType(goog.isArray(opt_data.availableLanguageIds), 'availableLanguageIds', opt_data.availableLanguageIds, '!Array<!goog.soy.data.SanitizedContent|string>');
   /** @type {!goog.soy.data.SanitizedContent|string} */
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
-  var _values__soy4360 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
+  var _values__soy4513 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'form-group-item');
@@ -77,17 +77,17 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       soyIdom.print(label);
     incrementalDom.elementClose('label');
     if (localizable == true) {
-      var language4408List = availableLanguageIds;
-      var language4408ListLen = language4408List.length;
-      for (var language4408Index = 0; language4408Index < language4408ListLen; language4408Index++) {
-          var language4408Data = language4408List[language4408Index];
-          if (language4408Data == defaultLanguageId) {
+      var language4561List = availableLanguageIds;
+      var language4561ListLen = language4561List.length;
+      for (var language4561Index = 0; language4561Index < language4561ListLen; language4561Index++) {
+          var language4561Data = language4561List[language4561Index];
+          if (language4561Data == defaultLanguageId) {
             incrementalDom.elementOpenStart('input');
                 incrementalDom.attr('class', 'form-control');
                 incrementalDom.attr('data-onkeyup', 'handleChange');
-                incrementalDom.attr('id', 'input_' + id + '_' + language4408Data);
-                incrementalDom.attr('value', (_values__soy4360[language4408Data] != null) ? _values__soy4360[language4408Data][_index] : '');
-                incrementalDom.attr('data-language', language4408Data);
+                incrementalDom.attr('id', 'input_' + id + '_' + language4561Data);
+                incrementalDom.attr('value', (_values__soy4513[language4561Data] != null) ? _values__soy4513[language4561Data][_index] : '');
+                incrementalDom.attr('data-language', language4561Data);
                 incrementalDom.attr('data-path', path);
                 incrementalDom.attr('placeholder', placeholder);
                 incrementalDom.attr('type', type);
@@ -97,10 +97,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           } else {
             incrementalDom.elementOpenStart('input');
                 incrementalDom.attr('class', 'form-control');
-                incrementalDom.attr('id', 'input_' + id + '_' + language4408Data);
+                incrementalDom.attr('id', 'input_' + id + '_' + language4561Data);
                 incrementalDom.attr('placeholder', placeholder);
-                incrementalDom.attr('value', (_values__soy4360[language4408Data] != null) ? _values__soy4360[language4408Data][_index] : '');
-                incrementalDom.attr('data-language', language4408Data);
+                incrementalDom.attr('value', (_values__soy4513[language4561Data] != null) ? _values__soy4513[language4561Data][_index] : '');
+                incrementalDom.attr('data-language', language4561Data);
                 incrementalDom.attr('data-path', path);
                 incrementalDom.attr('style', 'display: none');
                 incrementalDom.attr('type', type);
@@ -115,7 +115,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.attr('data-onkeyup', 'handleChange');
           incrementalDom.attr('id', 'input_' + id);
           incrementalDom.attr('data-path', path);
-          incrementalDom.attr('value', (_values__soy4360[defaultLanguageId] != null) ? _values__soy4360[defaultLanguageId][_index] : '');
+          incrementalDom.attr('value', (_values__soy4513[defaultLanguageId] != null) ? _values__soy4513[defaultLanguageId][_index] : '');
           incrementalDom.attr('placeholder', placeholder);
           incrementalDom.attr('type', type);
       incrementalDom.elementOpenEnd();

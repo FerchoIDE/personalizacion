@@ -400,6 +400,13 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.elementOpenEnd();
                     incrementalDom.text('Seleccionar');
                   incrementalDom.elementClose('button');
+                  incrementalDom.elementOpenStart('button');
+                      incrementalDom.attr('class', 'btn btn-secondary');
+                      incrementalDom.attr('onclick', 'window.history.go(-1); return false;');
+                      incrementalDom.attr('type', 'button');
+                  incrementalDom.elementOpenEnd();
+                    incrementalDom.text('Cancelar');
+                  incrementalDom.elementClose('button');
                 incrementalDom.elementClose('div');
               incrementalDom.elementClose('div');
             incrementalDom.elementClose('div');

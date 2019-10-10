@@ -5,6 +5,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.util.comparator.ArticleModifiedDateComparator;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.search.*;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -74,13 +75,15 @@ public class GeneratorViewClientViewMVCRenderCommand
             //String[] keys = new String[1];
             //keys[0] = s;
             List<Map<String, String>> lstElement = new LinkedList<>();
+
             List<JournalArticle> lst =
-                    journalArticleService.getArticlesByStructureId(portletGroupId, s, 0, 20, comparator);
-           //journalArticleService.getStructureArticles(keys);
+                    getArticlesByStructure(portletGroupId, renderRequest, s);
+            // journalArticleService.getArticlesByStructureId(portletGroupId, s, 0, 20, comparator);
+            //journalArticleService.getStructureArticles(keys);
 
             if (lst != null) {
                 lst.forEach(journalArticle -> {
-                    boolean isLast = false;
+                   /* boolean isLast = false;
 
                     try {
                         isLast = journalArticleService.isLatestVersion(
@@ -91,43 +94,43 @@ public class GeneratorViewClientViewMVCRenderCommand
                     } catch (Exception ex) {
                     }
 
-                    if (isLast) {
-                        Map<String, String> mapElement = new HashMap<>();
+                    if (isLast) {*/
+                    Map<String, String> mapElement = new HashMap<>();
 
-                        try {
-                            // System.out.println(
-                            //	journalArticle.getDDMStructure());
+                    try {
+                        // System.out.println(
+                        //	journalArticle.getDDMStructure());
 
-                            if (s.equalsIgnoreCase(String.valueOf(ConstantUtil.HOTEL_STRUCTURE_ID)))
-                                mapElement.put(
-                                        "marca",
-                                        journalArticle.getFolder().getName());
-                            else
-                                mapElement.put(
-                                        "marca",
-                                        journalArticle.getFolder().getParentFolder().getName());
-
-                        } catch (Exception ex) {
+                        if (s.equalsIgnoreCase(String.valueOf(ConstantUtil.HOTEL_STRUCTURE_ID)))
                             mapElement.put(
                                     "marca",
-                                    "unknown");
+                                    journalArticle.getFolder().getName());
+                        else
+                            mapElement.put(
+                                    "marca",
+                                    journalArticle.getFolder().getParentFolder().getName());
 
-                        }
+                    } catch (Exception ex) {
+                        mapElement.put(
+                                "marca",
+                                "unknown");
 
-                        mapElement.put("id", String.valueOf(journalArticle.getId()));
-                        mapElement.put("articleId", journalArticle.getArticleId());
-                        mapElement.put(
-                                "lastUpdated",
-                                sdf.format(journalArticle.getModifiedDate()));
-                        mapElement.put(
-                                "title",
-                                journalArticle.getTitle(
-                                        journalArticle.getDefaultLanguageId()));
-                        mapElement.put(
-                                "version",
-                                String.valueOf(journalArticle.getVersion()));
-                        lstElement.add(mapElement);
                     }
+
+                    mapElement.put("id", String.valueOf(journalArticle.getId()));
+                    mapElement.put("articleId", journalArticle.getArticleId());
+                    mapElement.put(
+                            "lastUpdated",
+                            sdf.format(journalArticle.getModifiedDate()));
+                    mapElement.put(
+                            "title",
+                            journalArticle.getTitle(
+                                    journalArticle.getDefaultLanguageId()));
+                    mapElement.put(
+                            "version",
+                            String.valueOf(journalArticle.getVersion()));
+                    lstElement.add(mapElement);
+                    //}
                 });
             }
 
@@ -138,22 +141,23 @@ public class GeneratorViewClientViewMVCRenderCommand
                         AbstractMap.SimpleEntry::getValue));
 
         Map<String, Integer> mpCount = keysLst.stream().map(s -> {
-             int countArticles = journalArticleService.getStructureArticlesCount(portletGroupId,s);
-             if(countArticles%20==0){
-                 return new AbstractMap.SimpleEntry<>(s, countArticles/20);
-             }else{
-                 return new AbstractMap.SimpleEntry<>(s,( (countArticles-(countArticles%20))/20)+1);
-             }
+            int countArticles = getCountArticlesByStructure(portletGroupId,renderRequest, s);//journalArticleService.getStructureArticlesCount(portletGroupId, s);
+            System.out.println("-------count==" + countArticles);
+            if (countArticles % 20 == 0) {
+                return new AbstractMap.SimpleEntry<>(s, countArticles / 20);
+            } else {
+                return new AbstractMap.SimpleEntry<>(s, ((countArticles - (countArticles % 20)) / 20) + 1);
+            }
         }).collect(
                 Collectors.toMap(
                         AbstractMap.SimpleEntry::getKey,
                         AbstractMap.SimpleEntry::getValue));
 
         Map<String, String> mapHeader = new HashMap<>();
-        mapHeader.put("id", "Identificador");
+        mapHeader.put("articleId", "Identificador");
         mapHeader.put("lastUpdated", "Fecha Modificación");
         mapHeader.put("marca", "Marca");
-        mapHeader.put("title", "Titulo");
+        mapHeader.put("title", "Título");
         mapHeader.put("version", "Versión");
 
         Template template = (Template) renderRequest.getAttribute(
@@ -165,7 +169,7 @@ public class GeneratorViewClientViewMVCRenderCommand
         template.put("header", mapHeader);
         template.put(
                 "keys",
-                Arrays.asList("id", "title", "version", "marca", "lastUpdated"));
+                Arrays.asList("articleId", "title", "version", "marca", "lastUpdated"));
 
         PortletURL navigationURL = renderResponse.createRenderURL();
 
@@ -178,7 +182,7 @@ public class GeneratorViewClientViewMVCRenderCommand
         PortletURL searchURL = renderResponse.createRenderURL();
 
         searchURL.setParameter("mvcRenderCommandName", "search");
-        System.out.println("search url===="+searchURL.toString());
+        System.out.println("search url====" + searchURL.toString());
 
         template.put("navigationNewURL", navigationURL.toString());
         template.put("navigationEditURL", editURL.toString());
@@ -229,6 +233,89 @@ public class GeneratorViewClientViewMVCRenderCommand
         result.put("KIDSCLUB", String.valueOf(ConstantUtil.KIDSCLUB_STRUCTURE_KEY));
         result.put("MEETING", String.valueOf(ConstantUtil.MEETING_STRUCTURE_KEY));
         return result;
+    }
+
+    private int getCountArticlesByStructure(Long portletGroupId,RenderRequest renderRequest, String structureKey) {
+        SearchContext searchContext = SearchContextFactory.getInstance(PortalUtil.getHttpServletRequest(renderRequest));
+        searchContext.setEntryClassNames(new String[]{JournalArticle.class.getName()});
+        long[] groupIds = {portletGroupId};
+        searchContext.setGroupIds(groupIds);
+
+        BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
+        BooleanQuery query = BooleanQueryFactoryUtil.create(searchContext);
+        BooleanQuery query1 = BooleanQueryFactoryUtil.create(searchContext);
+        BooleanQuery query2 = BooleanQueryFactoryUtil.create(searchContext);
+        BooleanQuery query3 = BooleanQueryFactoryUtil.create(searchContext);
+
+
+        query.addExactTerm("latest", Boolean.TRUE);
+        query1.addExactTerm("head", Boolean.TRUE);
+        query2.addExactTerm("ddmStructureKey", structureKey);
+        query3.addExactTerm("groupId", portletGroupId);
+
+        try {
+            fullQuery.add(query1, BooleanClauseOccur.MUST);
+            fullQuery.add(query, BooleanClauseOccur.MUST);
+            fullQuery.add(query2, BooleanClauseOccur.MUST);
+            fullQuery.add(query3, BooleanClauseOccur.MUST);
+
+            return Long.valueOf(IndexSearcherHelperUtil.searchCount(searchContext, fullQuery)).intValue();
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    private List<JournalArticle> getArticlesByStructure(Long portletGroupId, RenderRequest renderRequest, String structureKey) {
+        SearchContext searchContext = SearchContextFactory.getInstance(PortalUtil.getHttpServletRequest(renderRequest));
+        searchContext.setEntryClassNames(new String[]{JournalArticle.class.getName()});
+        searchContext.setSorts(new Sort("modified_sortable", true));
+        long[] groupIds = {portletGroupId};
+        searchContext.setGroupIds(groupIds);
+
+        searchContext.setStart(0);
+        searchContext.setEnd(20);
+
+        BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
+        BooleanQuery query = BooleanQueryFactoryUtil.create(searchContext);
+        BooleanQuery query1 = BooleanQueryFactoryUtil.create(searchContext);
+        BooleanQuery query2 = BooleanQueryFactoryUtil.create(searchContext);
+        BooleanQuery query3 = BooleanQueryFactoryUtil.create(searchContext);
+
+
+        query.addExactTerm("latest", Boolean.TRUE);
+        query1.addExactTerm("head", Boolean.TRUE);
+        query2.addExactTerm("ddmStructureKey", structureKey);
+        query3.addExactTerm("groupId", portletGroupId);
+        List<JournalArticle> lstArticles = new ArrayList<>();
+
+        try {
+            fullQuery.add(query1, BooleanClauseOccur.MUST);
+            fullQuery.add(query, BooleanClauseOccur.MUST);
+            fullQuery.add(query2, BooleanClauseOccur.MUST);
+            fullQuery.add(query3, BooleanClauseOccur.MUST);
+
+            Hits hits = IndexSearcherHelperUtil.search(searchContext, fullQuery);// SearchEngineUtil.search(searchContext, fullQuery);
+            System.out.println(portletGroupId+"--structureKey==="+structureKey+"---count hitss===="+hits.getLength());
+            for (Document doc : hits.getDocs()) {
+                System.out.println("Articleid===" + doc.getField(Field.ARTICLE_ID).getValue());
+
+                System.out.println("localized_title===" + doc.getField("localized_title").getValue());
+                System.out.println("groupId===" + doc.getField("groupId").getValue());
+               /* doc.getFields().forEach((s, field) -> {
+                    System.out.println(s + "---" + field.getValue());
+                });*/
+                JournalArticle ja = JournalArticleLocalServiceUtil.fetchLatestArticle(portletGroupId,
+                        doc.getField(Field.ARTICLE_ID).getValue(), 0);
+                System.out.println( "---Article===" + ja.getId());
+                lstArticles.add(ja);
+            }
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+        return lstArticles;
     }
 
     private JournalArticleLocalService journalArticleService =
