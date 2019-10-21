@@ -32,6 +32,7 @@
     {@param? isOpenJournalType: bool}
     {@param? closeSelectJournalType: ?}
     {@param? saveSelectJournalType: ?}
+    {@param? required: bool}
 
     {let $_itemsJournalAsociated: isNonnull($itemsJournalAsociated)?$itemsJournalAsociated[$id]:$itemsJournalAsociated /}
     {let $structureId: [
@@ -97,6 +98,7 @@
                 </div>
             </div>
             <div class="col-1">
+                {$required?'*':''}
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <button onclick="{$openSelectJournal}" data-target="#{$id}_Modal" data-toggle="modal"

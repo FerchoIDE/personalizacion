@@ -17,6 +17,7 @@
 	{@param availableLanguageIds: list<string>}
 	{@param defaultLanguageId: string}
 	{@param? handleChangeValue: ?}
+	{@param? required: bool}
 
 	{@param? countSection: list<?>}
 	{@param? handleAddSection: ?}
@@ -54,6 +55,7 @@
 								{param type: $type /}
 								{param localizable: $localizable /}
 								{param label: $labels[$defaultLanguageId] /}
+								{param required: $required /}
 								{param placeholder: $placeholder[$defaultLanguageId] /}
 								{param values: $values /}
 								{param _index: index($_countSection) /}
@@ -74,6 +76,7 @@
 		{call TextUI.render}
 			{param id: $id /}
 			{param type: $type /}
+			{param required: $required /}
 			{param localizable: $localizable /}
 			{param label: $labels[$defaultLanguageId] /}
 			{param placeholder: $placeholder[$defaultLanguageId] /}

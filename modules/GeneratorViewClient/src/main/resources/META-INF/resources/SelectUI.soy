@@ -10,11 +10,12 @@
 	{@param defaultLanguageId: string}
 	{@param? path: string}
 	{@param? multiple: bool}
+	{@param? required: bool}
 	{let $_values: isNonnull($values) ? $values : quoteKeysIfJs(['es_ES':[''],'en_US':['']]) /}
 	{let $_val: isNonnull($_values[$defaultLanguageId])?$_values[$defaultLanguageId]:'' /}
 	<div id="{$id}">
 		<div class="form-group">
-			<label for="select_{$id}">{$label}</label>
+			<label for="select_{$id}">{$label}{$required?'*':''}</label>
 			{if $multiple}
 				<select class="form-control" data-path="{$path}" data-language="{$defaultLanguageId}"
 						data-onchange="handleChange" multiple

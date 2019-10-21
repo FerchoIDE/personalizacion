@@ -15,9 +15,10 @@
 	{@param type: any}
 	{@param availableLanguageIds: list<string>}
 	{@param defaultLanguageId: string}
+	{@param? required: bool}
 	{let $_values: isNonnull($values) ? $values : quoteKeysIfJs(['es_ES':[''],'en_US':['']]) /}
 	<div id="{$id}" class="form-group-item" style="{$repeatable?'width:99%':''}">
-			<label for="input_{$id}">{$label}</label>
+			<label for="input_{$id}">{$label} {$required?'*':''}</label>
 
 		{if $localizable == true}
 			{foreach $language in $availableLanguageIds}

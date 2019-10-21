@@ -707,14 +707,84 @@ class NewStructure extends Component {
 
         let _structureKey = this.initialConfig_.structureKey;
         let _fields = []
+        var errorRequired=false
+        var _count=0;
         for (var field of this.model.getState()['fields']) {
+            _count=_count+1;
             if(field===undefined)
                 continue;
+            if(field.nested!==undefined){
+                for(var fieldN of field.nested){
+                    if(fieldN.required===true){
+                        var pathNArray = fieldN.path.split('/')
+                        var pathN = pathNArray[pathNArray.length-1]
+                        if(fieldN.values===undefined
+                            || ( Object.keys(fieldN.values).length<1 )){
+                            //$('#'+pathN).addClass('has-error');
+                            document.getElementById(pathN).style.border='solid'
+                            document.getElementById(pathN).style.color='red'
+                            console.log("Required Field not found==="+fieldN.path)
+                            errorRequired=true
+                        }else{
+                            if(fieldN.values!==undefined && Object.keys(fieldN.values).length>0 ){
+                                var valN = fieldN.values[this.initialConfig_.data.defaultLanguage]
+
+                                if(valN===undefined || valN ==='' ){
+                                    console.log("Required Field not found==="+fieldN.path)
+                                    errorRequired=true
+                                    //$('#'+pathN).addClass('has-error');
+                                    document.getElementById(pathN).style.border='solid'
+                                    document.getElementById(pathN).style.color='red'
+                                }
+                                else
+                                    //$('#'+pathN).removeClass('has-error');
+                                    document.getElementById(pathN).style.border=''
+                            }else
+                                //$('#'+pathN).removeClass('has-error');
+                                document.getElementById(pathN).style.border=''
+                        }
+                    }
+                }
+            }else{
+                if(field.required===true){
+                    if(field.values===undefined
+                        || ( Object.keys(field.values).length<1 )){
+                        //$('#'+field.path).addClass('has-error');
+                        document.getElementById(field.path).style.border='solid'
+                        document.getElementById(field.path).style.color='red'
+                        console.log("Required Field not found==="+field.path)
+                        errorRequired=true
+                    }else{
+                        if(field.values!==undefined && Object.keys(field.values).length>0 ){
+                            var valN = field.values[this.initialConfig_.data.defaultLanguage]
+
+                            if(valN===undefined || valN ==='' ){
+                                console.log("Required Field not found==="+field.path)
+                                errorRequired=true
+                                //$('#'+field.path).addClass('has-error');
+                                document.getElementById(field.path).style.border='solid'
+                                document.getElementById(field.path).style.color='red'
+                            }
+                            else
+                               // $('#'+field.path).removeClass('has-error');
+                                document.getElementById(field.path).style.border=''
+                        }else
+                           // $('#'+field.path).removeClass('has-error');
+                            document.getElementById(field.path).style.border=''
+                    }
+                }
+            }
+
+
             if(field.values===undefined
             || (field.multiple && Object.keys(field.values).length<1 ))
                 continue;
             console.log(field.toJson())
             _fields.push(field.toJson())
+        }
+        if(errorRequired){
+            alert('Algunos campos requeridos no han sido capturados, Revise')
+            return
         }
         var _fieldsRoot = {}
         let _fieldParent = {

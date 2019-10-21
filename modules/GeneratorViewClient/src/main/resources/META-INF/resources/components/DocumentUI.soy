@@ -40,6 +40,7 @@
     {@param availableLanguageIds: list<string>}
     {@param defaultLanguageId: string}
     {@param? handleChangeValueDocument: ?}
+    {@param? required: bool}
 
     {let $_itemsAsociated: isNonnull($itemsAsociated)?$itemsAsociated[$id]:$itemsAsociated /}
     {let $_isOpen: isNonnull($isOpen)?$isOpen: quoteKeysIfJs(['a': false]) /}
@@ -215,6 +216,7 @@
                 </div>
             </div>
             <div class="col-1">
+                {$required?'*':''}
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <div class="upload-btn-wrapper-custom">

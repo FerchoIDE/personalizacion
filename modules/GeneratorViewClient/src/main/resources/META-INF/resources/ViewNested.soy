@@ -100,6 +100,7 @@
 														{param localizable: $field['localizable'] /}
 														{param values: $field['values'] /}
 														{param repeatable: $field['repeatable'] /}
+														{param required: $field['required'] /}
 														{param contextPath: $contextPath/}
 														{param _index: index($_countSection)/}
 														{param availableLanguageIds: $availableLanguageIds /}
@@ -111,6 +112,7 @@
 														{param id: $field['name']+'___'+index($_countSection) /}
 														{param nameParent: $name /}
 														{param label: $field['label'] /}
+														{param required: $field['required'] /}
 														{param checkedOption: $checkedOption /}
 														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
 														{param defaultLanguageId: $defaultLanguage /}
@@ -123,6 +125,7 @@
 														{param values: $field['values'] /}
 														{param label: $field['label'][$defaultLanguage] /}
 														{param placeholder: $field['tip'][$defaultLanguage] /}
+														{param required: $field['required'] /}
 														{param defaultLanguageId: $defaultLanguage /}
 														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
 														{param handleChangeValue:  $handleChangeValue /}
@@ -133,6 +136,7 @@
 														{param id: $field['name']+'___'+index($_countSection) /}
 														{param type: $field['type'] /}
 														{param label: $field['label'][$defaultLanguage] /}
+														{param required: $field['required'] /}
 														{param placeholder: $field['tip'][$defaultLanguage] /}
 														{param availableLanguageIds: $availableLanguageIds /}
 														{param defaultLanguageId: $defaultLanguage /}
@@ -144,6 +148,7 @@
 													{call JournalUI.render}
 														{param id: $field['name']+'___'+index($_countSection) /}
 														{param label: $field['label'][$defaultLanguage] /}
+														{param required: $field['required'] /}
 														{param contextPath: $contextPath /}
 														{param brandSelected: $brandSelected/}
 														{param hotelSelected: $hotelSelected/}
@@ -161,6 +166,7 @@
 														{param contextPath: $contextPath /}
 														{param brandSelected: $brandSelected/}
 														{param hotelSelected: $hotelSelected/}
+														{param required: $field['required'] /}
 														{param nestedFields: $field['nestedFields'] /}
 
 														{param availableLanguageIds: $availableLanguageIds /}
@@ -176,6 +182,7 @@
 														{param label: $field['label'][$defaultLanguage] /}
 														{param defaultLanguageId: $defaultLanguage /}
 														{param options: $field['options'] /}
+														{param required: $field['required'] /}
 														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
 														{param handleChangeValue:  $handleChangeValue /}
 													{/call}
@@ -186,6 +193,7 @@
 														{param label: $field['label'][$defaultLanguage] /}
 														{param defaultLanguageId: $defaultLanguage /}
 														{param options: $field['options'] /}
+														{param required: $field['required'] /}
 														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
 														{param multiple: $field['multiple'] /}
 														{param handleChangeValue:  $handleChangeValue /}
@@ -227,6 +235,7 @@
 													{param values: $field['values'] /}
 													{param repeatable: $field['repeatable'] /}
 													{param contextPath: $contextPath/}
+													{param required: $field['required'] /}
 													{param availableLanguageIds: $availableLanguageIds /}
 													{param defaultLanguageId: $defaultLanguage /}
 													{param handleChangeValue:  $handleChangeValue /}
@@ -236,6 +245,7 @@
 													{param id: $field['name'] /}
 													{param nameParent: $name /}
 													{param label: $field['label'] /}
+													{param required: $field['required'] /}
 													{param checkedOption: $checkedOption /}
 													{param path:$path+'/'+ $field['name'] /}
 													{param values: $field['values'] /}
@@ -247,6 +257,7 @@
 												{call DateUI.render}
 													{param id: $field['name'] /}
 													{param values: $field['values'] /}
+													{param required: $field['required'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param placeholder: $field['tip'][$defaultLanguage] /}
 													{param defaultLanguageId: $defaultLanguage /}
@@ -258,6 +269,7 @@
 												{call TextAreaUI.render}
 													{param id: $field['name'] /}
 													{param type: $field['type'] /}
+													{param required: $field['required'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param placeholder: $field['tip'][$defaultLanguage] /}
 													{param availableLanguageIds: $availableLanguageIds /}
@@ -272,6 +284,7 @@
 													{param id: $field['name'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param values: $field['values'] /}
+													{param required: $field['required'] /}
 													{param contextPath: $contextPath /}
 													{param brandSelected: $brandSelected/}
 													{param hotelSelected: $hotelSelected/}
@@ -285,6 +298,7 @@
 												{call DocumentUI.render}
 													{param id: $field['name'] /}
 													{param values: $field['values'] /}
+													{param required: $field['required'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param contextPath: $contextPath /}
 													{param brandSelected: $brandSelected/}
@@ -301,6 +315,7 @@
 												{call RadioUI.render}
 													{param id: $field['name'] /}
 													{param values: $field['values'] /}
+													{param required: $field['required'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param defaultLanguageId: $defaultLanguage /}
 													{param options: $field['options'] /}
@@ -311,6 +326,7 @@
 												{call SelectUI.render}
 													{param id: $field['name'] /}
 													{param values: $field['values'] /}
+													{param required: $field['required'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param defaultLanguageId: $defaultLanguage /}
 													{param options: $field['options'] /}

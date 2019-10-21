@@ -29,7 +29,8 @@ var soyIdom = goog.require('soy.idom');
  *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
  *  placeholder: (*|null|undefined),
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
- *  path: (!goog.soy.data.SanitizedContent|null|string|undefined)
+ *  path: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  required: (boolean|null|undefined)
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
  * @param {Object<string, *>=} opt_ijData_deprecated
@@ -50,9 +51,11 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var path = soy.asserts.assertType(opt_data.path == null || (goog.isString(opt_data.path) || opt_data.path instanceof goog.soy.data.SanitizedContent), 'path', opt_data.path, '!goog.soy.data.SanitizedContent|null|string|undefined');
-  var _values__soy242 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
-  var _val__soy244 = (_values__soy242[defaultLanguageId] != null) ? _values__soy242[defaultLanguageId] : '';
-  var defaultLanguage__soy246 = defaultLanguageId;
+  /** @type {boolean|null|undefined} */
+  var required = soy.asserts.assertType(opt_data.required == null || (goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0), 'required', opt_data.required, 'boolean|null|undefined');
+  var _values__soy245 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
+  var _val__soy247 = (_values__soy245[defaultLanguageId] != null) ? _values__soy245[defaultLanguageId] : '';
+  var defaultLanguage__soy249 = defaultLanguageId;
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'form-group-item');
@@ -61,6 +64,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.attr('for', 'date_' + id);
     incrementalDom.elementOpenEnd();
       soyIdom.print(label);
+      soyIdom.print(required ? '*' : '');
     incrementalDom.elementClose('label');
     incrementalDom.elementOpenStart('div');
         incrementalDom.attr('id', 'date_' + id);
@@ -69,7 +73,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('class', 'input-group-item input-group-prepend');
       incrementalDom.elementOpenEnd();
-        if (_val__soy244 == '' || (_val__soy244.length) == 0 || _val__soy244[0] == '') {
+        if (_val__soy247 == '' || (_val__soy247.length) == 0 || _val__soy247[0] == '') {
           incrementalDom.elementOpenStart('input');
               incrementalDom.attr('class', 'form-control');
               incrementalDom.attr('type', 'text');
@@ -84,7 +88,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.attr('class', 'form-control');
               incrementalDom.attr('type', 'text');
               incrementalDom.attr('data-path', path);
-              incrementalDom.attr('value', _val__soy244[0]);
+              incrementalDom.attr('value', _val__soy247[0]);
               incrementalDom.attr('name', 'date_' + id);
               incrementalDom.attr('placeholder', placeholder);
               incrementalDom.attr('data-input', '');
@@ -133,7 +137,8 @@ exports.render = $render;
  *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
  *  placeholder: (*|null|undefined),
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
- *  path: (!goog.soy.data.SanitizedContent|null|string|undefined)
+ *  path: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  required: (boolean|null|undefined)
  * }}
  */
 $render.Params;
@@ -141,8 +146,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'DateUI.render';
 }
 
-exports.render.params = ["id","label","values","placeholder","defaultLanguageId","path"];
-exports.render.types = {"id":"any","label":"?","values":"map<string,list<?>>","placeholder":"any","defaultLanguageId":"string","path":"string"};
+exports.render.params = ["id","label","values","placeholder","defaultLanguageId","path","required"];
+exports.render.types = {"id":"any","label":"?","values":"map<string,list<?>>","placeholder":"any","defaultLanguageId":"string","path":"string","required":"bool"};
 templates = exports;
 return exports;
 

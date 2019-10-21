@@ -39,6 +39,7 @@ var $templateAlias1 = Soy.getTemplate('TextUI.incrementaldom', 'render');
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
  *  handleChangeValue: (?),
+ *  required: (boolean|null|undefined),
  *  countSection: (!Array<?>|null|undefined),
  *  handleAddSection: (?),
  *  handleRemoveSection: (?)
@@ -76,14 +77,16 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
   /** @type {?} */
   var handleChangeValue = opt_data.handleChangeValue;
+  /** @type {boolean|null|undefined} */
+  var required = soy.asserts.assertType(opt_data.required == null || (goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0), 'required', opt_data.required, 'boolean|null|undefined');
   /** @type {!Array<?>|null|undefined} */
   var countSection = soy.asserts.assertType(opt_data.countSection == null || goog.isArray(opt_data.countSection), 'countSection', opt_data.countSection, '!Array<?>|null|undefined');
   /** @type {?} */
   var handleAddSection = opt_data.handleAddSection;
   /** @type {?} */
   var handleRemoveSection = opt_data.handleRemoveSection;
-  var _countSections__soy4294 = (countSection != null) ? countSection : [1];
-  var ___index__soy4296 = (_index != null) ? _index : 0;
+  var _countSections__soy4311 = (countSection != null) ? countSection : [1];
+  var ___index__soy4313 = (_index != null) ? _index : 0;
   if (repeatable) {
     incrementalDom.elementOpenStart('div');
         incrementalDom.attr('class', 'form-group-item');
@@ -147,11 +150,11 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenStart('div');
               incrementalDom.attr('class', 'form-group');
           incrementalDom.elementOpenEnd();
-            var _countSection4324List = _countSections__soy4294;
-            var _countSection4324ListLen = _countSection4324List.length;
-            for (var _countSection4324Index = 0; _countSection4324Index < _countSection4324ListLen; _countSection4324Index++) {
-                var _countSection4324Data = _countSection4324List[_countSection4324Index];
-                $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: _countSection4324Index, repeatable: repeatable, path: path + '___' + _countSection4324Index, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
+            var _countSection4342List = _countSections__soy4311;
+            var _countSection4342ListLen = _countSection4342List.length;
+            for (var _countSection4342Index = 0; _countSection4342Index < _countSection4342ListLen; _countSection4342Index++) {
+                var _countSection4342Data = _countSection4342List[_countSection4342Index];
+                $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], required: required, placeholder: placeholder[defaultLanguageId], values: values, _index: _countSection4342Index, repeatable: repeatable, path: path + '___' + _countSection4342Index, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
               }
           incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');
@@ -162,7 +165,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementClose('div');
     incrementalDom.elementClose('div');
   } else {
-    $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: ___index__soy4296, repeatable: repeatable, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
+    $templateAlias1({id: id, type: type, required: required, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: ___index__soy4313, repeatable: repeatable, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
   }
 }
 exports.render = $render;
@@ -181,6 +184,7 @@ exports.render = $render;
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
  *  handleChangeValue: (?),
+ *  required: (boolean|null|undefined),
  *  countSection: (!Array<?>|null|undefined),
  *  handleAddSection: (?),
  *  handleRemoveSection: (?)
@@ -191,8 +195,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'TextLocalizableUI.render';
 }
 
-exports.render.params = ["id","path","localizable","contextPath","repeatable","_index","labels","values","type","placeholder","availableLanguageIds","defaultLanguageId","handleChangeValue","countSection","handleAddSection","handleRemoveSection"];
-exports.render.types = {"id":"any","path":"string","localizable":"bool","contextPath":"string","repeatable":"bool","_index":"number","labels":"map<string,string>","values":"map<string,list<?>>","type":"any","placeholder":"?","availableLanguageIds":"list<string>","defaultLanguageId":"string","handleChangeValue":"?","countSection":"list<?>","handleAddSection":"?","handleRemoveSection":"?"};
+exports.render.params = ["id","path","localizable","contextPath","repeatable","_index","labels","values","type","placeholder","availableLanguageIds","defaultLanguageId","handleChangeValue","required","countSection","handleAddSection","handleRemoveSection"];
+exports.render.types = {"id":"any","path":"string","localizable":"bool","contextPath":"string","repeatable":"bool","_index":"number","labels":"map<string,string>","values":"map<string,list<?>>","type":"any","placeholder":"?","availableLanguageIds":"list<string>","defaultLanguageId":"string","handleChangeValue":"?","required":"bool","countSection":"list<?>","handleAddSection":"?","handleRemoveSection":"?"};
 templates = exports;
 return exports;
 

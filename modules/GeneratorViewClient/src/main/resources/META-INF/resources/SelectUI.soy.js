@@ -30,7 +30,8 @@ var soyIdom = goog.require('soy.idom');
  *  options: !Array<?>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined),
- *  multiple: (boolean|null|undefined)
+ *  multiple: (boolean|null|undefined),
+ *  required: (boolean|null|undefined)
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
  * @param {Object<string, *>=} opt_ijData_deprecated
@@ -53,8 +54,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var path = soy.asserts.assertType(opt_data.path == null || (goog.isString(opt_data.path) || opt_data.path instanceof goog.soy.data.SanitizedContent), 'path', opt_data.path, '!goog.soy.data.SanitizedContent|null|string|undefined');
   /** @type {boolean|null|undefined} */
   var multiple = soy.asserts.assertType(opt_data.multiple == null || (goog.isBoolean(opt_data.multiple) || opt_data.multiple === 1 || opt_data.multiple === 0), 'multiple', opt_data.multiple, 'boolean|null|undefined');
-  var _values__soy3733 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
-  var _val__soy3735 = (_values__soy3733[defaultLanguageId] != null) ? _values__soy3733[defaultLanguageId] : '';
+  /** @type {boolean|null|undefined} */
+  var required = soy.asserts.assertType(opt_data.required == null || (goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0), 'required', opt_data.required, 'boolean|null|undefined');
+  var _values__soy3746 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
+  var _val__soy3748 = (_values__soy3746[defaultLanguageId] != null) ? _values__soy3746[defaultLanguageId] : '';
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
@@ -65,6 +68,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.attr('for', 'select_' + id);
       incrementalDom.elementOpenEnd();
         soyIdom.print(label);
+        soyIdom.print(required ? '*' : '');
       incrementalDom.elementClose('label');
       if (multiple) {
         incrementalDom.elementOpenStart('select');
@@ -75,22 +79,22 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.attr('multiple', '');
             incrementalDom.attr('id', 'select_' + id);
         incrementalDom.elementOpenEnd();
-          var option3767List = options;
-          var option3767ListLen = option3767List.length;
-          for (var option3767Index = 0; option3767Index < option3767ListLen; option3767Index++) {
-              var option3767Data = option3767List[option3767Index];
-              if ((_val__soy3735[0] != null) && (option3767Data.value != null) && (('' + _val__soy3735[0]).indexOf('' + option3767Data.value) != -1)) {
+          var option3781List = options;
+          var option3781ListLen = option3781List.length;
+          for (var option3781Index = 0; option3781Index < option3781ListLen; option3781Index++) {
+              var option3781Data = option3781List[option3781Index];
+              if ((_val__soy3748[0] != null) && (option3781Data.value != null) && (('' + _val__soy3748[0]).indexOf('' + option3781Data.value) != -1)) {
                 incrementalDom.elementOpenStart('option');
                     incrementalDom.attr('selected', '');
-                    incrementalDom.attr('value', option3767Data.value);
+                    incrementalDom.attr('value', option3781Data.value);
                 incrementalDom.elementOpenEnd();
-                  soyIdom.print(option3767Data.label[defaultLanguageId]);
+                  soyIdom.print(option3781Data.label[defaultLanguageId]);
                 incrementalDom.elementClose('option');
               } else {
                 incrementalDom.elementOpenStart('option');
-                    incrementalDom.attr('value', option3767Data.value);
+                    incrementalDom.attr('value', option3781Data.value);
                 incrementalDom.elementOpenEnd();
-                  soyIdom.print(option3767Data.label[defaultLanguageId]);
+                  soyIdom.print(option3781Data.label[defaultLanguageId]);
                 incrementalDom.elementClose('option');
               }
             }
@@ -103,7 +107,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.attr('data-onchange', 'handleChange');
             incrementalDom.attr('id', 'select_' + id);
         incrementalDom.elementOpenEnd();
-          if (_val__soy3735 == '') {
+          if (_val__soy3748 == '') {
             incrementalDom.elementOpenStart('option');
                 incrementalDom.attr('disabled', '');
                 incrementalDom.attr('selected', '');
@@ -112,22 +116,22 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               soyIdom.print(label);
             incrementalDom.elementClose('option');
           }
-          var option3799List = options;
-          var option3799ListLen = option3799List.length;
-          for (var option3799Index = 0; option3799Index < option3799ListLen; option3799Index++) {
-              var option3799Data = option3799List[option3799Index];
-              if (_val__soy3735 == '["' + option3799Data.value + '"]') {
+          var option3813List = options;
+          var option3813ListLen = option3813List.length;
+          for (var option3813Index = 0; option3813Index < option3813ListLen; option3813Index++) {
+              var option3813Data = option3813List[option3813Index];
+              if (_val__soy3748 == '["' + option3813Data.value + '"]') {
                 incrementalDom.elementOpenStart('option');
                     incrementalDom.attr('selected', '');
-                    incrementalDom.attr('value', option3799Data.value);
+                    incrementalDom.attr('value', option3813Data.value);
                 incrementalDom.elementOpenEnd();
-                  soyIdom.print(option3799Data.label[defaultLanguageId]);
+                  soyIdom.print(option3813Data.label[defaultLanguageId]);
                 incrementalDom.elementClose('option');
               } else {
                 incrementalDom.elementOpenStart('option');
-                    incrementalDom.attr('value', option3799Data.value);
+                    incrementalDom.attr('value', option3813Data.value);
                 incrementalDom.elementOpenEnd();
-                  soyIdom.print(option3799Data.label[defaultLanguageId]);
+                  soyIdom.print(option3813Data.label[defaultLanguageId]);
                 incrementalDom.elementClose('option');
               }
             }
@@ -145,7 +149,8 @@ exports.render = $render;
  *  options: !Array<?>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined),
- *  multiple: (boolean|null|undefined)
+ *  multiple: (boolean|null|undefined),
+ *  required: (boolean|null|undefined)
  * }}
  */
 $render.Params;
@@ -153,8 +158,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'SelectUI.render';
 }
 
-exports.render.params = ["id","label","values","options","defaultLanguageId","path","multiple"];
-exports.render.types = {"id":"any","label":"?","values":"map<string,list<?>>","options":"list<?>","defaultLanguageId":"string","path":"string","multiple":"bool"};
+exports.render.params = ["id","label","values","options","defaultLanguageId","path","multiple","required"];
+exports.render.types = {"id":"any","label":"?","values":"map<string,list<?>>","options":"list<?>","defaultLanguageId":"string","path":"string","multiple":"bool","required":"bool"};
 templates = exports;
 return exports;
 

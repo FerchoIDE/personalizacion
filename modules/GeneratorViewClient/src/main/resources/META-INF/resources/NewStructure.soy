@@ -180,7 +180,7 @@
 						 <div class="panel-body">
 							 {call TitleLocalizableUI.render}
 								 {param id: 'title_principal' /}
-								 {param label: 'Titulo' /}
+								 {param label: 'Titulo*' /}
 								 {param placeholder: 'Titulo principal' /}
 								 {param contextPath: $contextPath/}
 								 {param availableLanguageIds: $availableLanguageIds /}
@@ -287,6 +287,7 @@
 											{param placeholder: $field['tip'] /}
 											{param values: $field['values'] /}
 											{param repeatable: $field['repeatable'] /}
+											{param required: $field['required'] /}
 											{param contextPath: $contextPath/}
 											{param availableLanguageIds: $availableLanguageIds /}
 											{param defaultLanguageId: $selectedLanguage /}
@@ -299,6 +300,7 @@
 											{param label: $field['label'] /}
 											{param path: $field['name'] /}
 											{param values: $field['values'] /}
+											{param required: $field['required'] /}
 											{param defaultLanguageId: $selectedLanguage /}
 											{param handleChangeValue:  $handleChangeValue /}
 										{/call}
@@ -306,6 +308,7 @@
 										{call DateUI.render}
 											{param id: $field['name'] /}
 											{param values: $field['values'] /}
+											{param required: $field['required'] /}
 											{param label: $field['label'][$defaultLanguage] /}
 											{param placeholder: $field['tip'][$defaultLanguage] /}
 											{param defaultLanguageId: $selectedLanguage /}
@@ -316,6 +319,7 @@
 										{call TextAreaUI.render}
 											{param id: $field['name'] /}
 											{param type: $field['type'] /}
+											{param required: $field['required'] /}
 											{param label: $field['label'][$selectedLanguage] /}
 											{param placeholder: $field['tip'][$selectedLanguage] /}
 											{param availableLanguageIds: $availableLanguageIds /}
@@ -329,6 +333,7 @@
 										{call RadioUI.render}
 											{param id: $field['name'] /}
 											{param values: $field['values'] /}
+											{param required: $field['required'] /}
 											{param label: $field['label'][$selectedLanguage] /}
 											{param defaultLanguageId: $selectedLanguage /}
 											{param options: $field['options'] /}
@@ -339,6 +344,7 @@
 										{call SelectUI.render}
 											{param id: $field['name'] /}
 											{param values: $field['values'] /}
+											{param required: $field['required'] /}
 											{param label: $field['label'][$selectedLanguage] /}
 											{param defaultLanguageId: $selectedLanguage /}
 											{param options: $field['options'] /}

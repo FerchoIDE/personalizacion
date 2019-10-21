@@ -44,7 +44,8 @@ var soyIdom = goog.require('soy.idom');
  *  contextPath: (!goog.soy.data.SanitizedContent|string),
  *  isOpenJournalType: (boolean|null|undefined),
  *  closeSelectJournalType: (?),
- *  saveSelectJournalType: (?)
+ *  saveSelectJournalType: (?),
+ *  required: (boolean|null|undefined)
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
  * @param {Object<string, *>=} opt_ijData_deprecated
@@ -93,8 +94,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var closeSelectJournalType = opt_data.closeSelectJournalType;
   /** @type {?} */
   var saveSelectJournalType = opt_data.saveSelectJournalType;
-  var _itemsJournalAsociated__soy9157 = (itemsJournalAsociated != null) ? itemsJournalAsociated[id] : itemsJournalAsociated;
-  var structureId__soy9159 = {PUB: '35956', RESTAURANT: '35832', SPA: '35829', GYM: '35962', FACILITY: '35820', KIDSCLUB: '35959', MEETING: '35823'};
+  /** @type {boolean|null|undefined} */
+  var required = soy.asserts.assertType(opt_data.required == null || (goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0), 'required', opt_data.required, 'boolean|null|undefined');
+  var _itemsJournalAsociated__soy9200 = (itemsJournalAsociated != null) ? itemsJournalAsociated[id] : itemsJournalAsociated;
+  var structureId__soy9202 = {PUB: '35956', RESTAURANT: '35832', SPA: '35829', GYM: '35962', FACILITY: '35820', KIDSCLUB: '35959', MEETING: '35823'};
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'container');
@@ -118,15 +121,15 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.attr('class', 'table table-autofit table-list');
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
-                  if (_itemsJournalAsociated__soy9157 != null) {
-                    var field9197List = (soy.$$getMapKeys(_itemsJournalAsociated__soy9157));
-                    var field9197ListLen = field9197List.length;
-                    for (var field9197Index = 0; field9197Index < field9197ListLen; field9197Index++) {
-                        var field9197Data = field9197List[field9197Index];
-                        if (field9197Index == 0) {
+                  if (_itemsJournalAsociated__soy9200 != null) {
+                    var field9240List = (soy.$$getMapKeys(_itemsJournalAsociated__soy9200));
+                    var field9240ListLen = field9240List.length;
+                    for (var field9240Index = 0; field9240Index < field9240ListLen; field9240Index++) {
+                        var field9240Data = field9240List[field9240Index];
+                        if (field9240Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field9197Index + 3) % 3 == 0 && !(field9197Index == 0)) {
+                          if ((field9240Index + 3) % 3 == 0 && !(field9240Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -145,7 +148,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('span');
                                       incrementalDom.attr('class', 'badge-item badge-item-expand');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(_itemsJournalAsociated__soy9157[field9197Data].structureName);
+                                    soyIdom.print(_itemsJournalAsociated__soy9200[field9240Data].structureName);
                                   incrementalDom.elementClose('span');
                                 incrementalDom.elementClose('span');
                               incrementalDom.elementClose('div');
@@ -158,25 +161,25 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(_itemsJournalAsociated__soy9157[field9197Data].title);
+                                    soyIdom.print(_itemsJournalAsociated__soy9200[field9240Data].title);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(_itemsJournalAsociated__soy9157[field9197Data].path);
+                                  soyIdom.print(_itemsJournalAsociated__soy9200[field9240Data].path);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(_itemsJournalAsociated__soy9157[field9197Data].user);
+                                  soyIdom.print(_itemsJournalAsociated__soy9200[field9240Data].user);
                                   incrementalDom.text('\u00A0 hace  ');
-                                  soyIdom.print(_itemsJournalAsociated__soy9157[field9197Data].date);
+                                  soyIdom.print(_itemsJournalAsociated__soy9200[field9240Data].date);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'text-truncate-inline');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(_itemsJournalAsociated__soy9157[field9197Data].status);
+                                  soyIdom.print(_itemsJournalAsociated__soy9200[field9240Data].status);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                               incrementalDom.elementOpenStart('div');
@@ -185,7 +188,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                 incrementalDom.elementOpenStart('a');
                                     incrementalDom.attr('onclick', deleteJournal);
                                     incrementalDom.attr('href', '#1');
-                                    incrementalDom.attr('id', field9197Data);
+                                    incrementalDom.attr('id', field9240Data);
                                     incrementalDom.attr('style', 'font-size: 18px');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpenStart('svg');
@@ -202,7 +205,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field9197Index == field9197ListLen - 1) {
+                        if (field9240Index == field9240ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -216,6 +219,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementOpenStart('div');
           incrementalDom.attr('class', 'col-1');
       incrementalDom.elementOpenEnd();
+        soyIdom.print(required ? '*' : '');
         incrementalDom.elementOpenStart('ul');
             incrementalDom.attr('class', 'navbar-nav');
         incrementalDom.elementOpenEnd();
@@ -311,14 +315,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.text('Selecciona una opci\u00F3n o');
                       incrementalDom.elementClose('option');
                       if (foldersJournals) {
-                        var field9229List = foldersJournals;
-                        var field9229ListLen = field9229List.length;
-                        for (var field9229Index = 0; field9229Index < field9229ListLen; field9229Index++) {
-                            var field9229Data = field9229List[field9229Index];
+                        var field9274List = foldersJournals;
+                        var field9274ListLen = field9274List.length;
+                        for (var field9274Index = 0; field9274Index < field9274ListLen; field9274Index++) {
+                            var field9274Data = field9274List[field9274Index];
                             incrementalDom.elementOpenStart('option');
-                                incrementalDom.attr('value', field9229Data.key);
+                                incrementalDom.attr('value', field9274Data.key);
                             incrementalDom.elementOpenEnd();
-                              soyIdom.print(field9229Data.category);
+                              soyIdom.print(field9274Data.category);
                             incrementalDom.elementClose('option');
                           }
                       }
@@ -368,14 +372,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenEnd();
                 incrementalDom.elementOpen('tbody');
                   if (itemsResult) {
-                    var field9287List = itemsResult;
-                    var field9287ListLen = field9287List.length;
-                    for (var field9287Index = 0; field9287Index < field9287ListLen; field9287Index++) {
-                        var field9287Data = field9287List[field9287Index];
-                        if (field9287Index == 0) {
+                    var field9332List = itemsResult;
+                    var field9332ListLen = field9332List.length;
+                    for (var field9332Index = 0; field9332Index < field9332ListLen; field9332Index++) {
+                        var field9332Data = field9332List[field9332Index];
+                        if (field9332Index == 0) {
                             incrementalDom.elementOpen('tr');
                           }
-                          if ((field9287Index + 3) % 3 == 0 && !(field9287Index == 0)) {
+                          if ((field9332Index + 3) % 3 == 0 && !(field9332Index == 0)) {
                             incrementalDom.elementClose('tr');
                           incrementalDom.elementOpen('tr');
                           }
@@ -393,12 +397,12 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpen('label');
                                     if ((itemsResultSelected != null)) {
-                                      if (itemsResultSelected[field9287Data.id]) {
+                                      if (itemsResultSelected[field9332Data.id]) {
                                         incrementalDom.elementOpenStart('input');
                                             incrementalDom.attr('checked', '');
                                             incrementalDom.attr('onclick', setSelectedResult);
-                                            incrementalDom.attr('value', field9287Data.all);
-                                            incrementalDom.attr('id', field9287Data.id);
+                                            incrementalDom.attr('value', field9332Data.all);
+                                            incrementalDom.attr('id', field9332Data.id);
                                             incrementalDom.attr('class', 'custom-control-input');
                                             incrementalDom.attr('type', 'checkbox');
                                         incrementalDom.elementOpenEnd();
@@ -406,8 +410,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                       } else {
                                         incrementalDom.elementOpenStart('input');
                                             incrementalDom.attr('onclick', setSelectedResult);
-                                            incrementalDom.attr('value', field9287Data.all);
-                                            incrementalDom.attr('id', field9287Data.id);
+                                            incrementalDom.attr('value', field9332Data.all);
+                                            incrementalDom.attr('id', field9332Data.id);
                                             incrementalDom.attr('class', 'custom-control-input');
                                             incrementalDom.attr('type', 'checkbox');
                                         incrementalDom.elementOpenEnd();
@@ -430,7 +434,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('span');
                                       incrementalDom.attr('class', 'badge-item badge-item-expand');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(field9287Data.structureName);
+                                    soyIdom.print(field9332Data.structureName);
                                   incrementalDom.elementClose('span');
                                 incrementalDom.elementClose('span');
                               incrementalDom.elementClose('div');
@@ -443,30 +447,30 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                   incrementalDom.elementOpenStart('a');
                                       incrementalDom.attr('href', '#1');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(field9287Data.title);
+                                    soyIdom.print(field9332Data.title);
                                   incrementalDom.elementClose('a');
                                 incrementalDom.elementClose('h4');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field9287Data.path);
+                                  soyIdom.print(field9332Data.path);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field9287Data.user);
+                                  soyIdom.print(field9332Data.user);
                                   incrementalDom.text('\u00A0 hace  ');
-                                  soyIdom.print(field9287Data.date);
+                                  soyIdom.print(field9332Data.date);
                                 incrementalDom.elementClose('p');
                                 incrementalDom.elementOpenStart('p');
                                     incrementalDom.attr('class', 'list-group-subtitle text-truncate');
                                 incrementalDom.elementOpenEnd();
-                                  soyIdom.print(field9287Data.status);
+                                  soyIdom.print(field9332Data.status);
                                 incrementalDom.elementClose('p');
                               incrementalDom.elementClose('div');
                             incrementalDom.elementClose('div');
                           incrementalDom.elementClose('td');
-                        if (field9287Index == field9287ListLen - 1) {
+                        if (field9332Index == field9332ListLen - 1) {
                           incrementalDom.elementClose('tr');
                         }
                       }
@@ -593,7 +597,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_R');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy9159.RESTAURANT);
+                        incrementalDom.attr('value', structureId__soy9202.RESTAURANT);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');
@@ -616,7 +620,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_SR');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy9159.MEETING);
+                        incrementalDom.attr('value', structureId__soy9202.MEETING);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');
@@ -639,7 +643,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_G');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy9159.GYM);
+                        incrementalDom.attr('value', structureId__soy9202.GYM);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');
@@ -662,7 +666,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_B');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy9159.PUB);
+                        incrementalDom.attr('value', structureId__soy9202.PUB);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');
@@ -685,7 +689,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_S');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy9159.SPA);
+                        incrementalDom.attr('value', structureId__soy9202.SPA);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');
@@ -708,7 +712,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_FKC');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy9159.KIDSCLUB);
+                        incrementalDom.attr('value', structureId__soy9202.KIDSCLUB);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');
@@ -731,7 +735,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                         incrementalDom.attr('id', id + '_typeJournal_I');
                         incrementalDom.attr('name', id + '_typeJournal');
                         incrementalDom.attr('type', 'radio');
-                        incrementalDom.attr('value', structureId__soy9159.FACILITY);
+                        incrementalDom.attr('value', structureId__soy9202.FACILITY);
                     incrementalDom.elementOpenEnd();
                     incrementalDom.elementClose('input');
                     incrementalDom.elementOpenStart('span');
@@ -811,7 +815,8 @@ exports.render = $render;
  *  contextPath: (!goog.soy.data.SanitizedContent|string),
  *  isOpenJournalType: (boolean|null|undefined),
  *  closeSelectJournalType: (?),
- *  saveSelectJournalType: (?)
+ *  saveSelectJournalType: (?),
+ *  required: (boolean|null|undefined)
  * }}
  */
 $render.Params;
@@ -819,8 +824,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'JournalUI.render';
 }
 
-exports.render.params = ["id","label","isOpenJournalSelect","openSelectJournal","isOpenJournalNew","openNewJournal","closeSelectJournal","saveSelectJournal","deleteJournal","changeFolder","searchJournalByName","setSelectedResult","itemsResult","foldersJournals","itemsResultSelected","itemsJournalAsociated","contextPath","isOpenJournalType","closeSelectJournalType","saveSelectJournalType"];
-exports.render.types = {"id":"any","label":"?","isOpenJournalSelect":"bool","openSelectJournal":"?","isOpenJournalNew":"bool","openNewJournal":"?","closeSelectJournal":"?","saveSelectJournal":"?","deleteJournal":"?","changeFolder":"?","searchJournalByName":"?","setSelectedResult":"?","itemsResult":"list<?>","foldersJournals":"list<?>","itemsResultSelected":"?","itemsJournalAsociated":"?","contextPath":"string","isOpenJournalType":"bool","closeSelectJournalType":"?","saveSelectJournalType":"?"};
+exports.render.params = ["id","label","isOpenJournalSelect","openSelectJournal","isOpenJournalNew","openNewJournal","closeSelectJournal","saveSelectJournal","deleteJournal","changeFolder","searchJournalByName","setSelectedResult","itemsResult","foldersJournals","itemsResultSelected","itemsJournalAsociated","contextPath","isOpenJournalType","closeSelectJournalType","saveSelectJournalType","required"];
+exports.render.types = {"id":"any","label":"?","isOpenJournalSelect":"bool","openSelectJournal":"?","isOpenJournalNew":"bool","openNewJournal":"?","closeSelectJournal":"?","saveSelectJournal":"?","deleteJournal":"?","changeFolder":"?","searchJournalByName":"?","setSelectedResult":"?","itemsResult":"list<?>","foldersJournals":"list<?>","itemsResultSelected":"?","itemsJournalAsociated":"?","contextPath":"string","isOpenJournalType":"bool","closeSelectJournalType":"?","saveSelectJournalType":"?","required":"bool"};
 templates = exports;
 return exports;
 

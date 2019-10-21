@@ -12,6 +12,7 @@
 	{@param availableLanguageIds: list<string>}
 	{@param defaultLanguageId: string}
 	{@param? path: string}
+	{@param? required: bool}
 
 	{@param contextPath: string}
 	{@param? handleShowEdit: ?}
@@ -23,7 +24,7 @@
 	{let $_values: isNonnull($values) ? $values : quoteKeysIfJs(['es_ES':[''],'en_US':['']]) /}
 
 	<div id="{$id}" class="form-group-item">
-			<label for="input_{$id}">{$label}
+			<label for="input_{$id}">{$label}{$required?'*':''}
 				{if $type=='ddm-text-html'}
 					{sp}{sp}{sp}{sp}<a onclick="{$handleShowEdit}" value="inputarea_{$id}_{$defaultLanguageId}" href="#"
 					   style="font-size: 16px">

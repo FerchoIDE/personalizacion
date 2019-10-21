@@ -10,13 +10,14 @@
     {@param? placeholder: any}
     {@param defaultLanguageId: string}
     {@param? path: string}
+    {@param? required: bool}
 
     {let $_values: isNonnull($values) ? $values : quoteKeysIfJs(['es_ES':[''],'en_US':['']]) /}
     {let $_val: isNonnull($_values[$defaultLanguageId])?$_values[$defaultLanguageId]:'' /}
     {let $defaultLanguage: $defaultLanguageId /}
 
     <div id="{$id}" class="form-group-item">
-        <label for="date_{$id}">{$label}</label>
+        <label for="date_{$id}">{$label}{$required?'*':''}</label>
         <div id="date_{$id}" class="flatpickr input-group">
             <div class="input-group-item input-group-prepend">
                 {if $_val == '' or length($_val)==0 or $_val[0]==''}

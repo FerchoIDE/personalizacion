@@ -282,12 +282,14 @@ public class GeneratorViewClientViewMVCRenderCommand
         BooleanQuery query1 = BooleanQueryFactoryUtil.create(searchContext);
         BooleanQuery query2 = BooleanQueryFactoryUtil.create(searchContext);
         BooleanQuery query3 = BooleanQueryFactoryUtil.create(searchContext);
+        BooleanQuery query4 = BooleanQueryFactoryUtil.create(searchContext);
 
 
         query.addExactTerm("latest", Boolean.TRUE);
         query1.addExactTerm("head", Boolean.TRUE);
         query2.addExactTerm("ddmStructureKey", structureKey);
         query3.addExactTerm("groupId", portletGroupId);
+        query4.addExactTerm("status","8");
         List<JournalArticle> lstArticles = new ArrayList<>();
 
         try {
@@ -295,6 +297,7 @@ public class GeneratorViewClientViewMVCRenderCommand
             fullQuery.add(query, BooleanClauseOccur.MUST);
             fullQuery.add(query2, BooleanClauseOccur.MUST);
             fullQuery.add(query3, BooleanClauseOccur.MUST);
+            fullQuery.add(query4, BooleanClauseOccur.MUST_NOT);
 
             Hits hits = IndexSearcherHelperUtil.search(searchContext, fullQuery);// SearchEngineUtil.search(searchContext, fullQuery);
             System.out.println(portletGroupId+"--structureKey==="+structureKey+"---count hitss===="+hits.getLength());
@@ -306,10 +309,12 @@ public class GeneratorViewClientViewMVCRenderCommand
                /* doc.getFields().forEach((s, field) -> {
                     System.out.println(s + "---" + field.getValue());
                 });*/
-                JournalArticle ja = JournalArticleLocalServiceUtil.fetchLatestArticle(portletGroupId,
-                        doc.getField(Field.ARTICLE_ID).getValue(), 0);
-                System.out.println( "---Article===" + ja.getId());
-                lstArticles.add(ja);
+                /*JournalArticle ja = JournalArticleLocalServiceUtil.fetchLatestArticle(portletGroupId,
+                        doc.getField(Field.ARTICLE_ID).getValue(), 0);*/
+                JournalArticle ja = JournalArticleLocalServiceUtil.getLatestArticle(portletGroupId,
+                        doc.getField(Field.ARTICLE_ID).getValue());
+                if(ja!=null)
+                    lstArticles.add(ja);
             }
         } catch (Exception ex) {
 

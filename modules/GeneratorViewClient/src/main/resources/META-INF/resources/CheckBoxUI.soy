@@ -11,6 +11,7 @@
 	{@param? values: map<string,list<?>>}
 	{@param defaultLanguageId: string}
 	{@param? path: string}
+	{@param? required: bool}
 
 	{let $_values: isNonnull($values) ? $values : quoteKeysIfJs(['es_ES':[''],'en_US':['']]) /}
 	{let $_val: isNonnull($_values[$defaultLanguageId])?$_values[$defaultLanguageId]:false /}
@@ -45,7 +46,7 @@
 		{/if}
 
 		<span class="custom-control-label">
-					<span class="custom-control-label-text">{$label[$defaultLanguageId]}</span>
+					<span class="custom-control-label-text">{$label[$defaultLanguageId]}{$required?'*':''}</span>
 				</span>
 		</label>
 	</div>

@@ -157,8 +157,10 @@ public class GeneratorViewClientSearchMVCRenderCommand implements MVCRenderComma
                     System.out.println(s + "---" + field.getValue());
                 });*/
                 Map<String, String> mapElement = new HashMap<>();
-                JournalArticle ja = JournalArticleLocalServiceUtil.fetchLatestArticle(portletGroupId,
-                        doc.getField(Field.ARTICLE_ID).getValue(),0);
+                /*JournalArticle ja = JournalArticleLocalServiceUtil.fetchLatestArticle(portletGroupId,
+                        doc.getField(Field.ARTICLE_ID).getValue(),0);*/
+                JournalArticle ja = JournalArticleLocalServiceUtil.getLatestArticle(portletGroupId,
+                        doc.getField(Field.ARTICLE_ID).getValue());
                 if(ja==null ) {
                     System.out.println("Conttt---articleId===" + doc.getField(Field.ARTICLE_ID).getValue());
                     continue;

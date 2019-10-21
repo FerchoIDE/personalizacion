@@ -104,8 +104,11 @@ public class SearchContent implements MVCResourceCommand {
                     System.out.println(s + "---" + field.getValue());
                 });
                 Map<String, String> mapElement = new HashMap<>();
-                JournalArticle ja = JournalArticleLocalServiceUtil.fetchLatestArticle(portletGroupId,
-                        doc.getField(Field.ARTICLE_ID).getValue(), 0);
+                /*JournalArticle ja = JournalArticleLocalServiceUtil.fetchLatestArticle(portletGroupId,
+                        doc.getField(Field.ARTICLE_ID).getValue(), 0);*/
+
+                JournalArticle ja = JournalArticleLocalServiceUtil.getLatestArticle(portletGroupId,
+                        doc.getField(Field.ARTICLE_ID).getValue());
 
                 mapElement.put("id", String.valueOf(ja.getId()));
                 mapElement.put("articleId", doc.getField(Field.ARTICLE_ID).getValue());

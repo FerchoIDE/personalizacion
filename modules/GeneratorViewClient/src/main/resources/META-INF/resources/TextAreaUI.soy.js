@@ -32,6 +32,7 @@ var soyIdom = goog.require('soy.idom');
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  required: (boolean|null|undefined),
  *  contextPath: (!goog.soy.data.SanitizedContent|string),
  *  handleShowEdit: (?),
  *  handleCancelEdit: (?),
@@ -61,6 +62,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
   /** @type {!goog.soy.data.SanitizedContent|null|string|undefined} */
   var path = soy.asserts.assertType(opt_data.path == null || (goog.isString(opt_data.path) || opt_data.path instanceof goog.soy.data.SanitizedContent), 'path', opt_data.path, '!goog.soy.data.SanitizedContent|null|string|undefined');
+  /** @type {boolean|null|undefined} */
+  var required = soy.asserts.assertType(opt_data.required == null || (goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0), 'required', opt_data.required, 'boolean|null|undefined');
   /** @type {!goog.soy.data.SanitizedContent|string} */
   var contextPath = soy.asserts.assertType(goog.isString(opt_data.contextPath) || opt_data.contextPath instanceof goog.soy.data.SanitizedContent, 'contextPath', opt_data.contextPath, '!goog.soy.data.SanitizedContent|string');
   /** @type {?} */
@@ -71,7 +74,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var handleSaveEdit = opt_data.handleSaveEdit;
   /** @type {boolean|null|undefined} */
   var isOnLoadETA = soy.asserts.assertType(opt_data.isOnLoadETA == null || (goog.isBoolean(opt_data.isOnLoadETA) || opt_data.isOnLoadETA === 1 || opt_data.isOnLoadETA === 0), 'isOnLoadETA', opt_data.isOnLoadETA, 'boolean|null|undefined');
-  var _values__soy3929 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
+  var _values__soy3944 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'form-group-item');
@@ -80,6 +83,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.attr('for', 'input_' + id);
     incrementalDom.elementOpenEnd();
       soyIdom.print(label);
+      soyIdom.print(required ? '*' : '');
       if (type == 'ddm-text-html') {
         incrementalDom.text('    ');
         incrementalDom.elementOpenStart('a');
@@ -101,32 +105,32 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('a');
       }
     incrementalDom.elementClose('label');
-    var language3980List = availableLanguageIds;
-    var language3980ListLen = language3980List.length;
-    for (var language3980Index = 0; language3980Index < language3980ListLen; language3980Index++) {
-        var language3980Data = language3980List[language3980Index];
-        if (language3980Data == defaultLanguageId) {
+    var language3996List = availableLanguageIds;
+    var language3996ListLen = language3996List.length;
+    for (var language3996Index = 0; language3996Index < language3996ListLen; language3996Index++) {
+        var language3996Data = language3996List[language3996Index];
+        if (language3996Data == defaultLanguageId) {
           incrementalDom.elementOpenStart('textarea');
               incrementalDom.attr('class', 'form-control');
               incrementalDom.attr('data-onkeyup', 'handleChange');
               incrementalDom.attr('data-path', path);
-              incrementalDom.attr('data-language', language3980Data);
-              incrementalDom.attr('id', 'inputarea_' + id + '_' + language3980Data);
+              incrementalDom.attr('data-language', language3996Data);
+              incrementalDom.attr('id', 'inputarea_' + id + '_' + language3996Data);
               incrementalDom.attr('placeholder', placeholder);
           incrementalDom.elementOpenEnd();
-            soyIdom.print((_values__soy3929[language3980Data] != null) ? _values__soy3929[language3980Data][0] : '');
+            soyIdom.print((_values__soy3944[language3996Data] != null) ? _values__soy3944[language3996Data][0] : '');
           incrementalDom.elementClose('textarea');
         } else {
           incrementalDom.elementOpenStart('textarea');
               incrementalDom.attr('class', 'form-control');
               incrementalDom.attr('data-onkeyup', 'handleChange');
               incrementalDom.attr('data-path', path);
-              incrementalDom.attr('data-language', language3980Data);
-              incrementalDom.attr('id', 'inputarea_' + id + '_' + language3980Data);
+              incrementalDom.attr('data-language', language3996Data);
+              incrementalDom.attr('id', 'inputarea_' + id + '_' + language3996Data);
               incrementalDom.attr('placeholder', placeholder);
               incrementalDom.attr('style', 'display: none');
           incrementalDom.elementOpenEnd();
-            soyIdom.print((_values__soy3929[language3980Data] != null) ? _values__soy3929[language3980Data][0] : '');
+            soyIdom.print((_values__soy3944[language3996Data] != null) ? _values__soy3944[language3996Data][0] : '');
           incrementalDom.elementClose('textarea');
         }
       }
@@ -215,6 +219,7 @@ exports.render = $render;
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
  *  path: (!goog.soy.data.SanitizedContent|null|string|undefined),
+ *  required: (boolean|null|undefined),
  *  contextPath: (!goog.soy.data.SanitizedContent|string),
  *  handleShowEdit: (?),
  *  handleCancelEdit: (?),
@@ -227,8 +232,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'TextAreaUI.render';
 }
 
-exports.render.params = ["id","type","label","values","placeholder","availableLanguageIds","defaultLanguageId","path","contextPath","handleShowEdit","handleCancelEdit","handleSaveEdit","isOnLoadETA"];
-exports.render.types = {"id":"any","type":"string","label":"?","values":"map<string,list<?>> ","placeholder":"any","availableLanguageIds":"list<string>","defaultLanguageId":"string","path":"string","contextPath":"string","handleShowEdit":"?","handleCancelEdit":"?","handleSaveEdit":"?","isOnLoadETA":"bool"};
+exports.render.params = ["id","type","label","values","placeholder","availableLanguageIds","defaultLanguageId","path","required","contextPath","handleShowEdit","handleCancelEdit","handleSaveEdit","isOnLoadETA"];
+exports.render.types = {"id":"any","type":"string","label":"?","values":"map<string,list<?>> ","placeholder":"any","availableLanguageIds":"list<string>","defaultLanguageId":"string","path":"string","required":"bool","contextPath":"string","handleShowEdit":"?","handleCancelEdit":"?","handleSaveEdit":"?","isOnLoadETA":"bool"};
 templates = exports;
 return exports;
 

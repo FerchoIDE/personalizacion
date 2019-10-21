@@ -34,7 +34,8 @@ var soyIdom = goog.require('soy.idom');
  *  placeholder: (*|null|undefined),
  *  type: *,
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
- *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string)
+ *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
+ *  required: (boolean|null|undefined)
  * }} opt_data
  * @param {Object<string, *>=} opt_ijData
  * @param {Object<string, *>=} opt_ijData_deprecated
@@ -65,7 +66,9 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var availableLanguageIds = soy.asserts.assertType(goog.isArray(opt_data.availableLanguageIds), 'availableLanguageIds', opt_data.availableLanguageIds, '!Array<!goog.soy.data.SanitizedContent|string>');
   /** @type {!goog.soy.data.SanitizedContent|string} */
   var defaultLanguageId = soy.asserts.assertType(goog.isString(opt_data.defaultLanguageId) || opt_data.defaultLanguageId instanceof goog.soy.data.SanitizedContent, 'defaultLanguageId', opt_data.defaultLanguageId, '!goog.soy.data.SanitizedContent|string');
-  var _values__soy4513 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
+  /** @type {boolean|null|undefined} */
+  var required = soy.asserts.assertType(opt_data.required == null || (goog.isBoolean(opt_data.required) || opt_data.required === 1 || opt_data.required === 0), 'required', opt_data.required, 'boolean|null|undefined');
+  var _values__soy4533 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'form-group-item');
@@ -75,19 +78,21 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.attr('for', 'input_' + id);
     incrementalDom.elementOpenEnd();
       soyIdom.print(label);
+      incrementalDom.text(' ');
+      soyIdom.print(required ? '*' : '');
     incrementalDom.elementClose('label');
     if (localizable == true) {
-      var language4561List = availableLanguageIds;
-      var language4561ListLen = language4561List.length;
-      for (var language4561Index = 0; language4561Index < language4561ListLen; language4561Index++) {
-          var language4561Data = language4561List[language4561Index];
-          if (language4561Data == defaultLanguageId) {
+      var language4583List = availableLanguageIds;
+      var language4583ListLen = language4583List.length;
+      for (var language4583Index = 0; language4583Index < language4583ListLen; language4583Index++) {
+          var language4583Data = language4583List[language4583Index];
+          if (language4583Data == defaultLanguageId) {
             incrementalDom.elementOpenStart('input');
                 incrementalDom.attr('class', 'form-control');
                 incrementalDom.attr('data-onkeyup', 'handleChange');
-                incrementalDom.attr('id', 'input_' + id + '_' + language4561Data);
-                incrementalDom.attr('value', (_values__soy4513[language4561Data] != null) ? _values__soy4513[language4561Data][_index] : '');
-                incrementalDom.attr('data-language', language4561Data);
+                incrementalDom.attr('id', 'input_' + id + '_' + language4583Data);
+                incrementalDom.attr('value', (_values__soy4533[language4583Data] != null) ? _values__soy4533[language4583Data][_index] : '');
+                incrementalDom.attr('data-language', language4583Data);
                 incrementalDom.attr('data-path', path);
                 incrementalDom.attr('placeholder', placeholder);
                 incrementalDom.attr('type', type);
@@ -97,10 +102,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           } else {
             incrementalDom.elementOpenStart('input');
                 incrementalDom.attr('class', 'form-control');
-                incrementalDom.attr('id', 'input_' + id + '_' + language4561Data);
+                incrementalDom.attr('id', 'input_' + id + '_' + language4583Data);
                 incrementalDom.attr('placeholder', placeholder);
-                incrementalDom.attr('value', (_values__soy4513[language4561Data] != null) ? _values__soy4513[language4561Data][_index] : '');
-                incrementalDom.attr('data-language', language4561Data);
+                incrementalDom.attr('value', (_values__soy4533[language4583Data] != null) ? _values__soy4533[language4583Data][_index] : '');
+                incrementalDom.attr('data-language', language4583Data);
                 incrementalDom.attr('data-path', path);
                 incrementalDom.attr('style', 'display: none');
                 incrementalDom.attr('type', type);
@@ -115,7 +120,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.attr('data-onkeyup', 'handleChange');
           incrementalDom.attr('id', 'input_' + id);
           incrementalDom.attr('data-path', path);
-          incrementalDom.attr('value', (_values__soy4513[defaultLanguageId] != null) ? _values__soy4513[defaultLanguageId][_index] : '');
+          incrementalDom.attr('value', (_values__soy4533[defaultLanguageId] != null) ? _values__soy4533[defaultLanguageId][_index] : '');
           incrementalDom.attr('placeholder', placeholder);
           incrementalDom.attr('type', type);
       incrementalDom.elementOpenEnd();
@@ -136,7 +141,8 @@ exports.render = $render;
  *  placeholder: (*|null|undefined),
  *  type: *,
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
- *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string)
+ *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
+ *  required: (boolean|null|undefined)
  * }}
  */
 $render.Params;
@@ -144,8 +150,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'TextUI.render';
 }
 
-exports.render.params = ["id","label","localizable","_index","path","values","repeatable","placeholder","type","availableLanguageIds","defaultLanguageId"];
-exports.render.types = {"id":"any","label":"?","localizable":"bool","_index":"number","path":"string","values":"map<string,list<?>>","repeatable":"bool","placeholder":"any","type":"any","availableLanguageIds":"list<string>","defaultLanguageId":"string"};
+exports.render.params = ["id","label","localizable","_index","path","values","repeatable","placeholder","type","availableLanguageIds","defaultLanguageId","required"];
+exports.render.types = {"id":"any","label":"?","localizable":"bool","_index":"number","path":"string","values":"map<string,list<?>>","repeatable":"bool","placeholder":"any","type":"any","availableLanguageIds":"list<string>","defaultLanguageId":"string","required":"bool"};
 templates = exports;
 return exports;
 
