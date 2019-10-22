@@ -165,11 +165,15 @@ public class GeneratorViewClientSearchMVCRenderCommand implements MVCRenderComma
                     System.out.println("Conttt---articleId===" + doc.getField(Field.ARTICLE_ID).getValue());
                     continue;
                 }
-                System.out.println("getGroupId===="+ja.getId()+"---folder=="+ja.getFolder().buildTreePath());
                 mapElement.put("id",String.valueOf( ja.getId()));
                 mapElement.put("articleId", doc.getField(Field.ARTICLE_ID).getValue());
 
                 Long modifiedDate = Long.parseLong(doc.getField("modified_sortable").getValue());
+                String typeStructure= getStructureKEY().get(doc.getField("ddmStructureKey").getValue());
+                if(typeStructure==null){
+                    System.out.println("typeStructure not defined---articleId===" + doc.getField(Field.ARTICLE_ID).getValue());
+                    continue;
+                }
                 mapElement.put(
                         "lastUpdated",
                         sdf.format(new Date(modifiedDate)));
@@ -181,8 +185,8 @@ public class GeneratorViewClientSearchMVCRenderCommand implements MVCRenderComma
                         "version",
                         doc.getField("version").getValue());
                 mapElement.put(
-                        "type",
-                        getStructureKEY().get(doc.getField("ddmStructureKey").getValue()));
+                        "type",typeStructure
+                        );
                 lstElement.add(mapElement);
             }
             Template template = (Template) renderRequest.getAttribute(

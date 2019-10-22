@@ -12,11 +12,15 @@ class RadioUI extends Component {
                 if(this.initialConfig_.values[lang].length>0
                     && this.initialConfig_.values[lang][0]!=''){
                     let valueFinal = JSON.parse(this.initialConfig_.values[lang][0])
-                    this.handleChangeValue( {
-                        value: valueFinal[0],
-                        language: lang,
-                        path: this.initialConfig_.path
-                    });
+                    let isArrayValue = Array.isArray(valueFinal);
+                    if(isArrayValue){
+                        this.handleChangeValue( {
+                            value: valueFinal[0],
+                            language: lang,
+                            path: this.initialConfig_.path
+                        });
+                    }
+
                 }
             }
         }

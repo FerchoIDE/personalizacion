@@ -109,11 +109,20 @@ public class SearchContent implements MVCResourceCommand {
 
                 JournalArticle ja = JournalArticleLocalServiceUtil.getLatestArticle(portletGroupId,
                         doc.getField(Field.ARTICLE_ID).getValue());
+                if(ja==null ) {
+                    System.out.println("Conttt---articleId===" + doc.getField(Field.ARTICLE_ID).getValue());
+                    continue;
+                }
 
                 mapElement.put("id", String.valueOf(ja.getId()));
                 mapElement.put("articleId", doc.getField(Field.ARTICLE_ID).getValue());
 
                 Long modifiedDate = Long.parseLong(doc.getField("modified_sortable").getValue());
+                String typeStructure= getStructureKEY().get(doc.getField("ddmStructureKey").getValue());
+                if(typeStructure==null){
+                    System.out.println("typeStructure not defined---articleId===" + doc.getField(Field.ARTICLE_ID).getValue());
+                    continue;
+                }
                 mapElement.put(
                         "lastUpdated",
                         sdf.format(new Date(modifiedDate)));
@@ -126,7 +135,8 @@ public class SearchContent implements MVCResourceCommand {
                         doc.getField("version").getValue());
                 mapElement.put(
                         "type",
-                        getStructureKEY().get(doc.getField("ddmStructureKey").getValue()));
+                        typeStructure);
+                System.out.println(mapElement);
                 lstElement.add(mapElement);
             }
 
