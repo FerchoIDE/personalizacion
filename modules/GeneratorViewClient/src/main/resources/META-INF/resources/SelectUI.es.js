@@ -1,7 +1,6 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './SelectUI.soy';
-import RadioUI from "./RadioUI.es";
 /**
  * TextUI Component
  */
@@ -21,6 +20,21 @@ class SelectUI extends Component {
                         });
                     }
 
+                }
+            }
+        }else if(this.initialConfig_.defaultValues!==undefined){
+
+            for(var lang in this.initialConfig_.defaultValues ){
+                if(this.initialConfig_.defaultValues[lang]!==undefined
+                    && this.initialConfig_.defaultValues[lang]!=''){
+                    let valueFinal = JSON.parse(this.initialConfig_.defaultValues[lang])
+                    if(valueFinal) {
+                        this.handleChangeValue({
+                            value: valueFinal,
+                            language: lang,
+                            path: this.initialConfig_.path
+                        });
+                    }
                 }
             }
         }

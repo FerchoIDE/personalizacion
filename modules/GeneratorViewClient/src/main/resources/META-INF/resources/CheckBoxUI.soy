@@ -9,11 +9,13 @@
 	{@param? checkedOption: ?}
 	{@param label: ?}
 	{@param? values: map<string,list<?>>}
+	{@param? defaultValues: map<string,string>}
 	{@param defaultLanguageId: string}
 	{@param? path: string}
 	{@param? required: bool}
 
-	{let $_values: isNonnull($values) ? $values : quoteKeysIfJs(['es_ES':[''],'en_US':['']]) /}
+	{let $_defaultValues: isNonnull($defaultValues) ? quoteKeysIfJs(['es_ES':[$defaultValues['es_ES']],'en_US':[$defaultValues['en_US']]]) : quoteKeysIfJs(['es_ES':[''],'en_US':['']]) /}
+	{let $_values: isNonnull($values) ? $values : $_defaultValues /}
 	{let $_val: isNonnull($_values[$defaultLanguageId])?$_values[$defaultLanguageId]:false /}
 
 	{let $nameV kind="text"}

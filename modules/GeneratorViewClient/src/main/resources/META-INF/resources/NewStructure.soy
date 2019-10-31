@@ -286,6 +286,7 @@
 											{param labels: $field['label'] /}
 											{param placeholder: $field['tip'] /}
 											{param values: $field['values'] /}
+											{param defaultValues: $field['predefinedValue'] /}
 											{param repeatable: $field['repeatable'] /}
 											{param required: $field['required'] /}
 											{param contextPath: $contextPath/}
@@ -300,6 +301,7 @@
 											{param label: $field['label'] /}
 											{param path: $field['name'] /}
 											{param values: $field['values'] /}
+											{param defaultValues: $field['predefinedValue'] /}
 											{param required: $field['required'] /}
 											{param defaultLanguageId: $selectedLanguage /}
 											{param handleChangeValue:  $handleChangeValue /}
@@ -308,6 +310,7 @@
 										{call DateUI.render}
 											{param id: $field['name'] /}
 											{param values: $field['values'] /}
+											{param defaultValues: $field['predefinedValue'] /}
 											{param required: $field['required'] /}
 											{param label: $field['label'][$defaultLanguage] /}
 											{param placeholder: $field['tip'][$defaultLanguage] /}
@@ -326,6 +329,7 @@
 											{param defaultLanguageId: $selectedLanguage /}
 											{param path: $field['name'] /}
 											{param values: $field['values'] /}
+											{param defaultValues: $field['predefinedValue'] /}
 											{param handleChangeValue:  $handleChangeValue /}
 											{param contextPath: $contextPath/}
 										{/call}
@@ -333,6 +337,7 @@
 										{call RadioUI.render}
 											{param id: $field['name'] /}
 											{param values: $field['values'] /}
+											{param defaultValues: $field['predefinedValue'] /}
 											{param required: $field['required'] /}
 											{param label: $field['label'][$selectedLanguage] /}
 											{param defaultLanguageId: $selectedLanguage /}
@@ -344,6 +349,7 @@
 										{call SelectUI.render}
 											{param id: $field['name'] /}
 											{param values: $field['values'] /}
+											{param defaultValues: $field['predefinedValue'] /}
 											{param required: $field['required'] /}
 											{param label: $field['label'][$selectedLanguage] /}
 											{param defaultLanguageId: $selectedLanguage /}

@@ -28,6 +28,7 @@ var soyIdom = goog.require('soy.idom');
  *  type: (!goog.soy.data.SanitizedContent|string),
  *  label: (?),
  *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
+ *  defaultValues: (!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>|null|undefined),
  *  placeholder: (*|null|undefined),
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
@@ -54,6 +55,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var label = opt_data.label;
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined} */
   var values = soy.asserts.assertType(opt_data.values == null || goog.isObject(opt_data.values), 'values', opt_data.values, '!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined');
+  /** @type {!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>|null|undefined} */
+  var defaultValues = soy.asserts.assertType(opt_data.defaultValues == null || goog.isObject(opt_data.defaultValues), 'defaultValues', opt_data.defaultValues, '!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>|null|undefined');
   /** @type {*|null|undefined} */
   var placeholder = opt_data.placeholder;
   /** @type {!Array<!goog.soy.data.SanitizedContent|string>} */
@@ -74,7 +77,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var handleSaveEdit = opt_data.handleSaveEdit;
   /** @type {boolean|null|undefined} */
   var isOnLoadETA = soy.asserts.assertType(opt_data.isOnLoadETA == null || (goog.isBoolean(opt_data.isOnLoadETA) || opt_data.isOnLoadETA === 1 || opt_data.isOnLoadETA === 0), 'isOnLoadETA', opt_data.isOnLoadETA, 'boolean|null|undefined');
-  var _values__soy3944 = (values != null) ? values : {'es_ES': [''], 'en_US': ['']};
+  var _defaultValues__soy3960 = (defaultValues != null) ? {'es_ES': [defaultValues['es_ES']], 'en_US': [defaultValues['en_US']]} : {'es_ES': [''], 'en_US': ['']};
+  var _values__soy3962 = (values != null) ? values : _defaultValues__soy3960;
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'form-group-item');
@@ -105,32 +109,32 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('a');
       }
     incrementalDom.elementClose('label');
-    var language3996List = availableLanguageIds;
-    var language3996ListLen = language3996List.length;
-    for (var language3996Index = 0; language3996Index < language3996ListLen; language3996Index++) {
-        var language3996Data = language3996List[language3996Index];
-        if (language3996Data == defaultLanguageId) {
+    var language4014List = availableLanguageIds;
+    var language4014ListLen = language4014List.length;
+    for (var language4014Index = 0; language4014Index < language4014ListLen; language4014Index++) {
+        var language4014Data = language4014List[language4014Index];
+        if (language4014Data == defaultLanguageId) {
           incrementalDom.elementOpenStart('textarea');
               incrementalDom.attr('class', 'form-control');
               incrementalDom.attr('data-onkeyup', 'handleChange');
               incrementalDom.attr('data-path', path);
-              incrementalDom.attr('data-language', language3996Data);
-              incrementalDom.attr('id', 'inputarea_' + id + '_' + language3996Data);
+              incrementalDom.attr('data-language', language4014Data);
+              incrementalDom.attr('id', 'inputarea_' + id + '_' + language4014Data);
               incrementalDom.attr('placeholder', placeholder);
           incrementalDom.elementOpenEnd();
-            soyIdom.print((_values__soy3944[language3996Data] != null) ? _values__soy3944[language3996Data][0] : '');
+            soyIdom.print((_values__soy3962[language4014Data] != null) ? _values__soy3962[language4014Data][0] : '');
           incrementalDom.elementClose('textarea');
         } else {
           incrementalDom.elementOpenStart('textarea');
               incrementalDom.attr('class', 'form-control');
               incrementalDom.attr('data-onkeyup', 'handleChange');
               incrementalDom.attr('data-path', path);
-              incrementalDom.attr('data-language', language3996Data);
-              incrementalDom.attr('id', 'inputarea_' + id + '_' + language3996Data);
+              incrementalDom.attr('data-language', language4014Data);
+              incrementalDom.attr('id', 'inputarea_' + id + '_' + language4014Data);
               incrementalDom.attr('placeholder', placeholder);
               incrementalDom.attr('style', 'display: none');
           incrementalDom.elementOpenEnd();
-            soyIdom.print((_values__soy3944[language3996Data] != null) ? _values__soy3944[language3996Data][0] : '');
+            soyIdom.print((_values__soy3962[language4014Data] != null) ? _values__soy3962[language4014Data][0] : '');
           incrementalDom.elementClose('textarea');
         }
       }
@@ -215,6 +219,7 @@ exports.render = $render;
  *  type: (!goog.soy.data.SanitizedContent|string),
  *  label: (?),
  *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
+ *  defaultValues: (!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>|null|undefined),
  *  placeholder: (*|null|undefined),
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
  *  defaultLanguageId: (!goog.soy.data.SanitizedContent|string),
@@ -232,8 +237,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'TextAreaUI.render';
 }
 
-exports.render.params = ["id","type","label","values","placeholder","availableLanguageIds","defaultLanguageId","path","required","contextPath","handleShowEdit","handleCancelEdit","handleSaveEdit","isOnLoadETA"];
-exports.render.types = {"id":"any","type":"string","label":"?","values":"map<string,list<?>> ","placeholder":"any","availableLanguageIds":"list<string>","defaultLanguageId":"string","path":"string","required":"bool","contextPath":"string","handleShowEdit":"?","handleCancelEdit":"?","handleSaveEdit":"?","isOnLoadETA":"bool"};
+exports.render.params = ["id","type","label","values","defaultValues","placeholder","availableLanguageIds","defaultLanguageId","path","required","contextPath","handleShowEdit","handleCancelEdit","handleSaveEdit","isOnLoadETA"];
+exports.render.types = {"id":"any","type":"string","label":"?","values":"map<string,list<?>> ","defaultValues":"map<string,string>","placeholder":"any","availableLanguageIds":"list<string>","defaultLanguageId":"string","path":"string","required":"bool","contextPath":"string","handleShowEdit":"?","handleCancelEdit":"?","handleSaveEdit":"?","isOnLoadETA":"bool"};
 templates = exports;
 return exports;
 

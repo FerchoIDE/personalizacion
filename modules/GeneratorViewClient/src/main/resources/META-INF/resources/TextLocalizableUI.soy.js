@@ -34,6 +34,7 @@ var $templateAlias1 = Soy.getTemplate('TextUI.incrementaldom', 'render');
  *  _index: (null|number|undefined),
  *  labels: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
+ *  defaultValues: (!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>|null|undefined),
  *  type: (*|null|undefined),
  *  placeholder: (?),
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
@@ -67,6 +68,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var labels = soy.asserts.assertType(goog.isObject(opt_data.labels), 'labels', opt_data.labels, '!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>');
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined} */
   var values = soy.asserts.assertType(opt_data.values == null || goog.isObject(opt_data.values), 'values', opt_data.values, '!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined');
+  /** @type {!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>|null|undefined} */
+  var defaultValues = soy.asserts.assertType(opt_data.defaultValues == null || goog.isObject(opt_data.defaultValues), 'defaultValues', opt_data.defaultValues, '!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>|null|undefined');
   /** @type {*|null|undefined} */
   var type = opt_data.type;
   /** @type {?} */
@@ -85,8 +88,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var handleAddSection = opt_data.handleAddSection;
   /** @type {?} */
   var handleRemoveSection = opt_data.handleRemoveSection;
-  var _countSections__soy4311 = (countSection != null) ? countSection : [1];
-  var ___index__soy4313 = (_index != null) ? _index : 0;
+  var _countSections__soy4330 = (countSection != null) ? countSection : [1];
+  var ___index__soy4332 = (_index != null) ? _index : 0;
   if (repeatable) {
     incrementalDom.elementOpenStart('div');
         incrementalDom.attr('class', 'form-group-item');
@@ -150,11 +153,11 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenStart('div');
               incrementalDom.attr('class', 'form-group');
           incrementalDom.elementOpenEnd();
-            var _countSection4342List = _countSections__soy4311;
-            var _countSection4342ListLen = _countSection4342List.length;
-            for (var _countSection4342Index = 0; _countSection4342Index < _countSection4342ListLen; _countSection4342Index++) {
-                var _countSection4342Data = _countSection4342List[_countSection4342Index];
-                $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], required: required, placeholder: placeholder[defaultLanguageId], values: values, _index: _countSection4342Index, repeatable: repeatable, path: path + '___' + _countSection4342Index, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
+            var _countSection4362List = _countSections__soy4330;
+            var _countSection4362ListLen = _countSection4362List.length;
+            for (var _countSection4362Index = 0; _countSection4362Index < _countSection4362ListLen; _countSection4362Index++) {
+                var _countSection4362Data = _countSection4362List[_countSection4362Index];
+                $templateAlias1({id: id, type: type, localizable: localizable, label: labels[defaultLanguageId], required: required, placeholder: placeholder[defaultLanguageId], values: values, defaultValues: defaultValues, _index: _countSection4362Index, repeatable: repeatable, path: path + '___' + _countSection4362Index, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
               }
           incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');
@@ -165,7 +168,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
       incrementalDom.elementClose('div');
     incrementalDom.elementClose('div');
   } else {
-    $templateAlias1({id: id, type: type, required: required, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, _index: ___index__soy4313, repeatable: repeatable, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
+    $templateAlias1({id: id, type: type, required: required, localizable: localizable, label: labels[defaultLanguageId], placeholder: placeholder[defaultLanguageId], values: values, defaultValues: defaultValues, _index: ___index__soy4332, repeatable: repeatable, path: path, availableLanguageIds: availableLanguageIds, defaultLanguageId: defaultLanguageId, onChangeValue: handleChangeValue}, null, opt_ijData);
   }
 }
 exports.render = $render;
@@ -179,6 +182,7 @@ exports.render = $render;
  *  _index: (null|number|undefined),
  *  labels: !Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>,
  *  values: (!Object<!goog.soy.data.SanitizedContent|string,!Array<?>>|null|undefined),
+ *  defaultValues: (!Object<!goog.soy.data.SanitizedContent|string,!goog.soy.data.SanitizedContent|string>|null|undefined),
  *  type: (*|null|undefined),
  *  placeholder: (?),
  *  availableLanguageIds: !Array<!goog.soy.data.SanitizedContent|string>,
@@ -195,8 +199,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'TextLocalizableUI.render';
 }
 
-exports.render.params = ["id","path","localizable","contextPath","repeatable","_index","labels","values","type","placeholder","availableLanguageIds","defaultLanguageId","handleChangeValue","required","countSection","handleAddSection","handleRemoveSection"];
-exports.render.types = {"id":"any","path":"string","localizable":"bool","contextPath":"string","repeatable":"bool","_index":"number","labels":"map<string,string>","values":"map<string,list<?>>","type":"any","placeholder":"?","availableLanguageIds":"list<string>","defaultLanguageId":"string","handleChangeValue":"?","required":"bool","countSection":"list<?>","handleAddSection":"?","handleRemoveSection":"?"};
+exports.render.params = ["id","path","localizable","contextPath","repeatable","_index","labels","values","defaultValues","type","placeholder","availableLanguageIds","defaultLanguageId","handleChangeValue","required","countSection","handleAddSection","handleRemoveSection"];
+exports.render.types = {"id":"any","path":"string","localizable":"bool","contextPath":"string","repeatable":"bool","_index":"number","labels":"map<string,string>","values":"map<string,list<?>>","defaultValues":"map<string,string>","type":"any","placeholder":"?","availableLanguageIds":"list<string>","defaultLanguageId":"string","handleChangeValue":"?","required":"bool","countSection":"list<?>","handleAddSection":"?","handleRemoveSection":"?"};
 templates = exports;
 return exports;
 

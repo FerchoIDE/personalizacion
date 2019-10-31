@@ -99,6 +99,7 @@
 														{param placeholder: $field['tip'] /}
 														{param localizable: $field['localizable'] /}
 														{param values: $field['values'] /}
+														{param defaultValues: $field['predefinedValue'] /}
 														{param repeatable: $field['repeatable'] /}
 														{param required: $field['required'] /}
 														{param contextPath: $contextPath/}
@@ -113,6 +114,7 @@
 														{param nameParent: $name /}
 														{param label: $field['label'] /}
 														{param required: $field['required'] /}
+														{param defaultValues: $field['predefinedValue'] /}
 														{param checkedOption: $checkedOption /}
 														{param path:$path+'___'+index($_countSection)+'/'+ $field['name'] /}
 														{param defaultLanguageId: $defaultLanguage /}
@@ -123,6 +125,7 @@
 													{call DateUI.render}
 														{param id: $field['name']+'___'+index($_countSection) /}
 														{param values: $field['values'] /}
+														{param defaultValues: $field['predefinedValue'] /}
 														{param label: $field['label'][$defaultLanguage] /}
 														{param placeholder: $field['tip'][$defaultLanguage] /}
 														{param required: $field['required'] /}
@@ -137,6 +140,7 @@
 														{param type: $field['type'] /}
 														{param label: $field['label'][$defaultLanguage] /}
 														{param required: $field['required'] /}
+														{param defaultValues: $field['predefinedValue'] /}
 														{param placeholder: $field['tip'][$defaultLanguage] /}
 														{param availableLanguageIds: $availableLanguageIds /}
 														{param defaultLanguageId: $defaultLanguage /}
@@ -179,6 +183,7 @@
 													{call RadioUI.render}
 														{param id: $field['name']+'___'+index($_countSection) /}
 														{param values: $field['values'] /}
+														{param defaultValues: $field['predefinedValue'] /}
 														{param label: $field['label'][$defaultLanguage] /}
 														{param defaultLanguageId: $defaultLanguage /}
 														{param options: $field['options'] /}
@@ -190,6 +195,7 @@
 													{call SelectUI.render}
 														{param id: $field['name']+'___'+index($_countSection) /}
 														{param values: $field['values'] /}
+														{param defaultValues: $field['predefinedValue'] /}
 														{param label: $field['label'][$defaultLanguage] /}
 														{param defaultLanguageId: $defaultLanguage /}
 														{param options: $field['options'] /}
@@ -233,6 +239,7 @@
 													{param placeholder: $field['tip'] /}
 													{param localizable: $field['localizable'] /}
 													{param values: $field['values'] /}
+													{param defaultValues: $field['predefinedValue'] /}
 													{param repeatable: $field['repeatable'] /}
 													{param contextPath: $contextPath/}
 													{param required: $field['required'] /}
@@ -249,6 +256,7 @@
 													{param checkedOption: $checkedOption /}
 													{param path:$path+'/'+ $field['name'] /}
 													{param values: $field['values'] /}
+													{param defaultValues: $field['predefinedValue'] /}
 													{param defaultLanguageId: $defaultLanguage /}
 													{param handleChangeValue:  $handleChangeValue /}
 
@@ -257,6 +265,7 @@
 												{call DateUI.render}
 													{param id: $field['name'] /}
 													{param values: $field['values'] /}
+													{param defaultValues: $field['predefinedValue'] /}
 													{param required: $field['required'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param placeholder: $field['tip'][$defaultLanguage] /}
@@ -276,6 +285,7 @@
 													{param defaultLanguageId: $defaultLanguage /}
 													{param path:$path+'/'+ $field['name'] /}
 													{param values: $field['values'] /}
+													{param defaultValues: $field['predefinedValue'] /}
 													{param handleChangeValue:  $handleChangeValue /}
 													{param contextPath: $contextPath/}
 												{/call}
@@ -284,6 +294,7 @@
 													{param id: $field['name'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param values: $field['values'] /}
+													{param defaultValues: $field['predefinedValue'] /}
 													{param required: $field['required'] /}
 													{param contextPath: $contextPath /}
 													{param brandSelected: $brandSelected/}
@@ -315,6 +326,7 @@
 												{call RadioUI.render}
 													{param id: $field['name'] /}
 													{param values: $field['values'] /}
+													{param defaultValues: $field['predefinedValue'] /}
 													{param required: $field['required'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param defaultLanguageId: $defaultLanguage /}
@@ -326,6 +338,7 @@
 												{call SelectUI.render}
 													{param id: $field['name'] /}
 													{param values: $field['values'] /}
+													{param defaultValues: $field['predefinedValue'] /}
 													{param required: $field['required'] /}
 													{param label: $field['label'][$defaultLanguage] /}
 													{param defaultLanguageId: $defaultLanguage /}

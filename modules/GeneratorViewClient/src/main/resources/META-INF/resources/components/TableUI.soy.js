@@ -65,8 +65,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var changePageParent = opt_data.changePageParent;
   /** @type {?} */
   var selectPage = opt_data.selectPage;
-  var selectPageCurrent__soy10819 = (selectPage != null) ? ((selectPage[id] != null) ? selectPage[id] : 0) : 0;
-  var changePageCurrent__soy10821 = (changePageParent != null) ? changePageParent : changePage;
+  var selectPageCurrent__soy10856 = (selectPage != null) ? ((selectPage[id] != null) ? selectPage[id] : 0) : 0;
+  var changePageCurrent__soy10858 = (changePageParent != null) ? changePageParent : changePage;
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
       incrementalDom.attr('class', 'table-responsive');
@@ -76,10 +76,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
     incrementalDom.elementOpenEnd();
       incrementalDom.elementOpen('thead');
         incrementalDom.elementOpen('tr');
-          var field10830List = keys;
-          var field10830ListLen = field10830List.length;
-          for (var field10830Index = 0; field10830Index < field10830ListLen; field10830Index++) {
-              var field10830Data = field10830List[field10830Index];
+          var field10867List = keys;
+          var field10867ListLen = field10867List.length;
+          for (var field10867Index = 0; field10867Index < field10867ListLen; field10867Index++) {
+              var field10867Data = field10867List[field10867Index];
               incrementalDom.elementOpenStart('th');
                   incrementalDom.attr('class', 'table-head-title');
               incrementalDom.elementOpenEnd();
@@ -89,9 +89,9 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementOpenEnd();
                   incrementalDom.elementOpenStart('span');
                       incrementalDom.attr('style', 'font-size: 18px');
-                      incrementalDom.attr('title', header[field10830Data]);
+                      incrementalDom.attr('title', header[field10867Data]);
                   incrementalDom.elementOpenEnd();
-                    soyIdom.print(header[field10830Data]);
+                    soyIdom.print(header[field10867Data]);
                   incrementalDom.elementClose('span');
                 incrementalDom.elementClose('a');
               incrementalDom.elementClose('th');
@@ -101,17 +101,17 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
         incrementalDom.elementClose('tr');
       incrementalDom.elementClose('thead');
       incrementalDom.elementOpen('tbody');
-        var fieldData10852List = data;
-        var fieldData10852ListLen = fieldData10852List.length;
-        for (var fieldData10852Index = 0; fieldData10852Index < fieldData10852ListLen; fieldData10852Index++) {
-            var fieldData10852Data = fieldData10852List[fieldData10852Index];
+        var fieldData10889List = data;
+        var fieldData10889ListLen = fieldData10889List.length;
+        for (var fieldData10889Index = 0; fieldData10889Index < fieldData10889ListLen; fieldData10889Index++) {
+            var fieldData10889Data = fieldData10889List[fieldData10889Index];
             incrementalDom.elementOpen('tr');
-              var field10837List = keys;
-              var field10837ListLen = field10837List.length;
-              for (var field10837Index = 0; field10837Index < field10837ListLen; field10837Index++) {
-                  var field10837Data = field10837List[field10837Index];
+              var field10874List = keys;
+              var field10874ListLen = field10874List.length;
+              for (var field10874Index = 0; field10874Index < field10874ListLen; field10874Index++) {
+                  var field10874Data = field10874List[field10874Index];
                   incrementalDom.elementOpen('td');
-                    soyIdom.print(fieldData10852Data[field10837Data]);
+                    soyIdom.print(fieldData10889Data[field10874Data]);
                   incrementalDom.elementClose('td');
                 }
               incrementalDom.elementOpen('td');
@@ -121,7 +121,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.elementOpenStart('a');
                       incrementalDom.attr('class', 'component-action quick-action-item');
                       incrementalDom.attr('onclick', showDeleteWC);
-                      incrementalDom.attr('itemid', fieldData10852Data['articleId']);
+                      incrementalDom.attr('itemid', fieldData10889Data['articleId']);
                       incrementalDom.attr('style', 'font-size: 14px');
                       incrementalDom.attr('href', '#1');
                       incrementalDom.attr('role', 'button');
@@ -140,7 +140,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.elementOpenStart('a');
                       incrementalDom.attr('class', 'component-action quick-action-item');
                       incrementalDom.attr('style', 'font-size: 14px');
-                      incrementalDom.attr('href', navigationEditURL + '&_generatorviewclient_articleId=' + fieldData10852Data['id']);
+                      incrementalDom.attr('href', navigationEditURL + '&_generatorviewclient_articleId=' + fieldData10889Data['id']);
                       incrementalDom.attr('role', 'button');
                   incrementalDom.elementOpenEnd();
                     incrementalDom.elementOpenStart('svg');
@@ -171,19 +171,19 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.elementOpenStart('ul');
                 incrementalDom.attr('class', 'pagination');
             incrementalDom.elementOpenEnd();
-              var i10855Limit = dataCount;
-              for (var i10855 = 0; i10855 < i10855Limit; i10855++) {
-                if (i10855 == selectPageCurrent__soy10819) {
+              var i10892Limit = dataCount;
+              for (var i10892 = 0; i10892 < i10892Limit; i10892++) {
+                if (i10892 == selectPageCurrent__soy10856) {
                   incrementalDom.elementOpenStart('li');
                       incrementalDom.attr('class', 'page-item active');
                   incrementalDom.elementOpenEnd();
                     incrementalDom.elementOpenStart('a');
                         incrementalDom.attr('class', 'page-link');
-                        incrementalDom.attr('onclick', changePageCurrent__soy10821);
-                        incrementalDom.attr('itemid', id + '___' + i10855);
+                        incrementalDom.attr('onclick', changePageCurrent__soy10858);
+                        incrementalDom.attr('itemid', id + '___' + i10892);
                         incrementalDom.attr('href', '#1');
                     incrementalDom.elementOpenEnd();
-                      soyIdom.print(i10855 + 1);
+                      soyIdom.print(i10892 + 1);
                     incrementalDom.elementClose('a');
                   incrementalDom.elementClose('li');
                 } else {
@@ -192,11 +192,11 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.elementOpenEnd();
                     incrementalDom.elementOpenStart('a');
                         incrementalDom.attr('class', 'page-link');
-                        incrementalDom.attr('onclick', changePageCurrent__soy10821);
-                        incrementalDom.attr('itemid', id + '___' + i10855);
+                        incrementalDom.attr('onclick', changePageCurrent__soy10858);
+                        incrementalDom.attr('itemid', id + '___' + i10892);
                         incrementalDom.attr('href', '#3');
                     incrementalDom.elementOpenEnd();
-                      soyIdom.print(i10855 + 1);
+                      soyIdom.print(i10892 + 1);
                     incrementalDom.elementClose('a');
                   incrementalDom.elementClose('li');
                 }

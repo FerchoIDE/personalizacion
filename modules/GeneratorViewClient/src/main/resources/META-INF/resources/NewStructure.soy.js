@@ -162,14 +162,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
   var showCategory = soy.asserts.assertType(opt_data.showCategory == null || (goog.isBoolean(opt_data.showCategory) || opt_data.showCategory === 1 || opt_data.showCategory === 0), 'showCategory', opt_data.showCategory, 'boolean|null|undefined');
   /** @type {!Object<!goog.soy.data.SanitizedContent|string,boolean>} */
   var collapseInfo = soy.asserts.assertType(goog.isObject(opt_data.collapseInfo), 'collapseInfo', opt_data.collapseInfo, '!Object<!goog.soy.data.SanitizedContent|string,boolean>');
-  var isShowCategory__soy555 = (showCategory != null) ? showCategory : false;
-  var selectedLanguage__soy557 = data['selectedLanguage'];
-  var defaultLanguage__soy559 = data['defaultLanguage'];
-  var availableLanguageIds__soy561 = data['availableLanguageId'];
-  var availableLanguageIdsStyle__soy563 = data['availableLanguageId-style'];
-  var structureIdHotel__soy565 = '35835';
-  var structureIdBrand__soy567 = '35912';
-  var structureIdRate__soy569 = '35796';
+  var isShowCategory__soy561 = (showCategory != null) ? showCategory : false;
+  var selectedLanguage__soy563 = data['selectedLanguage'];
+  var defaultLanguage__soy565 = data['defaultLanguage'];
+  var availableLanguageIds__soy567 = data['availableLanguageId'];
+  var availableLanguageIdsStyle__soy569 = data['availableLanguageId-style'];
+  var structureIdHotel__soy571 = '35835';
+  var structureIdBrand__soy573 = '35912';
+  var structureIdRate__soy575 = '35796';
   incrementalDom.elementOpenStart('div');
       incrementalDom.attr('id', id);
   incrementalDom.elementOpenEnd();
@@ -230,7 +230,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.elementOpenStart('div');
                 incrementalDom.attr('class', 'container-fluid');
             incrementalDom.elementOpenEnd();
-              if (structureId == structureIdBrand__soy567) {
+              if (structureId == structureIdBrand__soy573) {
                 incrementalDom.elementOpenStart('div');
                     incrementalDom.attr('class', 'form-group');
                 incrementalDom.elementOpenEnd();
@@ -244,7 +244,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                   incrementalDom.elementOpenEnd();
                   incrementalDom.elementClose('input');
                 incrementalDom.elementClose('div');
-              } else if (structureId == structureIdRate__soy569) {
+              } else if (structureId == structureIdRate__soy575) {
                 incrementalDom.elementOpenStart('div');
                     incrementalDom.attr('class', 'form-group');
                 incrementalDom.elementOpenEnd();
@@ -260,14 +260,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                     incrementalDom.elementOpenEnd();
                       incrementalDom.text('Selecciona una Marca');
                     incrementalDom.elementClose('option');
-                    var field597List = categoryBrands;
-                    var field597ListLen = field597List.length;
-                    for (var field597Index = 0; field597Index < field597ListLen; field597Index++) {
-                        var field597Data = field597List[field597Index];
+                    var field603List = categoryBrands;
+                    var field603ListLen = field603List.length;
+                    for (var field603Index = 0; field603Index < field603ListLen; field603Index++) {
+                        var field603Data = field603List[field603Index];
                         incrementalDom.elementOpenStart('option');
-                            incrementalDom.attr('value', field597Data.key);
+                            incrementalDom.attr('value', field603Data.key);
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(field597Data.category);
+                          soyIdom.print(field603Data.category);
                         incrementalDom.elementClose('option');
                       }
                   incrementalDom.elementClose('select');
@@ -291,14 +291,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                     incrementalDom.elementOpenEnd();
                       incrementalDom.text('Selecciona una Marca');
                     incrementalDom.elementClose('option');
-                    var field609List = categoryBrands;
-                    var field609ListLen = field609List.length;
-                    for (var field609Index = 0; field609Index < field609ListLen; field609Index++) {
-                        var field609Data = field609List[field609Index];
+                    var field615List = categoryBrands;
+                    var field615ListLen = field615List.length;
+                    for (var field615Index = 0; field615Index < field615ListLen; field615Index++) {
+                        var field615Data = field615List[field615Index];
                         incrementalDom.elementOpenStart('option');
-                            incrementalDom.attr('value', field609Data.key);
+                            incrementalDom.attr('value', field615Data.key);
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(field609Data.category);
+                          soyIdom.print(field615Data.category);
                         incrementalDom.elementClose('option');
                       }
                   incrementalDom.elementClose('select');
@@ -306,7 +306,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementOpenStart('div');
                     incrementalDom.attr('class', 'form-group');
                 incrementalDom.elementOpenEnd();
-                  if (structureId == structureIdHotel__soy565) {
+                  if (structureId == structureIdHotel__soy571) {
                     incrementalDom.elementOpenStart('input');
                         incrementalDom.attr('id', 'txtCodeHotel');
                         incrementalDom.attr('disabled', '');
@@ -329,14 +329,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                       incrementalDom.elementOpenEnd();
                         incrementalDom.text('Selecciona un Hotel');
                       incrementalDom.elementClose('option');
-                      var field624List = hotelsXBrands;
-                      var field624ListLen = field624List.length;
-                      for (var field624Index = 0; field624Index < field624ListLen; field624Index++) {
-                          var field624Data = field624List[field624Index];
+                      var field630List = hotelsXBrands;
+                      var field630ListLen = field630List.length;
+                      for (var field630Index = 0; field630Index < field630ListLen; field630Index++) {
+                          var field630Data = field630List[field630Index];
                           incrementalDom.elementOpenStart('option');
-                              incrementalDom.attr('value', field624Data.key);
+                              incrementalDom.attr('value', field630Data.key);
                           incrementalDom.elementOpenEnd();
-                            soyIdom.print(field624Data.category);
+                            soyIdom.print(field630Data.category);
                           incrementalDom.elementClose('option');
                         }
                     incrementalDom.elementClose('select');
@@ -439,7 +439,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementOpenStart('h2');
                   incrementalDom.attr('class', 'sheet-title');
               incrementalDom.elementOpenEnd();
-                soyIdom.print(name[defaultLanguage__soy559]);
+                soyIdom.print(name[defaultLanguage__soy565]);
               incrementalDom.elementClose('h2');
             incrementalDom.elementClose('div');
           incrementalDom.elementClose('span');
@@ -481,8 +481,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenStart('div');
               incrementalDom.attr('class', 'panel-body');
           incrementalDom.elementOpenEnd();
-            $templateAlias1({id: 'title_principal', label: 'Titulo*', placeholder: 'Titulo principal', contextPath: contextPath, availableLanguageIds: availableLanguageIds__soy561, defaultLanguage: defaultLanguage__soy559, changeLanguage: changeLanguage, availableLanguageIdsStyle: availableLanguageIdsStyle__soy563, selectedLanguage: selectedLanguage__soy557}, null, opt_ijData);
-            $templateAlias1({id: 'description_prinipal', label: 'Resumen', placeholder: 'Resumen', contextPath: contextPath, availableLanguageIds: availableLanguageIds__soy561, defaultLanguage: defaultLanguage__soy559, changeLanguage: changeLanguage, availableLanguageIdsStyle: availableLanguageIdsStyle__soy563, selectedLanguage: selectedLanguage__soy557}, null, opt_ijData);
+            $templateAlias1({id: 'title_principal', label: 'Titulo*', placeholder: 'Titulo principal', contextPath: contextPath, availableLanguageIds: availableLanguageIds__soy567, defaultLanguage: defaultLanguage__soy565, changeLanguage: changeLanguage, availableLanguageIdsStyle: availableLanguageIdsStyle__soy569, selectedLanguage: selectedLanguage__soy563}, null, opt_ijData);
+            $templateAlias1({id: 'description_prinipal', label: 'Resumen', placeholder: 'Resumen', contextPath: contextPath, availableLanguageIds: availableLanguageIds__soy567, defaultLanguage: defaultLanguage__soy565, changeLanguage: changeLanguage, availableLanguageIdsStyle: availableLanguageIdsStyle__soy569, selectedLanguage: selectedLanguage__soy563}, null, opt_ijData);
           incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');
       incrementalDom.elementClose('div');
@@ -588,12 +588,12 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                 incrementalDom.elementOpenStart('div');
                     incrementalDom.attr('class', 'input-group');
                 incrementalDom.elementOpenEnd();
-                  var field800List = data['nestedFields'];
-                  var field800ListLen = field800List.length;
-    for (var field800Index = 0; field800Index < field800ListLen; field800Index++) {
-        var field800Data = field800List[field800Index];
-        if (field800Data['type'] == 'ddm-separator') {
-          if (field800Index > 0 && data['nestedFields'][field800Index - 1]['type'] != 'ddm-separator') {
+                  var field812List = data['nestedFields'];
+                  var field812ListLen = field812List.length;
+    for (var field812Index = 0; field812Index < field812ListLen; field812Index++) {
+        var field812Data = field812List[field812Index];
+        if (field812Data['type'] == 'ddm-separator') {
+          if (field812Index > 0 && data['nestedFields'][field812Index - 1]['type'] != 'ddm-separator') {
             incrementalDom.elementClose('div');
                       incrementalDom.elementClose('div');
                     incrementalDom.elementClose('div');
@@ -602,23 +602,23 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
               incrementalDom.elementClose('div');
             incrementalDom.elementClose('div');
           }
-          $templateAlias2({id: 'id_' + field800Index, structureId: structureId, name: field800Data['name'], path: field800Data['name'], data: field800Data['nestedFields'], title: field800Data['label'], repeatable: field800Data['repeatable'], availableLanguageIds: availableLanguageIds__soy561, defaultLanguage: selectedLanguage__soy557, closeOpenTab: closeOpenTab, contextPath: contextPath, collapseInfo: collapseInfo, brandSelected: brandSelected, hotelSelected: hotelSelected, brandIdSelected: brandIdSelected, hotelIdSelected: hotelIdSelected, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, handleRemoveItem: handleRemoveItem}, null, opt_ijData);
-        } else if (field800Data['type'] == 'text') {
-          $templateAlias3({id: field800Data['name'], type: field800Data['type'], path: field800Data['name'], localizable: field800Data['localizable'], labels: field800Data['label'], placeholder: field800Data['tip'], values: field800Data['values'], repeatable: field800Data['repeatable'], required: field800Data['required'], contextPath: contextPath, availableLanguageIds: availableLanguageIds__soy561, defaultLanguageId: selectedLanguage__soy557, handleChangeValue: handleChangeValue, handleRemoveItem: handleRemoveItem}, null, opt_ijData);
-        } else if (field800Data['type'] == 'checkbox') {
-          $templateAlias4({id: field800Data['name'], label: field800Data['label'], path: field800Data['name'], values: field800Data['values'], required: field800Data['required'], defaultLanguageId: selectedLanguage__soy557, handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field800Data['type'] == 'ddm-date') {
-          $templateAlias5({id: field800Data['name'], values: field800Data['values'], required: field800Data['required'], label: field800Data['label'][defaultLanguage__soy559], placeholder: field800Data['tip'][defaultLanguage__soy559], defaultLanguageId: selectedLanguage__soy557, path: field800Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field800Data['type'] == 'ddm-text-html' || field800Data['type'] == 'textarea') {
-          $templateAlias6({id: field800Data['name'], type: field800Data['type'], required: field800Data['required'], label: field800Data['label'][selectedLanguage__soy557], placeholder: field800Data['tip'][selectedLanguage__soy557], availableLanguageIds: availableLanguageIds__soy561, defaultLanguageId: selectedLanguage__soy557, path: field800Data['name'], values: field800Data['values'], handleChangeValue: handleChangeValue, contextPath: contextPath}, null, opt_ijData);
-        } else if (field800Data['type'] == 'radio') {
-          $templateAlias7({id: field800Data['name'], values: field800Data['values'], required: field800Data['required'], label: field800Data['label'][selectedLanguage__soy557], defaultLanguageId: selectedLanguage__soy557, options: field800Data['options'], path: field800Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
-        } else if (field800Data['type'] == 'select') {
-          $templateAlias8({id: field800Data['name'], values: field800Data['values'], required: field800Data['required'], label: field800Data['label'][selectedLanguage__soy557], defaultLanguageId: selectedLanguage__soy557, options: field800Data['options'], path: field800Data['name'], multiple: field800Data['multiple'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+          $templateAlias2({id: 'id_' + field812Index, structureId: structureId, name: field812Data['name'], path: field812Data['name'], data: field812Data['nestedFields'], title: field812Data['label'], repeatable: field812Data['repeatable'], availableLanguageIds: availableLanguageIds__soy567, defaultLanguage: selectedLanguage__soy563, closeOpenTab: closeOpenTab, contextPath: contextPath, collapseInfo: collapseInfo, brandSelected: brandSelected, hotelSelected: hotelSelected, brandIdSelected: brandIdSelected, hotelIdSelected: hotelIdSelected, handleChangeValue: handleChangeValue, handleRemoveValue: handleRemoveValue, handleRemoveItem: handleRemoveItem}, null, opt_ijData);
+        } else if (field812Data['type'] == 'text') {
+          $templateAlias3({id: field812Data['name'], type: field812Data['type'], path: field812Data['name'], localizable: field812Data['localizable'], labels: field812Data['label'], placeholder: field812Data['tip'], values: field812Data['values'], defaultValues: field812Data['predefinedValue'], repeatable: field812Data['repeatable'], required: field812Data['required'], contextPath: contextPath, availableLanguageIds: availableLanguageIds__soy567, defaultLanguageId: selectedLanguage__soy563, handleChangeValue: handleChangeValue, handleRemoveItem: handleRemoveItem}, null, opt_ijData);
+        } else if (field812Data['type'] == 'checkbox') {
+          $templateAlias4({id: field812Data['name'], label: field812Data['label'], path: field812Data['name'], values: field812Data['values'], defaultValues: field812Data['predefinedValue'], required: field812Data['required'], defaultLanguageId: selectedLanguage__soy563, handleChangeValue: handleChangeValue}, null, opt_ijData);
+        } else if (field812Data['type'] == 'ddm-date') {
+          $templateAlias5({id: field812Data['name'], values: field812Data['values'], defaultValues: field812Data['predefinedValue'], required: field812Data['required'], label: field812Data['label'][defaultLanguage__soy565], placeholder: field812Data['tip'][defaultLanguage__soy565], defaultLanguageId: selectedLanguage__soy563, path: field812Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+        } else if (field812Data['type'] == 'ddm-text-html' || field812Data['type'] == 'textarea') {
+          $templateAlias6({id: field812Data['name'], type: field812Data['type'], required: field812Data['required'], label: field812Data['label'][selectedLanguage__soy563], placeholder: field812Data['tip'][selectedLanguage__soy563], availableLanguageIds: availableLanguageIds__soy567, defaultLanguageId: selectedLanguage__soy563, path: field812Data['name'], values: field812Data['values'], defaultValues: field812Data['predefinedValue'], handleChangeValue: handleChangeValue, contextPath: contextPath}, null, opt_ijData);
+        } else if (field812Data['type'] == 'radio') {
+          $templateAlias7({id: field812Data['name'], values: field812Data['values'], defaultValues: field812Data['predefinedValue'], required: field812Data['required'], label: field812Data['label'][selectedLanguage__soy563], defaultLanguageId: selectedLanguage__soy563, options: field812Data['options'], path: field812Data['name'], handleChangeValue: handleChangeValue}, null, opt_ijData);
+        } else if (field812Data['type'] == 'select') {
+          $templateAlias8({id: field812Data['name'], values: field812Data['values'], defaultValues: field812Data['predefinedValue'], required: field812Data['required'], label: field812Data['label'][selectedLanguage__soy563], defaultLanguageId: selectedLanguage__soy563, options: field812Data['options'], path: field812Data['name'], multiple: field812Data['multiple'], handleChangeValue: handleChangeValue}, null, opt_ijData);
         } else {
-          soyIdom.print(field800Data['type']);
+          soyIdom.print(field812Data['type']);
           incrementalDom.text('--');
-          soyIdom.print(field800Data['name']);
+          soyIdom.print(field812Data['name']);
           incrementalDom.text('--Ninguno');
           incrementalDom.elementOpen('br');
           incrementalDom.elementClose('br');
@@ -694,7 +694,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
           incrementalDom.elementOpenStart('div');
               incrementalDom.attr('class', 'panel-body');
           incrementalDom.elementOpenEnd();
-            $templateAlias8({id: 'selectTemplate', label: 'Selecciona un template', defaultLanguageId: selectedLanguage__soy557, options: selectTempl, path: 'selectTemplate', handleChangeValue: handleChangeValueTempl}, null, opt_ijData);
+            $templateAlias8({id: 'selectTemplate', label: 'Selecciona un template', defaultLanguageId: selectedLanguage__soy563, options: selectTempl, path: 'selectTemplate', handleChangeValue: handleChangeValueTempl}, null, opt_ijData);
           incrementalDom.elementClose('div');
         incrementalDom.elementClose('div');
       incrementalDom.elementClose('div');
@@ -761,25 +761,25 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.elementOpen('div');
               if (itemsCategoriesKeysRender) {
                 if (itemsCategoriesSelected) {
-                  var key844List = itemsCategoriesKeysRender;
-                  var key844ListLen = key844List.length;
-                  for (var key844Index = 0; key844Index < key844ListLen; key844Index++) {
-                      var key844Data = key844List[key844Index];
+                  var key856List = itemsCategoriesKeysRender;
+                  var key856ListLen = key856List.length;
+                  for (var key856Index = 0; key856Index < key856ListLen; key856Index++) {
+                      var key856Data = key856List[key856Index];
                       incrementalDom.elementOpenStart('span');
-                          incrementalDom.attr('id', key844Data + ',S');
+                          incrementalDom.attr('id', key856Data + ',S');
                           incrementalDom.attr('style', 'font-size: 1.75rem;');
                           incrementalDom.attr('class', 'label label-dismissible label-secondary');
                       incrementalDom.elementOpenEnd();
                         incrementalDom.elementOpenStart('span');
                             incrementalDom.attr('class', 'label-item label-item-expand');
                         incrementalDom.elementOpenEnd();
-                          soyIdom.print(itemsCategoriesSelected[key844Data]);
+                          soyIdom.print(itemsCategoriesSelected[key856Data]);
                         incrementalDom.elementClose('span');
                         incrementalDom.elementOpenStart('span');
                             incrementalDom.attr('class', 'label-item label-item-after');
                         incrementalDom.elementOpenEnd();
                           incrementalDom.elementOpenStart('button');
-                              incrementalDom.attr('id', key844Data + ',B');
+                              incrementalDom.attr('id', key856Data + ',B');
                               incrementalDom.attr('aria-label', 'Close');
                               incrementalDom.attr('class', 'close');
                               incrementalDom.attr('type', 'button');
@@ -815,8 +815,8 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
             incrementalDom.elementOpenStart('div');
                 incrementalDom.attr('aria-labelledby', 'claySmallModalDlgCategory');
                 incrementalDom.attr('id', 'claySmallModalCategory');
-                incrementalDom.attr('class', 'modal ' + (isShowCategory__soy555 ? 'show in' : ''));
-                incrementalDom.attr('style', isShowCategory__soy555 ? '' : 'display: none');
+                incrementalDom.attr('class', 'modal ' + (isShowCategory__soy561 ? 'show in' : ''));
+                incrementalDom.attr('style', isShowCategory__soy561 ? '' : 'display: none');
                 incrementalDom.attr('role', 'dialog');
                 incrementalDom.attr('tabindex', '-1');
             incrementalDom.elementOpenEnd();
@@ -846,25 +846,25 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                       incrementalDom.elementOpen('div');
                         if (itemsCategoriesKeysRender) {
                           if (itemsCategoriesSelected) {
-                            var key872List = itemsCategoriesKeysRender;
-                            var key872ListLen = key872List.length;
-                            for (var key872Index = 0; key872Index < key872ListLen; key872Index++) {
-                                var key872Data = key872List[key872Index];
+                            var key884List = itemsCategoriesKeysRender;
+                            var key884ListLen = key884List.length;
+                            for (var key884Index = 0; key884Index < key884ListLen; key884Index++) {
+                                var key884Data = key884List[key884Index];
                                 incrementalDom.elementOpenStart('span');
-                                    incrementalDom.attr('id', key872Data + ',S');
+                                    incrementalDom.attr('id', key884Data + ',S');
                                     incrementalDom.attr('style', 'font-size: 1.75rem;');
                                     incrementalDom.attr('class', 'label label-dismissible label-secondary');
                                 incrementalDom.elementOpenEnd();
                                   incrementalDom.elementOpenStart('span');
                                       incrementalDom.attr('class', 'label-item label-item-expand');
                                   incrementalDom.elementOpenEnd();
-                                    soyIdom.print(itemsCategoriesSelected[key872Data]);
+                                    soyIdom.print(itemsCategoriesSelected[key884Data]);
                                   incrementalDom.elementClose('span');
                                   incrementalDom.elementOpenStart('span');
                                       incrementalDom.attr('class', 'label-item label-item-after');
                                   incrementalDom.elementOpenEnd();
                                     incrementalDom.elementOpenStart('button');
-                                        incrementalDom.attr('id', key872Data + ',B');
+                                        incrementalDom.attr('id', key884Data + ',B');
                                         incrementalDom.attr('aria-label', 'Close');
                                         incrementalDom.attr('class', 'close');
                                         incrementalDom.attr('type', 'button');
@@ -896,16 +896,16 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                           incrementalDom.elementOpen('tbody');
                             if (itemsCategories) {
                               if (itemsCategoriesKeys) {
-                                var key1044List = itemsCategoriesKeys;
-                                var key1044ListLen = key1044List.length;
-                                for (var key1044Index = 0; key1044Index < key1044ListLen; key1044Index++) {
-                                    var key1044Data = key1044List[key1044Index];
-                                    if (key1044Index == 0) {
+                                var key1056List = itemsCategoriesKeys;
+                                var key1056ListLen = key1056List.length;
+                                for (var key1056Index = 0; key1056Index < key1056ListLen; key1056Index++) {
+                                    var key1056Data = key1056List[key1056Index];
+                                    if (key1056Index == 0) {
                                         incrementalDom.elementOpenStart('tr');
                                           incrementalDom.attr('valign', 'top');
                                       incrementalDom.elementOpenEnd();
                                       }
-                                      if ((key1044Index + 3) % 3 == 0 && !(key1044Index == 0)) {
+                                      if ((key1056Index + 3) % 3 == 0 && !(key1056Index == 0)) {
                                         incrementalDom.elementClose('tr');
                                       incrementalDom.elementOpenStart('tr');
                                           incrementalDom.attr('valign', 'top');
@@ -914,14 +914,14 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                       incrementalDom.elementOpenStart('td');
                                           incrementalDom.attr('class', 'table-cell-expand');
                                       incrementalDom.elementOpenEnd();
-                                        if (key1044Data.name != 'Marcas') {
+                                        if (key1056Data.name != 'Marcas') {
                                           incrementalDom.elementOpenStart('nav');
                                               incrementalDom.attr('class', 'menubar menubar-transparent menubar-vertical-expand-md');
                                               incrementalDom.attr('style', 'max-width: 70%');
                                           incrementalDom.elementOpenEnd();
                                             incrementalDom.elementOpenStart('div');
                                                 incrementalDom.attr('class', 'collapse menubar-collapse');
-                                                incrementalDom.attr('id', 'menubarVertical' + key1044Data.nameFormat + 'Collapse01');
+                                                incrementalDom.attr('id', 'menubarVertical' + key1056Data.nameFormat + 'Collapse01');
                                             incrementalDom.elementOpenEnd();
                                               incrementalDom.elementOpenStart('ul');
                                                   incrementalDom.attr('class', 'nav nav-nested');
@@ -934,15 +934,15 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                                   incrementalDom.elementOpenEnd();
                                                     incrementalDom.elementOpenStart('a');
                                                         incrementalDom.attr('onclick', closeOpenTabCategory);
-                                                        incrementalDom.attr('id', key1044Data.nameFormat + ',OC');
-                                                        incrementalDom.attr('aria-controls', 'menubarVertical' + key1044Data.nameFormat + 'NestedCollapse01');
+                                                        incrementalDom.attr('id', key1056Data.nameFormat + ',OC');
+                                                        incrementalDom.attr('aria-controls', 'menubarVertical' + key1056Data.nameFormat + 'NestedCollapse01');
                                                         incrementalDom.attr('aria-expanded', 'false');
                                                         incrementalDom.attr('class', 'collapse-icon nav-link collapsed');
                                                         incrementalDom.attr('data-toggle', 'collapse');
-                                                        incrementalDom.attr('href', '#menubarVertical' + key1044Data.nameFormat + 'NestedCollapse01');
+                                                        incrementalDom.attr('href', '#menubarVertical' + key1056Data.nameFormat + 'NestedCollapse01');
                                                         incrementalDom.attr('role', 'button');
                                                     incrementalDom.elementOpenEnd();
-                                                      soyIdom.print(key1044Data.name);
+                                                      soyIdom.print(key1056Data.name);
                                                       incrementalDom.elementOpenStart('span');
                                                           incrementalDom.attr('class', 'collapse-icon-closed');
                                                       incrementalDom.elementOpenEnd();
@@ -973,36 +973,36 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                                       incrementalDom.elementClose('span');
                                                     incrementalDom.elementClose('a');
                                                     incrementalDom.elementOpenStart('div');
-                                                        incrementalDom.attr('class', 'panel-collapse collapse  ' + ((collapseInfo == null ? null : collapseInfo['menubarVertical' + key1044Data.nameFormat + 'Collapse01']) ? '' : 'show'));
-                                                        incrementalDom.attr('id', 'menubarVertical' + key1044Data.nameFormat + 'NestedCollapse01');
+                                                        incrementalDom.attr('class', 'panel-collapse collapse  ' + ((collapseInfo == null ? null : collapseInfo['menubarVertical' + key1056Data.nameFormat + 'Collapse01']) ? '' : 'show'));
+                                                        incrementalDom.attr('id', 'menubarVertical' + key1056Data.nameFormat + 'NestedCollapse01');
                                                         incrementalDom.attr('style', 'max-height: 300px;overflow-x: scroll;padding-right: 15px;');
                                                     incrementalDom.elementOpenEnd();
-                                                      var field952List = itemsCategories;
-                                                      var field952ListLen = field952List.length;
-                                                      for (var field952Index = 0; field952Index < field952ListLen; field952Index++) {
-                                                          var field952Data = field952List[field952Index];
-                                                          if (field952Data[key1044Data.name]) {
+                                                      var field964List = itemsCategories;
+                                                      var field964ListLen = field964List.length;
+                                                      for (var field964Index = 0; field964Index < field964ListLen; field964Index++) {
+                                                          var field964Data = field964List[field964Index];
+                                                          if (field964Data[key1056Data.name]) {
                                                             incrementalDom.elementOpenStart('ul');
-                                                                incrementalDom.attr('id', key1044Data.nameFormat + 'UL');
+                                                                incrementalDom.attr('id', key1056Data.nameFormat + 'UL');
                                                                 incrementalDom.attr('style', 'display:none;');
                                                                 incrementalDom.attr('class', 'nav nav-stacked');
                                                             incrementalDom.elementOpenEnd();
-                                                              var value948List = field952Data[key1044Data.name];
-                                                              var value948ListLen = value948List.length;
-                                                              for (var value948Index = 0; value948Index < value948ListLen; value948Index++) {
-                                                                  var value948Data = value948List[value948Index];
-                                                                  if (value948Data.isMultiValue) {
+                                                              var value960List = field964Data[key1056Data.name];
+                                                              var value960ListLen = value960List.length;
+                                                              for (var value960Index = 0; value960Index < value960ListLen; value960Index++) {
+                                                                  var value960Data = value960List[value960Index];
+                                                                  if (value960Data.isMultiValue) {
                                                                     incrementalDom.elementOpenStart('li');
                                                                         incrementalDom.attr('class', 'nav-item');
                                                                     incrementalDom.elementOpenEnd();
                                                                       incrementalDom.elementOpenStart('a');
-                                                                          incrementalDom.attr('id', value948Data.categoryId + ',' + value948Data.parentCategoryId + ',' + value948Data.parentName + ',T');
+                                                                          incrementalDom.attr('id', value960Data.categoryId + ',' + value960Data.parentCategoryId + ',' + value960Data.parentName + ',T');
                                                                           incrementalDom.attr('class', 'nav-link');
                                                                           incrementalDom.attr('style', 'text-decoration: none;');
                                                                           incrementalDom.attr('onclick', setSelectedCategories);
                                                                           incrementalDom.attr('href', '#1');
                                                                       incrementalDom.elementOpenEnd();
-                                                                        soyIdom.print(value948Data.name);
+                                                                        soyIdom.print(value960Data.name);
                                                                       incrementalDom.elementClose('a');
                                                                     incrementalDom.elementClose('li');
                                                                   } else {
@@ -1010,13 +1010,13 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                                                         incrementalDom.attr('class', 'nav-item');
                                                                     incrementalDom.elementOpenEnd();
                                                                       incrementalDom.elementOpenStart('a');
-                                                                          incrementalDom.attr('id', value948Data.categoryId + ',' + value948Data.parentCategoryId + ',' + value948Data.parentName + ',F');
+                                                                          incrementalDom.attr('id', value960Data.categoryId + ',' + value960Data.parentCategoryId + ',' + value960Data.parentName + ',F');
                                                                           incrementalDom.attr('onclick', setSelectedCategories);
                                                                           incrementalDom.attr('style', 'text-decoration: none;');
                                                                           incrementalDom.attr('class', 'nav-link');
                                                                           incrementalDom.attr('href', '#1');
                                                                       incrementalDom.elementOpenEnd();
-                                                                        soyIdom.print(value948Data.name);
+                                                                        soyIdom.print(value960Data.name);
                                                                       incrementalDom.elementClose('a');
                                                                     incrementalDom.elementClose('li');
                                                                   }
@@ -1031,11 +1031,11 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                             incrementalDom.elementClose('div');
                                           incrementalDom.elementClose('nav');
                                         } else {
-                                          var field1036List = itemsCategories;
-                                          var field1036ListLen = field1036List.length;
-                                          for (var field1036Index = 0; field1036Index < field1036ListLen; field1036Index++) {
-                                              var field1036Data = field1036List[field1036Index];
-                                              if (field1036Data[key1044Data.name]) {
+                                          var field1048List = itemsCategories;
+                                          var field1048ListLen = field1048List.length;
+                                          for (var field1048Index = 0; field1048Index < field1048ListLen; field1048Index++) {
+                                              var field1048Data = field1048List[field1048Index];
+                                              if (field1048Data[key1056Data.name]) {
                                                 if (itemsMarcasKeys) {
                                                   incrementalDom.elementOpenStart('nav');
                                                       incrementalDom.attr('class', 'menubar menubar-transparent menubar-vertical-expand-md');
@@ -1043,7 +1043,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                                   incrementalDom.elementOpenEnd();
                                                     incrementalDom.elementOpenStart('div');
                                                         incrementalDom.attr('class', 'collapse menubar-collapse');
-                                                        incrementalDom.attr('id', 'menubarVertical' + key1044Data.nameFormat + 'Collapse01');
+                                                        incrementalDom.attr('id', 'menubarVertical' + key1056Data.nameFormat + 'Collapse01');
                                                     incrementalDom.elementOpenEnd();
                                                       incrementalDom.elementOpenStart('ul');
                                                           incrementalDom.attr('class', 'nav nav-nested');
@@ -1056,15 +1056,15 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                                           incrementalDom.elementOpenEnd();
                                                             incrementalDom.elementOpenStart('a');
                                                                 incrementalDom.attr('onclick', closeOpenTabCategory);
-                                                                incrementalDom.attr('id', key1044Data.nameFormat + ',OC');
-                                                                incrementalDom.attr('aria-controls', 'menubarVertical' + key1044Data.nameFormat + 'NestedCollapse01');
+                                                                incrementalDom.attr('id', key1056Data.nameFormat + ',OC');
+                                                                incrementalDom.attr('aria-controls', 'menubarVertical' + key1056Data.nameFormat + 'NestedCollapse01');
                                                                 incrementalDom.attr('aria-expanded', 'false');
                                                                 incrementalDom.attr('class', 'collapse-icon nav-link collapsed');
                                                                 incrementalDom.attr('data-toggle', 'collapse');
-                                                                incrementalDom.attr('href', '#menubarVertical' + key1044Data.nameFormat + 'NestedCollapse01');
+                                                                incrementalDom.attr('href', '#menubarVertical' + key1056Data.nameFormat + 'NestedCollapse01');
                                                                 incrementalDom.attr('role', 'button');
                                                             incrementalDom.elementOpenEnd();
-                                                              soyIdom.print(key1044Data.name);
+                                                              soyIdom.print(key1056Data.name);
                                                               incrementalDom.elementOpenStart('span');
                                                                   incrementalDom.attr('class', 'collapse-icon-closed');
                                                               incrementalDom.elementOpenEnd();
@@ -1095,19 +1095,19 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                                               incrementalDom.elementClose('span');
                                                             incrementalDom.elementClose('a');
                                                             incrementalDom.elementOpenStart('div');
-                                                                incrementalDom.attr('class', 'panel-collapse collapse  ' + ((collapseInfo == null ? null : collapseInfo['menubarVertical' + key1044Data.nameFormat + 'Collapse01']) ? '' : 'show'));
-                                                                incrementalDom.attr('id', 'menubarVertical' + key1044Data.nameFormat + 'NestedCollapse01');
+                                                                incrementalDom.attr('class', 'panel-collapse collapse  ' + ((collapseInfo == null ? null : collapseInfo['menubarVertical' + key1056Data.nameFormat + 'Collapse01']) ? '' : 'show'));
+                                                                incrementalDom.attr('id', 'menubarVertical' + key1056Data.nameFormat + 'NestedCollapse01');
                                                                 incrementalDom.attr('style', 'max-height: 300px;overflow-x: scroll;padding-right: 15px;');
                                                             incrementalDom.elementOpenEnd();
                                                               incrementalDom.elementOpenStart('ul');
-                                                                  incrementalDom.attr('id', key1044Data.nameFormat + 'UL');
+                                                                  incrementalDom.attr('id', key1056Data.nameFormat + 'UL');
                                                                   incrementalDom.attr('style', 'display:none;');
                                                                   incrementalDom.attr('class', 'nav nav-stacked');
                                                               incrementalDom.elementOpenEnd();
-                                                                var key11031List = itemsMarcasKeys;
-                                                                var key11031ListLen = key11031List.length;
-                                                                for (var key11031Index = 0; key11031Index < key11031ListLen; key11031Index++) {
-                                                                    var key11031Data = key11031List[key11031Index];
+                                                                var key11043List = itemsMarcasKeys;
+                                                                var key11043ListLen = key11043List.length;
+                                                                for (var key11043Index = 0; key11043Index < key11043ListLen; key11043Index++) {
+                                                                    var key11043Data = key11043List[key11043Index];
                                                                     incrementalDom.elementOpenStart('li');
                                                                         incrementalDom.attr('class', 'nav-item');
                                                                     incrementalDom.elementOpenEnd();
@@ -1120,10 +1120,10 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                                                           incrementalDom.elementOpen('label');
                                                                             incrementalDom.elementOpenStart('input');
                                                                                 incrementalDom.attr('onclick', setSelectedCategories);
-                                                                                incrementalDom.attr('id', key11031Data.categoryId + ',' + key11031Data.parentCategoryId + ',' + key11031Data.parentName + ',T');
+                                                                                incrementalDom.attr('id', key11043Data.categoryId + ',' + key11043Data.parentCategoryId + ',' + key11043Data.parentName + ',T');
                                                                                 incrementalDom.attr('class', 'custom-control-input');
                                                                                 incrementalDom.attr('type', 'checkbox');
-                                                                                incrementalDom.attr('title', key11031Data.name);
+                                                                                incrementalDom.attr('title', key11043Data.name);
                                                                             incrementalDom.elementOpenEnd();
                                                                             incrementalDom.elementClose('input');
                                                                             incrementalDom.elementOpenStart('span');
@@ -1139,15 +1139,15 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                                                         incrementalDom.elementClose('div');
                                                                         incrementalDom.elementOpenStart('a');
                                                                             incrementalDom.attr('onclick', closeOpenTabCategory);
-                                                                            incrementalDom.attr('id', key11031Data.nameFormat + ',OC');
-                                                                            incrementalDom.attr('aria-controls', 'menubarVertical' + key11031Data.nameFormat + 'NestedCollapse02');
+                                                                            incrementalDom.attr('id', key11043Data.nameFormat + ',OC');
+                                                                            incrementalDom.attr('aria-controls', 'menubarVertical' + key11043Data.nameFormat + 'NestedCollapse02');
                                                                             incrementalDom.attr('aria-expanded', 'false');
                                                                             incrementalDom.attr('class', 'input-group-item collapsed collapse-icon nav-link');
                                                                             incrementalDom.attr('data-toggle', 'collapse');
-                                                                            incrementalDom.attr('href', '#menubarVertical' + key11031Data.nameFormat + 'NestedCollapse02');
+                                                                            incrementalDom.attr('href', '#menubarVertical' + key11043Data.nameFormat + 'NestedCollapse02');
                                                                             incrementalDom.attr('role', 'button');
                                                                         incrementalDom.elementOpenEnd();
-                                                                          soyIdom.print(key11031Data.name);
+                                                                          soyIdom.print(key11043Data.name);
                                                                           incrementalDom.elementOpenStart('span');
                                                                               incrementalDom.attr('class', 'collapse-icon-closed');
                                                                           incrementalDom.elementOpenEnd();
@@ -1179,29 +1179,29 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                                                         incrementalDom.elementClose('a');
                                                                       incrementalDom.elementClose('div');
                                                                       incrementalDom.elementOpenStart('div');
-                                                                          incrementalDom.attr('class', 'panel-collapse collapse  ' + ((collapseInfo == null ? null : collapseInfo['menubarVertical' + key11031Data.nameFormat + 'Collapse02']) ? '' : 'show'));
-                                                                          incrementalDom.attr('id', 'menubarVertical' + key11031Data.nameFormat + 'NestedCollapse02');
+                                                                          incrementalDom.attr('class', 'panel-collapse collapse  ' + ((collapseInfo == null ? null : collapseInfo['menubarVertical' + key11043Data.nameFormat + 'Collapse02']) ? '' : 'show'));
+                                                                          incrementalDom.attr('id', 'menubarVertical' + key11043Data.nameFormat + 'NestedCollapse02');
                                                                       incrementalDom.elementOpenEnd();
                                                                         incrementalDom.elementOpenStart('ul');
-                                                                            incrementalDom.attr('id', key11031Data.nameFormat + 'UL');
+                                                                            incrementalDom.attr('id', key11043Data.nameFormat + 'UL');
                                                                             incrementalDom.attr('style', 'display:none;');
                                                                             incrementalDom.attr('class', 'nav nav-stacked');
                                                                         incrementalDom.elementOpenEnd();
-                                                                          var key21028List = key11031Data.children;
-                                                                          var key21028ListLen = key21028List.length;
-                                                                          for (var key21028Index = 0; key21028Index < key21028ListLen; key21028Index++) {
-                                                                              var key21028Data = key21028List[key21028Index];
+                                                                          var key21040List = key11043Data.children;
+                                                                          var key21040ListLen = key21040List.length;
+                                                                          for (var key21040Index = 0; key21040Index < key21040ListLen; key21040Index++) {
+                                                                              var key21040Data = key21040List[key21040Index];
                                                                               incrementalDom.elementOpenStart('li');
                                                                                   incrementalDom.attr('class', 'nav-item');
                                                                               incrementalDom.elementOpenEnd();
                                                                                 incrementalDom.elementOpenStart('a');
-                                                                                    incrementalDom.attr('id', key21028Data.categoryId + ',' + key21028Data.parentCategoryId + ',' + key21028Data.parentName + ',T');
+                                                                                    incrementalDom.attr('id', key21040Data.categoryId + ',' + key21040Data.parentCategoryId + ',' + key21040Data.parentName + ',T');
                                                                                     incrementalDom.attr('class', 'nav-link');
                                                                                     incrementalDom.attr('style', 'text-decoration: none;');
                                                                                     incrementalDom.attr('onclick', setSelectedCategories);
                                                                                     incrementalDom.attr('href', '#1');
                                                                                 incrementalDom.elementOpenEnd();
-                                                                                  soyIdom.print(key21028Data.name);
+                                                                                  soyIdom.print(key21040Data.name);
                                                                                 incrementalDom.elementClose('a');
                                                                               incrementalDom.elementClose('li');
                                                                             }
@@ -1221,7 +1221,7 @@ function $render(opt_data, opt_ijData, opt_ijData_deprecated) {
                                             }
                                         }
                                       incrementalDom.elementClose('td');
-                                    if (key1044Index == key1044ListLen - 1) {
+                                    if (key1056Index == key1056ListLen - 1) {
                                       incrementalDom.elementClose('tr');
                                     }
                                   }

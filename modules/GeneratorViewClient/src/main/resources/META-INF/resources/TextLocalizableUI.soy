@@ -12,6 +12,7 @@
 	{@param? _index: number}
 	{@param labels: map<string,string>}
 	{@param? values: map<string,list<?>>}
+	{@param? defaultValues: map<string,string>}
 	{@param? type: any}
 	{@param placeholder: ?}
 	{@param availableLanguageIds: list<string>}
@@ -58,6 +59,7 @@
 								{param required: $required /}
 								{param placeholder: $placeholder[$defaultLanguageId] /}
 								{param values: $values /}
+								{param defaultValues: $defaultValues /}
 								{param _index: index($_countSection) /}
 								{param repeatable: $repeatable /}
 								{param path: $path+'___'+index($_countSection) /}
@@ -81,6 +83,7 @@
 			{param label: $labels[$defaultLanguageId] /}
 			{param placeholder: $placeholder[$defaultLanguageId] /}
 			{param values: $values /}
+			{param defaultValues: $defaultValues /}
 			{param _index: $___index /}
 			{param repeatable: $repeatable /}
 			{param path: $path /}

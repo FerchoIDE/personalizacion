@@ -43,6 +43,18 @@ class DateUI extends Component {
                     });
                 }
             }
+        }else if(this.initialConfig_.defaultValues!==undefined){
+
+            for(var lang in this.initialConfig_.defaultValues ){
+                if(this.initialConfig_.defaultValues[lang]!==undefined
+                    && this.initialConfig_.defaultValues[lang]!=''){
+                    this.handleChangeValue( {
+                        value: this.initialConfig_.defaultValues[lang],
+                        language: lang,
+                        path: this.initialConfig_.path
+                    });
+                }
+            }
         }
 
 

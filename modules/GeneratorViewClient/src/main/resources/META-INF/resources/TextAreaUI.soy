@@ -8,6 +8,7 @@
 	{@param type: string}
 	{@param? label: ?}
 	{@param? values: map<string,list<?>> }
+	{@param? defaultValues: map<string,string>}
 	{@param? placeholder: any}
 	{@param availableLanguageIds: list<string>}
 	{@param defaultLanguageId: string}
@@ -21,7 +22,8 @@
 	{@param? isOnLoadETA: bool}
 
 
-	{let $_values: isNonnull($values) ? $values : quoteKeysIfJs(['es_ES':[''],'en_US':['']]) /}
+	{let $_defaultValues: isNonnull($defaultValues) ? quoteKeysIfJs(['es_ES':[$defaultValues['es_ES']],'en_US':[$defaultValues['en_US']]]) : quoteKeysIfJs(['es_ES':[''],'en_US':['']]) /}
+	{let $_values: isNonnull($values) ? $values : $_defaultValues /}
 
 	<div id="{$id}" class="form-group-item">
 			<label for="input_{$id}">{$label}{$required?'*':''}
