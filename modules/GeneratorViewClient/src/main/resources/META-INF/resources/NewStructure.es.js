@@ -157,8 +157,8 @@ class NewStructure extends Component {
 
             var tempMarca = subMarcas[i];
             tempMarca.nameFormat=tempMarca.name.replace(" ","").replace(" ","");
-
-            _itemsMarcasKeys.push(tempMarca);
+            if(tempMarca.parentCategoryId===undefined || tempMarca.parentCategoryId=='0')
+                _itemsMarcasKeys.push(tempMarca);
         }
 
         this.setState({itemsMarcasKeys: _itemsMarcasKeys });
