@@ -109,6 +109,10 @@ class ViewNested extends Component {
             this.resizeTA($('#inputarea_DescriptionBenefits_es_ES'))
             $('#inputarea_DescriptionBenefits_en_US').val(this.checkedConcat['Benefits1']['en_US']);
             this.resizeTA($('#inputarea_DescriptionBenefits_en_US'))
+            $('#inputarea_benefitsRate_es_ES').val(this.checkedConcat['Benefits1']['es_ES']);
+            this.resizeTA($('#inputarea_benefitsRate_es_ES'))
+            $('#inputarea_benefitsRate_en_US').val(this.checkedConcat['Benefits1']['en_US']);
+            this.resizeTA($('#inputarea_benefitsRate_en_US'))
         }
 
         if(this.checkedConcat['Restrictions']) {
@@ -116,6 +120,10 @@ class ViewNested extends Component {
             this.resizeTA($('#inputarea_DescriptionsRestrictions_es_ES'))
             $('#inputarea_DescriptionsRestrictions_en_US').val(this.checkedConcat['Restrictions']['en_US']);
             this.resizeTA($('#inputarea_DescriptionsRestrictions_en_US'))
+            $('#inputarea_Restrictions1_es_ES').val(this.checkedConcat['Restrictions']['es_ES']);
+            this.resizeTA($('#inputarea_Restrictions1_es_ES'))
+            $('#inputarea_Restrictions1_en_US').val(this.checkedConcat['Restrictions']['en_US']);
+            this.resizeTA($('#inputarea_Restrictions1_en_US'))
         }
 
     }
